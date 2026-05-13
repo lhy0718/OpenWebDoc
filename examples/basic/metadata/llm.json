@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "Basic HTMLX Document",
+  "readingOrder": ["block-1"],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": ["block-1"],
+      "selector": "[data-htmlx-block-id=\"block-1\"]",
+      "summary": "A minimal valid HTMLX package example.",
+      "keywords": ["OpenWebDoc", "HTMLX", "example"],
+      "tokenEstimate": 80,
+      "sensitivity": "public"
+    }
+  ],
+  "entities": [],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

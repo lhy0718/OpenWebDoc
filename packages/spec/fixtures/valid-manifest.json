@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "packageId": "urn:uuid:00000000-0000-4000-8000-000000000000",
+  "title": "Basic HTMLX Document",
+  "language": "en",
+  "createdAt": "2026-05-13T00:00:00.000Z",
+  "modifiedAt": "2026-05-13T00:00:00.000Z",
+  "entry": "content/document.html",
+  "styles": ["styles/document.css"],
+  "resources": [
+    {
+      "path": "styles/document.css",
+      "mediaType": "text/css",
+      "role": "stylesheet"
+    },
+    {
+      "path": "metadata/llm.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    }
+  ],
+  "metadata": {
+    "llm": "metadata/llm.json",
+    "provenance": "metadata/provenance.json"
+  },
+  "security": {
+    "allowScripts": false,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

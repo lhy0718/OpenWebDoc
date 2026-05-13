@@ -1,0 +1,31 @@
+{
+  "name": "@openwebdoc/core",
+  "version": "0.1.0-alpha.0",
+  "description": "Core HTMLX Document Package read, write, pack, unpack, and validation APIs.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@openwebdoc/spec": "workspace:*",
+    "fflate": "^0.8.2",
+    "sanitize-html": "^2.17.0"
+  },
+  "devDependencies": {
+    "@types/sanitize-html": "^2.16.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  }
+}

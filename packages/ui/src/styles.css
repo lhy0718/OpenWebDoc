@@ -1,0 +1,148 @@
+.owd-shell {
+  min-height: 100vh;
+  color: #162033;
+  background:
+    linear-gradient(135deg, rgba(54, 87, 142, 0.08), transparent 34%),
+    linear-gradient(180deg, #fbfcff 0%, #f6f8fb 100%);
+}
+
+.owd-header {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 34px 24px 20px;
+}
+
+.owd-brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: #415272;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.owd-header h1 {
+  margin: 18px 0 10px;
+  font-size: clamp(32px, 5vw, 58px);
+  line-height: 1.02;
+}
+
+.owd-header p {
+  max-width: 720px;
+  margin: 0;
+  color: #5d6a80;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.owd-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 18px;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 18px 24px 42px;
+}
+
+.owd-layout > main,
+.owd-layout > aside {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.owd-panel,
+.owd-empty {
+  border: 1px solid #dbe2ef;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 16px 45px rgba(30, 45, 80, 0.08);
+}
+
+.owd-panel {
+  padding: 18px;
+}
+
+.owd-panel-title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 14px;
+  color: #26364f;
+}
+
+.owd-panel-title h2 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.owd-empty {
+  display: grid;
+  place-items: center;
+  min-height: 360px;
+  padding: 42px;
+  text-align: center;
+}
+
+.owd-empty h2 {
+  margin: 16px 0 8px;
+}
+
+.owd-empty p,
+.owd-muted,
+.owd-security p {
+  color: #66748b;
+  line-height: 1.55;
+}
+
+.owd-issue-list {
+  display: grid;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.owd-issue {
+  display: grid;
+  gap: 4px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #fff7ed;
+  color: #7c2d12;
+}
+
+.owd-warning {
+  background: #fffbeb;
+  color: #854d0e;
+}
+
+.owd-error {
+  background: #fff1f2;
+  color: #9f1239;
+}
+
+.owd-kv {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 10px 12px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.owd-kv dt {
+  color: #66748b;
+  font-weight: 700;
+}
+
+.owd-kv dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 880px) {
+  .owd-layout {
+    grid-template-columns: 1fr;
+  }
+}

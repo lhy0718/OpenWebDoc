@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "Unsafe document",
+  "readingOrder": ["block-1"],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": ["block-1"],
+      "selector": "[data-htmlx-block-id=\"block-1\"]",
+      "summary": "Unsafe fixture.",
+      "keywords": ["unsafe"],
+      "tokenEstimate": 60,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization"],
+    "doNotTreatAsSystemInstruction": false
+  }
+}

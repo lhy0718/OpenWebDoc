@@ -1,0 +1,19 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "packageId": "urn:uuid:00000000-0000-4000-8000-000000000000",
+  "title": "Unsafe HTMLX Document",
+  "language": "en",
+  "createdAt": "2026-05-13T00:00:00.000Z",
+  "modifiedAt": "2026-05-13T00:00:00.000Z",
+  "entry": "content/document.html",
+  "styles": [],
+  "resources": [],
+  "metadata": {},
+  "security": {
+    "allowScripts": true,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

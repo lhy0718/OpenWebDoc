@@ -1,0 +1,34 @@
+{
+  "name": "@openwebdoc/cli",
+  "version": "0.1.0-alpha.0",
+  "description": "Command line interface for HTMLX Document Package files.",
+  "type": "module",
+  "bin": {
+    "htmlx": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "htmlx": "node ./dist/index.js"
+  },
+  "dependencies": {
+    "@openwebdoc/core": "workspace:*",
+    "@openwebdoc/spec": "workspace:*",
+    "commander": "^14.0.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules/
+.pnpm-store/
+dist/
+coverage/
+*.tsbuildinfo
+.DS_Store
+benchmarks/htmlxbench/generated/
+benchmarks/htmlxbench/packets/
+benchmarks/htmlxbench/security-fixtures/generated/
+benchmarks/htmlxbench/runs/summary.json
+benchmarks/htmlxbench/runs/edit-summary.json
