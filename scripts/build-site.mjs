@@ -3,10 +3,15 @@ import { cp, mkdir, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const siteDirectory = "dist/site";
+const packages = ["@openwebdoc/spec", "@openwebdoc/core", "@openwebdoc/ui"];
 const apps = [
   { name: "Viewer", packageName: "@openwebdoc/viewer", route: "viewer" },
   { name: "Editor", packageName: "@openwebdoc/editor", route: "editor" },
 ];
+
+for (const packageName of packages) {
+  runPnpm(["--filter", packageName, "build"]);
+}
 
 for (const app of apps) {
   runPnpm(["--filter", app.packageName, "build"]);
