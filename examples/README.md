@@ -13,5 +13,5 @@ pnpm --filter @openwebdoc/cli htmlx -- pack examples/security-invalid examples/s
 Create an external-agent editing workspace:
 
 ```sh
-pnpm exec htmlx agent-workspace examples/basic.htmlx ./basic-agent
+pnpm htmlx agent-workspace examples/basic.htmlx ./basic-agent
 ```

@@ -5,8 +5,8 @@
 - [ ] `pnpm test` succeeds.
 - [ ] `pnpm lint` succeeds.
 - [ ] `pnpm smoke:e2e` succeeds.
-- [ ] `pnpm exec htmlx validate examples/basic.htmlx` succeeds.
-- [ ] `pnpm exec htmlx validate examples/security-invalid.htmlx` fails for expected security reasons.
+- [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
+- [ ] `pnpm htmlx validate examples/security-invalid.htmlx` fails for expected security reasons.
 - [ ] Viewer opens `examples/basic.htmlx`.
 - [ ] Viewer renders manifest-declared package-local assets.
 - [ ] Viewer production build has no oversized-chunk warning.

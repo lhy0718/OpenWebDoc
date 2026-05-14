@@ -30,8 +30,8 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
-pnpm exec htmlx validate examples/security-invalid.htmlx
+pnpm htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/security-invalid.htmlx
 ```
 
 The security-invalid validation command is expected to fail with a non-zero exit code.

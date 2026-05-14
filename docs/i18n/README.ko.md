@@ -34,7 +34,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```
 
 ## HTMLX CLI 사용법
@@ -44,7 +44,7 @@ CLI 명령어는 `htmlx`입니다. 이를 제공하는 npm 패키지는 `@openwe
 Workspace 개발 중에는 pnpm으로 실행합니다.
 
 ```sh
-pnpm exec htmlx <command>
+pnpm htmlx <command>
 ```
 
 `@openwebdoc/cli`를 패키지로 설치한 뒤에는 binary를 직접 사용할 수 있습니다.
@@ -77,7 +77,7 @@ htmlx create document.htmlx --title "My Document" --language en --json
 ```sh
 htmlx validate document.htmlx
 htmlx validate document.htmlx --json
-pnpm exec htmlx validate examples/basic.htmlx --json
+pnpm htmlx validate examples/basic.htmlx --json
 ```
 
 검증에 성공하면 exit code `0`을 반환합니다. 유효하지 않은 패키지는 non-zero exit code를 반환하고 `html.script`, `html.remote_resource`, `html.local_resource_missing`, `llm.system_instruction_guard` 같은 issue code를 포함합니다.

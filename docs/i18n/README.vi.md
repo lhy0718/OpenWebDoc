@@ -34,7 +34,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```
 
 ## Cách dùng HTMLX CLI
@@ -44,7 +44,7 @@ CLI command là `htmlx`. npm package cung cấp nó là `@openwebdoc/cli`; OpenW
 Khi phát triển workspace, chạy CLI qua pnpm.
 
 ```sh
-pnpm exec htmlx <command>
+pnpm htmlx <command>
 ```
 
 Sau khi cài `@openwebdoc/cli` như một package, dùng binary trực tiếp.
@@ -77,7 +77,7 @@ Validate package trước khi mở, unpack hoặc chia sẻ.
 ```sh
 htmlx validate document.htmlx
 htmlx validate document.htmlx --json
-pnpm exec htmlx validate examples/basic.htmlx --json
+pnpm htmlx validate examples/basic.htmlx --json
 ```
 
 Validate thành công trả về exit code `0`. Package không hợp lệ trả về non-zero exit code và issue codes như `html.script`, `html.remote_resource`, `html.local_resource_missing`, hoặc `llm.system_instruction_guard`.

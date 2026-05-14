@@ -34,7 +34,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```
 
 ## Penggunaan HTMLX CLI
@@ -44,7 +44,7 @@ CLI command adalah `htmlx`. npm package yang menyediakannya adalah `@openwebdoc/
 Selama pengembangan workspace, jalankan CLI melalui pnpm.
 
 ```sh
-pnpm exec htmlx <command>
+pnpm htmlx <command>
 ```
 
 Setelah memasang `@openwebdoc/cli` sebagai package, gunakan binary secara langsung.
@@ -77,7 +77,7 @@ Validasi package sebelum dibuka, di-unpack, atau dibagikan.
 ```sh
 htmlx validate document.htmlx
 htmlx validate document.htmlx --json
-pnpm exec htmlx validate examples/basic.htmlx --json
+pnpm htmlx validate examples/basic.htmlx --json
 ```
 
 Validasi yang berhasil mengembalikan exit code `0`. Package tidak valid mengembalikan non-zero exit code dan menyertakan issue codes seperti `html.script`, `html.remote_resource`, `html.local_resource_missing`, atau `llm.system_instruction_guard`.

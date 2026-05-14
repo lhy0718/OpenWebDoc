@@ -34,7 +34,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```
 
 ## HTMLX CLI の使い方
@@ -44,7 +44,7 @@ CLI command は `htmlx` です。これを提供する npm package は `@openweb
 Workspace 開発中は pnpm 経由で実行します。
 
 ```sh
-pnpm exec htmlx <command>
+pnpm htmlx <command>
 ```
 
 `@openwebdoc/cli` を package としてインストールした後は binary を直接使えます。
@@ -77,7 +77,7 @@ Package を開く、unpack する、共有する前に検証します。
 ```sh
 htmlx validate document.htmlx
 htmlx validate document.htmlx --json
-pnpm exec htmlx validate examples/basic.htmlx --json
+pnpm htmlx validate examples/basic.htmlx --json
 ```
 
 検証に成功すると exit code `0` を返します。無効な package は non-zero exit code を返し、`html.script`, `html.remote_resource`, `html.local_resource_missing`, `llm.system_instruction_guard` などの issue code を含みます。

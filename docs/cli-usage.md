@@ -21,5 +21,5 @@ Validation exits with a non-zero status for invalid packages. Use `--json` for m
 During workspace development, run the binary through pnpm:
 
 ```sh
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```

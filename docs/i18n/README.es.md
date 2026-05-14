@@ -34,7 +34,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```
 
 ## Uso de la CLI HTMLX
@@ -44,7 +44,7 @@ El comando CLI es `htmlx`. El paquete npm que lo proporciona es `@openwebdoc/cli
 Durante el desarrollo del workspace, ejecuta la CLI mediante pnpm.
 
 ```sh
-pnpm exec htmlx <command>
+pnpm htmlx <command>
 ```
 
 Después de instalar `@openwebdoc/cli` como paquete, usa el binary directamente.
@@ -77,7 +77,7 @@ Valida un paquete antes de abrirlo, desempaquetarlo o compartirlo.
 ```sh
 htmlx validate document.htmlx
 htmlx validate document.htmlx --json
-pnpm exec htmlx validate examples/basic.htmlx --json
+pnpm htmlx validate examples/basic.htmlx --json
 ```
 
 La validación correcta devuelve exit code `0`. Los paquetes inválidos devuelven un exit code distinto de cero e incluyen issue codes como `html.script`, `html.remote_resource`, `html.local_resource_missing` o `llm.system_instruction_guard`.

@@ -34,7 +34,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```
 
 ## HTMLX CLI 使用方法
@@ -44,7 +44,7 @@ CLI command 是 `htmlx`。提供它的 npm package 是 `@openwebdoc/cli`；OpenW
 Workspace 开发期间，通过 pnpm 运行 CLI。
 
 ```sh
-pnpm exec htmlx <command>
+pnpm htmlx <command>
 ```
 
 安装 `@openwebdoc/cli` 后，可以直接使用 binary。
@@ -77,7 +77,7 @@ htmlx create document.htmlx --title "My Document" --language en --json
 ```sh
 htmlx validate document.htmlx
 htmlx validate document.htmlx --json
-pnpm exec htmlx validate examples/basic.htmlx --json
+pnpm htmlx validate examples/basic.htmlx --json
 ```
 
 验证成功返回 exit code `0`。无效 package 返回 non-zero exit code，并包含 `html.script`、`html.remote_resource`、`html.local_resource_missing`、`llm.system_instruction_guard` 等 issue code。

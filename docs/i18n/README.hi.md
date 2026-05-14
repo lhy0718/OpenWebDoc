@@ -34,7 +34,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
-pnpm exec htmlx validate examples/basic.htmlx
+pnpm htmlx validate examples/basic.htmlx
 ```
 
 ## HTMLX CLI उपयोग
@@ -44,7 +44,7 @@ CLI command `htmlx` है। इसे provide करने वाला npm pa
 Workspace development के दौरान CLI को pnpm से चलाएँ।
 
 ```sh
-pnpm exec htmlx <command>
+pnpm htmlx <command>
 ```
 
 `@openwebdoc/cli` को package के रूप में install करने के बाद binary सीधे चलाएँ।
@@ -77,7 +77,7 @@ Package खोलने, unpack करने, या share करने से �
 ```sh
 htmlx validate document.htmlx
 htmlx validate document.htmlx --json
-pnpm exec htmlx validate examples/basic.htmlx --json
+pnpm htmlx validate examples/basic.htmlx --json
 ```
 
 Validation सफल होने पर exit code `0` लौटता है। Invalid packages non-zero exit code लौटाते हैं और `html.script`, `html.remote_resource`, `html.local_resource_missing`, या `llm.system_instruction_guard` जैसे issue codes शामिल करते हैं।
