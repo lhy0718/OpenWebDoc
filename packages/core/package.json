@@ -12,10 +12,11 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node ../../scripts/clean-dist.mjs && tsc -p tsconfig.json",
     "test": "vitest run"
   },
   "dependencies": {
@@ -27,5 +28,29 @@
     "@types/sanitize-html": "^2.16.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lhy0718/OpenWebDoc.git",
+    "directory": "packages/core"
+  },
+  "bugs": {
+    "url": "https://github.com/lhy0718/OpenWebDoc/issues"
+  },
+  "homepage": "https://github.com/lhy0718/OpenWebDoc/tree/main/packages/core#readme",
+  "keywords": [
+    "openwebdoc",
+    "htmlx",
+    "zip",
+    "document-package",
+    "validation"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

@@ -34,6 +34,9 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm site:build
+pnpm pack:packages
+pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
 
@@ -155,4 +158,5 @@ MVP memblokir arbitrary JavaScript execution, remote resources, path traversal, 
 - [LLM metadata guide](../llm-metadata-guide.md)
 - [Agent-editable HTMLX](../agent-editing.md)
 - [CLI usage](../cli-usage.md)
+- [Deployment](../deployment.md)
 - [Release checklist](../release-checklist.md)
