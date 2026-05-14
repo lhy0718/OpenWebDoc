@@ -29,6 +29,7 @@ npm package name `htmlx` tidak digunakan. Hanya CLI binary yang bernama `htmlx`.
 
 ```sh
 pnpm install
+pnpm guard:repo
 pnpm build
 pnpm test
 pnpm lint

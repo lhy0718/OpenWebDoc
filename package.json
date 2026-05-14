@@ -6,6 +6,7 @@
   "type": "module",
   "packageManager": "pnpm@10.24.0",
   "scripts": {
+    "guard:repo": "node scripts/repository-guard.mjs",
     "build": "pnpm -r --sort build",
     "test": "pnpm -r --sort test",
     "lint": "eslint .",

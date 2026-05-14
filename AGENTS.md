@@ -25,6 +25,7 @@ when running scripts instead of committing machine-specific paths.
 
 ```sh
 pnpm install
+pnpm guard:repo
 pnpm build
 pnpm test
 pnpm lint

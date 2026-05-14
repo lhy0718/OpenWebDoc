@@ -29,6 +29,7 @@ OpenWebDoc 是用于 HTMLX Document Package 格式的 TypeScript monorepo。HTML
 
 ```sh
 pnpm install
+pnpm guard:repo
 pnpm build
 pnpm test
 pnpm lint

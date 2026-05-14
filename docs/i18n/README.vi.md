@@ -29,6 +29,7 @@ Không dùng npm package name `htmlx`. Chỉ CLI binary được đặt tên `ht
 
 ```sh
 pnpm install
+pnpm guard:repo
 pnpm build
 pnpm test
 pnpm lint

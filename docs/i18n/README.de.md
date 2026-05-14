@@ -29,6 +29,7 @@ Der npm package name `htmlx` wird nicht verwendet. Nur das CLI binary heißt `ht
 
 ```sh
 pnpm install
+pnpm guard:repo
 pnpm build
 pnpm test
 pnpm lint
