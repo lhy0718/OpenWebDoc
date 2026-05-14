@@ -5,6 +5,10 @@
 - [ ] `pnpm test` succeeds.
 - [ ] `pnpm lint` succeeds.
 - [ ] `pnpm smoke:e2e` succeeds.
+- [ ] `pnpm guard:repo` succeeds.
+- [ ] `pnpm pack:packages` creates tarballs for `@openwebdoc/spec`, `@openwebdoc/core`, `@openwebdoc/cli`, and `@openwebdoc/ui`.
+- [ ] `pnpm site:build` creates `dist/site/` with viewer and editor builds.
+- [ ] `pnpm release:check` succeeds.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/security-invalid.htmlx` fails for expected security reasons.
 - [ ] Viewer opens `examples/basic.htmlx`.
@@ -15,5 +19,6 @@
 - [ ] Editor exports a `.htmlx` package that passes CLI validation after applying a local draft proposal.
 - [ ] Viewer reopens the editor-exported package.
 - [ ] Public package names use `@openwebdoc/*`.
+- [ ] Published npm package contents include README, license, declarations, JavaScript output, and any exported CSS.
 - [ ] The CLI binary is named `htmlx`.
 - [ ] README, docs, and Obsidian notes match implementation state.

@@ -45,6 +45,9 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm site:build
+pnpm pack:packages
+pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
 
@@ -178,4 +181,5 @@ MVP blocks arbitrary JavaScript execution, remote resources, path traversal, mis
 - [LLM metadata guide](docs/llm-metadata-guide.md)
 - [Agent-editable HTMLX](docs/agent-editing.md)
 - [CLI usage](docs/cli-usage.md)
+- [Deployment](docs/deployment.md)
 - [Release checklist](docs/release-checklist.md)

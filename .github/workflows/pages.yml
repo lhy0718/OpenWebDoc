@@ -1,18 +1,29 @@
-name: CI
+name: Deploy Pages
 
 on:
-  pull_request:
+  workflow_dispatch:
   push:
     branches:
       - main
-      - research/htmlxbench-pilot
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
-  verify:
+  deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
@@ -35,27 +46,17 @@ jobs:
       - name: Guard repository scope
         run: pnpm guard:repo
 
-      - name: Build
-        run: pnpm build
-
-      - name: Test
-        run: pnpm test
-
-      - name: Lint
-        run: pnpm lint
-
-      - name: Validate basic example
-        run: pnpm htmlx validate examples/basic.htmlx
-
-      - name: Reject invalid example
-        run: |
-          if pnpm htmlx validate examples/security-invalid.htmlx; then
-            echo "security-invalid.htmlx unexpectedly passed validation"
-            exit 1
-          fi
-
-      - name: Pack npm packages
-        run: pnpm pack:packages
-
       - name: Build static site
         run: pnpm site:build
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -13,10 +13,12 @@
     "./styles.css": "./src/styles.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "src/styles.css",
+    "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "node ../../scripts/clean-dist.mjs && tsc -p tsconfig.json",
     "test": "vitest run --passWithNoTests"
   },
   "peerDependencies": {
@@ -31,5 +33,31 @@
     "@types/react-dom": "^19.2.3",
     "typescript": "^5.9.3",
     "vitest": "^4.0.15"
-  }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lhy0718/OpenWebDoc.git",
+    "directory": "packages/ui"
+  },
+  "bugs": {
+    "url": "https://github.com/lhy0718/OpenWebDoc/issues"
+  },
+  "homepage": "https://github.com/lhy0718/OpenWebDoc/tree/main/packages/ui#readme",
+  "keywords": [
+    "openwebdoc",
+    "htmlx",
+    "react",
+    "ui"
+  ],
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "sideEffects": [
+    "./src/styles.css"
+  ]
 }

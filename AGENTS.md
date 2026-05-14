@@ -30,6 +30,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 pnpm htmlx validate examples/security-invalid.htmlx
 ```
