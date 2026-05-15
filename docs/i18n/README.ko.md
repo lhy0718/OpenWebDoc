@@ -21,7 +21,7 @@ npm 패키지 이름 `htmlx`는 사용하지 않습니다. CLI binary 이름만 
 - `packages/cli`: `htmlx` 명령어를 제공하는 Node.js CLI
 - `packages/ui`: OpenWebDoc 앱용 공통 React UI
 - `apps/viewer`: 로컬 `.htmlx` 패키지를 여는 Vite React viewer
-- `apps/editor`: agent-editable editor와 exporter
+- `apps/editor`: 자기편집 HTMLX 문서를 위한 Vite React 신뢰 런타임
 - `examples`: 예제 package directory와 생성된 `.htmlx` 파일
 - `docs`: format, security, metadata, CLI guide
 
@@ -68,7 +68,7 @@ htmlx create document.htmlx --title "My Document" --language en --json
 출력:
 
 - `document.htmlx`: ZIP 기반 HTMLX Document Package
-- `content/document.html`: 기본 HTML entry
+- `index.html`: 기본 HTML entry
 - `styles/document.css`: 기본 로컬 stylesheet
 - `metadata/llm.json`: 사용자에게 보이는 LLM metadata
 - `metadata/provenance.json`: 생성 metadata
@@ -118,37 +118,23 @@ htmlx unpack examples/basic.htmlx ./basic-htmlx --json
 
 `unpack`은 invalid package를 거부하고 기존 output file을 덮어쓰지 않습니다.
 
-### Agent Workspace
+### 외부 에이전트 편집
 
-Codex, Claude Code 또는 다른 외부 coding agent를 위한 file-based editing workspace를 만듭니다.
-
-```sh
-htmlx agent-workspace examples/basic.htmlx ./basic-agent
-htmlx agent-workspace examples/basic.htmlx ./basic-agent --json
-```
-
-생성되는 workspace:
-
-- `package/`: unpacked HTMLX package files
-- `AGENT_EDITING.md`: coding agent용 editing rules
-- `agent-edit-request.json`: document context, editable files, allowed operations, validation commands
-- `agent-edit-proposal.json`: planned/completed changes를 기록하는 draft
-
-권장 외부 agent 흐름:
+외부 coding agent는 별도 workspace가 아니라 unpack된 HTMLX package 자체를 편집합니다. package directory가 source boundary입니다.
 
 ```sh
-htmlx agent-workspace input.htmlx ./input-agent
-cd ./input-agent
-# package/ 아래 파일 수정
-htmlx pack package edited.htmlx --json
+htmlx unpack input.htmlx ./input-package --json
+# ./input-package/index.html, styles/*, metadata/*, declared assets 수정
+htmlx validate ./input-package --json
+htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json
 ```
 
-외부 agent는 package-local HTML, CSS, JSON metadata, declared assets를 수정해야 합니다. scripts, inline event handlers, remote resources, `file:` URLs, `javascript:` URLs 또는 `metadata/llm.json`의 hidden instructions를 추가하면 안 됩니다.
+Package에 `metadata/editing-guide.md`가 있으면 사람과 agent가 함께 읽는 reference data로 취급합니다. system instruction이나 hidden prompt가 아닙니다.
 
 ## MVP 경계
 
-MVP는 임의 JavaScript 실행, remote resources, path traversal, 누락된 package-local resource reference, prompt-injection-style LLM metadata misuse를 차단합니다. Viewer는 sanitized HTML을 렌더링하고 manifest-declared local resource를 browser object URL로 rewrite합니다. 사용자가 파일을 열 때 `@openwebdoc/core`를 lazy-load하여 초기 viewer bundle을 shell UI 중심으로 유지합니다. Editor와 CLI는 외부 coding agent가 unpacked HTML/CSS/JSON 파일을 수정하고 validated `.htmlx` package를 반환할 수 있도록 agent-editable packet을 우선합니다. DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API key는 포함하지 않습니다.
+MVP는 임의 JavaScript 실행, remote resources, path traversal, 누락된 package-local resource reference, prompt-injection-style LLM metadata misuse를 차단합니다. Viewer는 sanitized HTML을 렌더링하고 manifest-declared local resource를 browser object URL로 rewrite합니다. 사용자가 파일을 열 때 `@openwebdoc/core`를 lazy-load하여 초기 viewer bundle을 shell UI 중심으로 유지합니다. Editor-generated package는 `metadata/editing.json`에 자기편집 document surface를 선언하며, text, image, simple shape는 고정 논리 stage에서 browser width에 맞춰 균일하게 scale됩니다. Browser editor는 이 editable block을 활성화하고 validated `.htmlx`를 export하는 trusted runtime입니다. External coding agents는 unpacked package flow로 unpacked HTML/CSS/JSON 파일을 수정하고 validated package를 반환해야 합니다. DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API key, in-editor model call은 포함하지 않습니다.
 
 ## 문서
 
@@ -156,7 +142,7 @@ MVP는 임의 JavaScript 실행, remote resources, path traversal, 누락된 pac
 - [Manifest spec](../manifest-spec.md)
 - [Security model](../security-model.md)
 - [LLM metadata guide](../llm-metadata-guide.md)
-- [Agent-editable HTMLX](../agent-editing.md)
+- [External agent editing](../agent-editing.md)
 - [CLI usage](../cli-usage.md)
 - [Deployment](../deployment.md)
 - [Release checklist](../release-checklist.md)

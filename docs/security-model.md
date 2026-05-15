@@ -12,6 +12,7 @@ Every `.htmlx` file is treated as untrusted input.
 - Resolve resources from package-local files only and render them through temporary browser object URLs.
 - Reject stylesheet `@import`, remote `url(...)`, `file:` URLs, and `javascript:` references.
 - Treat LLM metadata as user-visible reference data, never as system instructions.
-- Validate external agent workspaces before accepting edits back into `.htmlx` packages.
+- Treat `metadata/editing-guide.md` as user-visible reference data. Validate its manifest resource declaration, Markdown media type, and unsafe instruction-like phrases.
+- Validate unpacked package directories before accepting edits back into `.htmlx` packages.
 
 The CLI refuses to unpack invalid packages and does not include an unsafe bypass flag in MVP.

@@ -10,13 +10,20 @@
 - [ ] `pnpm site:build` creates `dist/site/` with viewer and editor builds.
 - [ ] `pnpm release:check` succeeds.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
+- [ ] `pnpm htmlx validate examples/rich-self-editable.htmlx` succeeds.
+- [ ] `metadata/editing-guide.md`, when present, is declared as package-local Markdown metadata.
 - [ ] `pnpm htmlx validate examples/security-invalid.htmlx` fails for expected security reasons.
 - [ ] Viewer opens `examples/basic.htmlx`.
+- [ ] Viewer opens `examples/rich-self-editable.htmlx` with text, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, and funnel blocks.
 - [ ] Viewer renders manifest-declared package-local assets.
 - [ ] Viewer production build has no oversized-chunk warning.
-- [ ] `htmlx agent-workspace` creates an agent-editable unpacked workspace.
-- [ ] Editor prepares an agent edit packet from an instruction.
-- [ ] Editor exports a `.htmlx` package that passes CLI validation after applying a local draft proposal.
+- [ ] `htmlx validate <directory>` validates an unpacked package before repacking.
+- [ ] Editor acts as the trusted WYSIWYG runtime for `metadata/editing.json`.
+- [ ] Editor supports direct text editing, image placement, rectangle placement, semantic table insertion, grouped figure movement, and selected-figure inner card movement on the document surface.
+- [ ] Editor-generated documents preserve uniform text/image/table/figure/border scale across browser widths.
+- [ ] Text editing preserves caret position while typing.
+- [ ] The collapsed hamburger toolbar can be dragged and changes expansion direction near viewport edges.
+- [ ] Editor exports a `.htmlx` package that passes CLI validation.
 - [ ] Viewer reopens the editor-exported package.
 - [ ] Public package names use `@openwebdoc/*`.
 - [ ] Published npm package contents include README, license, declarations, JavaScript output, and any exported CSS.

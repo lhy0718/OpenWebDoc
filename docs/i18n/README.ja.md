@@ -21,7 +21,7 @@ npm package name `htmlx` は使用しません。CLI binary の名前だけが `
 - `packages/cli`: `htmlx` command を公開する Node.js CLI
 - `packages/ui`: OpenWebDoc apps 用の共有 React UI
 - `apps/viewer`: ローカル `.htmlx` packages 用の Vite React viewer
-- `apps/editor`: agent-editable editor と exporter
+- `apps/editor`: 自己編集可能な HTMLX document のための Vite React trusted runtime
 - `examples`: example package directories と生成済み `.htmlx` files
 - `docs`: format, security, metadata, CLI guides
 
@@ -68,7 +68,7 @@ htmlx create document.htmlx --title "My Document" --language en --json
 出力:
 
 - `document.htmlx`: ZIP-based HTMLX Document Package
-- `content/document.html`: default HTML entry
+- `index.html`: default HTML entry
 - `styles/document.css`: default local stylesheet
 - `metadata/llm.json`: user-visible LLM metadata
 - `metadata/provenance.json`: creation metadata
@@ -118,37 +118,23 @@ htmlx unpack examples/basic.htmlx ./basic-htmlx --json
 
 `unpack` は invalid package を拒否し、既存の output file を上書きしません。
 
-### Agent Workspace
+### 外部エージェント編集
 
-Codex、Claude Code、または他の外部 coding agent のための file-based editing workspace を作成します。
-
-```sh
-htmlx agent-workspace examples/basic.htmlx ./basic-agent
-htmlx agent-workspace examples/basic.htmlx ./basic-agent --json
-```
-
-生成される workspace:
-
-- `package/`: unpacked HTMLX package files
-- `AGENT_EDITING.md`: coding agents 向け editing rules
-- `agent-edit-request.json`: document context, editable files, allowed operations, validation commands
-- `agent-edit-proposal.json`: planned/completed changes を記録する draft
-
-推奨される外部 agent flow:
+外部 coding agent は別の workspace ではなく、unpack された HTMLX package 自体を編集します。package directory が source boundary です。
 
 ```sh
-htmlx agent-workspace input.htmlx ./input-agent
-cd ./input-agent
-# package/ 配下の files を編集
-htmlx pack package edited.htmlx --json
+htmlx unpack input.htmlx ./input-package --json
+# ./input-package/index.html, styles/*, metadata/*, declared assets を編集
+htmlx validate ./input-package --json
+htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json
 ```
 
-外部 agent は package-local HTML, CSS, JSON metadata, declared assets を編集します。scripts、inline event handlers、remote resources、`file:` URLs、`javascript:` URLs、または `metadata/llm.json` の hidden instructions を追加してはいけません。
+Package に `metadata/editing-guide.md` がある場合、人間と agent のための reference data として扱います。system instruction や hidden prompt ではありません。
 
 ## MVP 境界
 
-MVP は arbitrary JavaScript execution、remote resources、path traversal、missing package-local resource references、prompt-injection-style LLM metadata misuse をブロックします。Viewer は sanitized HTML をレンダリングし、manifest-declared local resources を browser object URLs に rewrite します。ユーザーが file を開くときに `@openwebdoc/core` を lazy-load し、initial viewer bundle を shell UI 中心に保ちます。Editor と CLI は、外部 coding agents が unpacked HTML/CSS/JSON files を変更し validated `.htmlx` packages を返せるように agent-editable packets を優先します。DOCX/HWPX/PDF import/export、plugin execution、cloud sync、real-time collaboration、browser-side model API keys は含みません。
+MVP は arbitrary JavaScript execution、remote resources、path traversal、missing package-local resource references、prompt-injection-style LLM metadata misuse をブロックします。Viewer は sanitized HTML をレンダリングし、manifest-declared local resources を browser object URLs に rewrite します。ユーザーが file を開くときに `@openwebdoc/core` を lazy-load し、initial viewer bundle を shell UI 中心に保ちます。Editor-generated package は `metadata/editing.json` で自己編集可能な document surface を宣言し、text, image, simple shape は固定 logical stage 上で browser width に合わせて均一に scale されます。Browser editor は editable block を有効化し、validated `.htmlx` を export する trusted runtime です。External coding agents は unpacked package flow で unpacked HTML/CSS/JSON files を変更し validated packages を返します。DOCX/HWPX/PDF import/export、plugin execution、cloud sync、real-time collaboration、browser-side model API keys は含みません。
 
 ## Docs
 
@@ -156,7 +142,7 @@ MVP は arbitrary JavaScript execution、remote resources、path traversal、mis
 - [Manifest spec](../manifest-spec.md)
 - [Security model](../security-model.md)
 - [LLM metadata guide](../llm-metadata-guide.md)
-- [Agent-editable HTMLX](../agent-editing.md)
+- [External agent editing](../agent-editing.md)
 - [CLI usage](../cli-usage.md)
 - [Deployment](../deployment.md)
 - [Release checklist](../release-checklist.md)

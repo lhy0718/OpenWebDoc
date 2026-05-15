@@ -32,7 +32,7 @@ The npm package name `htmlx` is not used. Only the CLI binary is named `htmlx`.
 - `packages/cli`: Node.js CLI that exposes the `htmlx` command
 - `packages/ui`: shared React UI for OpenWebDoc apps
 - `apps/viewer`: Vite React viewer for local `.htmlx` packages
-- `apps/editor`: Vite React agent-editable editor and exporter
+- `apps/editor`: Vite React trusted runtime for self-editable HTMLX documents
 - `examples`: example package directories and generated `.htmlx` files
 - `docs`: format, security, metadata, and CLI guides
 
@@ -79,10 +79,16 @@ htmlx create document.htmlx --title "My Document" --language en --json
 Output:
 
 - `document.htmlx`: ZIP-based HTMLX Document Package
-- `content/document.html`: default HTML entry
+- `index.html`: default HTML entry
 - `styles/document.css`: default local stylesheet
 - `metadata/llm.json`: user-visible LLM metadata
 - `metadata/provenance.json`: creation metadata
+
+The canonical package entry is the root `index.html`. After unpacking a `.htmlx` package, opening
+`index.html` directly in a browser should render the same document layout using only package-local
+files such as `styles/document.css` and `assets/*`. A browser cannot natively render an HTML file
+inside a still-compressed ZIP without a viewer or extension, so direct opening means the package has
+been unpacked first.
 
 ### Validate
 
@@ -129,49 +135,23 @@ htmlx unpack examples/basic.htmlx ./basic-htmlx --json
 
 `unpack` refuses invalid packages and refuses to overwrite existing output files.
 
-### Agent Workspace
+### External Agent Editing
 
-Create a file-based editing workspace for Codex, Claude Code, or another external coding agent.
-
-```sh
-htmlx agent-workspace examples/basic.htmlx ./basic-agent
-htmlx agent-workspace examples/basic.htmlx ./basic-agent --json
-```
-
-The generated workspace contains:
-
-- `package/`: unpacked HTMLX package files
-- `AGENT_EDITING.md`: editing rules for coding agents
-- `agent-edit-request.json`: document context, editable files, allowed operations, and validation commands
-- `agent-edit-proposal.json`: a draft record for planned or completed changes
-
-Suggested external-agent flow:
+External coding agents edit the unpacked HTMLX package itself. There is no separate canonical agent workspace: the package directory is the source boundary.
 
 ```sh
-htmlx agent-workspace input.htmlx ./input-agent
-cd ./input-agent
-htmlx validate-workspace . --json
-# Edit files under package/
-htmlx pack package edited.htmlx --json
+htmlx unpack input.htmlx ./input-package --json
+# Edit ./input-package/index.html, styles/*, metadata/*, and declared assets.
+htmlx validate ./input-package --json
+htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json
 ```
 
-External agents should edit package-local HTML, CSS, JSON metadata, and declared assets. They should not add scripts, inline event handlers, remote resources, `file:` URLs, `javascript:` URLs, or hidden instructions in `metadata/llm.json`.
-
-### Validate Agent Workspace
-
-Validate an unpacked agent workspace before returning an edit.
-
-```sh
-htmlx validate-workspace ./basic-agent
-htmlx validate-workspace ./basic-agent --json
-```
-
-The command checks `agent-edit-request.json`, `agent-edit-proposal.json`, and the unpacked `package/` directory.
+External agents should edit package-local HTML, CSS, JSON metadata, and declared assets. A package may include `metadata/editing-guide.md` as user-visible reference data for humans and agents. It is not a system instruction. Agents should not add scripts, inline event handlers, remote resources, `file:` URLs, `javascript:` URLs, or hidden instructions in `metadata/llm.json`.
 
 ## MVP Boundaries
 
-MVP blocks arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, and prompt-injection-style LLM metadata misuse. The viewer renders sanitized HTML and rewrites manifest-declared local resources to browser object URLs. It lazy-loads `@openwebdoc/core` when a user opens a file, keeping the initial viewer bundle focused on shell UI. The editor and CLI prioritize agent-editable packets so external coding agents can modify unpacked HTML/CSS/JSON files and return validated `.htmlx` packages. It does not include DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, or browser-side model API keys.
+MVP blocks arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, and prompt-injection-style LLM metadata misuse. The viewer renders sanitized HTML and rewrites manifest-declared local resources to browser object URLs. It lazy-loads `@openwebdoc/core` when a user opens a file, keeping the initial viewer bundle focused on shell UI. Editor-generated packages declare a self-editable document surface in `metadata/editing.json`: text, images, and simple shapes live on a fixed logical stage and scale uniformly with the browser width. The browser editor is the trusted runtime that activates those editable blocks and exports a validated `.htmlx`; the package itself does not carry executable editor code. External coding agents should unpack the package, modify package-local HTML/CSS/JSON/assets directly, validate the directory, repack it, and validate the edited `.htmlx`. The MVP does not include DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, or in-editor model calls.
 
 ## Docs
 
@@ -179,7 +159,8 @@ MVP blocks arbitrary JavaScript execution, remote resources, path traversal, mis
 - [Manifest spec](docs/manifest-spec.md)
 - [Security model](docs/security-model.md)
 - [LLM metadata guide](docs/llm-metadata-guide.md)
-- [Agent-editable HTMLX](docs/agent-editing.md)
+- [External agent editing](docs/agent-editing.md)
+- [Chrome extension strategy](docs/extension-strategy.md)
 - [CLI usage](docs/cli-usage.md)
 - [Deployment](docs/deployment.md)
 - [Release checklist](docs/release-checklist.md)

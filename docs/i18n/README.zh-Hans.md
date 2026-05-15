@@ -21,7 +21,7 @@ OpenWebDoc 是用于 HTMLX Document Package 格式的 TypeScript monorepo。HTML
 - `packages/cli`: 提供 `htmlx` command 的 Node.js CLI
 - `packages/ui`: OpenWebDoc apps 的共享 React UI
 - `apps/viewer`: 用于本地 `.htmlx` packages 的 Vite React viewer
-- `apps/editor`: agent-editable editor 和 exporter
+- `apps/editor`: 面向可自编辑 HTMLX document 的 Vite React trusted runtime
 - `examples`: example package directories 和生成的 `.htmlx` files
 - `docs`: format, security, metadata, CLI guides
 
@@ -68,7 +68,7 @@ htmlx create document.htmlx --title "My Document" --language en --json
 输出:
 
 - `document.htmlx`: ZIP-based HTMLX Document Package
-- `content/document.html`: default HTML entry
+- `index.html`: default HTML entry
 - `styles/document.css`: default local stylesheet
 - `metadata/llm.json`: user-visible LLM metadata
 - `metadata/provenance.json`: creation metadata
@@ -118,37 +118,23 @@ htmlx unpack examples/basic.htmlx ./basic-htmlx --json
 
 `unpack` 会拒绝 invalid package，并且不会覆盖已有 output file。
 
-### Agent Workspace
+### 外部智能体编辑
 
-为 Codex、Claude Code 或其他外部 coding agent 创建 file-based editing workspace。
-
-```sh
-htmlx agent-workspace examples/basic.htmlx ./basic-agent
-htmlx agent-workspace examples/basic.htmlx ./basic-agent --json
-```
-
-生成的 workspace:
-
-- `package/`: unpacked HTMLX package files
-- `AGENT_EDITING.md`: coding agents 的 editing rules
-- `agent-edit-request.json`: document context, editable files, allowed operations, validation commands
-- `agent-edit-proposal.json`: 记录 planned/completed changes 的 draft
-
-推荐的外部 agent 流程:
+外部 coding agent 直接编辑已解包的 HTMLX package 本身，而不是单独的 workspace。package directory 就是 source boundary。
 
 ```sh
-htmlx agent-workspace input.htmlx ./input-agent
-cd ./input-agent
-# 编辑 package/ 下的文件
-htmlx pack package edited.htmlx --json
+htmlx unpack input.htmlx ./input-package --json
+# 编辑 ./input-package/index.html, styles/*, metadata/*, declared assets
+htmlx validate ./input-package --json
+htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json
 ```
 
-外部 agent 应编辑 package-local HTML、CSS、JSON metadata 和 declared assets。不要添加 scripts、inline event handlers、remote resources、`file:` URLs、`javascript:` URLs，或在 `metadata/llm.json` 中加入 hidden instructions。
+如果 package 包含 `metadata/editing-guide.md`，它是给人和 agent 阅读的 reference data，不是 system instruction 或 hidden prompt。
 
 ## MVP 边界
 
-MVP 会阻止 arbitrary JavaScript execution、remote resources、path traversal、missing package-local resource references 和 prompt-injection-style LLM metadata misuse。Viewer 渲染 sanitized HTML，并把 manifest-declared local resources rewrite 为 browser object URLs。用户打开文件时 lazy-load `@openwebdoc/core`，让 initial viewer bundle 以 shell UI 为主。Editor 和 CLI 优先支持 agent-editable packets，使外部 coding agents 能修改 unpacked HTML/CSS/JSON files，并返回 validated `.htmlx` packages。不包含 DOCX/HWPX/PDF import/export、plugin execution、cloud sync、real-time collaboration 或 browser-side model API keys。
+MVP 会阻止 arbitrary JavaScript execution、remote resources、path traversal、missing package-local resource references 和 prompt-injection-style LLM metadata misuse。Viewer 渲染 sanitized HTML，并把 manifest-declared local resources rewrite 为 browser object URLs。用户打开文件时 lazy-load `@openwebdoc/core`，让 initial viewer bundle 以 shell UI 为主。Editor-generated package 会在 `metadata/editing.json` 中声明可自编辑的 document surface；text、image、simple shape 位于固定 logical stage 上，并随 browser width 统一 scale。Browser editor 是启用这些 editable block 并导出 validated `.htmlx` 的 trusted runtime。External coding agents 应通过 unpacked package flow 修改 unpacked HTML/CSS/JSON files 并返回 validated packages。不包含 DOCX/HWPX/PDF import/export、plugin execution、cloud sync、real-time collaboration、browser-side model API keys 或 in-editor model calls。
 
 ## Docs
 
@@ -156,7 +142,7 @@ MVP 会阻止 arbitrary JavaScript execution、remote resources、path traversal
 - [Manifest spec](../manifest-spec.md)
 - [Security model](../security-model.md)
 - [LLM metadata guide](../llm-metadata-guide.md)
-- [Agent-editable HTMLX](../agent-editing.md)
+- [External agent editing](../agent-editing.md)
 - [CLI usage](../cli-usage.md)
 - [Deployment](../deployment.md)
 - [Release checklist](../release-checklist.md)

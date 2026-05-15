@@ -17,6 +17,7 @@ describe("HTMLX manifest schema", () => {
     });
 
     expect(validateHtmlxManifestSchema(manifest).valid).toBe(true);
+    expect(manifest.entry).toBe("index.html");
   });
 
   it("rejects script-enabled manifests", () => {
@@ -48,7 +49,7 @@ describe("HTMLX agent edit schemas", () => {
       source: {
         input: "example.htmlx",
         packageDirectory: "package",
-        entry: "content/document.html",
+        entry: "index.html",
         title: "Example",
         language: "en",
       },
@@ -56,8 +57,8 @@ describe("HTMLX agent edit schemas", () => {
         validate: "htmlx validate edited.htmlx --json",
         pack: "htmlx pack package edited.htmlx --json",
       },
-      editableFiles: ["content/document.html", "metadata/llm.json"],
-      packageEntries: ["content/document.html", "metadata/llm.json", "manifest.json"],
+      editableFiles: ["index.html", "metadata/llm.json"],
+      packageEntries: ["index.html", "metadata/llm.json", "manifest.json"],
       allowedOperations: ["edit safe HTML"],
       constraints: ["Do not add scripts."],
       documentContext: {
@@ -79,7 +80,7 @@ describe("HTMLX agent edit schemas", () => {
       source: {
         input: "example.htmlx",
         packageDirectory: "package",
-        entry: "../content/document.html",
+        entry: "../index.html",
         title: "Example",
         language: "en",
       },
@@ -87,7 +88,7 @@ describe("HTMLX agent edit schemas", () => {
         validate: "htmlx validate edited.htmlx --json",
         pack: "htmlx pack package edited.htmlx --json",
       },
-      editableFiles: ["../content/document.html"],
+      editableFiles: ["../index.html"],
       packageEntries: ["manifest.json"],
       allowedOperations: ["edit safe HTML"],
       constraints: ["Do not add scripts."],
@@ -109,12 +110,12 @@ describe("HTMLX agent edit schemas", () => {
       operations: [
         {
           type: "replace_html",
-          path: "content/document.html",
+          path: "index.html",
           summary: "Revise block wording.",
           blockIds: ["block-1"],
         },
       ],
-      touchedFiles: ["content/document.html"],
+      touchedFiles: ["index.html"],
       validation: {
         packedOutput: "edited.htmlx",
         commandsRun: ["htmlx pack package edited.htmlx --json"],

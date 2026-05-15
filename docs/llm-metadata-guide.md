@@ -34,4 +34,6 @@ MVP does not include embedding vectors by default because embedding dimensions, 
 
 ## Editing Relationship
 
-Agent edit packets are separate from `metadata/llm.json`. The metadata file describes the document for retrieval, summarization, and editing context. Edit requests and applied edit history belong in workflow state and `metadata/provenance.json`, not in hidden instructions.
+Agent edit requests are separate from `metadata/llm.json`. The metadata file describes the document for retrieval, summarization, and editing context. The document's WYSIWYG surface is declared separately in `metadata/editing.json`, where block selectors, stage coordinates, and direct-manipulation constraints belong.
+
+External-agent workflow state belongs in the unpacked package files and durable edit records belong in `metadata/provenance.json`, not in hidden instructions or the browser editor's primary UI. A package-local `metadata/editing-guide.md` may provide user-visible reference guidance, but it is not a system instruction.

@@ -45,7 +45,7 @@ body {
 }
 
 .document-surface {
-  min-height: 620px;
+  min-height: min(82vh, 960px);
   overflow: hidden;
   border: 1px solid #dbe2ef;
   border-radius: 8px;
@@ -56,7 +56,8 @@ body {
 .document-surface iframe {
   display: block;
   width: 100%;
-  height: 620px;
+  height: min(82vh, 960px);
+  min-height: 720px;
   border: 0;
   background: white;
 }
