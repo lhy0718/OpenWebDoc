@@ -114,8 +114,9 @@ export async function createHtmlxDocument(input: HtmlxCreateDocumentInput): Prom
     sources: [],
   };
 
+  const standaloneHtml = ensureStandaloneHtmlEntry(input.html, "styles/document.css", input.title);
   const files = new Map<string, Uint8Array>([
-    [manifest.entry, encodeText(input.html)],
+    [manifest.entry, encodeText(standaloneHtml)],
     ["styles/document.css", encodeText(input.css ?? defaultDocumentCss)],
     ["metadata/llm.json", encodeJson(llm)],
     ["metadata/provenance.json", encodeJson(provenance)],
@@ -225,7 +226,31 @@ export function sanitizeHtmlxDocument(html: string): string {
       "time",
     ]),
     allowedAttributes: {
-      "*": ["class", "id", "title", "data-htmlx-block-id", "aria-label"],
+      "*": [
+        "class",
+        "id",
+        "title",
+        "data-htmlx-block-id",
+        "data-htmlx-kind",
+        "data-htmlx-editable",
+        "data-htmlx-stage-width",
+        "data-htmlx-stage-height",
+        "data-htmlx-x",
+        "data-htmlx-y",
+        "data-htmlx-width",
+        "data-htmlx-height",
+        "data-htmlx-font-size",
+        "data-htmlx-line-height",
+        "data-htmlx-asset-id",
+        "data-htmlx-shape",
+        "data-htmlx-fill",
+        "data-htmlx-card-x",
+        "data-htmlx-card-y",
+        "data-htmlx-card-width",
+        "data-htmlx-card-height",
+        "data-htmlx-variant",
+        "aria-label",
+      ],
       a: ["href", "name", "target", "rel"],
       img: ["src", "alt", "width", "height"],
       section: ["data-htmlx-block-id"],
@@ -452,9 +477,11 @@ async function validateFileMap(
   }
 
   validateManifestPaths(manifest, files, issues);
+  validateMetadataDeclarations(manifest, files, issues);
   await validateResourceIntegrity(manifest, files, issues);
   validateDocumentSafety(manifest, files, issues);
   validateStylesheetSafety(manifest, files, issues);
+  validateProportionalLayoutContract(manifest, files, issues);
   validateLlmMetadata(manifest, files, issues);
 
   return {
@@ -495,6 +522,118 @@ function validateManifestPaths(
         code: "manifest.path_missing",
         message: `Manifest references a missing file: ${path}`,
         path,
+      });
+    }
+  }
+}
+
+function validateMetadataDeclarations(
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  issues: HtmlxValidationIssue[],
+): void {
+  const resources = new Map(manifest.resources.map((resource) => [resource.path, resource]));
+  for (const [metadataKind, metadataPath] of Object.entries(manifest.metadata)) {
+    if (!metadataPath) {
+      continue;
+    }
+
+    const resource = resources.get(metadataPath);
+    if (!resource) {
+      issues.push({
+        severity: "error",
+        code: "metadata.resource_missing",
+        message: `Metadata path must be declared in manifest.resources: ${metadataPath}`,
+        path: metadataPath,
+      });
+      continue;
+    }
+
+    if (resource.role !== "metadata") {
+      issues.push({
+        severity: "error",
+        code: "metadata.role_invalid",
+        message: `Metadata resource must use role "metadata": ${metadataPath}`,
+        path: metadataPath,
+      });
+    }
+
+    if (
+      metadataKind !== "editingGuide" &&
+      metadataPath.endsWith(".json") &&
+      resource.mediaType !== "application/json"
+    ) {
+      issues.push({
+        severity: "error",
+        code: "metadata.media_type_invalid",
+        message: `JSON metadata must use application/json: ${metadataPath}`,
+        path: metadataPath,
+      });
+    }
+  }
+
+  validateEditingGuideMetadata(manifest, files, resources, issues);
+}
+
+function validateEditingGuideMetadata(
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  resources: Map<string, HtmlxManifest["resources"][number]>,
+  issues: HtmlxValidationIssue[],
+): void {
+  const editingGuidePath = manifest.metadata.editingGuide;
+  if (!editingGuidePath) {
+    return;
+  }
+
+  const resource = resources.get(editingGuidePath);
+  if (resource && resource.mediaType !== "text/markdown") {
+    issues.push({
+      severity: "error",
+      code: "editing_guide.media_type_invalid",
+      message: "Editing guides must use text/markdown.",
+      path: editingGuidePath,
+    });
+  }
+
+  if (!editingGuidePath.startsWith("metadata/") || !editingGuidePath.endsWith(".md")) {
+    issues.push({
+      severity: "error",
+      code: "editing_guide.path_invalid",
+      message: "Editing guides must live under metadata/ and use a .md extension.",
+      path: editingGuidePath,
+    });
+  }
+
+  const bytes = files.get(editingGuidePath);
+  if (!bytes) {
+    return;
+  }
+
+  const guideText = decodeText(bytes).trim();
+  if (!guideText) {
+    issues.push({
+      severity: "error",
+      code: "editing_guide.empty",
+      message: "Editing guide metadata must not be empty.",
+      path: editingGuidePath,
+    });
+    return;
+  }
+
+  const unsafeInstructionPatterns: Array<[RegExp, string]> = [
+    [/ignore (all )?(previous|prior) instructions/i, "ignore previous instructions"],
+    [/system instruction\s*:/i, "system instruction block"],
+    [/developer message\s*:/i, "developer message block"],
+    [/assistant must/i, "assistant command phrasing"],
+  ];
+  for (const [pattern, label] of unsafeInstructionPatterns) {
+    if (pattern.test(guideText)) {
+      issues.push({
+        severity: "error",
+        code: "editing_guide.system_instruction_guard",
+        message: `Editing guide must remain reference data, not hidden instructions: ${label}.`,
+        path: editingGuidePath,
       });
     }
   }
@@ -592,6 +731,103 @@ function validateStylesheetSafety(
         issues.push({ severity: "error", code, message, path: stylePath });
       }
     }
+  }
+}
+
+function validateProportionalLayoutContract(
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  issues: HtmlxValidationIssue[],
+): void {
+  const htmlBytes = files.get(manifest.entry);
+  if (!htmlBytes) return;
+
+  const html = decodeText(htmlBytes);
+  if (!hasSelfEditableStage(html)) return;
+
+  if (manifest.entry !== "index.html") {
+    issues.push({
+      severity: "error",
+      code: "layout.entry_not_standalone",
+      message: "Self-editable HTMLX documents must use root index.html as the package entry.",
+      path: HTMLX_MANIFEST_PATH,
+    });
+  }
+
+  const stageTag = extractTagsWithAttribute(html, "data-htmlx-editable", "document")[0];
+  if (!stageTag) {
+    return;
+  }
+  validateNumericAttributes(
+    stageTag,
+    ["data-htmlx-stage-width", "data-htmlx-stage-height"],
+    "layout.stage_geometry_missing",
+    "Self-editable HTMLX stage must declare data-htmlx-stage-width and data-htmlx-stage-height.",
+    manifest.entry,
+    issues,
+  );
+
+  for (const tag of extractTagsWithAttribute(html, "data-htmlx-editable", "text")) {
+    validateNumericAttributes(
+      tag,
+      [
+        "data-htmlx-x",
+        "data-htmlx-y",
+        "data-htmlx-width",
+        "data-htmlx-font-size",
+        "data-htmlx-line-height",
+      ],
+      "layout.text_geometry_missing",
+      "Editable text blocks must declare stage-relative geometry and typography data attributes.",
+      manifest.entry,
+      issues,
+    );
+  }
+
+  for (const tag of extractTagsWithAttribute(html, "data-htmlx-editable", "object")) {
+    validateNumericAttributes(
+      tag,
+      ["data-htmlx-x", "data-htmlx-y", "data-htmlx-width", "data-htmlx-height"],
+      "layout.object_geometry_missing",
+      "Editable object blocks must declare stage-relative geometry data attributes.",
+      manifest.entry,
+      issues,
+    );
+  }
+
+  let hasBorderBoxSizing = false;
+  for (const stylePath of manifest.styles) {
+    const styleBytes = files.get(stylePath);
+    if (!styleBytes) continue;
+    const css = decodeText(styleBytes);
+    hasBorderBoxSizing ||= /box-sizing\s*:\s*border-box/i.test(css);
+    if (/\b(?:min|max|clamp)\s*\(/i.test(css)) {
+      issues.push({
+        severity: "error",
+        code: "layout.non_proportional_css_function",
+        message:
+          "Self-editable HTMLX styles must not use min(), max(), or clamp(); use the stage coordinate scale instead.",
+        path: stylePath,
+      });
+    }
+    if (/@media\b/i.test(css)) {
+      issues.push({
+        severity: "error",
+        code: "layout.media_query_override",
+        message:
+          "Self-editable HTMLX styles must not use media queries that override the stage coordinate scale.",
+        path: stylePath,
+      });
+    }
+  }
+  if (!hasBorderBoxSizing) {
+    issues.push({
+      severity: "error",
+      code: "layout.box_sizing_missing",
+      message:
+        "Self-editable HTMLX styles must set box-sizing: border-box so declared object frames include border and padding.",
+      path: manifest.styles[0] ?? manifest.entry,
+    });
   }
 }
 
@@ -723,6 +959,82 @@ function extractBlockIds(html: string): Set<string> {
   );
 }
 
+function hasSelfEditableStage(html: string): boolean {
+  return extractTagsWithAttribute(html, "data-htmlx-editable", "document").length > 0;
+}
+
+function extractTagsWithAttribute(html: string, attribute: string, value: string): string[] {
+  const tags: string[] = [];
+  const tagPattern = /<([a-z][a-z0-9-]*)\b[^>]*>/gi;
+  for (const match of html.matchAll(tagPattern)) {
+    const tag = match[0];
+    const actual = getHtmlAttribute(tag, attribute);
+    if (actual === value) {
+      tags.push(tag);
+    }
+  }
+  return tags;
+}
+
+function validateNumericAttributes(
+  tag: string,
+  attributes: string[],
+  code: string,
+  message: string,
+  path: string,
+  issues: HtmlxValidationIssue[],
+): void {
+  const missing = attributes.filter((attribute) => {
+    const value = getHtmlAttribute(tag, attribute);
+    return (
+      value === null ||
+      value.trim() === "" ||
+      Number.isNaN(Number(value)) ||
+      !Number.isFinite(Number(value))
+    );
+  });
+  if (missing.length > 0) {
+    issues.push({
+      severity: "error",
+      code,
+      message: `${message} Missing or invalid: ${missing.join(", ")}.`,
+      path,
+    });
+  }
+}
+
+function getHtmlAttribute(tag: string, attribute: string): string | null {
+  const pattern = new RegExp(`\\b${escapeRegExp(attribute)}\\s*=\\s*["']([^"']*)["']`, "i");
+  return pattern.exec(tag)?.[1] ?? null;
+}
+
+function ensureStandaloneHtmlEntry(html: string, stylesheetPath: string, title: string): string {
+  if (hasStylesheetLink(html, stylesheetPath)) return html;
+  const link = `<link rel="stylesheet" href="${escapeHtmlAttribute(stylesheetPath)}">`;
+  if (/<head[\s>]/i.test(html)) {
+    return html.replace(/<\/head>/i, `  ${link}\n  </head>`);
+  }
+  const head = `<head>\n    <meta charset="utf-8">\n    <title>${escapeHtmlAttribute(title)}</title>\n    ${link}\n  </head>`;
+  if (/<html[\s>]/i.test(html)) {
+    return html.replace(/<html([^>]*)>/i, `<html$1>\n  ${head}`);
+  }
+  return `<!doctype html>\n<html>\n  ${head}\n  <body>\n    ${html}\n  </body>\n</html>`;
+}
+
+function hasStylesheetLink(html: string, stylesheetPath: string): boolean {
+  const stylesheetPattern = new RegExp(
+    `<link\\b(?=[^>]*\\brel=["'][^"']*stylesheet[^"']*["'])(?=[^>]*\\bhref=["']${escapeRegExp(
+      stylesheetPath,
+    )}["'])[^>]*>`,
+    "i",
+  );
+  return stylesheetPattern.test(html);
+}
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function extractHtmlResourceRefs(html: string): string[] {
   return [...html.matchAll(/\s(?:src|href)\s*=\s*["']([^"']+)["']/gi)]
     .map((match) => match[1])
@@ -783,7 +1095,13 @@ function base64FromBytes(bytes: Uint8Array): string {
   return btoa(binary);
 }
 
-const defaultDocumentCss = `:root {
+const defaultDocumentCss = `*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
   color-scheme: light;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;

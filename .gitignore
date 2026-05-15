@@ -4,6 +4,7 @@ dist/
 coverage/
 *.tsbuildinfo
 .DS_Store
+.playwright-mcp/
 benchmarks/htmlxbench/generated/
 benchmarks/htmlxbench/packets/
 benchmarks/htmlxbench/security-fixtures/generated/

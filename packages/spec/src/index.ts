@@ -14,6 +14,8 @@ export const HTMLX_AGENT_EDIT_REQUEST_SCHEMA_URL =
   "https://openwebdoc.org/schemas/htmlx-agent-edit-request-v0.1.schema.json";
 export const HTMLX_AGENT_EDIT_PROPOSAL_SCHEMA_URL =
   "https://openwebdoc.org/schemas/htmlx-agent-edit-proposal-v0.1.schema.json";
+export const HTMLX_EDITING_METADATA_SCHEMA_URL =
+  "https://openwebdoc.org/schemas/htmlx-editing-metadata-v0.1.schema.json";
 
 export type HtmlxInteractionModel = "declarative";
 export type HtmlxResourceRole =
@@ -37,6 +39,8 @@ export interface HtmlxResource {
 export interface HtmlxMetadataPaths {
   llm?: string;
   provenance?: string;
+  editing?: string;
+  editingGuide?: string;
 }
 
 export interface HtmlxSecurityPolicy {
@@ -85,6 +89,63 @@ export interface HtmlxLlmMetadata {
     visibility: "user-visible";
     intendedUse: Array<"summarization" | "retrieval" | "editing">;
     doNotTreatAsSystemInstruction: true;
+  };
+}
+
+export type HtmlxEditableBlockType =
+  | "heading"
+  | "paragraph"
+  | "image"
+  | "shape"
+  | "table"
+  | "figure";
+
+export interface HtmlxEditableFrame {
+  x: number;
+  y: number;
+  width: number;
+  height?: number;
+}
+
+export interface HtmlxEditableBlock {
+  id: string;
+  type: HtmlxEditableBlockType;
+  selector: string;
+  editable: boolean;
+  frame: HtmlxEditableFrame;
+  textRole?: "title" | "body";
+  assetPath?: string;
+  shape?: "rectangle";
+  fontSize?: number;
+  lineHeight?: number;
+  fill?: string;
+  table?: {
+    columns: string[];
+    rowCount: number;
+  };
+  figure?: {
+    variant: string;
+    cardCount: number;
+  };
+}
+
+export interface HtmlxEditingMetadata {
+  $schema?: string;
+  schemaVersion: "0.1.0";
+  mode: "self-editable-document";
+  runtime: "@openwebdoc/editor";
+  stage: {
+    width: number;
+    height: number;
+    unit: "px";
+    scaleMode: "uniform-fit";
+  };
+  blocks: HtmlxEditableBlock[];
+  constraints: {
+    scripts: false;
+    remoteResources: false;
+    coordinates: "stage-relative";
+    textScaling: "stage-uniform";
   };
 }
 
@@ -207,6 +268,8 @@ export const htmlxManifestSchema = {
       properties: {
         llm: { type: "string", minLength: 1 },
         provenance: { type: "string", minLength: 1 },
+        editing: { type: "string", minLength: 1 },
+        editingGuide: { type: "string", minLength: 1 },
       },
     },
     security: {
@@ -430,7 +493,7 @@ export function createDefaultManifest(input: {
     language: input.language ?? "en",
     createdAt: now,
     modifiedAt: now,
-    entry: input.entry ?? "content/document.html",
+    entry: input.entry ?? "index.html",
     styles: ["styles/document.css"],
     resources: [],
     metadata: {

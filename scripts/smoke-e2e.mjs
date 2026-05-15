@@ -21,6 +21,11 @@ let browser;
 
 try {
   await createAssetFixture(join(tmpRoot, "asset-doc.htmlx"));
+  const editorImagePath = join(tmpRoot, "editor-pixel.svg");
+  await writeFile(
+    editorImagePath,
+    '<svg xmlns="http://www.w3.org/2000/svg" width="96" height="64"><rect width="96" height="64" rx="8" fill="#2f6fed"/><circle cx="68" cy="28" r="14" fill="#dbeafe"/></svg>',
+  );
 
   servers.push(
     startServer([
@@ -57,22 +62,181 @@ try {
   await page.locator('input[type="file"]').setInputFiles(join(repoRoot, "examples/basic.htmlx"));
   await expectFrameText(page, "h1", "Basic HTMLX Document");
 
+  await page
+    .locator('input[type="file"]')
+    .setInputFiles(join(repoRoot, "examples/rich-self-editable.htmlx"));
+  await expectFrameText(page, "h1", "OpenWebDoc Introduction");
+  await page
+    .frameLocator('iframe[title="HTMLX document"]')
+    .locator('[data-htmlx-kind="table"] table')
+    .first()
+    .waitFor({ state: "attached", timeout: 5000 });
+  await page
+    .frameLocator('iframe[title="HTMLX document"]')
+    .locator('[data-htmlx-kind="figure"] img[src^="blob:"]')
+    .first()
+    .waitFor({ state: "attached", timeout: 5000 });
+
   await page.locator('input[type="file"]').setInputFiles(join(tmpRoot, "asset-doc.htmlx"));
   await expectFrameText(page, "h1", "Asset Resolver Smoke");
   await page
     .frameLocator('iframe[title="HTMLX document"]')
     .locator('img[src^="blob:"]')
+    .first()
     .waitFor({ state: "attached", timeout: 5000 });
 
   const editor = await browser.newPage();
   await editor.goto(editorUrl);
-  await editor
-    .getByLabel("Agent edit request")
-    .fill(
-      "Title: Playwright Export Smoke\nBody: The editor export smoke produces a valid HTMLX package through the agent-editable proposal flow.",
+  const moveButton = editor.getByRole("button", { name: "Move menu" });
+  const menuButton = editor.getByRole("button", { name: "Expand menu" });
+  const menuBeforeDrag = await moveButton.boundingBox();
+  if (!menuBeforeDrag) {
+    throw new Error("Collapsed editor menu handle was not visible for drag smoke.");
+  }
+  await editor.mouse.move(
+    menuBeforeDrag.x + menuBeforeDrag.width / 2,
+    menuBeforeDrag.y + menuBeforeDrag.height / 2,
+  );
+  await editor.mouse.down();
+  await editor.mouse.move(
+    menuBeforeDrag.x + menuBeforeDrag.width / 2 - 84,
+    menuBeforeDrag.y + menuBeforeDrag.height / 2 + 42,
+    { steps: 8 },
+  );
+  await editor.mouse.up();
+  const menuAfterDrag = await moveButton.boundingBox();
+  if (
+    !menuAfterDrag ||
+    menuAfterDrag.x > menuBeforeDrag.x - 50 ||
+    menuAfterDrag.y < menuBeforeDrag.y + 25
+  ) {
+    throw new Error("Collapsed menu handle did not stay under pointer after drag.");
+  }
+  await menuButton.click();
+  const headBox = await editor.locator(".toolbar-head").boundingBox();
+  const actionsBox = await editor.locator(".toolbar-actions").boundingBox();
+  if (!headBox || !actionsBox || actionsBox.y <= headBox.y + headBox.height) {
+    throw new Error("Expanded toolbar actions did not open below the fixed header row.");
+  }
+  const controlsClass = await editor.locator(".floating-controls").getAttribute("class");
+  if (!controlsClass?.includes("open-left")) {
+    throw new Error(
+      `Expanded toolbar did not adapt direction near the right edge: ${controlsClass}`,
     );
-  await editor.getByRole("button", { name: /prepare agent packet/i }).click();
-  await editor.getByRole("button", { name: /apply local draft/i }).click();
+  }
+  await editor
+    .locator('input[accept=".htmlx,application/vnd.openwebdoc.htmlx+zip"]')
+    .setInputFiles(join(repoRoot, "examples/rich-self-editable.htmlx"));
+  await editor
+    .locator('[data-htmlx-block-id="doc-title"]')
+    .filter({ hasText: "OpenWebDoc Introduction" })
+    .waitFor({ state: "visible", timeout: 5000 });
+  await editor.waitForFunction(() => {
+    const figure = document.querySelector(".figure-object");
+    const card = document.querySelector(".figure-object .figure-card");
+    if (!figure || !card) return false;
+    const figureBox = figure.getBoundingClientRect();
+    const cardBox = card.getBoundingClientRect();
+    return figureBox.width > 0 && figureBox.height > 0 && cardBox.width > 0 && cardBox.height > 0;
+  });
+  const firstFigure = editor.locator('[data-htmlx-block-id="implementation-map"]');
+  const firstFigureCard = firstFigure.locator(".figure-card").first();
+  await firstFigureCard.scrollIntoViewIfNeeded();
+  const figureBox = await firstFigure.boundingBox();
+  if (!figureBox || !(await firstFigureCard.boundingBox())) {
+    throw new Error("Grouped figure and inner card were not visible for drag smoke.");
+  }
+  await editor.mouse.click(figureBox.x + figureBox.width / 2, figureBox.y + figureBox.height / 2);
+  await editor.waitForTimeout(100);
+  const cardBox = await firstFigureCard.boundingBox();
+  if (!cardBox) {
+    throw new Error("Grouped figure card disappeared after selecting the figure.");
+  }
+  await editor.mouse.click(cardBox.x + cardBox.width / 2, cardBox.y + cardBox.height / 2);
+  await editor.waitForTimeout(100);
+  const activeCardBox = await firstFigureCard.boundingBox();
+  if (!activeCardBox) {
+    throw new Error("Grouped figure card disappeared after activation click.");
+  }
+  const cardStyleBefore = await firstFigureCard.getAttribute("style");
+  await editor.mouse.move(
+    activeCardBox.x + activeCardBox.width / 2,
+    activeCardBox.y + activeCardBox.height / 2,
+  );
+  await editor.mouse.down();
+  await editor.mouse.move(
+    activeCardBox.x + activeCardBox.width / 2 + 60,
+    activeCardBox.y + activeCardBox.height / 2 + 40,
+    {
+      steps: 8,
+    },
+  );
+  await editor.mouse.up();
+  await editor.waitForTimeout(100);
+  const cardStyleAfter = await firstFigureCard.getAttribute("style");
+  if (cardStyleAfter === cardStyleBefore) {
+    throw new Error("Figure inner card did not move after selecting the grouped figure.");
+  }
+  await replaceEditableText(
+    editor.locator('[data-htmlx-block-id="doc-title"]'),
+    "Playwright Export Smoke",
+  );
+  await replaceEditableText(
+    editor.locator('[data-htmlx-block-id="doc-subtitle"]'),
+    "The editor export smoke produces a valid HTMLX package through the WYSIWYG flow.",
+  );
+  await editor.locator('input[accept="image/*"]').setInputFiles(editorImagePath);
+  await editor.getByRole("button", { name: /rectangle/i }).click();
+  const rectangle = editor.locator(".shape-object").last();
+  const beforeDrag = await rectangle.boundingBox();
+  if (!beforeDrag) {
+    throw new Error("Rectangle shape was not visible for drag smoke.");
+  }
+  await rectangle.click();
+  const selectedShapeBox = await rectangle.boundingBox();
+  if (!selectedShapeBox) {
+    throw new Error("Rectangle shape disappeared after selection.");
+  }
+  const shapeStyleBeforeDrag = await rectangle.getAttribute("style");
+  await editor.mouse.move(
+    selectedShapeBox.x + selectedShapeBox.width / 2,
+    selectedShapeBox.y + selectedShapeBox.height / 2,
+  );
+  await editor.mouse.down();
+  await editor.mouse.move(
+    selectedShapeBox.x + selectedShapeBox.width / 2 + 84,
+    selectedShapeBox.y + selectedShapeBox.height / 2 + 48,
+    {
+      steps: 8,
+    },
+  );
+  await editor.mouse.up();
+  const afterDrag = await rectangle.boundingBox();
+  if (
+    !afterDrag ||
+    afterDrag.x <= selectedShapeBox.x + 60 ||
+    afterDrag.y <= selectedShapeBox.y + 30
+  ) {
+    throw new Error("Rectangle shape did not move after pointer drag.");
+  }
+  const shapeStyleAfterDrag = await rectangle.getAttribute("style");
+  const undoShortcut = process.platform === "darwin" ? "Meta+Z" : "Control+Z";
+  const redoShortcut = process.platform === "darwin" ? "Meta+Shift+Z" : "Control+Shift+Z";
+  await editor.locator('[data-htmlx-block-id="doc-title"]').click();
+  await editor.keyboard.press(undoShortcut);
+  const shapeStyleAfterUndo = await rectangle.getAttribute("style");
+  if (shapeStyleAfterUndo !== shapeStyleBeforeDrag) {
+    throw new Error(
+      `Command/Ctrl+Z did not undo rectangle movement.\nExpected ${shapeStyleBeforeDrag}\nActual ${shapeStyleAfterUndo}`,
+    );
+  }
+  await editor.keyboard.press(redoShortcut);
+  const shapeStyleAfterRedo = await rectangle.getAttribute("style");
+  if (shapeStyleAfterRedo !== shapeStyleAfterDrag) {
+    throw new Error(
+      `Command/Ctrl+Shift+Z did not redo rectangle movement.\nExpected ${shapeStyleAfterDrag}\nActual ${shapeStyleAfterRedo}`,
+    );
+  }
   const downloadPromise = editor.waitForEvent("download");
   await editor.getByRole("button", { name: /export \.htmlx/i }).click();
   const download = await downloadPromise;
@@ -87,28 +251,48 @@ try {
   if (validate.status !== 0) {
     throw new Error(`Exported package failed validation:\n${validate.stdout}\n${validate.stderr}`);
   }
-  const agentWorkspace = join(tmpRoot, "agent-workspace");
-  const agentWorkspaceResult = spawnSync(
+  const unpackedPackage = join(tmpRoot, "unpacked-export");
+  const unpackResult = spawnSync(
     pnpm,
-    ["exec", "htmlx", "agent-workspace", exportPath, agentWorkspace, "--json"],
+    ["exec", "htmlx", "unpack", exportPath, unpackedPackage, "--json"],
     {
       cwd: repoRoot,
       env,
       encoding: "utf8",
     },
   );
-  if (agentWorkspaceResult.status !== 0) {
+  if (unpackResult.status !== 0) {
+    throw new Error(`Package unpack failed:\n${unpackResult.stdout}\n${unpackResult.stderr}`);
+  }
+  await stat(join(unpackedPackage, "manifest.json"));
+  const validateDirectory = spawnSync(
+    pnpm,
+    ["exec", "htmlx", "validate", unpackedPackage, "--json"],
+    {
+      cwd: repoRoot,
+      env,
+      encoding: "utf8",
+    },
+  );
+  if (validateDirectory.status !== 0) {
     throw new Error(
-      `Agent workspace creation failed:\n${agentWorkspaceResult.stdout}\n${agentWorkspaceResult.stderr}`,
+      `Unpacked package failed validation:\n${validateDirectory.stdout}\n${validateDirectory.stderr}`,
     );
   }
-  await stat(join(agentWorkspace, "AGENT_EDITING.md"));
-  await stat(join(agentWorkspace, "agent-edit-request.json"));
-  await stat(join(agentWorkspace, "package", "manifest.json"));
 
   await page.goto(viewerUrl);
   await page.locator('input[type="file"]').setInputFiles(exportPath);
   await expectFrameText(page, "h1", "Playwright Export Smoke");
+  await page
+    .frameLocator('iframe[title="HTMLX document"]')
+    .locator('img[src^="blob:"]')
+    .first()
+    .waitFor({ state: "attached", timeout: 5000 });
+  await page
+    .frameLocator('iframe[title="HTMLX document"]')
+    .locator(".htmlx-shape-rectangle")
+    .first()
+    .waitFor({ state: "attached", timeout: 5000 });
 
   console.log("OpenWebDoc smoke e2e passed.");
 } finally {
@@ -150,7 +334,14 @@ async function expectFrameText(page, selector, text) {
     .frameLocator('iframe[title="HTMLX document"]')
     .locator(selector)
     .filter({ hasText: text })
-    .waitFor({ state: "visible", timeout: 5000 });
+    .waitFor({ state: "attached", timeout: 5000 });
+}
+
+async function replaceEditableText(locator, text) {
+  await locator.click();
+  await locator.press(process.platform === "darwin" ? "Meta+A" : "Control+A");
+  await locator.press("Backspace");
+  await locator.pressSequentially(text);
 }
 
 async function createAssetFixture(outputPath) {

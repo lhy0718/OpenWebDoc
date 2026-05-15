@@ -18,7 +18,11 @@ const absolutePathPatterns = [
   { label: "Windows drive path", pattern: /(?<![A-Za-z])[A-Za-z]:[\\/]/ },
 ];
 
-const ignoredBinaryFiles = new Set(["examples/basic.htmlx", "examples/security-invalid.htmlx"]);
+const ignoredBinaryFiles = new Set([
+  "examples/basic.htmlx",
+  "examples/rich-self-editable.htmlx",
+  "examples/security-invalid.htmlx",
+]);
 
 const failures = [];
 

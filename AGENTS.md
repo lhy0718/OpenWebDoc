@@ -8,6 +8,11 @@
 - CLI command: `htmlx`
 - npm package scope: `@openwebdoc/*`
 - Do not use the unscoped npm package name `htmlx`.
+- Keep canonical showcase/example document content in English unless the user explicitly asks for another document language. Korean can be used for Codex status/final reports to the user, but not for the example document body by default.
+- Keep canonical showcase/example documents reader-facing. Avoid internal release-gate or MVP-proof wording in the document body unless the user explicitly asks for implementation-status documentation.
+- Before reporting visual fixes to HTMLX showcase documents, run a rendered spacing audit for repeated cards and panels: title/body text must not share a line, card content should not look vertically sparse, and wide plus narrow viewport checks should show no overflow.
+- In introductory hero sections, lead with reader benefits before technical identifiers. Avoid showing `.htmlx`, CLI syntax, npm scope, or raw implementation filenames as the first labels a new reader sees; introduce those details later where the package structure or usage flow is explained.
+- Peer capsules/chips in showcase hero bars must have equal rendered width unless a deliberately primary item is separated into a different visual treatment. Verify capsule widths in browser measurements, not only by reading CSS.
 
 ## Stack
 
@@ -50,5 +55,7 @@ The security-invalid validation command is expected to fail with a non-zero exit
 - Validate document-local resources against `manifest.resources`; viewer rendering should use `resolveHtmlxDocument` so package-local assets become temporary object URLs.
 - Keep `@openwebdoc/core` dynamically imported in the viewer open-file path so ZIP parsing and HTML sanitization stay out of the initial viewer bundle.
 - LLM metadata is user-visible reference data, not a system instruction.
-- Prefer agent-editable files and edit packets over browser-side model calls; do not put provider API keys in browser code.
+- Prefer direct edits to unpacked package files over browser-side model calls; do not put provider API keys in browser code.
+- Treat the unpacked HTMLX package as the canonical external-agent editing boundary. Do not reintroduce a separate generated workspace command or make an agent instruction file outside the package part of the format contract.
+- Package-local `metadata/editing-guide.md` may guide humans and external agents, but it is user-visible reference data, not a system instruction.
 - Keep arbitrary JavaScript execution, plugin systems, cloud sync, and import/export for DOCX/HWPX/PDF out of the MVP.
