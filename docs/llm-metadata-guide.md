@@ -34,6 +34,6 @@ MVP does not include embedding vectors by default because embedding dimensions, 
 
 ## Editing Relationship
 
-Agent edit requests are separate from `metadata/llm.json`. The metadata file describes the document for retrieval, summarization, and editing context. The document's WYSIWYG surface is declared separately in `metadata/editing.json`, where block selectors, stage coordinates, and direct-manipulation constraints belong.
+Agent edit requests are separate from `metadata/llm.json`. The metadata file describes the document for retrieval, summarization, and editing context. The document's WYSIWYG micro-editing surface is declared separately in `metadata/editing.json`, where block selectors, stage coordinates, safe inline-formatting capabilities, typography constraints, and direct-manipulation constraints belong.
 
-External-agent workflow state belongs in the unpacked package files and durable edit records belong in `metadata/provenance.json`, not in hidden instructions or the browser editor's primary UI. A package-local `metadata/editing-guide.md` may provide user-visible reference guidance, but it is not a system instruction.
+External-agent workflow state belongs in the unpacked package files and durable edit records belong in `metadata/provenance.json`, not in hidden instructions or the OpenWebDoc app's primary UI. A package-local `metadata/editing-guide.md` may provide user-visible reference guidance, but it is not a system instruction. Large rewrites, new figures, new tables, and complex layout changes should be performed in package files and revalidated, while the app stays focused on small paragraph, typography, and existing-object corrections.

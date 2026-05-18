@@ -2,6 +2,15 @@
 
 OpenWebDoc est un monorepo TypeScript pour le format HTMLX Document Package. Les paquets HTMLX sont des fichiers `.htmlx` basés sur ZIP qui contiennent du HTML lisible par navigateur, des assets locaux, des manifests explicites, une validation de sécurité et des metadata LLM-native.
 
+## Quick Start
+
+```sh
+pnpm install
+pnpm dev:app
+```
+
+Open the local URL printed by Vite, choose a `.htmlx` file, and read it as the document itself. Packages with `metadata/editing.json` can switch into direct editing from the small floating control.
+
 ## Nommage
 
 | Concept     | Nom                    |
@@ -19,9 +28,8 @@ Le package name npm `htmlx` n’est pas utilisé. Seul le binary CLI s’appelle
 - `packages/spec`: format constants, TypeScript types, JSON Schemas, fixtures
 - `packages/core`: APIs read/write/validate/pack/unpack pour `.htmlx` et package-local asset resolution
 - `packages/cli`: CLI Node.js exposant la commande `htmlx`
-- `packages/ui`: React UI partagée pour les apps OpenWebDoc
-- `apps/viewer`: Vite React viewer pour les packages `.htmlx` locaux
-- `apps/editor`: runtime Vite React de confiance pour documents HTMLX autoéditables
+- `packages/ui`: shared React UI for OpenWebDoc surfaces
+- `apps/openwebdoc`: Vite React app and trusted runtime for reading and editing `.htmlx` documents
 - `examples`: example package directories et fichiers `.htmlx` générés
 - `docs`: guides format, security, metadata et CLI
 
@@ -34,6 +42,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm dev:app
 pnpm site:build
 pnpm pack:packages
 pnpm release:check
@@ -134,7 +143,7 @@ Si le package contient `metadata/editing-guide.md`, ce fichier est une reference
 
 ## Limites MVP
 
-Le MVP bloque arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references et prompt-injection-style LLM metadata misuse. Le viewer rend du HTML sanitized et réécrit les manifest-declared local resources en browser object URLs. Il lazy-load `@openwebdoc/core` quand l’utilisateur ouvre un fichier, afin de garder l’initial viewer bundle centré sur la shell UI. Les packages générés par l’editor déclarent une surface de document autoéditable dans `metadata/editing.json`; text, image et simple shape vivent sur un logical stage fixe et scalent uniformément avec la largeur du browser. Le browser editor est le trusted runtime qui active ces editable blocks et exporte un `.htmlx` validé. Les coding agents externes doivent utiliser le unpacked package flow pour modifier unpacked HTML/CSS/JSON files et retourner des validated packages. Le MVP n’inclut pas DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys ni in-editor model calls.
+Le MVP bloque arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references et prompt-injection-style LLM metadata misuse. L’OpenWebDoc app rend le package HTML de manière sûre, réécrit les manifest-declared local resources en browser object URLs si nécessaire et active editing uniquement depuis la declarative package metadata. Les self-editable packages déclarent leur document surface dans `metadata/editing.json`. Le edit mode de l app sert aux micro-edits; major rewrites, new figures, new tables et layout redesigns restent dans les unpacked package files. Le package ne transporte pas d’executable runtime code. Les external coding agents modifient directement HTML/CSS/JSON/assets dans le unpacked package, valident le directory, repackent, puis valident le `.htmlx` modifié. DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys et in-app model calls sont hors MVP.
 
 ## Docs
 

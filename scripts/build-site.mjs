@@ -4,25 +4,18 @@ import { join } from "node:path";
 
 const siteDirectory = "dist/site";
 const packages = ["@openwebdoc/spec", "@openwebdoc/core", "@openwebdoc/ui"];
-const apps = [
-  { name: "Viewer", packageName: "@openwebdoc/viewer", route: "viewer" },
-  { name: "Editor", packageName: "@openwebdoc/editor", route: "editor" },
-];
+const app = { name: "OpenWebDoc", packageName: "@openwebdoc/app", route: "app" };
 
 for (const packageName of packages) {
   runPnpm(["--filter", packageName, "build"]);
 }
 
-for (const app of apps) {
-  runPnpm(["--filter", app.packageName, "build"]);
-}
+runPnpm(["--filter", app.packageName, "build"]);
 
 await rm(siteDirectory, { recursive: true, force: true });
 await mkdir(siteDirectory, { recursive: true });
 
-for (const app of apps) {
-  await cp(`apps/${app.route}/dist`, join(siteDirectory, app.route), { recursive: true });
-}
+await cp(`apps/openwebdoc/dist`, join(siteDirectory, app.route), { recursive: true });
 
 await writeFile(
   join(siteDirectory, "index.html"),
@@ -77,10 +70,9 @@ await writeFile(
   <body>
     <main>
       <h1>OpenWebDoc</h1>
-      <p>OpenWebDoc packages browser-readable HTML, local assets, explicit manifests, security validation, and LLM-native metadata into the HTMLX Document Package format.</p>
-      <nav aria-label="OpenWebDoc apps">
-        <a href="./viewer/">Open Viewer</a>
-        <a href="./editor/">Open Editor</a>
+      <p>OpenWebDoc opens HTMLX Document Package files as browser-readable documents. Editable packages can switch into direct editing on the same document surface.</p>
+      <nav aria-label="OpenWebDoc app">
+        <a href="./app/">Open OpenWebDoc</a>
       </nav>
     </main>
   </body>
@@ -93,7 +85,7 @@ await writeFile(
   `${JSON.stringify(
     {
       name: "OpenWebDoc static site",
-      apps: apps.map((app) => ({ name: app.name, path: `${app.route}/` })),
+      apps: [{ name: app.name, path: `${app.route}/` }],
     },
     null,
     2,

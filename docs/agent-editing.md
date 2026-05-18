@@ -32,7 +32,7 @@ External agents may edit:
 - declared package-local assets under `assets/`
 - `manifest.json` when resources, metadata paths, title, language, or timestamps change
 
-They should preserve semantic HTML, real tables, package-local image references, fixed-stage proportional layout rules, and declared metadata paths.
+They should preserve semantic HTML, real tables, package-local image references, fixed-stage proportional layout rules, inline formatting that uses safe semantic tags, and declared metadata paths.
 
 ## Security Rules
 
@@ -43,8 +43,8 @@ They should preserve semantic HTML, real tables, package-local image references,
 - Declare every resource in `manifest.resources`.
 - Run `htmlx validate <directory>`, `htmlx pack`, and `htmlx validate <file.htmlx>` before returning an edited package.
 
-## Browser Editor Role
+## OpenWebDoc Runtime Role
 
-The browser editor should not directly call model providers, store provider API keys, or put model-backed workflows inside the document editing surface. Its role is to act as a trusted WYSIWYG runtime for self-editable HTMLX documents: it reads the package entry, styles, and `metadata/editing.json`, activates editable text/image/shape blocks, and exports a validated `.htmlx` package.
+The OpenWebDoc runtime should not directly call model providers, store provider API keys, or put model-backed workflows inside the document editing surface. Its role is to act as a trusted micro-editing runtime for self-editable HTMLX documents: it reads the package entry, styles, and `metadata/editing.json`, activates paragraph fixes, inline bold/italic/underline, typography tweaks, existing image/shape/table/figure adjustments, and exports a validated `.htmlx` package.
 
-The document surface is the main UI. The editor may add small overlay controls for direct actions such as opening a file, inserting content, validating, showing document details, and exporting. It should not make the default experience feel like a separate form-based app around the document.
+The document surface is the main UI. The runtime may add small overlay controls for direct actions such as opening a file, small paragraph edits, formatting, validating, showing document details, and exporting. It should not expose browser-side agent prompt generation, model calls, provider API keys, or large structure-creation tools such as new figure/table/layout builders.

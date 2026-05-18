@@ -12,6 +12,7 @@ npm install -g @openwebdoc/cli
 
 ```sh
 htmlx create document.htmlx --title "My Document"
+htmlx create deck.htmlx --profile slide-deck --title "OpenWebDoc Pitch" --slides 6
 htmlx validate document.htmlx
 htmlx inspect document.htmlx --json
 htmlx unpack document.htmlx ./document-package

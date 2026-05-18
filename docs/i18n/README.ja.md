@@ -19,9 +19,8 @@ npm package name `htmlx` は使用しません。CLI binary の名前だけが `
 - `packages/spec`: format constants, TypeScript types, JSON Schemas, fixtures
 - `packages/core`: `.htmlx` read/write/validate/pack/unpack API と package-local asset resolution
 - `packages/cli`: `htmlx` command を公開する Node.js CLI
-- `packages/ui`: OpenWebDoc apps 用の共有 React UI
-- `apps/viewer`: ローカル `.htmlx` packages 用の Vite React viewer
-- `apps/editor`: 自己編集可能な HTMLX document のための Vite React trusted runtime
+- `packages/ui`: OpenWebDoc surfaces 用の共有 React UI
+- `apps/openwebdoc`: `.htmlx` documents を読む・編集する Vite React app と trusted runtime
 - `examples`: example package directories と生成済み `.htmlx` files
 - `docs`: format, security, metadata, CLI guides
 
@@ -34,11 +33,24 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm dev:app
 pnpm site:build
 pnpm pack:packages
 pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
+
+## OpenWebDoc App Usage
+
+OpenWebDoc app は単一の document-first flow を使います。
+
+1. `pnpm dev:app` で app を開きます。
+2. ローカル `.htmlx` package を選択します。
+3. sidebar や inspection chrome なしで文書を読みます。
+4. package が `metadata/editing.json` を宣言している場合、floating edit control で同じ surface 上の直接編集に切り替えます。
+5. validated `.htmlx` として export し、`pnpm htmlx validate path/to/file.htmlx` で確認します。
+
+`examples/basic.htmlx` は readable package として開きます。`examples/openwebdoc-introduction.htmlx` は reading mode で開き、paragraph edits, inline bold/italic/underline, typography tweaks, grouped figures, semantic tables, document-owned microcopy を直接補正できます。New figures, new tables, and large layout redesigns belong in unpacked package files.
 
 ## HTMLX CLI の使い方
 
@@ -134,7 +146,7 @@ Package に `metadata/editing-guide.md` がある場合、人間と agent のた
 
 ## MVP 境界
 
-MVP は arbitrary JavaScript execution、remote resources、path traversal、missing package-local resource references、prompt-injection-style LLM metadata misuse をブロックします。Viewer は sanitized HTML をレンダリングし、manifest-declared local resources を browser object URLs に rewrite します。ユーザーが file を開くときに `@openwebdoc/core` を lazy-load し、initial viewer bundle を shell UI 中心に保ちます。Editor-generated package は `metadata/editing.json` で自己編集可能な document surface を宣言し、text, image, simple shape は固定 logical stage 上で browser width に合わせて均一に scale されます。Browser editor は editable block を有効化し、validated `.htmlx` を export する trusted runtime です。External coding agents は unpacked package flow で unpacked HTML/CSS/JSON files を変更し validated packages を返します。DOCX/HWPX/PDF import/export、plugin execution、cloud sync、real-time collaboration、browser-side model API keys は含みません。
+MVP は arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, prompt-injection-style LLM metadata misuse をブロックします。OpenWebDoc app は package HTML を安全にレンダリングし、必要に応じて manifest-declared local resources を browser object URLs に rewrite し、declarative package metadata がある場合だけ editing を有効化します。Self-editable packages は `metadata/editing.json` に document surface を宣言します。App edit mode is a micro-editing surface; major rewrites, new figures, new tables, and layout redesigns belong in unpacked package files. Package 自体は executable runtime code を持ちません。External coding agents は unpacked package の HTML/CSS/JSON/assets を直接編集し、directory validation, repack, file validation を通す必要があります。DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, in-app model calls は含みません。
 
 ## Docs
 

@@ -7,7 +7,7 @@ OpenWebDoc should keep the current web runtime and CLI as the canonical implemen
 Use a `web-app + optional extension` direction:
 
 - Keep `@openwebdoc/spec`, `@openwebdoc/core`, and `@openwebdoc/cli` as the stable format and automation layer.
-- Keep `apps/viewer` and `apps/editor` as static web runtimes for opening, inspecting, editing, and exporting `.htmlx`.
+- Keep `apps/openwebdoc` as the static web runtime for opening, reading, editing, and exporting `.htmlx`.
 - Add a Chrome extension only when capture/open convenience becomes a validated user need.
 
 ## Why Not Extension-only
@@ -26,7 +26,7 @@ OpenWebDoc's core value is the portable HTMLX Document Package and the validatio
 
 A future extension should be a thin companion:
 
-- open a local `.htmlx` with the hosted viewer/editor
+- open a local `.htmlx` with the hosted OpenWebDoc app
 - capture the current page or selection into a draft HTMLX package
 - send a package to a local or hosted external-agent editing flow
 - expose validation status for a package before sharing
@@ -39,5 +39,5 @@ Promote an extension to official product scope only after one of these signals i
 
 - users repeatedly ask to capture current web pages into `.htmlx`
 - users need OS/browser-level `.htmlx` open convenience more than CLI automation
-- pilot results show web capture is more important than editor authoring
+- pilot results show web capture is more important than document-surface authoring
 - the extension can remain a thin shell without duplicating CLI validation logic

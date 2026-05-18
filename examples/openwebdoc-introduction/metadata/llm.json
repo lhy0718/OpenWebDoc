@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "OpenWebDoc Introduction explains why browser-native document packages are useful, how the HTMLX Document Package keeps content, layout, assets, and metadata together, how small corrections stay on the document surface, how external agents revise unpacked files, and how validation, security, reference metadata, and practical use cases fit together.",
+  "readingOrder": [
+    "doc-title",
+    "doc-subtitle",
+    "hero-system-card",
+    "why-heading",
+    "need-matrix",
+    "philosophy-heading",
+    "philosophy-grid",
+    "system-heading",
+    "implementation-map",
+    "package-heading",
+    "package-table",
+    "editing-heading",
+    "editing-model",
+    "security-heading",
+    "security-table",
+    "workflow-heading",
+    "workflow-commands",
+    "use-cases-heading",
+    "use-cases-panel",
+    "closing-heading",
+    "closing-note"
+  ],
+  "chunks": [
+    {
+      "id": "identity-and-need",
+      "blockIds": ["doc-title", "doc-subtitle", "hero-system-card", "why-heading", "need-matrix"],
+      "selector": "#doc-title, #doc-subtitle, #hero-system-card, #why-heading, #need-matrix",
+      "summary": "Introduces OpenWebDoc as a browser-native document package and compares HTMLX against page-bound documents and ordinary web pages across reading, editing, AI-assisted revision, integrity, and trust boundaries.",
+      "keywords": ["OpenWebDoc", "HTMLX Document Package", "browser-native", ".htmlx", "need"],
+      "tokenEstimate": 520,
+      "sensitivity": "public"
+    },
+    {
+      "id": "philosophy",
+      "blockIds": ["philosophy-heading", "philosophy-grid"],
+      "selector": "#philosophy-heading, #philosophy-grid",
+      "summary": "Explains the OpenWebDoc philosophy through readable source, semantic HTML, package-owned layout, and file-level agent revision boundaries.",
+      "keywords": ["readable source", "semantic HTML", "package CSS", "unpacked package"],
+      "tokenEstimate": 340,
+      "sensitivity": "public"
+    },
+    {
+      "id": "implementation-system",
+      "blockIds": ["system-heading", "implementation-map", "package-heading", "package-table"],
+      "selector": "#system-heading, #implementation-map, #package-heading, #package-table",
+      "summary": "Describes the HTMLX package structure and the author, validate, revise, and repack implementation flow.",
+      "keywords": ["manifest.json", "index.html", "styles", "metadata", "assets", "validation"],
+      "tokenEstimate": 560,
+      "sensitivity": "public"
+    },
+    {
+      "id": "editing-boundary",
+      "blockIds": ["editing-heading", "editing-model"],
+      "selector": "#editing-heading, #editing-model",
+      "summary": "Separates small direct corrections in the OpenWebDoc runtime from structural edits performed by external agents in unpacked package files.",
+      "keywords": [
+        "self-editable",
+        "contenteditable",
+        "micro editing",
+        "external agent",
+        "directory validation"
+      ],
+      "tokenEstimate": 420,
+      "sensitivity": "public"
+    },
+    {
+      "id": "security-metadata-workflow",
+      "blockIds": [
+        "security-heading",
+        "security-table",
+        "workflow-heading",
+        "workflow-commands",
+        "use-cases-heading",
+        "use-cases-panel",
+        "closing-note"
+      ],
+      "selector": "#security-heading, #security-table, #workflow-heading, #workflow-commands, #use-cases-heading, #use-cases-panel, #closing-note",
+      "summary": "Covers untrusted input handling, remote resource and script blocking, reference metadata isolation, the CLI workflow, and practical use cases such as research briefs, manuals, agent-reviewed drafts, and portable knowledge packs.",
+      "keywords": ["security", "untrusted input", "reference metadata", "htmlx CLI", "use cases"],
+      "tokenEstimate": 620,
+      "sensitivity": "public"
+    }
+  ],
+  "entities": [
+    { "name": "OpenWebDoc", "type": "project" },
+    { "name": "HTMLX Document Package", "type": "format" },
+    { "name": ".htmlx", "type": "extension" },
+    { "name": "htmlx", "type": "cli" },
+    { "name": "@openwebdoc/*", "type": "npm-scope" }
+  ],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

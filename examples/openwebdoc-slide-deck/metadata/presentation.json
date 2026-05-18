@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-presentation-metadata-v0.1.schema.json",
+  "schemaVersion": "0.1.0",
+  "profile": "slide-deck",
+  "runtime": "@openwebdoc/runtime",
+  "slideSelector": "[data-htmlx-kind='slide']",
+  "stage": {
+    "width": 1600,
+    "height": 900,
+    "unit": "px",
+    "scaleMode": "uniform-fit"
+  },
+  "navigation": {
+    "loop": false,
+    "advanceOnClick": false
+  }
+}

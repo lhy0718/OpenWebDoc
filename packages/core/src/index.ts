@@ -2,10 +2,13 @@ import {
   HTMLX_MANIFEST_PATH,
   HTMLX_MIME_TYPE,
   HTMLX_MIMETYPE_PATH,
+  type HtmlxEditingMetadata,
   type HtmlxLlmMetadata,
   type HtmlxManifest,
+  type HtmlxPresentationMetadata,
   createDefaultManifest,
   validateHtmlxManifestSchema,
+  validateHtmlxPresentationMetadataSchema,
 } from "@openwebdoc/spec";
 import sanitizeHtml from "sanitize-html";
 import { unzipSync, zipSync } from "fflate";
@@ -214,21 +217,24 @@ export function unpackHtmlx(
 }
 
 export function sanitizeHtmlxDocument(html: string): string {
-  return sanitizeHtml(html, {
+  return sanitizeHtml(extractHtmlBody(html), {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat([
       "article",
       "aside",
       "figure",
       "figcaption",
+      "htmlx-inline",
       "img",
       "main",
       "section",
       "time",
+      "u",
     ]),
     allowedAttributes: {
       "*": [
         "class",
         "id",
+        "style",
         "title",
         "data-htmlx-block-id",
         "data-htmlx-kind",
@@ -241,7 +247,12 @@ export function sanitizeHtmlxDocument(html: string): string {
         "data-htmlx-height",
         "data-htmlx-font-size",
         "data-htmlx-line-height",
+        "data-htmlx-color",
         "data-htmlx-asset-id",
+        "data-htmlx-original-src",
+        "data-htmlx-original-href",
+        "data-htmlx-runtime-origin-x",
+        "data-htmlx-runtime-origin-y",
         "data-htmlx-shape",
         "data-htmlx-fill",
         "data-htmlx-card-x",
@@ -249,10 +260,14 @@ export function sanitizeHtmlxDocument(html: string): string {
         "data-htmlx-card-width",
         "data-htmlx-card-height",
         "data-htmlx-variant",
+        "data-htmlx-object-text",
+        "data-htmlx-profile",
+        "data-htmlx-slide-id",
+        "data-htmlx-slide-index",
         "aria-label",
       ],
-      a: ["href", "name", "target", "rel"],
-      img: ["src", "alt", "width", "height"],
+      a: ["href", "name", "target", "rel", "data-htmlx-original-href"],
+      img: ["src", "alt", "width", "height", "data-htmlx-original-src"],
       section: ["data-htmlx-block-id"],
       article: ["data-htmlx-block-id"],
       div: ["data-htmlx-block-id"],
@@ -262,10 +277,28 @@ export function sanitizeHtmlxDocument(html: string): string {
       h3: ["data-htmlx-block-id"],
     },
     allowedSchemes: ["http", "https", "mailto", "blob"],
+    allowedStyles: {
+      "*": {
+        color: [/^#[0-9a-f]{3,8}$/i, /^rgba?\([\d\s,.%]+\)$/i],
+        background: [/^#[0-9a-f]{3,8}$/i, /^rgba?\([\d\s,.%]+\)$/i],
+        "background-color": [/^#[0-9a-f]{3,8}$/i, /^rgba?\([\d\s,.%]+\)$/i],
+        display: [/^inline$/i],
+        "font-size": [/^\d+(\.\d+)?(px|rem|em|cqw|%)$/i],
+        "line-height": [/^\d+(\.\d+)?$/],
+        width: [/^\d+(\.\d+)?(px|cqw|%)$/i],
+        height: [/^\d+(\.\d+)?(px|cqw|%)$/i],
+        transform: [/^translate\(-?\d+(\.\d+)?(px|cqw|%),\s*-?\d+(\.\d+)?(px|cqw|%)\)$/i],
+      },
+    },
     transformTags: {
       a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer" }, true),
     },
   });
+}
+
+function extractHtmlBody(html: string): string {
+  const match = html.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i);
+  return match?.[1] ?? html;
 }
 
 export function resolveHtmlxDocument(
@@ -482,6 +515,8 @@ async function validateFileMap(
   validateDocumentSafety(manifest, files, issues);
   validateStylesheetSafety(manifest, files, issues);
   validateProportionalLayoutContract(manifest, files, issues);
+  validateEditingMetadata(manifest, files, issues);
+  validatePresentationMetadata(manifest, files, issues);
   validateLlmMetadata(manifest, files, issues);
 
   return {
@@ -676,6 +711,11 @@ function validateDocumentSafety(
     [/javascript:/i, "html.javascript_url", "javascript: URLs are not allowed."],
     [/<iframe[\s>]/i, "html.iframe", "Iframes are not allowed in MVP packages."],
     [/<form[\s>]/i, "html.form", "Forms are not allowed in MVP packages."],
+    [
+      /\sstyle\s*=\s*["'][^"']*(?:url\s*\(|@import|javascript:|https?:\/\/|file:)/i,
+      "html.inline_style_resource",
+      "Inline styles must not reference scripts or remote/file resources.",
+    ],
     [
       /\s(?:src|href)\s*=\s*["']https?:\/\//i,
       "html.remote_resource",
@@ -890,6 +930,176 @@ function validateLlmMetadata(
   }
 }
 
+function validateEditingMetadata(
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  issues: HtmlxValidationIssue[],
+): void {
+  const editingPath = manifest.metadata.editing;
+  if (!editingPath || !files.has(editingPath)) {
+    return;
+  }
+
+  let metadata: HtmlxEditingMetadata;
+  try {
+    metadata = JSON.parse(decodeText(files.get(editingPath)!)) as HtmlxEditingMetadata;
+  } catch {
+    issues.push({
+      severity: "error",
+      code: "editing.invalid_json",
+      message: "Editing metadata is not valid JSON.",
+      path: editingPath,
+    });
+    return;
+  }
+
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+    issues.push({
+      severity: "error",
+      code: "editing.schema_invalid",
+      message: "Editing metadata must be a JSON object.",
+      path: editingPath,
+    });
+    return;
+  }
+
+  if (metadata.schemaVersion !== "0.1.0") {
+    issues.push({
+      severity: "error",
+      code: "editing.schema_version_invalid",
+      message: "Editing metadata must use schemaVersion 0.1.0.",
+      path: editingPath,
+    });
+  }
+  if (metadata.mode !== "self-editable-document") {
+    issues.push({
+      severity: "error",
+      code: "editing.mode_invalid",
+      message: "Editing metadata mode must be self-editable-document.",
+      path: editingPath,
+    });
+  }
+  if (metadata.runtime !== "@openwebdoc/runtime") {
+    issues.push({
+      severity: "error",
+      code: "editing.runtime_invalid",
+      message: "Editing metadata runtime must be @openwebdoc/runtime.",
+      path: editingPath,
+    });
+  }
+  if (
+    !metadata.stage ||
+    !Number.isFinite(metadata.stage.width) ||
+    !Number.isFinite(metadata.stage.height) ||
+    metadata.stage.width <= 0 ||
+    metadata.stage.height <= 0 ||
+    metadata.stage.unit !== "px" ||
+    metadata.stage.scaleMode !== "uniform-fit"
+  ) {
+    issues.push({
+      severity: "error",
+      code: "editing.stage_invalid",
+      message: "Editing metadata stage must declare a positive px uniform-fit stage.",
+      path: editingPath,
+    });
+  }
+  if (!Array.isArray(metadata.blocks)) {
+    issues.push({
+      severity: "error",
+      code: "editing.blocks_invalid",
+      message: "Editing metadata blocks must be an array.",
+      path: editingPath,
+    });
+  }
+  if (
+    metadata.constraints?.scripts !== false ||
+    metadata.constraints?.remoteResources !== false ||
+    metadata.constraints?.coordinates !== "stage-relative" ||
+    metadata.constraints?.textScaling !== "stage-uniform"
+  ) {
+    issues.push({
+      severity: "error",
+      code: "editing.constraints_invalid",
+      message:
+        "Editing metadata constraints must keep scripts and remote resources disabled with stage-relative coordinates.",
+      path: editingPath,
+    });
+  }
+}
+
+function validatePresentationMetadata(
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  issues: HtmlxValidationIssue[],
+): void {
+  const presentationPath = manifest.metadata.presentation;
+  if (!presentationPath || !files.has(presentationPath)) {
+    return;
+  }
+
+  let metadata: HtmlxPresentationMetadata;
+  try {
+    metadata = JSON.parse(decodeText(files.get(presentationPath)!)) as HtmlxPresentationMetadata;
+  } catch {
+    issues.push({
+      severity: "error",
+      code: "presentation.invalid_json",
+      message: "Presentation metadata is not valid JSON.",
+      path: presentationPath,
+    });
+    return;
+  }
+
+  const schemaResult = validateHtmlxPresentationMetadataSchema(metadata);
+  if (!schemaResult.valid) {
+    for (const error of schemaResult.errors) {
+      issues.push({
+        severity: "error",
+        code: "presentation.schema_invalid",
+        message: `${error.instancePath || "/"} ${error.message ?? "is invalid"}`,
+        path: presentationPath,
+      });
+    }
+    return;
+  }
+
+  const htmlBytes = files.get(manifest.entry);
+  if (!htmlBytes) return;
+  const html = decodeText(htmlBytes);
+  const deckTags = extractTagsWithAttribute(html, "data-htmlx-profile", "slide-deck");
+  if (deckTags.length === 0) {
+    issues.push({
+      severity: "error",
+      code: "presentation.deck_missing",
+      message: 'Slide deck packages must declare data-htmlx-profile="slide-deck" on the deck root.',
+      path: manifest.entry,
+    });
+    return;
+  }
+
+  const deckTag = deckTags[0]!;
+  const stageWidth = Number(getHtmlAttribute(deckTag, "data-htmlx-stage-width"));
+  const stageHeight = Number(getHtmlAttribute(deckTag, "data-htmlx-stage-height"));
+  if (stageWidth !== metadata.stage.width || stageHeight !== metadata.stage.height) {
+    issues.push({
+      severity: "error",
+      code: "presentation.stage_mismatch",
+      message: "Slide deck root stage geometry must match metadata/presentation.json.",
+      path: manifest.entry,
+    });
+  }
+
+  const slideTags = extractTagsWithAttribute(html, "data-htmlx-kind", "slide");
+  if (slideTags.length === 0) {
+    issues.push({
+      severity: "error",
+      code: "presentation.slides_missing",
+      message: 'Slide deck packages must contain at least one data-htmlx-kind="slide" section.',
+      path: manifest.entry,
+    });
+  }
+}
+
 function unzipHtmlx(input: Uint8Array, options: HtmlxOpenOptions): Map<string, Uint8Array> {
   const unzipped = unzipSync(input);
   const files = new Map<string, Uint8Array>();
@@ -1064,7 +1274,8 @@ function rewriteHtmlResourceAttributes(
       if (!resolved) {
         return fullMatch;
       }
-      return ` ${attributeName}=${quote}${resolved}${quote}`;
+      const originalAttributeName = `data-htmlx-original-${attributeName.toLowerCase()}`;
+      return ` ${attributeName}=${quote}${resolved}${quote} ${originalAttributeName}=${quote}${escapeHtmlAttribute(ref)}${quote}`;
     },
   );
 }

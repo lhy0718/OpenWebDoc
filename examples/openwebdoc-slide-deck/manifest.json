@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "packageId": "urn:uuid:40000000-0000-4000-8000-000000000000",
+  "title": "OpenWebDoc Slide Deck",
+  "language": "en",
+  "createdAt": "2026-05-17T00:00:00.000Z",
+  "modifiedAt": "2026-05-17T00:00:00.000Z",
+  "entry": "index.html",
+  "styles": ["styles/document.css"],
+  "resources": [
+    { "path": "styles/document.css", "mediaType": "text/css", "role": "stylesheet" },
+    { "path": "metadata/llm.json", "mediaType": "application/json", "role": "metadata" },
+    { "path": "metadata/provenance.json", "mediaType": "application/json", "role": "metadata" },
+    { "path": "metadata/editing.json", "mediaType": "application/json", "role": "metadata" },
+    { "path": "metadata/presentation.json", "mediaType": "application/json", "role": "metadata" },
+    { "path": "metadata/editing-guide.md", "mediaType": "text/markdown", "role": "metadata" }
+  ],
+  "metadata": {
+    "llm": "metadata/llm.json",
+    "provenance": "metadata/provenance.json",
+    "editing": "metadata/editing.json",
+    "editingGuide": "metadata/editing-guide.md",
+    "presentation": "metadata/presentation.json"
+  },
+  "security": {
+    "allowScripts": false,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

@@ -19,9 +19,8 @@ OpenWebDoc 是用于 HTMLX Document Package 格式的 TypeScript monorepo。HTML
 - `packages/spec`: format constants, TypeScript types, JSON Schemas, fixtures
 - `packages/core`: `.htmlx` read/write/validate/pack/unpack API 和 package-local asset resolution
 - `packages/cli`: 提供 `htmlx` command 的 Node.js CLI
-- `packages/ui`: OpenWebDoc apps 的共享 React UI
-- `apps/viewer`: 用于本地 `.htmlx` packages 的 Vite React viewer
-- `apps/editor`: 面向可自编辑 HTMLX document 的 Vite React trusted runtime
+- `packages/ui`: shared React UI for OpenWebDoc surfaces
+- `apps/openwebdoc`: Vite React app and trusted runtime for reading and editing `.htmlx` documents
 - `examples`: example package directories 和生成的 `.htmlx` files
 - `docs`: format, security, metadata, CLI guides
 
@@ -34,11 +33,24 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm dev:app
 pnpm site:build
 pnpm pack:packages
 pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
+
+## OpenWebDoc App Usage
+
+The app has one document-first flow.
+
+1. Open the app with `pnpm dev:app`.
+2. Choose a local `.htmlx` package.
+3. Read the document without sidebars or inspection chrome.
+4. If the package declares `metadata/editing.json`, use the floating edit control to edit on the same surface.
+5. Export a validated `.htmlx` package and confirm it with `pnpm htmlx validate path/to/file.htmlx`.
+
+`examples/basic.htmlx` opens as a readable package. `examples/openwebdoc-introduction.htmlx` opens in reading mode and can switch into direct editing for paragraph edits, inline text formatting, typography tweaks, grouped figures, semantic tables, and document-owned microcopy.
 
 ## HTMLX CLI 使用方法
 
@@ -134,7 +146,7 @@ htmlx validate edited.htmlx --json
 
 ## MVP 边界
 
-MVP 会阻止 arbitrary JavaScript execution、remote resources、path traversal、missing package-local resource references 和 prompt-injection-style LLM metadata misuse。Viewer 渲染 sanitized HTML，并把 manifest-declared local resources rewrite 为 browser object URLs。用户打开文件时 lazy-load `@openwebdoc/core`，让 initial viewer bundle 以 shell UI 为主。Editor-generated package 会在 `metadata/editing.json` 中声明可自编辑的 document surface；text、image、simple shape 位于固定 logical stage 上，并随 browser width 统一 scale。Browser editor 是启用这些 editable block 并导出 validated `.htmlx` 的 trusted runtime。External coding agents 应通过 unpacked package flow 修改 unpacked HTML/CSS/JSON files 并返回 validated packages。不包含 DOCX/HWPX/PDF import/export、plugin execution、cloud sync、real-time collaboration、browser-side model API keys 或 in-editor model calls。
+MVP blocks arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, and prompt-injection-style LLM metadata misuse. The OpenWebDoc app renders package HTML safely, rewrites manifest-declared local resources to browser object URLs when needed, and activates editing only from declarative package metadata. Self-editable packages declare their document surface in `metadata/editing.json`. The app edit mode is for micro-edits; major rewrites, new figures, new tables, and layout redesigns belong in unpacked package files. The package itself does not carry executable runtime code. External coding agents should edit unpacked package HTML/CSS/JSON/assets directly, validate the directory, repack it, and validate the edited `.htmlx`. DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, and in-app model calls are outside the MVP.
 
 ## Docs
 

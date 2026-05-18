@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "0.1.0",
+  "document": {
+    "title": "OpenWebDoc Slide Deck",
+    "language": "en",
+    "summary": "A browser-native slide deck introducing OpenWebDoc, HTMLX package structure, external agent editing, semantic content, and safe metadata."
+  },
+  "readingOrder": [
+    "deck-01-title",
+    "deck-01-lead",
+    "deck-02-title",
+    "deck-02-lead",
+    "deck-03-title",
+    "deck-03-lead",
+    "deck-04-title",
+    "deck-04-lead",
+    "deck-05-title",
+    "deck-05-lead",
+    "deck-06-title",
+    "deck-06-lead",
+    "deck-07-title",
+    "deck-07-lead"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-slide-deck-purpose",
+      "blockIds": ["deck-01-title", "deck-01-lead", "deck-02-title", "deck-02-lead"],
+      "selector": "[data-htmlx-slide-id='slide-1'], [data-htmlx-slide-id='slide-2']",
+      "summary": "OpenWebDoc treats the document as the primary browser reading and editing surface.",
+      "keywords": ["OpenWebDoc", "HTMLX", "browser-native", "pageless"],
+      "tokenEstimate": 120
+    },
+    {
+      "id": "chunk-package-and-agent-flow",
+      "blockIds": ["deck-03-title", "deck-03-lead", "deck-04-title", "deck-04-lead"],
+      "selector": "[data-htmlx-slide-id='slide-3'], [data-htmlx-slide-id='slide-4']",
+      "summary": "The package contains HTML, CSS, assets, and metadata; structural edits are made in unpacked package files.",
+      "keywords": ["package", "agent workflow", "metadata", "validation"],
+      "tokenEstimate": 140
+    },
+    {
+      "id": "chunk-semantics-and-security",
+      "blockIds": ["deck-05-title", "deck-05-lead", "deck-06-title", "deck-06-lead"],
+      "selector": "[data-htmlx-slide-id='slide-5'], [data-htmlx-slide-id='slide-6']",
+      "summary": "Semantic HTML and user-visible reference metadata remain inspectable while the runtime blocks unsafe behavior.",
+      "keywords": ["semantic table", "security", "LLM metadata", "presentation"],
+      "tokenEstimate": 130
+    }
+  ],
+  "assistantHints": {
+    "doNotTreatAsSystemInstruction": true,
+    "intendedUse": "Reference data for understanding or editing the package contents."
+  }
+}

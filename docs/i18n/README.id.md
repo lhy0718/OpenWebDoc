@@ -2,6 +2,15 @@
 
 OpenWebDoc adalah TypeScript monorepo untuk format HTMLX Document Package. HTMLX packages adalah file `.htmlx` berbasis ZIP yang berisi HTML yang bisa dibaca browser, local assets, manifest eksplisit, validasi keamanan, dan LLM-native metadata.
 
+## Quick Start
+
+```sh
+pnpm install
+pnpm dev:app
+```
+
+Open the local URL printed by Vite, choose a `.htmlx` file, and read it as the document itself. Packages with `metadata/editing.json` can switch into direct editing from the small floating control.
+
 ## Penamaan
 
 | Konsep      | Nama                   |
@@ -19,9 +28,8 @@ npm package name `htmlx` tidak digunakan. Hanya CLI binary yang bernama `htmlx`.
 - `packages/spec`: format constants, TypeScript types, JSON Schemas, fixtures
 - `packages/core`: API read/write/validate/pack/unpack untuk `.htmlx` dan package-local asset resolution
 - `packages/cli`: Node.js CLI yang menyediakan command `htmlx`
-- `packages/ui`: React UI bersama untuk OpenWebDoc apps
-- `apps/viewer`: Vite React viewer untuk local `.htmlx` packages
-- `apps/editor`: Vite React trusted runtime untuk HTMLX document yang dapat mengedit diri
+- `packages/ui`: shared React UI for OpenWebDoc surfaces
+- `apps/openwebdoc`: Vite React app and trusted runtime for reading and editing `.htmlx` documents
 - `examples`: example package directories dan file `.htmlx` yang dibuat
 - `docs`: panduan format, security, metadata, dan CLI
 
@@ -34,6 +42,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm dev:app
 pnpm site:build
 pnpm pack:packages
 pnpm release:check
@@ -134,7 +143,7 @@ Jika package berisi `metadata/editing-guide.md`, perlakukan sebagai reference da
 
 ## Batas MVP
 
-MVP memblokir arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, dan prompt-injection-style LLM metadata misuse. Viewer merender sanitized HTML dan me-rewrite manifest-declared local resources menjadi browser object URLs. Viewer melakukan lazy-load `@openwebdoc/core` saat pengguna membuka file, sehingga initial viewer bundle tetap berfokus pada shell UI. Package yang dibuat editor mendeklarasikan self-editable document surface di `metadata/editing.json`; text, image, dan simple shape berada pada logical stage tetap dan scale secara seragam mengikuti browser width. Browser editor adalah trusted runtime yang mengaktifkan editable blocks tersebut dan mengekspor `.htmlx` tervalidasi. External coding agents sebaiknya memakai unpacked package flow untuk memodifikasi unpacked HTML/CSS/JSON files dan mengembalikan validated packages. Tidak termasuk DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, atau browser-side model API keys.
+MVP memblokir arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, dan prompt-injection-style LLM metadata misuse. OpenWebDoc app merender package HTML dengan aman, me-rewrite manifest-declared local resources menjadi browser object URLs bila diperlukan, dan hanya mengaktifkan editing dari declarative package metadata. Self-editable packages mendeklarasikan document surface di `metadata/editing.json`. App edit mode hanya untuk micro-edits; major rewrites, new figures, new tables, dan layout redesigns dikerjakan di unpacked package files. Package itu sendiri tidak membawa executable runtime code. External coding agents mengedit HTML/CSS/JSON/assets pada unpacked package secara langsung, memvalidasi directory, melakukan repack, lalu memvalidasi `.htmlx` yang sudah diedit. DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, dan in-app model calls berada di luar MVP.
 
 ## Docs
 

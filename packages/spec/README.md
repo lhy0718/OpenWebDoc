@@ -11,7 +11,11 @@ npm install @openwebdoc/spec
 ## Usage
 
 ```ts
-import { HTMLX_MANIFEST_PATH, validateHtmlxManifestSchema } from "@openwebdoc/spec";
+import {
+  HTMLX_MANIFEST_PATH,
+  validateHtmlxManifestSchema,
+  validateHtmlxPresentationMetadataSchema,
+} from "@openwebdoc/spec";
 ```
 
-Use this package when implementing manifest-aware tooling for `.htmlx` files.
+Use this package when implementing manifest-aware tooling for `.htmlx` files, including optional HTMLX-native slide deck presentation metadata.
