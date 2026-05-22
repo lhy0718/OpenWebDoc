@@ -49,11 +49,31 @@ The output is written to `dist/site/`:
 
 `dist/site/app/` is the deployable OpenWebDoc runtime. It starts with a single file-open screen. After a valid package is selected, the runtime shows the document first and keeps app controls in a small floating toolbar. `dist/site/index.html` is only a lightweight entry page that links to the app.
 
+The current GitHub Pages deployment is:
+
+- Entry page: <https://lhy0718.github.io/OpenWebDoc/>
+- OpenWebDoc app: <https://lhy0718.github.io/OpenWebDoc/app/>
+- Introduction example: <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction>
+- Slide deck example: <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck>
+
 For a local static smoke check after building:
 
 ```sh
 pnpm site:build
 pnpm exec vite preview --host 127.0.0.1 --outDir dist/site
+```
+
+For a live GitHub Pages smoke check:
+
+```sh
+pnpm pages:smoke
+OPENWEBDOC_PAGES_SCREENSHOTS=1 pnpm pages:smoke
+```
+
+Use `OPENWEBDOC_PAGES_URL` to test a fork or preview deployment:
+
+```sh
+OPENWEBDOC_PAGES_URL=https://example.github.io/OpenWebDoc/ pnpm pages:smoke
 ```
 
 ## GitHub Actions

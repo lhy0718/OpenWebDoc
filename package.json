@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "format": "prettier --check .",
     "smoke:e2e": "node scripts/smoke-e2e.mjs",
+    "pages:smoke": "node scripts/pages-smoke.mjs",
     "dev:app": "pnpm --filter @openwebdoc/app dev",
     "htmlx": "pnpm --filter @openwebdoc/cli htmlx",
     "site:build": "node scripts/build-site.mjs",

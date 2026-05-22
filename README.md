@@ -13,7 +13,30 @@
 
 OpenWebDoc is a TypeScript monorepo for the HTMLX Document Package format. HTMLX packages are `.htmlx` ZIP files built around browser-readable HTML, local assets, explicit manifests, security validation, and LLM-native metadata.
 
+## Try OpenWebDoc
+
+- [Open the live app](https://lhy0718.github.io/OpenWebDoc/app/)
+- [Read the OpenWebDoc introduction example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction)
+- [Open the slide deck example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck)
+- [Visit the project entry page](https://lhy0718.github.io/OpenWebDoc/)
+
+The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
+
+## Screenshots
+
+![OpenWebDoc file-open screen](docs/assets/screenshots/openwebdoc-pages-empty.png)
+
+![OpenWebDoc introduction example](docs/assets/screenshots/openwebdoc-pages-introduction.png)
+
+![OpenWebDoc slide deck presentation mode](docs/assets/screenshots/openwebdoc-pages-slide-deck-present.png)
+
 ## Quick Start
+
+Use the live app when you only want to open and try `.htmlx` documents:
+
+- [https://lhy0718.github.io/OpenWebDoc/app/](https://lhy0718.github.io/OpenWebDoc/app/)
+
+Run the app locally when you are developing OpenWebDoc itself:
 
 ```sh
 pnpm install
@@ -53,6 +76,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm pages:smoke
 pnpm dev:app
 pnpm site:build
 pnpm pack:packages
@@ -203,6 +227,7 @@ MVP blocks arbitrary JavaScript execution, remote resources, path traversal, mis
 - [LLM metadata guide](docs/llm-metadata-guide.md)
 - [External agent editing](docs/agent-editing.md)
 - [Chrome extension strategy](docs/extension-strategy.md)
+- [Public alpha roadmap](docs/roadmap.md)
 - [CLI usage](docs/cli-usage.md)
 - [Deployment](docs/deployment.md)
 - [Release checklist](docs/release-checklist.md)
