@@ -5,9 +5,12 @@
 - [ ] `pnpm test` succeeds.
 - [ ] `pnpm lint` succeeds.
 - [ ] `pnpm smoke:e2e` succeeds.
+- [ ] `pnpm pages:smoke` succeeds against the live GitHub Pages app.
 - [ ] `pnpm guard:repo` succeeds.
 - [ ] `pnpm pack:packages` creates tarballs for `@openwebdoc/spec`, `@openwebdoc/core`, `@openwebdoc/cli`, and `@openwebdoc/ui`.
 - [ ] `pnpm site:build` creates `dist/site/` with the OpenWebDoc app build.
+- [ ] GitHub Pages serves the entry page at `https://lhy0718.github.io/OpenWebDoc/`.
+- [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.
 - [ ] `pnpm release:check` succeeds.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/openwebdoc-introduction.htmlx` succeeds.
@@ -33,3 +36,5 @@
 - [ ] Published npm package contents include README, license, declarations, JavaScript output, and any exported CSS.
 - [ ] The CLI binary is named `htmlx`.
 - [ ] README, docs, and Obsidian notes match implementation state.
+- [ ] The repository secret `NPM_TOKEN` is configured before publishing npm packages.
+- [ ] Public alpha follow-up issues are triaged before tagging the alpha release.
