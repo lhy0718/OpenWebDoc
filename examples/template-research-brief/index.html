@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research Brief Template</title>
+    <link rel="stylesheet" href="styles/document.css" />
+  </head>
+  <body>
+    <main class="doc research-brief" data-htmlx-kind="document">
+      <header class="hero">
+        <p class="eyebrow" data-htmlx-block-id="brief-kicker">Research brief</p>
+        <h1 data-htmlx-block-id="brief-title">Browser-native evidence brief</h1>
+        <p class="lede" data-htmlx-block-id="brief-summary">
+          Use this template for a compact research memo that combines a claim, evidence table,
+          decision notes, and follow-up questions in one portable HTMLX package.
+        </p>
+        <div class="meta-grid" data-htmlx-block-id="brief-metadata">
+          <span>Audience: product and research leads</span>
+          <span>Length: 4 to 6 sections</span>
+          <span>Status: draft-ready</span>
+        </div>
+      </header>
+
+      <section class="split">
+        <article class="panel strong" data-htmlx-block-id="brief-thesis">
+          <h2>Primary takeaway</h2>
+          <p>
+            Put the conclusion first. The rest of the brief should explain what changed, why it
+            matters, how strong the evidence is, and what decision the reader can make now.
+          </p>
+        </article>
+        <article class="panel" data-htmlx-block-id="brief-question">
+          <h2>Open question</h2>
+          <p>
+            Frame the uncertainty clearly enough that another reviewer or external agent can refine
+            the brief without inventing private context.
+          </p>
+        </article>
+      </section>
+
+      <section class="section" data-htmlx-block-id="brief-evidence">
+        <h2>Evidence matrix</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Signal</th>
+              <th>Observation</th>
+              <th>Confidence</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>User workflow</td>
+              <td>Readers need a single package that opens without a document converter.</td>
+              <td>High</td>
+              <td>Keep the HTML entry readable after unpacking.</td>
+            </tr>
+            <tr>
+              <td>Agent revision</td>
+              <td>
+                Large edits are easier when the package exposes HTML, CSS, metadata, and assets.
+              </td>
+              <td>Medium</td>
+              <td>Route structural edits through unpack, validate, pack.</td>
+            </tr>
+            <tr>
+              <td>Trust boundary</td>
+              <td>Documents from unknown sources must be treated as untrusted input.</td>
+              <td>High</td>
+              <td>Block scripts, remote resources, and unsafe metadata.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <figure class="timeline" data-htmlx-block-id="brief-workflow">
+        <figcaption>Recommended review loop</figcaption>
+        <ol>
+          <li><strong>Read</strong><span>Open the package and inspect the claim.</span></li>
+          <li>
+            <strong>Check</strong><span>Validate evidence, citations, and unresolved risks.</span>
+          </li>
+          <li><strong>Revise</strong><span>Ask an agent to edit unpacked package files.</span></li>
+          <li><strong>Ship</strong><span>Pack and validate the final `.htmlx` document.</span></li>
+        </ol>
+      </figure>
+    </main>
+  </body>
+</html>

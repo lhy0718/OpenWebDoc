@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "A research talk template for presenting task, method, evidence, limitations, and future work.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

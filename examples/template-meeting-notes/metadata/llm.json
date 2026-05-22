@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "A meeting notes template for agendas, decisions, owners, due dates, and follow-up actions.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

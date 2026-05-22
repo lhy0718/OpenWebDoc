@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "A lesson deck template for teaching a workflow with concept, practice, and recap slides.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "HTMLX Document Package", "type": "format" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

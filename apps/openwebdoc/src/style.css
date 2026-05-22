@@ -207,6 +207,60 @@ label:focus-within,
   line-height: 1.4;
 }
 
+.example-gallery {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid #d7e2ef;
+}
+
+.example-gallery h2 {
+  margin: 0 0 12px;
+  color: #13213a;
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.example-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.example-list a {
+  display: grid;
+  gap: 4px;
+  min-height: 70px;
+  align-content: center;
+  border: 1px solid #c8d7ea;
+  border-radius: 8px;
+  padding: 12px;
+  color: #172033;
+  background: #f8fbff;
+  text-decoration: none;
+}
+
+.example-list a:hover,
+.example-list a:focus-visible {
+  border-color: #2f6fed;
+  background: #eff5ff;
+}
+
+.example-list strong {
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.example-list span {
+  color: #5c6c83;
+  font-size: 12px;
+}
+
+@media (max-width: 580px) {
+  .example-list {
+    grid-template-columns: 1fr;
+  }
+}
+
 .floating-controls {
   position: fixed;
   z-index: 30;

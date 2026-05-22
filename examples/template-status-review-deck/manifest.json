@@ -1,0 +1,50 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "packageId": "urn:uuid:52000000-0000-4000-8000-000000000004",
+  "title": "Status Review Deck Template",
+  "language": "en",
+  "createdAt": "2026-05-23T00:00:00.000Z",
+  "modifiedAt": "2026-05-23T00:00:00.000Z",
+  "entry": "index.html",
+  "styles": ["styles/document.css"],
+  "resources": [
+    {
+      "path": "styles/document.css",
+      "mediaType": "text/css",
+      "role": "stylesheet"
+    },
+    {
+      "path": "metadata/llm.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    },
+    {
+      "path": "metadata/provenance.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    },
+    {
+      "path": "metadata/editing.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    },
+    {
+      "path": "metadata/presentation.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    }
+  ],
+  "metadata": {
+    "llm": "metadata/llm.json",
+    "provenance": "metadata/provenance.json",
+    "presentation": "metadata/presentation.json",
+    "editing": "metadata/editing.json"
+  },
+  "security": {
+    "allowScripts": false,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

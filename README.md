@@ -18,9 +18,11 @@ OpenWebDoc is a TypeScript monorepo for the HTMLX Document Package format. HTMLX
 - [Open the live app](https://lhy0718.github.io/OpenWebDoc/app/)
 - [Read the OpenWebDoc introduction example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction)
 - [Open the slide deck example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck)
-- [Visit the project entry page](https://lhy0718.github.io/OpenWebDoc/)
+- [Browse the template gallery](https://lhy0718.github.io/OpenWebDoc/)
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
+
+The project entry page lists downloadable `.htmlx` templates for general documents and slide decks.
 
 ## Screenshots
 

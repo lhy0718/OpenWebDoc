@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "A pitch deck template for explaining a browser-native document package product story.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}
