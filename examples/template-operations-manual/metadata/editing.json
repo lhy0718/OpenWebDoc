@@ -1,0 +1,41 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-editing-metadata-v0.1.schema.json",
+  "schemaVersion": "0.1.0",
+  "mode": "self-editable-document",
+  "runtime": "@openwebdoc/runtime",
+  "model": "template-operations-manual-editable-template",
+  "stage": {
+    "width": 980,
+    "height": 1400,
+    "unit": "px",
+    "scaleMode": "uniform-fit"
+  },
+  "editableKinds": ["heading", "paragraph", "table", "figure", "shape"],
+  "inlineFormatting": ["bold", "italic", "underline"],
+  "typography": {
+    "fontSize": "block-stage-relative",
+    "textColor": "safe-css-color",
+    "fontFamily": "package-css-or-system",
+    "remoteFonts": false
+  },
+  "blocks": [],
+  "constraints": {
+    "scripts": false,
+    "remoteResources": false,
+    "coordinates": "stage-relative",
+    "textScaling": "stage-uniform",
+    "textFormatting": ["bold", "italic", "underline"],
+    "typography": {
+      "fontSize": "block-stage-relative",
+      "textColor": "safe-css-color",
+      "fontFamily": "package-css-or-system",
+      "remoteFonts": false
+    }
+  },
+  "appRole": "minor-direct-corrections",
+  "externalAgentRole": "structural edits in unpacked package files",
+  "notes": [
+    "Template text blocks are editable in the OpenWebDoc runtime.",
+    "Large structure changes should happen in unpacked package files and return through validation."
+  ]
+}

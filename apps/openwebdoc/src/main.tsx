@@ -52,6 +52,20 @@ const DESIGN_HEIGHT = 7200;
 const TOOLBAR_ANCHOR_WIDTH = 232;
 const TOOLBAR_ANCHOR_HEIGHT = 48;
 const HISTORY_LIMIT = 100;
+const BUNDLED_EXAMPLES = [
+  { id: "openwebdoc-introduction", title: "OpenWebDoc Introduction", type: "Document" },
+  { id: "openwebdoc-slide-deck", title: "OpenWebDoc Slide Deck", type: "Presentation" },
+  { id: "template-research-brief", title: "Research Brief", type: "Document template" },
+  { id: "template-product-spec", title: "Product Spec", type: "Document template" },
+  { id: "template-operations-manual", title: "Operations Manual", type: "Document template" },
+  { id: "template-meeting-notes", title: "Meeting Notes", type: "Document template" },
+  { id: "template-project-proposal", title: "Project Proposal", type: "Document template" },
+  { id: "template-data-report", title: "Data Report", type: "Document template" },
+  { id: "template-pitch-deck", title: "Pitch Deck", type: "Presentation template" },
+  { id: "template-lesson-deck", title: "Lesson Deck", type: "Presentation template" },
+  { id: "template-research-talk", title: "Research Talk", type: "Presentation template" },
+  { id: "template-status-review-deck", title: "Status Review Deck", type: "Presentation template" },
+] as const;
 const EDITABLE_RUNTIME_TEXT_OVERRIDES = `
 .document-page .text-layer h1,
 .document-page .text-layer p {
@@ -307,7 +321,7 @@ function OpenWebDocApp() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const exampleName = params.get("example");
-    const examplePackages = new Set(["openwebdoc-introduction", "openwebdoc-slide-deck"]);
+    const examplePackages = new Set<string>(BUNDLED_EXAMPLES.map((example) => example.id));
     if (!exampleName || !examplePackages.has(exampleName)) return;
     let cancelled = false;
     setBusy(true);
@@ -1622,7 +1636,14 @@ function OpenWebDocApp() {
   }
 
   if (runtimeStatus === "empty") {
-    return <OpenScreen busy={busy} issues={issues} onOpenDocument={openDocument} />;
+    return (
+      <OpenScreen
+        busy={busy}
+        issues={issues}
+        examples={BUNDLED_EXAMPLES}
+        onOpenDocument={openDocument}
+      />
+    );
   }
 
   return (
@@ -1816,10 +1837,12 @@ function OpenWebDocApp() {
 function OpenScreen({
   busy,
   issues,
+  examples,
   onOpenDocument,
 }: {
   busy: boolean;
   issues: Array<{ severity: string; code: string; message: string; path?: string }>;
+  examples: typeof BUNDLED_EXAMPLES;
   onOpenDocument: (file: File) => Promise<void>;
 }) {
   const openInputRef = useRef<HTMLInputElement | null>(null);
@@ -1875,6 +1898,17 @@ function OpenScreen({
             </ul>
           </section>
         ) : null}
+        <section className="example-gallery" aria-label="Bundled examples">
+          <h2>Try a bundled example</h2>
+          <div className="example-list">
+            {examples.map((example) => (
+              <a key={example.id} href={`?example=${example.id}`}>
+                <strong>{example.title}</strong>
+                <span>{example.type}</span>
+              </a>
+            ))}
+          </div>
+        </section>
       </section>
     </main>
   );
@@ -1959,6 +1993,7 @@ function ShadowHtmlxDocument({
     const shadow = host.shadowRoot ?? host.attachShadow({ mode: "open" });
     const parsed = new DOMParser().parseFromString(html, "text/html");
     rewritePackageLocalAssetsForRuntime(parsed, assets);
+    markImplicitEditableText(parsed);
     const headContent = Array.from(parsed.head.querySelectorAll("style"))
       .map((element) => element.outerHTML)
       .join("\n");
@@ -2119,6 +2154,7 @@ function ShadowHtmlxDocument({
         }
       }
     </style>${parsed.body.innerHTML}`;
+    markImplicitEditableText(shadow);
     prepareObjectTextEditing(shadow);
   }, [hostRef, html, css]);
 
@@ -4188,7 +4224,7 @@ function parseEditableBlocksFromRoot(root: ParentNode, assets: AssetState[]): Do
     root.querySelectorAll<HTMLElement>("[data-htmlx-block-id]"),
   ).map((element): DocumentBlock | null => {
     const id = element.dataset.htmlxBlockId;
-    const kind = element.dataset.htmlxKind;
+    const kind = element.dataset.htmlxKind || inferImplicitEditableKind(element);
     if (!id || !kind) return null;
     const x = readNumber(element.dataset.htmlxX, 64);
     const y = readNumber(element.dataset.htmlxY, 64);
@@ -4282,6 +4318,54 @@ function parseEditableBlocksFromRoot(root: ParentNode, assets: AssetState[]): Do
     return null;
   });
   return parsed.filter((block): block is DocumentBlock => Boolean(block));
+}
+
+function inferImplicitEditableKind(element: HTMLElement): "heading" | "paragraph" | "" {
+  const tag = element.tagName.toLowerCase();
+  if (tag === "h1" || tag === "h2" || tag === "h3") return "heading";
+  if (["p", "span", "b", "strong", "li", "th", "td", "code", "figcaption"].includes(tag))
+    return "paragraph";
+  return "";
+}
+
+function markImplicitEditableText(root: ParentNode) {
+  let generatedIndex = 0;
+  const hasCoordinateEditingSurface = Boolean(
+    root.querySelector('[data-htmlx-editable="document"]'),
+  );
+  root.querySelectorAll<HTMLElement>("[data-htmlx-block-id]").forEach((element) => {
+    const implicitMatch = /^implicit-text-(\d+)$/.exec(element.dataset.htmlxBlockId ?? "");
+    if (implicitMatch) generatedIndex = Math.max(generatedIndex, Number(implicitMatch[1]));
+    if (element.closest('[data-htmlx-editable="object"]')) return;
+    if (element.matches(OBJECT_TEXT_TARGET_SELECTOR)) return;
+    const kind = element.dataset.htmlxKind || inferImplicitEditableKind(element);
+    if (kind !== "heading" && kind !== "paragraph") return;
+    element.dataset.htmlxKind = kind;
+    element.dataset.htmlxEditable = "text";
+  });
+  if (hasCoordinateEditingSurface) return;
+  root
+    .querySelectorAll<HTMLElement>("h1, h2, h3, p, span, b, strong, li, th, td, code, figcaption")
+    .forEach((element) => {
+      if (element.dataset.htmlxBlockId) return;
+      if (!element.textContent?.trim()) return;
+      if (element.closest("[data-openwebdoc-runtime-control]")) return;
+      if (element.closest('[data-htmlx-editable="object"]')) return;
+      if (element.matches(OBJECT_TEXT_TARGET_SELECTOR)) return;
+      if (element.closest('[data-htmlx-editable="text"]')) return;
+
+      const nestedEditable = element.querySelector<HTMLElement>(
+        "h1, h2, h3, p, span, b, strong, li, th, td, code, figcaption",
+      );
+      if (nestedEditable?.textContent?.trim()) return;
+
+      const kind = inferImplicitEditableKind(element);
+      if (kind !== "heading" && kind !== "paragraph") return;
+      generatedIndex += 1;
+      element.dataset.htmlxBlockId = `implicit-text-${generatedIndex}`;
+      element.dataset.htmlxKind = kind;
+      element.dataset.htmlxEditable = "text";
+    });
 }
 
 function readObjectCaption(element: HTMLElement, fallbackTitle: string) {

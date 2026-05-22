@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Operations Manual Template</title>
+    <link rel="stylesheet" href="styles/document.css" />
+  </head>
+  <body>
+    <main class="doc operations-manual" data-htmlx-kind="document">
+      <header class="manual-header">
+        <div>
+          <p class="eyebrow" data-htmlx-block-id="manual-kicker">Operations manual</p>
+          <h1 data-htmlx-block-id="manual-title">Safe package intake procedure</h1>
+        </div>
+        <aside data-htmlx-block-id="manual-status">
+          <strong>Runbook</strong>
+          <span>Version 0.1</span>
+          <span>Owner: document operations</span>
+        </aside>
+      </header>
+
+      <section class="section" data-htmlx-block-id="manual-intake">
+        <h2>Intake checklist</h2>
+        <div class="checklist">
+          <p><strong>1. Receive</strong> Save the `.htmlx` package from a trusted channel.</p>
+          <p><strong>2. Validate</strong> Run CLI validation before opening unknown content.</p>
+          <p><strong>3. Inspect</strong> Confirm manifest resources are package-local.</p>
+          <p><strong>4. Revise</strong> Use unpacked files for large changes.</p>
+          <p><strong>5. Repack</strong> Validate the final file before distribution.</p>
+        </div>
+      </section>
+
+      <section class="section" data-htmlx-block-id="manual-escalation">
+        <h2>Escalation table</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Issue</th>
+              <th>Likely cause</th>
+              <th>Response</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Remote resource blocked</td>
+              <td>Document references an external URL.</td>
+              <td>Move the asset into the package or remove the reference.</td>
+            </tr>
+            <tr>
+              <td>Script blocked</td>
+              <td>HTML contains executable JavaScript.</td>
+              <td>Replace behavior with declarative HTML, CSS, or metadata.</td>
+            </tr>
+            <tr>
+              <td>Metadata warning</td>
+              <td>LLM metadata is not marked as reference data.</td>
+              <td>Add explicit user-visible assistant hints.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "A status review deck template for progress, risks, decisions, and commitments.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

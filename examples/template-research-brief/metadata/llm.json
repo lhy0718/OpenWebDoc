@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "A research brief template for claims, evidence, decisions, and follow-up questions.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "HTMLX Document Package", "type": "format" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

@@ -1,0 +1,135 @@
+:root {
+  color: #122033;
+  background: #0a0d14;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: #111827;
+}
+.htmlx-slide-deck {
+  display: grid;
+  gap: 28px;
+  width: 100%;
+  padding: 28px;
+  background: #101827;
+}
+.htmlx-slide {
+  display: grid;
+  align-content: center;
+  container-type: inline-size;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 18px;
+  padding: 6%;
+  background: linear-gradient(135deg, #f8fbff, #e8f2fb);
+  color: #10243d;
+}
+.htmlx-slide.cover,
+.htmlx-slide.closing {
+  background: linear-gradient(135deg, #10243d, #0a8278);
+  color: #ffffff;
+}
+.eyebrow {
+  margin: 0 0 22px;
+  color: #0a8278;
+  font-size: 2cqw;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.cover .eyebrow,
+.closing .eyebrow {
+  color: #9df3e8;
+}
+h1,
+h2,
+p {
+  margin: 0;
+}
+h1 {
+  max-width: 1080px;
+  font-size: 6.1cqw;
+  line-height: 0.98;
+}
+h2 {
+  max-width: 1120px;
+  font-size: 4.7cqw;
+  line-height: 1.04;
+}
+p {
+  max-width: 900px;
+  margin-top: 28px;
+  color: rgba(16, 36, 61, 0.74);
+  font-size: 2.15cqw;
+  line-height: 1.4;
+}
+.cover p,
+.closing p {
+  color: rgba(255, 255, 255, 0.86);
+}
+.three {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+article,
+td,
+th {
+  border: 1px solid #d2deea;
+  border-radius: 16px;
+  padding: 18px;
+  background: #ffffff;
+  color: #354b66;
+  font-size: 2.15cqw;
+  line-height: 1.35;
+}
+article b {
+  display: block;
+  margin-bottom: 10px;
+  color: #0a8278;
+  font-size: 2cqw;
+}
+table {
+  width: 100%;
+  margin-top: 14px;
+  border-collapse: separate;
+  border-spacing: 6px;
+}
+table th,
+table td {
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 2.4cqw;
+  line-height: 1.22;
+}
+table th:nth-child(1),
+table td:nth-child(1) {
+  width: 30%;
+}
+table th:nth-child(2),
+table td:nth-child(2) {
+  width: 15%;
+}
+table th:nth-child(3),
+table td:nth-child(3) {
+  width: 55%;
+}
+th {
+  color: #10243d;
+  text-align: left;
+}

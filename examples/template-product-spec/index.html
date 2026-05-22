@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Spec Template</title>
+    <link rel="stylesheet" href="styles/document.css" />
+  </head>
+  <body>
+    <main class="doc product-spec" data-htmlx-kind="document">
+      <header class="hero compact">
+        <p class="eyebrow" data-htmlx-block-id="spec-kicker">Product specification</p>
+        <h1 data-htmlx-block-id="spec-title">Document runtime release spec</h1>
+        <p class="lede" data-htmlx-block-id="spec-summary">
+          A structured product spec for defining scope, constraints, release gates, and owner
+          responsibilities without losing the readable document surface.
+        </p>
+      </header>
+
+      <section class="spec-grid" data-htmlx-block-id="spec-scope">
+        <article class="panel">
+          <h2>Problem</h2>
+          <p>Readers need to open a document, correct small details, and export safely.</p>
+        </article>
+        <article class="panel">
+          <h2>Non-goals</h2>
+          <p>No in-browser model calls, provider keys, plugin execution, or hidden instructions.</p>
+        </article>
+        <article class="panel">
+          <h2>Success</h2>
+          <p>Examples open from GitHub Pages, validate locally, and remain package-local.</p>
+        </article>
+      </section>
+
+      <section class="section" data-htmlx-block-id="spec-requirements">
+        <h2>Functional requirements</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Capability</th>
+              <th>Runtime behavior</th>
+              <th>Validation rule</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Open package</td>
+              <td>Show document first, with minimal floating controls.</td>
+              <td>Manifest and resources must pass validation.</td>
+            </tr>
+            <tr>
+              <td>Edit mode</td>
+              <td>Allow small text and object corrections on the document surface.</td>
+              <td>Requires declarative editing metadata.</td>
+            </tr>
+            <tr>
+              <td>Export</td>
+              <td>Create a fresh `.htmlx` file from the current package state.</td>
+              <td>Exported package must validate before sharing.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="decision-strip" data-htmlx-block-id="spec-decisions">
+        <article><b>Owner</b><span>Runtime maintainer</span></article>
+        <article><b>Release risk</b><span>Medium until accessibility pass</span></article>
+        <article><b>Fallback</b><span>Use CLI validation and unpacked edits</span></article>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meeting Notes Template</title>
+    <link rel="stylesheet" href="styles/document.css" />
+  </head>
+  <body>
+    <main class="doc meeting-notes" data-htmlx-kind="document">
+      <header class="hero notes">
+        <p class="eyebrow" data-htmlx-block-id="notes-kicker">Meeting notes</p>
+        <h1 data-htmlx-block-id="notes-title">OpenWebDoc weekly review</h1>
+        <p class="lede" data-htmlx-block-id="notes-summary">
+          A meeting note template for decisions, owners, follow-ups, and unresolved risks. It is
+          compact enough to read in a browser and structured enough for later agent review.
+        </p>
+      </header>
+
+      <section class="agenda" data-htmlx-block-id="notes-agenda">
+        <article>
+          <b>Agenda</b><span>Release readiness, template gallery, accessibility pass</span>
+        </article>
+        <article><b>Decision needed</b><span>Whether npm publish remains deferred</span></article>
+        <article><b>Output</b><span>Validated package and issue-linked roadmap</span></article>
+      </section>
+
+      <section class="section" data-htmlx-block-id="notes-decisions">
+        <h2>Decisions and actions</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Decision</th>
+              <th>Owner</th>
+              <th>Due</th>
+              <th>Follow-up</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Keep npm publishing disabled for public preview.</td>
+              <td>Release owner</td>
+              <td>This week</td>
+              <td>Keep tarballs as Actions artifacts.</td>
+            </tr>
+            <tr>
+              <td>Add 10 public templates for viewing and download.</td>
+              <td>Documentation owner</td>
+              <td>Next review</td>
+              <td>Validate every `.htmlx` example.</td>
+            </tr>
+            <tr>
+              <td>Improve keyboard and accessibility coverage.</td>
+              <td>Runtime owner</td>
+              <td>Alpha gate</td>
+              <td>Track in GitHub issue.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>

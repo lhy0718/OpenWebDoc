@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "A project proposal template for need, approach, validation, outcomes, and pilot planning.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "HTMLX Document Package", "type": "format" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

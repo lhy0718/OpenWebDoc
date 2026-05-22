@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "0.1.0",
+  "summary": "An operations manual template for safe package intake, validation, escalation, and repacking.",
+  "readingOrder": [],
+  "chunks": [],
+  "entities": [{ "name": "htmlx", "type": "cli" }],
+  "citations": [],
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": ["summarization", "retrieval", "editing"],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

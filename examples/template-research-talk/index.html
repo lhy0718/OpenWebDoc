@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Research Talk Template</title>
+    <link rel="stylesheet" href="styles/document.css" />
+  </head>
+  <body>
+    <main
+      class="htmlx-slide-deck research-talk"
+      data-htmlx-profile="slide-deck"
+      data-htmlx-stage-width="1600"
+      data-htmlx-stage-height="900"
+    >
+      <section
+        class="htmlx-slide cover"
+        data-htmlx-kind="slide"
+        data-htmlx-slide-id="slide-1"
+        data-htmlx-slide-index="1"
+      >
+        <p class="eyebrow" data-htmlx-block-id="talk-kicker">Research talk</p>
+        <h1 data-htmlx-block-id="talk-title">Evaluating document-agent workflows</h1>
+        <p data-htmlx-block-id="talk-summary">
+          A talk template for framing task, method, evidence, limitations, and future work.
+        </p>
+      </section>
+      <section
+        class="htmlx-slide"
+        data-htmlx-kind="slide"
+        data-htmlx-slide-id="slide-2"
+        data-htmlx-slide-index="2"
+      >
+        <p class="eyebrow">Research question</p>
+        <h2 data-htmlx-block-id="talk-question">
+          Can agents revise rich documents without breaking portability or trust boundaries?
+        </h2>
+        <div class="callout">The unit of analysis is the package, not a chat transcript.</div>
+      </section>
+      <section
+        class="htmlx-slide"
+        data-htmlx-kind="slide"
+        data-htmlx-slide-id="slide-3"
+        data-htmlx-slide-index="3"
+      >
+        <p class="eyebrow">Method</p>
+        <h2 data-htmlx-block-id="talk-method">Compare edits before and after validation.</h2>
+        <table>
+          <tr>
+            <th>Input</th>
+            <th>Operation</th>
+            <th>Check</th>
+          </tr>
+          <tr>
+            <td>Unpacked HTMLX</td>
+            <td>Agent revises package files</td>
+            <td>Validate directory</td>
+          </tr>
+          <tr>
+            <td>Packed `.htmlx`</td>
+            <td>Runtime opens document</td>
+            <td>Check rendering and resources</td>
+          </tr>
+        </table>
+      </section>
+      <section
+        class="htmlx-slide closing"
+        data-htmlx-kind="slide"
+        data-htmlx-slide-id="slide-4"
+        data-htmlx-slide-index="4"
+      >
+        <p class="eyebrow">Limitations</p>
+        <h2 data-htmlx-block-id="talk-limitations">
+          Do not overclaim: this is a package workflow, not a universal document standard yet.
+        </h2>
+        <p>Use this final slide to state evidence gaps and next experiments.</p>
+      </section>
+    </main>
+  </body>
+</html>
