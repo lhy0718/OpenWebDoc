@@ -80,13 +80,19 @@ OPENWEBDOC_PAGES_URL=https://example.github.io/OpenWebDoc/ pnpm pages:smoke
 
 - `CI` runs on `main` and pull requests.
 - `Deploy Pages` builds and deploys `dist/site/` from `main`.
-- `Release` builds release artifacts on version tags and can publish npm packages when `NPM_TOKEN` is configured.
+- `Release` builds release artifacts on version tags and uploads npm tarballs and the static site as GitHub Actions artifacts.
 
-## npm publishing
+## npm package artifacts
 
-Publishing uses npm provenance. Required repository secret:
+OpenWebDoc does not publish npm packages during the public preview phase. The release workflow creates local package tarballs for inspection, but it does not publish them to the npm registry.
 
-- `NPM_TOKEN`
+Create package artifacts locally:
+
+```sh
+pnpm pack:packages
+```
+
+The tarballs are written to `dist/npm/`.
 
 Recommended release flow:
 
@@ -96,4 +102,4 @@ git tag v0.1.0-alpha.0
 git push origin v0.1.0-alpha.0
 ```
 
-The release workflow uploads local artifacts on every run. It publishes npm packages only for version tags or a manual workflow dispatch with publishing enabled.
+The release workflow uploads local artifacts on every run. npm publishing is intentionally deferred until OpenWebDoc is ready to support external package consumers.
