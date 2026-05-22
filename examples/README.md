@@ -1,7 +1,8 @@
 # OpenWebDoc Examples
 
 - `basic/`: a valid HTMLX package directory that can be packed into `basic.htmlx`.
-- `rich-self-editable/`: a long OpenWebDoc primer with a root `index.html`, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, funnel blocks, and validation metadata.
+- `openwebdoc-introduction/`: a long OpenWebDoc primer with a root `index.html`, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, funnel blocks, and validation metadata.
+- `openwebdoc-slide-deck/`: an HTMLX-native 16:9 slide deck with `metadata/presentation.json`, stacked read mode, and black-background presentation mode.
 
 Each valid example is also a standalone unpacked package: open its `index.html` directly in a
 browser to inspect the same script-free document that will be packed into `.htmlx`.
@@ -12,7 +13,8 @@ Generate example packages after building the CLI:
 
 ```sh
 pnpm --filter @openwebdoc/cli htmlx -- pack examples/basic examples/basic.htmlx
-pnpm --filter @openwebdoc/cli htmlx -- pack examples/rich-self-editable examples/rich-self-editable.htmlx
+pnpm --filter @openwebdoc/cli htmlx -- pack examples/openwebdoc-introduction examples/openwebdoc-introduction.htmlx
+pnpm --filter @openwebdoc/cli htmlx -- pack examples/openwebdoc-slide-deck examples/openwebdoc-slide-deck.htmlx
 pnpm --filter @openwebdoc/cli htmlx -- pack examples/security-invalid examples/security-invalid.htmlx
 ```
 

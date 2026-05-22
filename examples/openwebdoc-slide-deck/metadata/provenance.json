@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "0.1.0",
+  "createdBy": "@openwebdoc/runtime",
+  "createdAt": "2026-05-17T00:00:00.000Z",
+  "runtimeMode": "slide-deck-profile",
+  "source": "examples/openwebdoc-slide-deck",
+  "notes": [
+    "This is an HTMLX-native slide deck, not a PPTX import or export.",
+    "Presentation behavior is declared by metadata/presentation.json.",
+    "The package remains script-free and remote-resource-free."
+  ]
+}

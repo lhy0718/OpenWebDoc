@@ -6,8 +6,7 @@ const directories = [
   "packages/core/dist",
   "packages/cli/dist",
   "packages/ui/dist",
-  "apps/viewer/dist",
-  "apps/editor/dist",
+  "apps/openwebdoc/dist",
 ];
 
 for (const directory of directories) {

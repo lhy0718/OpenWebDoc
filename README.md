@@ -13,6 +13,15 @@
 
 OpenWebDoc is a TypeScript monorepo for the HTMLX Document Package format. HTMLX packages are `.htmlx` ZIP files built around browser-readable HTML, local assets, explicit manifests, security validation, and LLM-native metadata.
 
+## Quick Start
+
+```sh
+pnpm install
+pnpm dev:app
+```
+
+Open the local URL printed by Vite, choose a `.htmlx` file, and read it as the document itself. Packages that include `metadata/editing.json` can switch into direct editing from the small floating control. The static deployment artifact is built with `pnpm site:build` and serves the app from `dist/site/app/`.
+
 ## Naming
 
 | Concept     | Name                   |
@@ -30,9 +39,8 @@ The npm package name `htmlx` is not used. Only the CLI binary is named `htmlx`.
 - `packages/spec`: format constants, TypeScript types, JSON Schemas, fixtures
 - `packages/core`: `.htmlx` read/write/validate/pack/unpack APIs and package-local asset resolution
 - `packages/cli`: Node.js CLI that exposes the `htmlx` command
-- `packages/ui`: shared React UI for OpenWebDoc apps
-- `apps/viewer`: Vite React viewer for local `.htmlx` packages
-- `apps/editor`: Vite React trusted runtime for self-editable HTMLX documents
+- `packages/ui`: shared React UI for OpenWebDoc surfaces
+- `apps/openwebdoc`: Vite React app and trusted runtime for reading and editing `.htmlx` documents
 - `examples`: example package directories and generated `.htmlx` files
 - `docs`: format, security, metadata, and CLI guides
 
@@ -45,11 +53,41 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm dev:app
 pnpm site:build
 pnpm pack:packages
 pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
+
+## OpenWebDoc App Usage
+
+The app has one document-first flow:
+
+1. Open the app locally with `pnpm dev:app`, or open the built static app from `dist/site/app/` after `pnpm site:build`.
+2. Choose a local `.htmlx` package.
+3. Read the document without sidebars or inspection chrome.
+4. If the package declares `metadata/editing.json`, use the floating edit control or `Command/Ctrl+E` to edit on the same surface.
+5. Make small corrections: paragraph add/delete/duplicate, heading/paragraph switching, inline bold/italic/underline, font-size and text-color tweaks, existing object movement/resizing, image replacement, shape fill changes, table/figure positioning, undo/redo, and deletion.
+6. Export a validated `.htmlx` package with the export button or `Command/Ctrl+S`, then confirm it with `pnpm htmlx validate path/to/file.htmlx`.
+
+`examples/basic.htmlx` opens as a readable package. `examples/openwebdoc-introduction.htmlx` opens in reading mode and can switch into direct editing for paragraphs, inline text formatting, typography tweaks, grouped figures, semantic tables, and document-owned microcopy. `examples/openwebdoc-slide-deck.htmlx` demonstrates an HTMLX-native slide deck: read mode stacks slides vertically, and presentation mode shows one 16:9 slide on a black background with keyboard navigation. Creating new figures, new tables, new slides, or new shape systems belongs in the external-agent package workflow.
+
+Useful shortcuts:
+
+| Action                    | Shortcut                                                        |
+| ------------------------- | --------------------------------------------------------------- |
+| Open package              | `Command/Ctrl+O`                                                |
+| Toggle edit mode          | `Command/Ctrl+E`                                                |
+| Export package            | `Command/Ctrl+S`                                                |
+| Undo                      | `Command/Ctrl+Z`                                                |
+| Redo                      | `Command/Ctrl+Shift+Z`                                          |
+| Bold / italic / underline | `Command/Ctrl+B`, `Command/Ctrl+I`, `Command/Ctrl+U`            |
+| New paragraph             | `Enter` while editing a paragraph                               |
+| Line break                | `Shift+Enter` while editing a paragraph                         |
+| Clear selection           | `Escape`                                                        |
+| Delete selection          | `Delete` or `Backspace` outside text editing                    |
+| Presentation navigation   | `ArrowLeft/Right`, `PageUp/Down`, `Space`, `Home`, `End`, `Esc` |
 
 ## HTMLX CLI Usage
 
@@ -74,6 +112,7 @@ Create a minimal valid `.htmlx` package.
 ```sh
 htmlx create document.htmlx --title "My Document" --language en
 htmlx create document.htmlx --title "My Document" --language en --json
+htmlx create deck.htmlx --profile slide-deck --title "OpenWebDoc Pitch" --slides 6
 ```
 
 Output:
@@ -83,12 +122,15 @@ Output:
 - `styles/document.css`: default local stylesheet
 - `metadata/llm.json`: user-visible LLM metadata
 - `metadata/provenance.json`: creation metadata
+- `metadata/presentation.json`: present only for `--profile slide-deck`, declaring the HTMLX-native slide profile
+
+`--profile document` is the default. `--profile slide-deck` creates a browser-readable 16:9 deck using HTML, CSS, and metadata inside the same `.htmlx` package; it is not `.pptx` import/export.
 
 The canonical package entry is the root `index.html`. After unpacking a `.htmlx` package, opening
 `index.html` directly in a browser should render the same document layout using only package-local
 files such as `styles/document.css` and `assets/*`. A browser cannot natively render an HTML file
-inside a still-compressed ZIP without a viewer or extension, so direct opening means the package has
-been unpacked first.
+inside a still-compressed ZIP without the OpenWebDoc app or another compatible runtime, so direct
+opening means the package has been unpacked first.
 
 ### Validate
 
@@ -151,7 +193,7 @@ External agents should edit package-local HTML, CSS, JSON metadata, and declared
 
 ## MVP Boundaries
 
-MVP blocks arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, and prompt-injection-style LLM metadata misuse. The viewer renders sanitized HTML and rewrites manifest-declared local resources to browser object URLs. It lazy-loads `@openwebdoc/core` when a user opens a file, keeping the initial viewer bundle focused on shell UI. Editor-generated packages declare a self-editable document surface in `metadata/editing.json`: text, images, and simple shapes live on a fixed logical stage and scale uniformly with the browser width. The browser editor is the trusted runtime that activates those editable blocks and exports a validated `.htmlx`; the package itself does not carry executable editor code. External coding agents should unpack the package, modify package-local HTML/CSS/JSON/assets directly, validate the directory, repack it, and validate the edited `.htmlx`. The MVP does not include DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, or in-editor model calls.
+MVP blocks arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, and prompt-injection-style LLM metadata misuse. The OpenWebDoc app renders sanitized package HTML, rewrites manifest-declared local resources to browser object URLs when needed, and activates editing only from declarative package metadata. Self-editable packages declare their document surface in `metadata/editing.json`: text blocks, existing images, tables, grouped figures, and existing simple shapes live on a fixed logical stage and scale uniformly with the browser width. The app's edit mode is intentionally a micro-editing surface, not a document design studio: major rewrites, new figures, new tables, and layout redesigns should happen in unpacked package files and return through validation. The package itself does not carry executable runtime code. External coding agents should unpack the package, modify package-local HTML/CSS/JSON/assets directly, validate the directory, repack it, and validate the edited `.htmlx`. The MVP does not include DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, or in-app model calls.
 
 ## Docs
 

@@ -8,6 +8,8 @@ const commands = [
   ["pnpm", ["lint"]],
   ["pnpm", ["format"]],
   ["node", ["packages/cli/dist/index.js", "validate", "examples/basic.htmlx"]],
+  ["node", ["packages/cli/dist/index.js", "validate", "examples/openwebdoc-introduction.htmlx"]],
+  ["node", ["packages/cli/dist/index.js", "validate", "examples/openwebdoc-slide-deck.htmlx"]],
   [
     "node",
     ["packages/cli/dist/index.js", "validate", "examples/security-invalid.htmlx"],

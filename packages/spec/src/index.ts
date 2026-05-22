@@ -16,6 +16,8 @@ export const HTMLX_AGENT_EDIT_PROPOSAL_SCHEMA_URL =
   "https://openwebdoc.org/schemas/htmlx-agent-edit-proposal-v0.1.schema.json";
 export const HTMLX_EDITING_METADATA_SCHEMA_URL =
   "https://openwebdoc.org/schemas/htmlx-editing-metadata-v0.1.schema.json";
+export const HTMLX_PRESENTATION_METADATA_SCHEMA_URL =
+  "https://openwebdoc.org/schemas/htmlx-presentation-metadata-v0.1.schema.json";
 
 export type HtmlxInteractionModel = "declarative";
 export type HtmlxResourceRole =
@@ -41,6 +43,7 @@ export interface HtmlxMetadataPaths {
   provenance?: string;
   editing?: string;
   editingGuide?: string;
+  presentation?: string;
 }
 
 export interface HtmlxSecurityPolicy {
@@ -118,6 +121,8 @@ export interface HtmlxEditableBlock {
   shape?: "rectangle";
   fontSize?: number;
   lineHeight?: number;
+  color?: string;
+  inlineFormatting?: Array<"bold" | "italic" | "underline">;
   fill?: string;
   table?: {
     columns: string[];
@@ -133,7 +138,7 @@ export interface HtmlxEditingMetadata {
   $schema?: string;
   schemaVersion: "0.1.0";
   mode: "self-editable-document";
-  runtime: "@openwebdoc/editor";
+  runtime: "@openwebdoc/runtime";
   stage: {
     width: number;
     height: number;
@@ -146,6 +151,31 @@ export interface HtmlxEditingMetadata {
     remoteResources: false;
     coordinates: "stage-relative";
     textScaling: "stage-uniform";
+    textFormatting?: Array<"bold" | "italic" | "underline">;
+    typography?: {
+      fontSize: "block-stage-relative";
+      textColor: "safe-css-color";
+      fontFamily: "package-css-or-system";
+      remoteFonts: false;
+    };
+  };
+}
+
+export interface HtmlxPresentationMetadata {
+  $schema?: string;
+  schemaVersion: "0.1.0";
+  profile: "slide-deck";
+  runtime: "@openwebdoc/runtime";
+  slideSelector: "[data-htmlx-kind='slide']" | '[data-htmlx-kind="slide"]';
+  stage: {
+    width: number;
+    height: number;
+    unit: "px";
+    scaleMode: "uniform-fit";
+  };
+  navigation: {
+    loop: boolean;
+    advanceOnClick: boolean;
   };
 }
 
@@ -270,6 +300,7 @@ export const htmlxManifestSchema = {
         provenance: { type: "string", minLength: 1 },
         editing: { type: "string", minLength: 1 },
         editingGuide: { type: "string", minLength: 1 },
+        presentation: { type: "string", minLength: 1 },
       },
     },
     security: {
@@ -439,6 +470,42 @@ export const htmlxAgentEditProposalSchema = {
   },
 } as const;
 
+export const htmlxPresentationMetadataSchema = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: HTMLX_PRESENTATION_METADATA_SCHEMA_URL,
+  title: "HTMLX Presentation Metadata",
+  type: "object",
+  additionalProperties: false,
+  required: ["schemaVersion", "profile", "runtime", "slideSelector", "stage", "navigation"],
+  properties: {
+    $schema: { const: HTMLX_PRESENTATION_METADATA_SCHEMA_URL },
+    schemaVersion: { const: HTMLX_CURRENT_VERSION },
+    profile: { const: "slide-deck" },
+    runtime: { const: "@openwebdoc/runtime" },
+    slideSelector: { enum: ["[data-htmlx-kind='slide']", '[data-htmlx-kind="slide"]'] },
+    stage: {
+      type: "object",
+      additionalProperties: false,
+      required: ["width", "height", "unit", "scaleMode"],
+      properties: {
+        width: { type: "number", exclusiveMinimum: 0 },
+        height: { type: "number", exclusiveMinimum: 0 },
+        unit: { const: "px" },
+        scaleMode: { const: "uniform-fit" },
+      },
+    },
+    navigation: {
+      type: "object",
+      additionalProperties: false,
+      required: ["loop", "advanceOnClick"],
+      properties: {
+        loop: { type: "boolean" },
+        advanceOnClick: { type: "boolean" },
+      },
+    },
+  },
+} as const;
+
 const ajv = new Ajv2020({ allErrors: true, strict: false, validateFormats: false });
 const validateManifestSchema = ajv.compile<HtmlxManifest>(htmlxManifestSchema);
 const validateAgentEditRequestSchema = ajv.compile<HtmlxAgentEditRequest>(
@@ -446,6 +513,9 @@ const validateAgentEditRequestSchema = ajv.compile<HtmlxAgentEditRequest>(
 );
 const validateAgentEditProposalSchema = ajv.compile<HtmlxAgentEditProposal>(
   htmlxAgentEditProposalSchema,
+);
+const validatePresentationMetadataSchema = ajv.compile<HtmlxPresentationMetadata>(
+  htmlxPresentationMetadataSchema,
 );
 
 export interface HtmlxSchemaValidationResult {
@@ -474,6 +544,16 @@ export function validateHtmlxAgentEditProposalSchema(input: unknown): HtmlxSchem
   return {
     valid,
     errors: validateAgentEditProposalSchema.errors ?? [],
+  };
+}
+
+export function validateHtmlxPresentationMetadataSchema(
+  input: unknown,
+): HtmlxSchemaValidationResult {
+  const valid = validatePresentationMetadataSchema(input);
+  return {
+    valid,
+    errors: validatePresentationMetadataSchema.errors ?? [],
   };
 }
 

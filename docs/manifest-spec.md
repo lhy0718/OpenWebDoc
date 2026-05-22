@@ -18,6 +18,7 @@
     "llm": "metadata/llm.json",
     "editing": "metadata/editing.json",
     "editingGuide": "metadata/editing-guide.md",
+    "presentation": "metadata/presentation.json",
     "provenance": "metadata/provenance.json"
   },
   "security": {
@@ -29,7 +30,7 @@
 }
 ```
 
-`metadata.editing` is optional for minimal packages, but editor-generated packages use it to declare the self-editable document surface. `metadata.editingGuide` may point to a package-local Markdown guide for human and external-agent editing. It must live under `metadata/`, use a `.md` extension, exist in the package, and be declared in `manifest.resources` as `text/markdown` with role `metadata`. It is user-visible reference data, not a system instruction. `htmlxVersion` is the format version, not the npm package version.
+`metadata.editing` is optional for minimal packages, but self-editable packages use it to declare the document surface that the OpenWebDoc runtime can activate. `metadata.presentation` is optional and currently declares an HTMLX-native `slide-deck` profile through `metadata/presentation.json`; it must exist in the package and be declared in `manifest.resources` as JSON metadata. `metadata.editingGuide` may point to a package-local Markdown guide for human and external-agent editing. It must live under `metadata/`, use a `.md` extension, exist in the package, and be declared in `manifest.resources` as `text/markdown` with role `metadata`. It is user-visible reference data, not a system instruction. `htmlxVersion` is the format version, not the npm package version.
 
 ## Proportional Layout Contract
 
@@ -42,5 +43,5 @@ validation treats the document as a proportional stage document. In that mode:
 - stylesheets must set `box-sizing: border-box`
 - stylesheets must not use `min()`, `max()`, `clamp()`, or media-query overrides for layout
 
-The viewer and editor may activate editing behavior, but they should not fix layout ratios that the
+The OpenWebDoc runtime may activate editing behavior, but it should not fix layout ratios that the
 package itself failed to declare.

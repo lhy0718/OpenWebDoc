@@ -7,24 +7,28 @@
 - [ ] `pnpm smoke:e2e` succeeds.
 - [ ] `pnpm guard:repo` succeeds.
 - [ ] `pnpm pack:packages` creates tarballs for `@openwebdoc/spec`, `@openwebdoc/core`, `@openwebdoc/cli`, and `@openwebdoc/ui`.
-- [ ] `pnpm site:build` creates `dist/site/` with viewer and editor builds.
+- [ ] `pnpm site:build` creates `dist/site/` with the OpenWebDoc app build.
 - [ ] `pnpm release:check` succeeds.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
-- [ ] `pnpm htmlx validate examples/rich-self-editable.htmlx` succeeds.
+- [ ] `pnpm htmlx validate examples/openwebdoc-introduction.htmlx` succeeds.
+- [ ] `pnpm htmlx validate examples/openwebdoc-slide-deck.htmlx` succeeds.
 - [ ] `metadata/editing-guide.md`, when present, is declared as package-local Markdown metadata.
 - [ ] `pnpm htmlx validate examples/security-invalid.htmlx` fails for expected security reasons.
-- [ ] Viewer opens `examples/basic.htmlx`.
-- [ ] Viewer opens `examples/rich-self-editable.htmlx` with text, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, and funnel blocks.
-- [ ] Viewer renders manifest-declared package-local assets.
-- [ ] Viewer production build has no oversized-chunk warning.
+- [ ] OpenWebDoc opens `examples/basic.htmlx` as a readable document.
+- [ ] OpenWebDoc opens `examples/openwebdoc-introduction.htmlx` in reading mode with text, editable document-owned microcopy, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, and funnel blocks.
+- [ ] OpenWebDoc opens `examples/openwebdoc-slide-deck.htmlx` in read mode as stacked 16:9 slides.
+- [ ] OpenWebDoc presentation mode for slide decks hides app chrome and shows one centered slide on a black background with keyboard navigation.
+- [ ] OpenWebDoc renders manifest-declared package-local assets.
+- [ ] OpenWebDoc production build has no oversized-chunk warning.
 - [ ] `htmlx validate <directory>` validates an unpacked package before repacking.
-- [ ] Editor acts as the trusted WYSIWYG runtime for `metadata/editing.json`.
-- [ ] Editor supports direct text editing, image placement, rectangle placement, semantic table insertion, grouped figure movement, and selected-figure inner card movement on the document surface.
-- [ ] Editor-generated documents preserve uniform text/image/table/figure/border scale across browser widths.
+- [ ] OpenWebDoc acts as the trusted WYSIWYG runtime for `metadata/editing.json`.
+- [ ] OpenWebDoc supports paragraph add/delete/duplicate, heading deletion, inline bold/italic/underline, font-size and text-color tweaks, existing image replacement, existing shape movement/resizing/fill changes, semantic table preservation, grouped figure movement, and selected-figure inner card movement on the document surface.
+- [ ] OpenWebDoc does not expose new rectangle, table, figure, or large-layout generation inside the runtime edit mode.
+- [ ] OpenWebDoc-generated documents preserve uniform text/image/table/figure/border scale across browser widths.
 - [ ] Text editing preserves caret position while typing.
 - [ ] The collapsed hamburger toolbar can be dragged and changes expansion direction near viewport edges.
-- [ ] Editor exports a `.htmlx` package that passes CLI validation.
-- [ ] Viewer reopens the editor-exported package.
+- [ ] OpenWebDoc exports a `.htmlx` package that passes CLI validation.
+- [ ] OpenWebDoc reopens the exported package.
 - [ ] Public package names use `@openwebdoc/*`.
 - [ ] Published npm package contents include README, license, declarations, JavaScript output, and any exported CSS.
 - [ ] The CLI binary is named `htmlx`.

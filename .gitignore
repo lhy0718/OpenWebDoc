@@ -5,8 +5,34 @@ coverage/
 *.tsbuildinfo
 .DS_Store
 .playwright-mcp/
-benchmarks/htmlxbench/generated/
-benchmarks/htmlxbench/packets/
-benchmarks/htmlxbench/security-fixtures/generated/
-benchmarks/htmlxbench/runs/summary.json
-benchmarks/htmlxbench/runs/edit-summary.json
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.mobileprovision
+
+# Logs and local reports
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+playwright-report/
+test-results/
+
+# Editor and OS noise
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# Local scratch files
+.tmp/
+tmp/
+*.local

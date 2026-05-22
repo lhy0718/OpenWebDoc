@@ -3,7 +3,7 @@
 OpenWebDoc has two deployable surfaces:
 
 - npm packages under `@openwebdoc/*`
-- a static site that hosts the viewer and editor apps
+- a static site that hosts the OpenWebDoc app
 
 ## Local release check
 
@@ -44,13 +44,21 @@ pnpm site:build
 
 The output is written to `dist/site/`:
 
-- `dist/site/viewer/`
-- `dist/site/editor/`
+- `dist/site/app/`
 - `dist/site/index.html`
+
+`dist/site/app/` is the deployable OpenWebDoc runtime. It starts with a single file-open screen. After a valid package is selected, the runtime shows the document first and keeps app controls in a small floating toolbar. `dist/site/index.html` is only a lightweight entry page that links to the app.
+
+For a local static smoke check after building:
+
+```sh
+pnpm site:build
+pnpm exec vite preview --host 127.0.0.1 --outDir dist/site
+```
 
 ## GitHub Actions
 
-- `CI` runs on `main`, `research/htmlxbench-pilot`, and pull requests.
+- `CI` runs on `main` and pull requests.
 - `Deploy Pages` builds and deploys `dist/site/` from `main`.
 - `Release` builds release artifacts on version tags and can publish npm packages when `NPM_TOKEN` is configured.
 

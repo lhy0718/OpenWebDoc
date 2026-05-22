@@ -2,6 +2,15 @@
 
 OpenWebDoc là TypeScript monorepo cho định dạng HTMLX Document Package. HTMLX packages là các file `.htmlx` dựa trên ZIP, gồm HTML có thể đọc bằng trình duyệt, local assets, manifest rõ ràng, kiểm tra bảo mật và LLM-native metadata.
 
+## Quick Start
+
+```sh
+pnpm install
+pnpm dev:app
+```
+
+Open the local URL printed by Vite, choose a `.htmlx` file, and read it as the document itself. Packages with `metadata/editing.json` can switch into direct editing from the small floating control.
+
 ## Đặt tên
 
 | Khái niệm   | Tên                    |
@@ -19,9 +28,8 @@ Không dùng npm package name `htmlx`. Chỉ CLI binary được đặt tên `ht
 - `packages/spec`: format constants, TypeScript types, JSON Schemas, fixtures
 - `packages/core`: API read/write/validate/pack/unpack cho `.htmlx` và package-local asset resolution
 - `packages/cli`: Node.js CLI cung cấp command `htmlx`
-- `packages/ui`: React UI dùng chung cho OpenWebDoc apps
-- `apps/viewer`: Vite React viewer cho local `.htmlx` packages
-- `apps/editor`: Vite React trusted runtime cho HTMLX document tự chỉnh sửa
+- `packages/ui`: shared React UI for OpenWebDoc surfaces
+- `apps/openwebdoc`: Vite React app and trusted runtime for reading and editing `.htmlx` documents
 - `examples`: example package directories và các file `.htmlx` đã tạo
 - `docs`: hướng dẫn format, security, metadata và CLI
 
@@ -34,6 +42,7 @@ pnpm build
 pnpm test
 pnpm lint
 pnpm smoke:e2e
+pnpm dev:app
 pnpm site:build
 pnpm pack:packages
 pnpm release:check
@@ -134,7 +143,7 @@ Neu package co `metadata/editing-guide.md`, hay xem no la reference data hien th
 
 ## Ranh giới MVP
 
-MVP chặn arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references và prompt-injection-style LLM metadata misuse. Viewer render sanitized HTML và rewrite manifest-declared local resources thành browser object URLs. Khi người dùng mở file, viewer lazy-load `@openwebdoc/core` để giữ initial viewer bundle tập trung vào shell UI. Package do editor tạo ra khai báo self-editable document surface trong `metadata/editing.json`; text, image và simple shape nằm trên logical stage cố định và scale đồng đều theo browser width. Browser editor là trusted runtime kích hoạt các editable block này và export `.htmlx` đã validate. External coding agents nên dùng unpacked package flow để sửa unpacked HTML/CSS/JSON files và trả về validated packages. Không bao gồm DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration hoặc browser-side model API keys.
+MVP chặn arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references và prompt-injection-style LLM metadata misuse. OpenWebDoc app render package HTML an toàn, rewrite manifest-declared local resources thành browser object URLs khi cần, và chỉ kích hoạt editing từ declarative package metadata. Self-editable packages khai báo document surface trong `metadata/editing.json`. App edit mode chi dành cho micro-edits; major rewrites, new figures, new tables, and layout redesigns thuộc về unpacked package files. Package không chứa executable runtime code. External coding agents chỉnh sửa trực tiếp HTML/CSS/JSON/assets của unpacked package, validate directory, repack, rồi validate `.htmlx` đã sửa. DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, và in-app model calls nằm ngoài MVP.
 
 ## Docs
 
