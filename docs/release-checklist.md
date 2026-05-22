@@ -33,8 +33,8 @@
 - [ ] OpenWebDoc exports a `.htmlx` package that passes CLI validation.
 - [ ] OpenWebDoc reopens the exported package.
 - [ ] Public package names use `@openwebdoc/*`.
-- [ ] Published npm package contents include README, license, declarations, JavaScript output, and any exported CSS.
+- [ ] Packed npm package artifacts include README, license, declarations, JavaScript output, and any exported CSS.
 - [ ] The CLI binary is named `htmlx`.
 - [ ] README, docs, and Obsidian notes match implementation state.
-- [ ] The repository secret `NPM_TOKEN` is configured before publishing npm packages.
+- [ ] npm publishing remains disabled for the public preview; release artifacts are uploaded as GitHub Actions artifacts only.
 - [ ] Public alpha follow-up issues are triaged before tagging the alpha release.
