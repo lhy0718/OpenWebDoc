@@ -8,12 +8,12 @@ OpenWebDoc stays centered on one runtime: a `.htmlx` document opens as the readi
 
 ## Public Alpha Milestones
 
-- [#10 Prepare v0.1.0-alpha.0 release](https://github.com/lhy0718/OpenWebDoc/issues/10): finish release gate, tag strategy, npm readiness, and GitHub Pages confirmation.
-- [#9 Accessibility and keyboard QA pass](https://github.com/lhy0718/OpenWebDoc/issues/9): verify focus order, keyboard-only operation, labels, and presentation-mode escape paths.
-- [#8 Harden table and figure micro-editing](https://github.com/lhy0718/OpenWebDoc/issues/8): tighten editing behavior for semantic tables, captions, grouped figures, and inner figure cards.
-- [#12 Mobile and export UX hardening](https://github.com/lhy0718/OpenWebDoc/issues/12): polish mobile read/edit interactions, export feedback, and reopened-package confidence.
-- [#11 Explore Chrome extension and file association entry points](https://github.com/lhy0718/OpenWebDoc/issues/11): evaluate whether a browser extension or file association improves local `.htmlx` opening without changing the package format.
-- [#13 Research package signing and trusted provenance](https://github.com/lhy0718/OpenWebDoc/issues/13): explore future integrity, authorship, and provenance verification without adding executable package code.
+- [#10 Prepare v0.1.0-alpha.0 release](https://github.com/lhy0718/OpenWebDoc/issues/10): release readiness is GitHub Pages plus GitHub release artifacts. npm registry publishing is deferred for the public preview.
+- [#9 Accessibility and keyboard QA pass](https://github.com/lhy0718/OpenWebDoc/issues/9): the QA bar is captured in [Accessibility, Mobile, and Export QA](accessibility-mobile-export-qa.md), with keyboard, focus, reduced-motion, presentation, and live-status expectations.
+- [#8 Harden table and figure micro-editing](https://github.com/lhy0718/OpenWebDoc/issues/8): smoke coverage includes semantic table editing, table caption and cell edits, grouped figure movement, inner-card movement, object handles, and export round trip.
+- [#12 Mobile and export UX hardening](https://github.com/lhy0718/OpenWebDoc/issues/12): mobile overflow checks and export/reopen validation are part of `pnpm smoke:e2e`; export success is announced in the app.
+- [#11 Explore Chrome extension and file association entry points](https://github.com/lhy0718/OpenWebDoc/issues/11): [Chrome Extension Strategy](extension-strategy.md) keeps extension work optional and outside the alpha release gate.
+- [#13 Research package signing and trusted provenance](https://github.com/lhy0718/OpenWebDoc/issues/13): [Package Signing and Trusted Provenance](package-signing-provenance.md) records future signing scope without adding alpha trust complexity.
 
 ## Release Gate
 
@@ -36,3 +36,4 @@ The live app should also be checked manually at:
 - <https://lhy0718.github.io/OpenWebDoc/app/>
 - <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction>
 - <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck>
+- <https://lhy0718.github.io/OpenWebDoc/app/?example=template-status-review-deck>

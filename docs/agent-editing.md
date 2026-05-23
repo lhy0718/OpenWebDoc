@@ -48,3 +48,5 @@ They should preserve semantic HTML, real tables, package-local image references,
 The OpenWebDoc runtime should not directly call model providers, store provider API keys, or put model-backed workflows inside the document editing surface. Its role is to act as a trusted micro-editing runtime for self-editable HTMLX documents: it reads the package entry, styles, and `metadata/editing.json`, activates paragraph fixes, inline bold/italic/underline, typography tweaks, existing image/shape/table/figure adjustments, and exports a validated `.htmlx` package.
 
 The document surface is the main UI. The runtime may add small overlay controls for direct actions such as opening a file, small paragraph edits, formatting, validating, showing document details, and exporting. It should not expose browser-side agent prompt generation, model calls, provider API keys, or large structure-creation tools such as new figure/table/layout builders.
+
+For the current public-alpha QA boundary around keyboard operation, mobile behavior, table/figure micro-editing, and export round trips, see [Accessibility, Mobile, and Export QA](accessibility-mobile-export-qa.md).

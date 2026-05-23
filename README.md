@@ -22,7 +22,7 @@ OpenWebDoc is a TypeScript monorepo for the HTMLX Document Package format. HTMLX
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
-The project entry page lists downloadable `.htmlx` templates for general documents and slide decks.
+The project entry page lists downloadable, editable `.htmlx` templates for general documents and slide decks.
 
 ## Screenshots
 
@@ -86,6 +86,8 @@ pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
 
+`pnpm release:check` validates every tracked example package in `examples/*.htmlx`, rejects the intentionally invalid security fixture, builds npm tarballs for inspection, and builds the static site. OpenWebDoc does not publish npm packages during the public preview phase; GitHub release artifacts and GitHub Pages are the release surfaces.
+
 ## OpenWebDoc App Usage
 
 The app has one document-first flow:
@@ -98,6 +100,8 @@ The app has one document-first flow:
 6. Export a validated `.htmlx` package with the export button or `Command/Ctrl+S`, then confirm it with `pnpm htmlx validate path/to/file.htmlx`.
 
 `examples/basic.htmlx` opens as a readable package. `examples/openwebdoc-introduction.htmlx` opens in reading mode and can switch into direct editing for paragraphs, inline text formatting, typography tweaks, grouped figures, semantic tables, and document-owned microcopy. `examples/openwebdoc-slide-deck.htmlx` demonstrates an HTMLX-native slide deck: read mode stacks slides vertically, and presentation mode shows one 16:9 slide on a black background with keyboard navigation. Creating new figures, new tables, new slides, or new shape systems belongs in the external-agent package workflow.
+
+For the current QA criteria, see [Accessibility, Mobile, and Export QA](docs/accessibility-mobile-export-qa.md). For future trust work, see [Package Signing and Trusted Provenance](docs/package-signing-provenance.md).
 
 Useful shortcuts:
 

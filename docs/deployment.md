@@ -1,9 +1,9 @@
 # Deployment
 
-OpenWebDoc has two deployable surfaces:
+OpenWebDoc has two release surfaces during the public preview:
 
-- npm packages under `@openwebdoc/*`
-- a static site that hosts the OpenWebDoc app
+- a static site that hosts the OpenWebDoc app and template gallery
+- npm tarballs under `dist/npm/` for inspection, not registry publication
 
 ## Local release check
 
@@ -13,7 +13,7 @@ Run the full release gate before tagging or deploying:
 pnpm release:check
 ```
 
-This command runs repository guards, builds all workspaces, runs tests and linting, verifies examples, creates npm package tarballs, and builds the static site.
+This command runs repository guards, builds all workspaces, runs tests and linting, verifies every tracked `examples/*.htmlx` package, rejects the intentionally invalid security fixture, creates npm package tarballs, and builds the static site.
 
 ## npm package artifacts
 
@@ -103,3 +103,13 @@ git push origin v0.1.0-alpha.0
 ```
 
 The release workflow uploads local artifacts on every run. npm publishing is intentionally deferred until OpenWebDoc is ready to support external package consumers.
+
+## Public alpha follow-up gates
+
+Before tagging `v0.1.0-alpha.0`, confirm:
+
+- GitHub Pages serves the entry page, app, introduction example, slide deck example, and template gallery.
+- `pnpm smoke:e2e` covers table/figure micro-editing, keyboard shortcuts, mobile overflow, export validation, and reopened-package confidence.
+- `pnpm pages:smoke` passes against the live Pages URL.
+- The Chrome extension direction remains a decision note, not an alpha dependency.
+- Package signing remains a future provenance design, not an alpha dependency.

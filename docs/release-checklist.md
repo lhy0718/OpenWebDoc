@@ -9,8 +9,10 @@
 - [ ] `pnpm guard:repo` succeeds.
 - [ ] `pnpm pack:packages` creates tarballs for `@openwebdoc/spec`, `@openwebdoc/core`, `@openwebdoc/cli`, and `@openwebdoc/ui`.
 - [ ] `pnpm site:build` creates `dist/site/` with the OpenWebDoc app build.
+- [ ] `pnpm release:check` validates every tracked `examples/*.htmlx` package and rejects `examples/security-invalid.htmlx`.
 - [ ] GitHub Pages serves the entry page at `https://lhy0718.github.io/OpenWebDoc/`.
 - [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.
+- [ ] GitHub Pages serves the downloadable template gallery from the entry page.
 - [ ] `pnpm release:check` succeeds.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/openwebdoc-introduction.htmlx` succeeds.
@@ -20,6 +22,7 @@
 - [ ] OpenWebDoc opens `examples/basic.htmlx` as a readable document.
 - [ ] OpenWebDoc opens `examples/openwebdoc-introduction.htmlx` in reading mode with text, editable document-owned microcopy, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, and funnel blocks.
 - [ ] OpenWebDoc opens `examples/openwebdoc-slide-deck.htmlx` in read mode as stacked 16:9 slides.
+- [ ] OpenWebDoc opens the template gallery examples, including presentation templates, without horizontal overflow.
 - [ ] OpenWebDoc presentation mode for slide decks hides app chrome and shows one centered slide on a black background with keyboard navigation.
 - [ ] OpenWebDoc renders manifest-declared package-local assets.
 - [ ] OpenWebDoc production build has no oversized-chunk warning.
@@ -31,10 +34,12 @@
 - [ ] Text editing preserves caret position while typing.
 - [ ] The collapsed hamburger toolbar can be dragged and changes expansion direction near viewport edges.
 - [ ] OpenWebDoc exports a `.htmlx` package that passes CLI validation.
+- [ ] OpenWebDoc shows a small status message after successful export and opens the info drawer when validation blocks export.
 - [ ] OpenWebDoc reopens the exported package.
 - [ ] Public package names use `@openwebdoc/*`.
 - [ ] Packed npm package artifacts include README, license, declarations, JavaScript output, and any exported CSS.
 - [ ] The CLI binary is named `htmlx`.
 - [ ] README, docs, and Obsidian notes match implementation state.
 - [ ] npm publishing remains disabled for the public preview; release artifacts are uploaded as GitHub Actions artifacts only.
-- [ ] Public alpha follow-up issues are triaged before tagging the alpha release.
+- [ ] Chrome extension and file-association work is documented as optional future scope, not an alpha blocker.
+- [ ] Package signing and trusted provenance are documented as future scope, not an alpha blocker.
