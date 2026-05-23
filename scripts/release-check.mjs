@@ -1,4 +1,9 @@
 import { spawnSync } from "node:child_process";
+import { readdirSync } from "node:fs";
+
+const examplePackages = readdirSync("examples")
+  .filter((entry) => entry.endsWith(".htmlx"))
+  .sort();
 
 const commands = [
   ["pnpm", ["clean"]],
@@ -7,14 +12,11 @@ const commands = [
   ["pnpm", ["test"]],
   ["pnpm", ["lint"]],
   ["pnpm", ["format"]],
-  ["node", ["packages/cli/dist/index.js", "validate", "examples/basic.htmlx"]],
-  ["node", ["packages/cli/dist/index.js", "validate", "examples/openwebdoc-introduction.htmlx"]],
-  ["node", ["packages/cli/dist/index.js", "validate", "examples/openwebdoc-slide-deck.htmlx"]],
-  [
+  ...examplePackages.map((examplePackage) => [
     "node",
-    ["packages/cli/dist/index.js", "validate", "examples/security-invalid.htmlx"],
-    { expectFailure: true },
-  ],
+    ["packages/cli/dist/index.js", "validate", `examples/${examplePackage}`],
+    { expectFailure: examplePackage === "security-invalid.htmlx" },
+  ]),
   ["pnpm", ["pack:packages"]],
   ["pnpm", ["site:build"]],
 ];

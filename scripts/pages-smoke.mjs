@@ -77,6 +77,26 @@ try {
   await page.keyboard.press("Escape");
   await page.locator(".floating-controls").waitFor({ state: "visible", timeout: 10000 });
 
+  await page.goto(`${appUrl}?example=template-status-review-deck`, { waitUntil: "networkidle" });
+  await page
+    .locator('[data-htmlx-slide-id="slide-1"]')
+    .filter({ hasText: "OpenWebDoc alpha readiness" })
+    .waitFor({ state: "visible", timeout: 10000 });
+  await assertNoHorizontalOverflow(page, "status review deck read mode");
+  await screenshot(page, "openwebdoc-pages-template-status-read.png");
+  await page.getByRole("button", { name: "Expand menu" }).click();
+  await page.getByRole("button", { name: "Enter presentation mode" }).click();
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowRight");
+  await page
+    .locator('[data-htmlx-slide-id="slide-3"]')
+    .filter({ hasText: "Track risks where the document and runtime meet." })
+    .waitFor({ state: "visible", timeout: 10000 });
+  await assertReadableActiveSlide(page, "status review deck presentation");
+  await screenshot(page, "openwebdoc-pages-template-status-present.png");
+  await page.keyboard.press("Escape");
+  await page.locator(".floating-controls").waitFor({ state: "visible", timeout: 10000 });
+
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(`${appUrl}?example=openwebdoc-introduction`, { waitUntil: "networkidle" });
   await page
@@ -103,6 +123,32 @@ async function assertNoHorizontalOverflow(page, label) {
   const maxScrollWidth = Math.max(overflow.scrollWidth, overflow.bodyScrollWidth);
   if (maxScrollWidth > overflow.clientWidth + 2) {
     throw new Error(`${label} has horizontal overflow: ${JSON.stringify(overflow)}`);
+  }
+}
+
+async function assertReadableActiveSlide(page, label) {
+  const metrics = await page.evaluate(() => {
+    const root = document.querySelector(".shadow-document-frame")?.shadowRoot ?? document;
+    const slide = root.querySelector('[data-openwebdoc-slide-active="true"]');
+    if (!slide) throw new Error("No active slide.");
+    const slideBox = slide.getBoundingClientRect();
+    const cells = Array.from(slide.querySelectorAll("th, td"));
+    const cellSizes = cells.map((cell) => Number.parseFloat(getComputedStyle(cell).fontSize));
+    return {
+      activeSlideId: slide.getAttribute("data-htmlx-slide-id"),
+      ratio: slideBox.width / slideBox.height,
+      minCellFontSize: cellSizes.length ? Math.min(...cellSizes) : 99,
+      overflowX: Math.max(0, slide.scrollWidth - slide.clientWidth),
+      overflowY: Math.max(0, slide.scrollHeight - slide.clientHeight),
+    };
+  });
+  if (
+    metrics.minCellFontSize < 13.5 ||
+    metrics.overflowX > 2 ||
+    metrics.overflowY > 2 ||
+    Math.abs(metrics.ratio - 16 / 9) > 0.04
+  ) {
+    throw new Error(`${label} is not readable: ${JSON.stringify(metrics)}`);
   }
 }
 

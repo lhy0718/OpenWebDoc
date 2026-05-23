@@ -10,6 +10,8 @@ Use a `web-app + optional extension` direction:
 - Keep `apps/openwebdoc` as the static web runtime for opening, reading, editing, and exporting `.htmlx`.
 - Add a Chrome extension only when capture/open convenience becomes a validated user need.
 
+This is the public-alpha decision. The `v0.1.0-alpha.0` release should not wait for a Chrome extension or OS-level file association. The static app, CLI, and package format are the canonical surfaces.
+
 ## Why Not Extension-only
 
 An extension-only product would simplify the visible entry point, but it would move too much of the core system into Chrome-specific constraints:
@@ -41,3 +43,5 @@ Promote an extension to official product scope only after one of these signals i
 - users need OS/browser-level `.htmlx` open convenience more than CLI automation
 - pilot results show web capture is more important than document-surface authoring
 - the extension can remain a thin shell without duplicating CLI validation logic
+
+Until then, extension work should stay exploratory and should not introduce package-format requirements.

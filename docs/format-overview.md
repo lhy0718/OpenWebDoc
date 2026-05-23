@@ -119,3 +119,5 @@ In read mode, the OpenWebDoc app shows slides stacked vertically as a normal bro
 Internal app editing remains micro-editing only: correcting text, typography, existing object position/size, and image replacement. New slides, layout redesign, new complex figures, and deck generation belong in unpacked package files through the external-agent workflow.
 
 See `examples/openwebdoc-slide-deck/` for a valid slide deck package.
+
+Trusted provenance and package signing are intentionally outside the public-alpha format contract. See [Package Signing and Trusted Provenance](package-signing-provenance.md) for the current future-facing design note.

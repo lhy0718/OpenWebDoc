@@ -125,6 +125,61 @@ try {
   await page.keyboard.press("Escape");
   await page.locator(".floating-controls").waitFor({ state: "visible", timeout: 5000 });
 
+  await page.goto(`${appUrl}?example=template-status-review-deck`);
+  await page
+    .locator('[data-htmlx-slide-id="slide-1"]')
+    .filter({ hasText: "OpenWebDoc alpha readiness" })
+    .waitFor({ state: "visible", timeout: 5000 });
+  const statusSlideCount = await page.locator('[data-htmlx-kind="slide"]').count();
+  if (statusSlideCount !== 4) {
+    throw new Error(`Expected 4 status-review slides, found ${statusSlideCount}.`);
+  }
+  await assertNoHorizontalOverflow(page, "status-review read mode");
+  await page.getByRole("button", { name: "Expand menu" }).click();
+  await page.getByRole("button", { name: "Enter presentation mode" }).click();
+  await page.keyboard.press("ArrowRight");
+  await page.keyboard.press("ArrowRight");
+  await page
+    .locator('[data-htmlx-slide-id="slide-3"]')
+    .filter({ hasText: "Track risks where the document and runtime meet." })
+    .waitFor({ state: "visible", timeout: 5000 });
+  const statusDeckReadability = await page.evaluate(() => {
+    const root = document.querySelector(".shadow-document-frame")?.shadowRoot ?? document;
+    const slide = root.querySelector('[data-openwebdoc-slide-active="true"]');
+    if (!slide) throw new Error("No active status-review slide.");
+    const cells = Array.from(slide.querySelectorAll("th, td"));
+    const cellSizes = cells.map((cell) => Number.parseFloat(getComputedStyle(cell).fontSize));
+    const slideBox = slide.getBoundingClientRect();
+    return {
+      activeSlideId: slide.getAttribute("data-htmlx-slide-id"),
+      minCellFontSize: Math.min(...cellSizes),
+      maxOverflowX: Math.max(0, slide.scrollWidth - slide.clientWidth),
+      maxOverflowY: Math.max(0, slide.scrollHeight - slide.clientHeight),
+      ratio: slideBox.width / slideBox.height,
+    };
+  });
+  if (
+    statusDeckReadability.activeSlideId !== "slide-3" ||
+    statusDeckReadability.minCellFontSize < 13.5 ||
+    statusDeckReadability.maxOverflowX > 2 ||
+    statusDeckReadability.maxOverflowY > 2 ||
+    Math.abs(statusDeckReadability.ratio - 16 / 9) > 0.04
+  ) {
+    throw new Error(
+      `Status review deck presentation is not readable: ${JSON.stringify(statusDeckReadability)}`,
+    );
+  }
+  await page.keyboard.press("Escape");
+  await page.locator(".floating-controls").waitFor({ state: "visible", timeout: 5000 });
+  await page.getByRole("button", { name: "Expand menu" }).click();
+  await page.getByRole("button", { name: "Switch to editing mode" }).click();
+  await page
+    .locator('[data-htmlx-block-id="status-risks"][contenteditable="true"]')
+    .waitFor({ state: "attached", timeout: 5000 });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await assertNoHorizontalOverflow(page, "status-review mobile edit mode");
+  await page.setViewportSize({ width: 1280, height: 720 });
+
   await openInApp(page, join(tmpRoot, "asset-doc.htmlx"));
   await expectFrameText(page, "h1", "Asset Resolver Smoke");
   await page
@@ -1149,8 +1204,13 @@ try {
   const download = await downloadPromise;
   const exportPath = join(tmpRoot, "playwright-export-smoke.htmlx");
   await download.saveAs(exportPath);
+  await appPage
+    .locator(".runtime-status")
+    .filter({ hasText: "Exported playwright-export-smoke.htmlx" })
+    .waitFor({ state: "visible", timeout: 5000 });
 
-  const validate = spawnSync(pnpm, ["exec", "htmlx", "validate", exportPath, "--json"], {
+  const cliEntry = join(repoRoot, "packages/cli/dist/index.js");
+  const validate = spawnSync("node", [cliEntry, "validate", exportPath, "--json"], {
     cwd: repoRoot,
     env,
     encoding: "utf8",
@@ -1160,8 +1220,8 @@ try {
   }
   const unpackedPackage = join(tmpRoot, "unpacked-export");
   const unpackResult = spawnSync(
-    pnpm,
-    ["exec", "htmlx", "unpack", exportPath, unpackedPackage, "--json"],
+    "node",
+    [cliEntry, "unpack", exportPath, unpackedPackage, "--json"],
     {
       cwd: repoRoot,
       env,
@@ -1223,15 +1283,11 @@ try {
   ) {
     throw new Error("Exported document did not preserve selected text color.");
   }
-  const validateDirectory = spawnSync(
-    pnpm,
-    ["exec", "htmlx", "validate", unpackedPackage, "--json"],
-    {
-      cwd: repoRoot,
-      env,
-      encoding: "utf8",
-    },
-  );
+  const validateDirectory = spawnSync("node", [cliEntry, "validate", unpackedPackage, "--json"], {
+    cwd: repoRoot,
+    env,
+    encoding: "utf8",
+  });
   if (validateDirectory.status !== 0) {
     throw new Error(
       `Unpacked package failed validation:\n${validateDirectory.stdout}\n${validateDirectory.stderr}`,
@@ -1331,6 +1387,18 @@ async function verifyProportionalSurface(page, viewports) {
     if (metrics.tableWidth <= 0 || metrics.tableWidth > metrics.width) {
       throw new Error(`Document table overflowed or disappeared at ${viewport.width}px.`);
     }
+  }
+}
+
+async function assertNoHorizontalOverflow(page, label) {
+  const overflow = await page.evaluate(() => ({
+    clientWidth: document.documentElement.clientWidth,
+    scrollWidth: document.documentElement.scrollWidth,
+    bodyScrollWidth: document.body.scrollWidth,
+  }));
+  const maxScrollWidth = Math.max(overflow.scrollWidth, overflow.bodyScrollWidth);
+  if (maxScrollWidth > overflow.clientWidth + 2) {
+    throw new Error(`${label} has horizontal overflow: ${JSON.stringify(overflow)}`);
   }
 }
 

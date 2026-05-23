@@ -281,6 +281,7 @@ function OpenWebDocApp() {
   const [drawer, setDrawer] = useState<DrawerMode>("none");
   const [lastManifest, setLastManifest] = useState<HtmlxManifest | null>(null);
   const [documentCss, setDocumentCss] = useState("");
+  const [runtimeMessage, setRuntimeMessage] = useState("");
   const [issues, setIssues] = useState<
     Array<{ severity: string; code: string; message: string; path?: string }>
   >([]);
@@ -317,6 +318,12 @@ function OpenWebDocApp() {
     const frame = requestAnimationFrame(restorePreservedTextSelection);
     return () => cancelAnimationFrame(frame);
   }, [editing]);
+
+  useEffect(() => {
+    if (!runtimeMessage) return undefined;
+    const timeout = window.setTimeout(() => setRuntimeMessage(""), 3600);
+    return () => window.clearTimeout(timeout);
+  }, [runtimeMessage]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -761,6 +768,7 @@ function OpenWebDocApp() {
     setPresentationSlideCount(nextSlideCount);
     setCurrentSlideIndex(0);
     setPresentationMode(false);
+    setRuntimeMessage("");
     if (!declaresEditing || parsedBlocks.length === 0) {
       const resolved = resolveHtmlxDocument(htmlxPackage);
       readOnlyRevokeRef.current = resolved.revoke;
@@ -814,6 +822,7 @@ function OpenWebDocApp() {
       setPresentationSlideCount(0);
       setCurrentSlideIndex(0);
       setPresentationMode(false);
+      setRuntimeMessage("");
       setLastManifest(null);
       setIssues(
         Array.isArray(errorIssues)
@@ -1505,6 +1514,7 @@ function OpenWebDocApp() {
     setIssues(validation.issues);
     setLastManifest(manifest);
     if (!validation.valid) {
+      setRuntimeMessage("Export blocked: validation needs attention.");
       setDrawer("info");
       return;
     }
@@ -1520,6 +1530,7 @@ function OpenWebDocApp() {
     link.download = `${slugify(getTitle(syncedBlocks))}.htmlx`;
     link.click();
     URL.revokeObjectURL(url);
+    setRuntimeMessage(`Exported ${link.download}`);
   }
 
   async function validateCurrentPackage() {
@@ -1707,6 +1718,11 @@ function OpenWebDocApp() {
           onToolbarPointerUp={stopToolbarDrag}
         />
       )}
+      {runtimeMessage && !presentationMode ? (
+        <div className="runtime-status" role="status" aria-live="polite">
+          {runtimeMessage}
+        </div>
+      ) : null}
 
       {readOnlyHtml ? (
         <iframe
@@ -3560,7 +3576,7 @@ function DocumentDrawer({
   onClose: () => void;
 }) {
   return (
-    <aside className="document-drawer" aria-label="Document information">
+    <aside className="document-drawer" role="dialog" aria-label="Document information">
       <header>
         <strong>Document</strong>
         <button type="button" onClick={onClose} aria-label="Close document info">
