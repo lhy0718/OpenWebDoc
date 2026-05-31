@@ -1,13 +1,182 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "slide-deck",
   "summary": "A research talk template for presenting task, method, evidence, limitations, and future work.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "textHash": "sha256-6ot9BU3Du8W/PdT0KDtBbxa/4Kq3vrP+q8DX4hm/168=",
+  "selectors": {
+    "talk-kicker": "[data-htmlx-block-id=\"talk-kicker\"]",
+    "talk-title": "[data-htmlx-block-id=\"talk-title\"]",
+    "talk-summary": "[data-htmlx-block-id=\"talk-summary\"]",
+    "talk-question": "[data-htmlx-block-id=\"talk-question\"]",
+    "talk-method": "[data-htmlx-block-id=\"talk-method\"]",
+    "talk-limitations": "[data-htmlx-block-id=\"talk-limitations\"]"
+  },
+  "blockMap": [
+    {
+      "id": "talk-kicker",
+      "selector": "[data-htmlx-block-id=\"talk-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-a6FRlzCqZX/aAnPiDQTwh4H96dl/vH0LzgXMF5Nuy6A=",
+      "editable": false
+    },
+    {
+      "id": "talk-title",
+      "selector": "[data-htmlx-block-id=\"talk-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-1TT/vc2zmlwSpmIoLRk50Q16pNxWhERfWWD1WBvLbYc=",
+      "editable": false
+    },
+    {
+      "id": "talk-summary",
+      "selector": "[data-htmlx-block-id=\"talk-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-fJHsGt7xyQ9xrfYJnsFnSgPP2cVfYGWIekG53iAQK58=",
+      "editable": false
+    },
+    {
+      "id": "talk-question",
+      "selector": "[data-htmlx-block-id=\"talk-question\"]",
+      "kind": "heading",
+      "textHash": "sha256-gs2eNW/qeFpazij3BQHAzZqEfn5GSGYuv2545Hjrhb0=",
+      "editable": false
+    },
+    {
+      "id": "talk-method",
+      "selector": "[data-htmlx-block-id=\"talk-method\"]",
+      "kind": "heading",
+      "textHash": "sha256-kza9CVt9oDhZgFtG7TamqM9SdhGwFSsvn+BbjhCWJXI=",
+      "editable": false
+    },
+    {
+      "id": "talk-limitations",
+      "selector": "[data-htmlx-block-id=\"talk-limitations\"]",
+      "kind": "heading",
+      "textHash": "sha256-kGJdPLZfZN4aPfLWhJiRBiP6n8FnegxsSOJyjS6rC5g=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "talk-kicker",
+    "talk-title",
+    "talk-summary",
+    "talk-question",
+    "talk-method",
+    "talk-limitations"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "talk-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"talk-kicker\"]",
+      "textHash": "sha256-a6FRlzCqZX/aAnPiDQTwh4H96dl/vH0LzgXMF5Nuy6A=",
+      "summary": "Research talk",
+      "keywords": [
+        "Research Talk Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "talk-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"talk-title\"]",
+      "textHash": "sha256-1TT/vc2zmlwSpmIoLRk50Q16pNxWhERfWWD1WBvLbYc=",
+      "summary": "Evaluating document-agent workflows",
+      "keywords": [
+        "Research Talk Template"
+      ],
+      "tokenEstimate": 5,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "talk-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"talk-summary\"]",
+      "textHash": "sha256-fJHsGt7xyQ9xrfYJnsFnSgPP2cVfYGWIekG53iAQK58=",
+      "summary": "A talk template for framing task, method, evidence, limitations, and future work.",
+      "keywords": [
+        "Research Talk Template"
+      ],
+      "tokenEstimate": 17,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "talk-question"
+      ],
+      "selector": "[data-htmlx-block-id=\"talk-question\"]",
+      "textHash": "sha256-gs2eNW/qeFpazij3BQHAzZqEfn5GSGYuv2545Hjrhb0=",
+      "summary": "Can agents revise rich documents without breaking portability or trust boundaries?",
+      "keywords": [
+        "Research Talk Template"
+      ],
+      "tokenEstimate": 15,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "talk-method"
+      ],
+      "selector": "[data-htmlx-block-id=\"talk-method\"]",
+      "textHash": "sha256-kza9CVt9oDhZgFtG7TamqM9SdhGwFSsvn+BbjhCWJXI=",
+      "summary": "Compare edits before and after validation.",
+      "keywords": [
+        "Research Talk Template"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "talk-limitations"
+      ],
+      "selector": "[data-htmlx-block-id=\"talk-limitations\"]",
+      "textHash": "sha256-kGJdPLZfZN4aPfLWhJiRBiP6n8FnegxsSOJyjS6rC5g=",
+      "summary": "Do not overclaim: this is a package workflow, not a universal document standard yet.",
+      "keywords": [
+        "Research Talk Template"
+      ],
+      "tokenEstimate": 19,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "slide-deck",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/presentation.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

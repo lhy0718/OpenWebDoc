@@ -1,13 +1,181 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "flow-document",
   "summary": "A product specification template for runtime scope, requirements, release gates, and decisions.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "textHash": "sha256-4JnCCDWxttGHu+rg/UA0GC/lDZYOpE5yRmXYqM3HZ+E=",
+  "selectors": {
+    "spec-kicker": "[data-htmlx-block-id=\"spec-kicker\"]",
+    "spec-title": "[data-htmlx-block-id=\"spec-title\"]",
+    "spec-summary": "[data-htmlx-block-id=\"spec-summary\"]",
+    "spec-scope": "[data-htmlx-block-id=\"spec-scope\"]",
+    "spec-requirements": "[data-htmlx-block-id=\"spec-requirements\"]",
+    "spec-decisions": "[data-htmlx-block-id=\"spec-decisions\"]"
+  },
+  "blockMap": [
+    {
+      "id": "spec-kicker",
+      "selector": "[data-htmlx-block-id=\"spec-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-pa+VkQeep6HPadHznK+X8k9efSLj64v+F2pcg5ai5wU=",
+      "editable": false
+    },
+    {
+      "id": "spec-title",
+      "selector": "[data-htmlx-block-id=\"spec-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-Iv6F/sHePY31cmNK/Eq/HP3Tjk5iZXBbLDo4auWZ028=",
+      "editable": false
+    },
+    {
+      "id": "spec-summary",
+      "selector": "[data-htmlx-block-id=\"spec-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-V16bO8dWSmz5kcvvfcBmfgN/WlMrwHyFeyunffagvbQ=",
+      "editable": false
+    },
+    {
+      "id": "spec-scope",
+      "selector": "[data-htmlx-block-id=\"spec-scope\"]",
+      "kind": "section",
+      "textHash": "sha256-wB8nZWd9r8MNjxPvtyflmsACEhkai0u34lTfFtIROC0=",
+      "editable": false
+    },
+    {
+      "id": "spec-requirements",
+      "selector": "[data-htmlx-block-id=\"spec-requirements\"]",
+      "kind": "section",
+      "textHash": "sha256-Kn6j/frQHFXW2TuoMt1MMo8CfY5qA7nuu1WbqWhmOKA=",
+      "editable": false
+    },
+    {
+      "id": "spec-decisions",
+      "selector": "[data-htmlx-block-id=\"spec-decisions\"]",
+      "kind": "section",
+      "textHash": "sha256-SvUYVHhBs3/ggiW6NTfPAeB3+UEsIATAvis94qPLyn8=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "spec-kicker",
+    "spec-title",
+    "spec-summary",
+    "spec-scope",
+    "spec-requirements",
+    "spec-decisions"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "spec-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"spec-kicker\"]",
+      "textHash": "sha256-pa+VkQeep6HPadHznK+X8k9efSLj64v+F2pcg5ai5wU=",
+      "summary": "Product specification",
+      "keywords": [
+        "Product Spec Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "spec-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"spec-title\"]",
+      "textHash": "sha256-Iv6F/sHePY31cmNK/Eq/HP3Tjk5iZXBbLDo4auWZ028=",
+      "summary": "Document runtime release spec",
+      "keywords": [
+        "Product Spec Template"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "spec-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"spec-summary\"]",
+      "textHash": "sha256-V16bO8dWSmz5kcvvfcBmfgN/WlMrwHyFeyunffagvbQ=",
+      "summary": "A structured product spec for defining scope, constraints, release gates, and owner responsibilities without losing t...",
+      "keywords": [
+        "Product Spec Template"
+      ],
+      "tokenEstimate": 26,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "spec-scope"
+      ],
+      "selector": "[data-htmlx-block-id=\"spec-scope\"]",
+      "textHash": "sha256-wB8nZWd9r8MNjxPvtyflmsACEhkai0u34lTfFtIROC0=",
+      "summary": "Problem Readers need to open a document, correct small details, and export safely. Non-goals No in-browser model call...",
+      "keywords": [
+        "Product Spec Template"
+      ],
+      "tokenEstimate": 49,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "spec-requirements"
+      ],
+      "selector": "[data-htmlx-block-id=\"spec-requirements\"]",
+      "textHash": "sha256-Kn6j/frQHFXW2TuoMt1MMo8CfY5qA7nuu1WbqWhmOKA=",
+      "summary": "Functional requirements Capability Runtime behavior Validation rule Open package Show document first, with minimal fl...",
+      "keywords": [
+        "Product Spec Template"
+      ],
+      "tokenEstimate": 75,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "spec-decisions"
+      ],
+      "selector": "[data-htmlx-block-id=\"spec-decisions\"]",
+      "textHash": "sha256-SvUYVHhBs3/ggiW6NTfPAeB3+UEsIATAvis94qPLyn8=",
+      "summary": "Owner Runtime maintainer Release risk Medium until accessibility pass Fallback Use CLI validation and unpacked edits",
+      "keywords": [
+        "Product Spec Template"
+      ],
+      "tokenEstimate": 22,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

@@ -29,5 +29,6 @@
     "allowRemoteResources": false,
     "allowedOrigins": [],
     "interactionModel": "declarative"
-  }
+  },
+  "profile": "flow-document"
 }

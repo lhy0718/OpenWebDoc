@@ -1,13 +1,158 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "flow-document",
   "summary": "A data report template for metrics, methodology notes, semantic tables, and interpretation.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "textHash": "sha256-vMTRN7lI3MZZOXIf+5LL5lFtpFaKjocfCOzHAHmdaeg=",
+  "selectors": {
+    "report-kicker": "[data-htmlx-block-id=\"report-kicker\"]",
+    "report-title": "[data-htmlx-block-id=\"report-title\"]",
+    "report-summary": "[data-htmlx-block-id=\"report-summary\"]",
+    "report-metrics": "[data-htmlx-block-id=\"report-metrics\"]",
+    "report-table": "[data-htmlx-block-id=\"report-table\"]"
+  },
+  "blockMap": [
+    {
+      "id": "report-kicker",
+      "selector": "[data-htmlx-block-id=\"report-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-OjCQ+w8zh+uGK4BASYomhjF8QKc9tPtVRQLZVj6oBKw=",
+      "editable": false
+    },
+    {
+      "id": "report-title",
+      "selector": "[data-htmlx-block-id=\"report-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-5LyY0Cm9MEo0DCXyH6EeY3UUVS+SZ2mQMALgWs5p9fo=",
+      "editable": false
+    },
+    {
+      "id": "report-summary",
+      "selector": "[data-htmlx-block-id=\"report-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-b5VAMCqucY11bL1TT9feSCmT8WB2TSv8L8+NrfKf4Pc=",
+      "editable": false
+    },
+    {
+      "id": "report-metrics",
+      "selector": "[data-htmlx-block-id=\"report-metrics\"]",
+      "kind": "section",
+      "textHash": "sha256-O1Qchxt8OwDIC9JLjxdQ9fdXBUQC26OaVCnZzZI/Sjo=",
+      "editable": false
+    },
+    {
+      "id": "report-table",
+      "selector": "[data-htmlx-block-id=\"report-table\"]",
+      "kind": "section",
+      "textHash": "sha256-0t2snlm5+SnnU8/IHMxFrLsJwegx6cj/TwFMlgoKjd4=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "report-kicker",
+    "report-title",
+    "report-summary",
+    "report-metrics",
+    "report-table"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "report-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"report-kicker\"]",
+      "textHash": "sha256-OjCQ+w8zh+uGK4BASYomhjF8QKc9tPtVRQLZVj6oBKw=",
+      "summary": "Data report",
+      "keywords": [
+        "Data Report Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "report-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"report-title\"]",
+      "textHash": "sha256-5LyY0Cm9MEo0DCXyH6EeY3UUVS+SZ2mQMALgWs5p9fo=",
+      "summary": "Document package readiness dashboard",
+      "keywords": [
+        "Data Report Template"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "report-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"report-summary\"]",
+      "textHash": "sha256-b5VAMCqucY11bL1TT9feSCmT8WB2TSv8L8+NrfKf4Pc=",
+      "summary": "A report template for combining headline metrics, methodology notes, a semantic data table, and interpretation in a p...",
+      "keywords": [
+        "Data Report Template"
+      ],
+      "tokenEstimate": 32,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "report-metrics"
+      ],
+      "selector": "[data-htmlx-block-id=\"report-metrics\"]",
+      "textHash": "sha256-O1Qchxt8OwDIC9JLjxdQ9fdXBUQC26OaVCnZzZI/Sjo=",
+      "summary": "10 Template packages 100% Package-local resources 0 Scripts or remote assets 1 Document-first runtime",
+      "keywords": [
+        "Data Report Template"
+      ],
+      "tokenEstimate": 19,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "report-table"
+      ],
+      "selector": "[data-htmlx-block-id=\"report-table\"]",
+      "textHash": "sha256-0t2snlm5+SnnU8/IHMxFrLsJwegx6cj/TwFMlgoKjd4=",
+      "summary": "Readiness table Area Measure Status Next check Format Manifest, entry, metadata, and local resources Ready for previe...",
+      "keywords": [
+        "Data Report Template"
+      ],
+      "tokenEstimate": 60,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

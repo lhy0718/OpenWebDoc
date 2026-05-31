@@ -1,13 +1,158 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "flow-document",
   "summary": "An operations manual template for safe package intake, validation, escalation, and repacking.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "htmlx", "type": "cli" }],
+  "textHash": "sha256-5zb0de1iUOB1PQ+WJyh4HUD/U1j4axeK7wMCRUtY29o=",
+  "selectors": {
+    "manual-kicker": "[data-htmlx-block-id=\"manual-kicker\"]",
+    "manual-title": "[data-htmlx-block-id=\"manual-title\"]",
+    "manual-status": "[data-htmlx-block-id=\"manual-status\"]",
+    "manual-intake": "[data-htmlx-block-id=\"manual-intake\"]",
+    "manual-escalation": "[data-htmlx-block-id=\"manual-escalation\"]"
+  },
+  "blockMap": [
+    {
+      "id": "manual-kicker",
+      "selector": "[data-htmlx-block-id=\"manual-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-T/3N2WPpGcRECrQxpSbXKtbWulfeGVzK6dFs2lAh6Qk=",
+      "editable": false
+    },
+    {
+      "id": "manual-title",
+      "selector": "[data-htmlx-block-id=\"manual-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-/YLbSVa4T9neHWBMhkb2I3xMViEolmt1M45tItQUSv0=",
+      "editable": false
+    },
+    {
+      "id": "manual-status",
+      "selector": "[data-htmlx-block-id=\"manual-status\"]",
+      "kind": "unknown",
+      "textHash": "sha256-QhQcTmR/LJ5JtRt7bZP7oIQnmr2xgxgLXxuSYjSvH7Y=",
+      "editable": false
+    },
+    {
+      "id": "manual-intake",
+      "selector": "[data-htmlx-block-id=\"manual-intake\"]",
+      "kind": "section",
+      "textHash": "sha256-jIwWkKE1B7CBn6YkGmjlQuNH2KpZGAIQq53+w8VczEo=",
+      "editable": false
+    },
+    {
+      "id": "manual-escalation",
+      "selector": "[data-htmlx-block-id=\"manual-escalation\"]",
+      "kind": "section",
+      "textHash": "sha256-GuL/5oAubvSawCrHUEQAdZEJRtl+o/zT8SSOrpL0eXQ=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "manual-kicker",
+    "manual-title",
+    "manual-status",
+    "manual-intake",
+    "manual-escalation"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "manual-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"manual-kicker\"]",
+      "textHash": "sha256-T/3N2WPpGcRECrQxpSbXKtbWulfeGVzK6dFs2lAh6Qk=",
+      "summary": "Operations manual",
+      "keywords": [
+        "Operations Manual Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "manual-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"manual-title\"]",
+      "textHash": "sha256-/YLbSVa4T9neHWBMhkb2I3xMViEolmt1M45tItQUSv0=",
+      "summary": "Safe package intake procedure",
+      "keywords": [
+        "Operations Manual Template"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "manual-status"
+      ],
+      "selector": "[data-htmlx-block-id=\"manual-status\"]",
+      "textHash": "sha256-QhQcTmR/LJ5JtRt7bZP7oIQnmr2xgxgLXxuSYjSvH7Y=",
+      "summary": "Runbook Version 0.1 Owner: document operations",
+      "keywords": [
+        "Operations Manual Template"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "manual-intake"
+      ],
+      "selector": "[data-htmlx-block-id=\"manual-intake\"]",
+      "textHash": "sha256-jIwWkKE1B7CBn6YkGmjlQuNH2KpZGAIQq53+w8VczEo=",
+      "summary": "Intake checklist 1. Receive Save the `.htmlx` package from a trusted channel. 2. Validate Run CLI validation before o...",
+      "keywords": [
+        "Operations Manual Template"
+      ],
+      "tokenEstimate": 60,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "manual-escalation"
+      ],
+      "selector": "[data-htmlx-block-id=\"manual-escalation\"]",
+      "textHash": "sha256-GuL/5oAubvSawCrHUEQAdZEJRtl+o/zT8SSOrpL0eXQ=",
+      "summary": "Escalation table Issue Likely cause Response Remote resource blocked Document references an external URL. Move the as...",
+      "keywords": [
+        "Operations Manual Template"
+      ],
+      "tokenEstimate": 72,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "htmlx",
+      "type": "cli"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

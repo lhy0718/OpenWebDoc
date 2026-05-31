@@ -1,13 +1,158 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "flow-document",
   "summary": "A project proposal template for need, approach, validation, outcomes, and pilot planning.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "HTMLX Document Package", "type": "format" }],
+  "textHash": "sha256-oJqPac+BivjNRl1OKxYUio02vtl/tKd7BWUqEoZLwF4=",
+  "selectors": {
+    "proposal-kicker": "[data-htmlx-block-id=\"proposal-kicker\"]",
+    "proposal-title": "[data-htmlx-block-id=\"proposal-title\"]",
+    "proposal-summary": "[data-htmlx-block-id=\"proposal-summary\"]",
+    "proposal-map": "[data-htmlx-block-id=\"proposal-map\"]",
+    "proposal-plan": "[data-htmlx-block-id=\"proposal-plan\"]"
+  },
+  "blockMap": [
+    {
+      "id": "proposal-kicker",
+      "selector": "[data-htmlx-block-id=\"proposal-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-sot7n9M1USWXV+TQLUhoc+B5kButErj5x8FuYrs3W3c=",
+      "editable": false
+    },
+    {
+      "id": "proposal-title",
+      "selector": "[data-htmlx-block-id=\"proposal-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-gnwobdzC7BK/1YW55bsoDlkYlAZYdhG1NmEK/mR4i7o=",
+      "editable": false
+    },
+    {
+      "id": "proposal-summary",
+      "selector": "[data-htmlx-block-id=\"proposal-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-veQB2S7XDMIKeM0906HPYyUdCLNjoIf82C46xPrguTw=",
+      "editable": false
+    },
+    {
+      "id": "proposal-map",
+      "selector": "[data-htmlx-block-id=\"proposal-map\"]",
+      "kind": "section",
+      "textHash": "sha256-0HYURRZ2yuhrZapNMIsBOP6GR36/UdCSDAjAxQN+PIg=",
+      "editable": false
+    },
+    {
+      "id": "proposal-plan",
+      "selector": "[data-htmlx-block-id=\"proposal-plan\"]",
+      "kind": "section",
+      "textHash": "sha256-fYnIhJ8UgF0yXE0cX0SMAkamfOtp/mRxSU/OaqhN+sg=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "proposal-kicker",
+    "proposal-title",
+    "proposal-summary",
+    "proposal-map",
+    "proposal-plan"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "proposal-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"proposal-kicker\"]",
+      "textHash": "sha256-sot7n9M1USWXV+TQLUhoc+B5kButErj5x8FuYrs3W3c=",
+      "summary": "Project proposal",
+      "keywords": [
+        "Project Proposal Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "proposal-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"proposal-title\"]",
+      "textHash": "sha256-gnwobdzC7BK/1YW55bsoDlkYlAZYdhG1NmEK/mR4i7o=",
+      "summary": "Portable document workflow pilot",
+      "keywords": [
+        "Project Proposal Template"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "proposal-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"proposal-summary\"]",
+      "textHash": "sha256-veQB2S7XDMIKeM0906HPYyUdCLNjoIf82C46xPrguTw=",
+      "summary": "A proposal format for explaining why a team should adopt HTMLX packages, what will be tested, what is out of scope, a...",
+      "keywords": [
+        "Project Proposal Template"
+      ],
+      "tokenEstimate": 37,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "proposal-map"
+      ],
+      "selector": "[data-htmlx-block-id=\"proposal-map\"]",
+      "textHash": "sha256-0HYURRZ2yuhrZapNMIsBOP6GR36/UdCSDAjAxQN+PIg=",
+      "summary": "Need Documents should open in browsers without losing structure. Approach Use `.htmlx` packages with local assets and...",
+      "keywords": [
+        "Project Proposal Template"
+      ],
+      "tokenEstimate": 45,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "proposal-plan"
+      ],
+      "selector": "[data-htmlx-block-id=\"proposal-plan\"]",
+      "textHash": "sha256-fYnIhJ8UgF0yXE0cX0SMAkamfOtp/mRxSU/OaqhN+sg=",
+      "summary": "Pilot plan Phase Deliverable Review question Prepare Template gallery and validated examples Can first-time users und...",
+      "keywords": [
+        "Project Proposal Template"
+      ],
+      "tokenEstimate": 60,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "HTMLX Document Package",
+      "type": "format"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

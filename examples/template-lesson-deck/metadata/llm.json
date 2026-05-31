@@ -1,13 +1,182 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "slide-deck",
   "summary": "A lesson deck template for teaching a workflow with concept, practice, and recap slides.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "HTMLX Document Package", "type": "format" }],
+  "textHash": "sha256-81YG3qUw0VRAUrjx3pWjPvuXeomzQWan457Yu7/tKMI=",
+  "selectors": {
+    "lesson-kicker": "[data-htmlx-block-id=\"lesson-kicker\"]",
+    "lesson-title": "[data-htmlx-block-id=\"lesson-title\"]",
+    "lesson-summary": "[data-htmlx-block-id=\"lesson-summary\"]",
+    "lesson-concept": "[data-htmlx-block-id=\"lesson-concept\"]",
+    "lesson-practice": "[data-htmlx-block-id=\"lesson-practice\"]",
+    "lesson-recap": "[data-htmlx-block-id=\"lesson-recap\"]"
+  },
+  "blockMap": [
+    {
+      "id": "lesson-kicker",
+      "selector": "[data-htmlx-block-id=\"lesson-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-nQ3/Hhs8Pzn06H8okxw4Ga0KEiNpgzYRdefWw7RVd7E=",
+      "editable": false
+    },
+    {
+      "id": "lesson-title",
+      "selector": "[data-htmlx-block-id=\"lesson-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-EOb83K+J/T32Pi+0pCQJkja5AZ9ET9BIxWrp8F8eeTo=",
+      "editable": false
+    },
+    {
+      "id": "lesson-summary",
+      "selector": "[data-htmlx-block-id=\"lesson-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-lvMC8aDiUVMWGr4/TsVGFfprkD8XXms9so5JYpd5eSU=",
+      "editable": false
+    },
+    {
+      "id": "lesson-concept",
+      "selector": "[data-htmlx-block-id=\"lesson-concept\"]",
+      "kind": "heading",
+      "textHash": "sha256-52EM0hUgDYzY+KqpWNFJkEy4jH7vU+lchnI45yZ4veM=",
+      "editable": false
+    },
+    {
+      "id": "lesson-practice",
+      "selector": "[data-htmlx-block-id=\"lesson-practice\"]",
+      "kind": "heading",
+      "textHash": "sha256-2GiYtNoq4q2Zq+ZjAb8iUl2TawwTvTaHLOjcyz+NC6o=",
+      "editable": false
+    },
+    {
+      "id": "lesson-recap",
+      "selector": "[data-htmlx-block-id=\"lesson-recap\"]",
+      "kind": "heading",
+      "textHash": "sha256-RlbTU3HFU90W+TyqZ4K6QcYIfkmBTH0wRr6CKs/dcnk=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "lesson-kicker",
+    "lesson-title",
+    "lesson-summary",
+    "lesson-concept",
+    "lesson-practice",
+    "lesson-recap"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "lesson-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"lesson-kicker\"]",
+      "textHash": "sha256-nQ3/Hhs8Pzn06H8okxw4Ga0KEiNpgzYRdefWw7RVd7E=",
+      "summary": "Lesson deck",
+      "keywords": [
+        "Lesson Deck Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "lesson-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"lesson-title\"]",
+      "textHash": "sha256-EOb83K+J/T32Pi+0pCQJkja5AZ9ET9BIxWrp8F8eeTo=",
+      "summary": "Teach a workflow as a browser-readable deck",
+      "keywords": [
+        "Lesson Deck Template"
+      ],
+      "tokenEstimate": 10,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "lesson-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"lesson-summary\"]",
+      "textHash": "sha256-lvMC8aDiUVMWGr4/TsVGFfprkD8XXms9so5JYpd5eSU=",
+      "summary": "A classroom or workshop template for concept, demonstration, practice, and recap.",
+      "keywords": [
+        "Lesson Deck Template"
+      ],
+      "tokenEstimate": 15,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "lesson-concept"
+      ],
+      "selector": "[data-htmlx-block-id=\"lesson-concept\"]",
+      "textHash": "sha256-52EM0hUgDYzY+KqpWNFJkEy4jH7vU+lchnI45yZ4veM=",
+      "summary": "A `.htmlx` file is a document package, not a script bundle.",
+      "keywords": [
+        "Lesson Deck Template"
+      ],
+      "tokenEstimate": 15,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "lesson-practice"
+      ],
+      "selector": "[data-htmlx-block-id=\"lesson-practice\"]",
+      "textHash": "sha256-2GiYtNoq4q2Zq+ZjAb8iUl2TawwTvTaHLOjcyz+NC6o=",
+      "summary": "Learners inspect one package and mark what should stay local.",
+      "keywords": [
+        "Lesson Deck Template"
+      ],
+      "tokenEstimate": 14,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "lesson-recap"
+      ],
+      "selector": "[data-htmlx-block-id=\"lesson-recap\"]",
+      "textHash": "sha256-RlbTU3HFU90W+TyqZ4K6QcYIfkmBTH0wRr6CKs/dcnk=",
+      "summary": "Readable source, local resources, explicit validation.",
+      "keywords": [
+        "Lesson Deck Template"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "HTMLX Document Package",
+      "type": "format"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "slide-deck",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/presentation.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

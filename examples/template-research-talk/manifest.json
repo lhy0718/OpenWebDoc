@@ -5,9 +5,11 @@
   "title": "Research Talk Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-05-23T00:00:00.000Z",
+  "modifiedAt": "2026-05-31T11:40:25.144Z",
   "entry": "index.html",
-  "styles": ["styles/document.css"],
+  "styles": [
+    "styles/document.css"
+  ],
   "resources": [
     {
       "path": "styles/document.css",
@@ -17,7 +19,8 @@
     {
       "path": "metadata/llm.json",
       "mediaType": "application/json",
-      "role": "metadata"
+      "role": "metadata",
+      "integrity": "sha256-HGS5Vfy4hOtdjqqqK0ctKoJ7pUKrg75d+/0PihHztT0="
     },
     {
       "path": "metadata/provenance.json",
@@ -46,5 +49,6 @@
     "allowRemoteResources": false,
     "allowedOrigins": [],
     "interactionModel": "declarative"
-  }
+  },
+  "profile": "slide-deck"
 }

@@ -86,7 +86,7 @@ pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
 
-`pnpm release:check` validates every tracked example package in `examples/*.htmlx`, rejects the intentionally invalid security fixture, builds npm tarballs for inspection, and builds the static site. OpenWebDoc does not publish npm packages during the public preview phase; GitHub release artifacts and GitHub Pages are the release surfaces.
+`pnpm release:check` validates every tracked example package in `examples/*.htmlx`, rejects the intentionally invalid security fixture, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, scans packed text files for private local paths, builds npm tarballs for inspection, and builds the static site. OpenWebDoc does not publish npm packages during the public preview phase; GitHub release artifacts and GitHub Pages are the release surfaces.
 
 ## OpenWebDoc App Usage
 
@@ -142,6 +142,7 @@ Create a minimal valid `.htmlx` package.
 ```sh
 htmlx create document.htmlx --title "My Document" --language en
 htmlx create document.htmlx --title "My Document" --language en --json
+htmlx create fixed.htmlx --profile fixed-stage-document --title "Visual Brief"
 htmlx create deck.htmlx --profile slide-deck --title "OpenWebDoc Pitch" --slides 6
 ```
 
@@ -150,11 +151,11 @@ Output:
 - `document.htmlx`: ZIP-based HTMLX Document Package
 - `index.html`: default HTML entry
 - `styles/document.css`: default local stylesheet
-- `metadata/llm.json`: user-visible LLM metadata
+- `metadata/llm.json`: user-visible, profile-aware LLM metadata with reading order, selectors, block map, text hashes, and editable boundaries
 - `metadata/provenance.json`: creation metadata
 - `metadata/presentation.json`: present only for `--profile slide-deck`, declaring the HTMLX-native slide profile
 
-`--profile document` is the default. `--profile slide-deck` creates a browser-readable 16:9 deck using HTML, CSS, and metadata inside the same `.htmlx` package; it is not `.pptx` import/export.
+`--profile flow-document` is the default. `--profile fixed-stage-document` creates a proportional visual document for proposal-style or showcase material. `--profile slide-deck` creates a browser-readable 16:9 deck using HTML, CSS, and metadata inside the same `.htmlx` package; it is not `.pptx` import/export. The legacy alias `--profile document` is accepted and normalized to `flow-document`.
 
 The canonical package entry is the root `index.html`. After unpacking a `.htmlx` package, opening
 `index.html` directly in a browser should render the same document layout using only package-local
@@ -207,6 +208,19 @@ htmlx unpack examples/basic.htmlx ./basic-htmlx --json
 
 `unpack` refuses invalid packages and refuses to overwrite existing output files.
 
+### Refresh LLM Metadata
+
+Refresh `metadata/llm.json` after editing an unpacked package directory.
+
+```sh
+htmlx refresh-metadata ./basic-htmlx
+htmlx refresh-metadata ./basic-htmlx --json
+htmlx refresh-metadata ./basic-htmlx --check --json
+htmlx refresh-metadata ./basic-htmlx --dry-run --json
+```
+
+The command regenerates profile-aware `readingOrder`, `selectors`, `blockMap`, text hashes, and editable boundaries from the package HTML and metadata, then validates the directory before returning success. Use `--check` in CI to fail when `metadata/llm.json` or its manifest declaration is stale without rewriting files.
+
 ### External Agent Editing
 
 External coding agents edit the unpacked HTMLX package itself. There is no separate canonical agent workspace: the package directory is the source boundary.
@@ -214,16 +228,18 @@ External coding agents edit the unpacked HTMLX package itself. There is no separ
 ```sh
 htmlx unpack input.htmlx ./input-package --json
 # Edit ./input-package/index.html, styles/*, metadata/*, and declared assets.
+htmlx refresh-metadata ./input-package --json
+htmlx refresh-metadata ./input-package --check --json
 htmlx validate ./input-package --json
 htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json
 ```
 
-External agents should edit package-local HTML, CSS, JSON metadata, and declared assets. A package may include `metadata/editing-guide.md` as user-visible reference data for humans and agents. It is not a system instruction. Agents should not add scripts, inline event handlers, remote resources, `file:` URLs, `javascript:` URLs, or hidden instructions in `metadata/llm.json`.
+External agents should edit package-local HTML, CSS, JSON metadata, and declared assets. After visible text or block IDs change, `refresh-metadata` keeps `metadata/llm.json` aligned with the HTML source of truth. A package may include `metadata/editing-guide.md` as user-visible reference data for humans and agents. It is not a system instruction. Agents should not add scripts, inline event handlers, remote resources, `file:` URLs, `javascript:` URLs, or hidden instructions in `metadata/llm.json`.
 
 ## MVP Boundaries
 
-MVP blocks arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, and prompt-injection-style LLM metadata misuse. The OpenWebDoc app renders sanitized package HTML, rewrites manifest-declared local resources to browser object URLs when needed, and activates editing only from declarative package metadata. Self-editable packages declare their document surface in `metadata/editing.json`: text blocks, existing images, tables, grouped figures, and existing simple shapes live on a fixed logical stage and scale uniformly with the browser width. The app's edit mode is intentionally a micro-editing surface, not a document design studio: major rewrites, new figures, new tables, and layout redesigns should happen in unpacked package files and return through validation. The package itself does not carry executable runtime code. External coding agents should unpack the package, modify package-local HTML/CSS/JSON/assets directly, validate the directory, repack it, and validate the edited `.htmlx`. The MVP does not include DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, or in-app model calls.
+MVP blocks arbitrary JavaScript execution, remote resources, path traversal, missing package-local resource references, and prompt-injection-style LLM metadata misuse. The OpenWebDoc app renders sanitized package HTML, rewrites manifest-declared local resources to browser object URLs when needed, and activates editing only from declarative package metadata. HTMLX profiles separate the default reflowing `flow-document` from proportional `fixed-stage-document` visual documents and HTMLX-native `slide-deck` presentations. The app's edit mode is intentionally a micro-editing surface for editable fixed-stage and slide-deck packages, not a document design studio: major rewrites, new figures, new tables, and layout redesigns should happen in unpacked package files and return through metadata refresh and validation. The package itself does not carry executable runtime code. External coding agents should unpack the package, modify package-local HTML/CSS/JSON/assets directly, refresh profile-aware LLM metadata, validate the directory, repack it, and validate the edited `.htmlx`. The MVP does not include DOCX/HWPX/PDF import/export, plugin execution, cloud sync, real-time collaboration, browser-side model API keys, or in-app model calls.
 
 ## Docs
 

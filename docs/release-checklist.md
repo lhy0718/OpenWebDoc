@@ -10,22 +10,30 @@
 - [ ] `pnpm pack:packages` creates tarballs for `@openwebdoc/spec`, `@openwebdoc/core`, `@openwebdoc/cli`, and `@openwebdoc/ui`.
 - [ ] `pnpm site:build` creates `dist/site/` with the OpenWebDoc app build.
 - [ ] `pnpm release:check` validates every tracked `examples/*.htmlx` package and rejects `examples/security-invalid.htmlx`.
+- [ ] `pnpm release:check` runs `htmlx refresh-metadata <example-directory> --check --json` for every valid source example directory.
+- [ ] `pnpm release:check` fails when a packed `examples/*.htmlx` file drifts from its source directory.
+- [ ] `pnpm release:check` fails when `apps/openwebdoc/public/examples/*.htmlx` is not byte-identical to the matching packed example.
+- [ ] `pnpm release:check` scans text files inside packed examples for absolute or private local paths.
 - [ ] GitHub Pages serves the entry page at `https://lhy0718.github.io/OpenWebDoc/`.
 - [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.
 - [ ] GitHub Pages serves the downloadable template gallery from the entry page.
 - [ ] `pnpm release:check` succeeds.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
+- [ ] `pnpm htmlx validate examples/template-flow-article.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/openwebdoc-introduction.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/openwebdoc-slide-deck.htmlx` succeeds.
 - [ ] `metadata/editing-guide.md`, when present, is declared as package-local Markdown metadata.
 - [ ] `pnpm htmlx validate examples/security-invalid.htmlx` fails for expected security reasons.
 - [ ] OpenWebDoc opens `examples/basic.htmlx` as a readable document.
+- [ ] OpenWebDoc opens `examples/template-flow-article.htmlx` as a reflowing read-only `flow-document`.
 - [ ] OpenWebDoc opens `examples/openwebdoc-introduction.htmlx` in reading mode with text, editable document-owned microcopy, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, and funnel blocks.
 - [ ] OpenWebDoc opens `examples/openwebdoc-slide-deck.htmlx` in read mode as stacked 16:9 slides.
 - [ ] OpenWebDoc opens the template gallery examples, including presentation templates, without horizontal overflow.
 - [ ] OpenWebDoc presentation mode for slide decks hides app chrome and shows one centered slide on a black background with keyboard navigation.
 - [ ] OpenWebDoc renders manifest-declared package-local assets.
 - [ ] OpenWebDoc production build has no oversized-chunk warning.
+- [ ] `htmlx refresh-metadata <directory>` updates `metadata/llm.json` and preserves directory validation.
+- [ ] `htmlx refresh-metadata <directory> --check --json` succeeds for fresh examples and fails without rewriting files for stale metadata.
 - [ ] `htmlx validate <directory>` validates an unpacked package before repacking.
 - [ ] OpenWebDoc acts as the trusted WYSIWYG runtime for `metadata/editing.json`.
 - [ ] OpenWebDoc supports paragraph add/delete/duplicate, heading deletion, inline bold/italic/underline, font-size and text-color tweaks, existing image replacement, existing shape movement/resizing/fill changes, semantic table preservation, grouped figure movement, and selected-figure inner card movement on the document surface.

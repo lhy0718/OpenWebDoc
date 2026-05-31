@@ -1,13 +1,227 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "flow-document",
   "summary": "A research brief template for claims, evidence, decisions, and follow-up questions.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "HTMLX Document Package", "type": "format" }],
+  "textHash": "sha256-QCh84TeOgHj2/KIB3VRvUqpj5mNsc++ObMd+kHYtmwU=",
+  "selectors": {
+    "brief-kicker": "[data-htmlx-block-id=\"brief-kicker\"]",
+    "brief-title": "[data-htmlx-block-id=\"brief-title\"]",
+    "brief-summary": "[data-htmlx-block-id=\"brief-summary\"]",
+    "brief-metadata": "[data-htmlx-block-id=\"brief-metadata\"]",
+    "brief-thesis": "[data-htmlx-block-id=\"brief-thesis\"]",
+    "brief-question": "[data-htmlx-block-id=\"brief-question\"]",
+    "brief-evidence": "[data-htmlx-block-id=\"brief-evidence\"]",
+    "brief-workflow": "[data-htmlx-block-id=\"brief-workflow\"]"
+  },
+  "blockMap": [
+    {
+      "id": "brief-kicker",
+      "selector": "[data-htmlx-block-id=\"brief-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-kuh3StGK1mllJELxHp/Is9LRVlrm7zTf+6wUElEIv5A=",
+      "editable": false
+    },
+    {
+      "id": "brief-title",
+      "selector": "[data-htmlx-block-id=\"brief-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-lH0z7JEmBgwaPsHSxqqDsLqu54yTB4cOd779DuKO1mo=",
+      "editable": false
+    },
+    {
+      "id": "brief-summary",
+      "selector": "[data-htmlx-block-id=\"brief-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-jT0ZrPwa/2RSdQ9S0pAIxsw9uax9ucNjX9zoLBn/bi0=",
+      "editable": false
+    },
+    {
+      "id": "brief-metadata",
+      "selector": "[data-htmlx-block-id=\"brief-metadata\"]",
+      "kind": "unknown",
+      "textHash": "sha256-pb6nNA9uzi+YQK/kCAde0ozMFoJjZW9T0w12NcYWBYw=",
+      "editable": false
+    },
+    {
+      "id": "brief-thesis",
+      "selector": "[data-htmlx-block-id=\"brief-thesis\"]",
+      "kind": "section",
+      "textHash": "sha256-4ppk8eY0k8HPV1lUJJmCWFoKO3cAAeBTHHgFY2CUgXE=",
+      "editable": false
+    },
+    {
+      "id": "brief-question",
+      "selector": "[data-htmlx-block-id=\"brief-question\"]",
+      "kind": "section",
+      "textHash": "sha256-XoAV8cNbq+sy/NAyuFlCIJPTsyUdg3fdZXrwXFMJJFM=",
+      "editable": false
+    },
+    {
+      "id": "brief-evidence",
+      "selector": "[data-htmlx-block-id=\"brief-evidence\"]",
+      "kind": "section",
+      "textHash": "sha256-VGj+H+YzO04Xr21+6iBElRebFYkQVfD75+RGU5ZuFDs=",
+      "editable": false
+    },
+    {
+      "id": "brief-workflow",
+      "selector": "[data-htmlx-block-id=\"brief-workflow\"]",
+      "kind": "figure",
+      "textHash": "sha256-X/2M36gkrUYwR+XCeofYEq5xTJJ8Rjwyh7/HtMSrBiE=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "brief-kicker",
+    "brief-title",
+    "brief-summary",
+    "brief-metadata",
+    "brief-thesis",
+    "brief-question",
+    "brief-evidence",
+    "brief-workflow"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "brief-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-kicker\"]",
+      "textHash": "sha256-kuh3StGK1mllJELxHp/Is9LRVlrm7zTf+6wUElEIv5A=",
+      "summary": "Research brief",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "brief-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-title\"]",
+      "textHash": "sha256-lH0z7JEmBgwaPsHSxqqDsLqu54yTB4cOd779DuKO1mo=",
+      "summary": "Browser-native evidence brief",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 5,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "brief-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-summary\"]",
+      "textHash": "sha256-jT0ZrPwa/2RSdQ9S0pAIxsw9uax9ucNjX9zoLBn/bi0=",
+      "summary": "Use this template for a compact research memo that combines a claim, evidence table, decision notes, and follow-up qu...",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 33,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "brief-metadata"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-metadata\"]",
+      "textHash": "sha256-pb6nNA9uzi+YQK/kCAde0ozMFoJjZW9T0w12NcYWBYw=",
+      "summary": "Audience: product and research leads Length: 4 to 6 sections Status: draft-ready",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 17,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "brief-thesis"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-thesis\"]",
+      "textHash": "sha256-4ppk8eY0k8HPV1lUJJmCWFoKO3cAAeBTHHgFY2CUgXE=",
+      "summary": "Primary takeaway Put the conclusion first. The rest of the brief should explain what changed, why it matters, how str...",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 42,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "brief-question"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-question\"]",
+      "textHash": "sha256-XoAV8cNbq+sy/NAyuFlCIJPTsyUdg3fdZXrwXFMJJFM=",
+      "summary": "Open question Frame the uncertainty clearly enough that another reviewer or external agent can refine the brief witho...",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 29,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-7",
+      "blockIds": [
+        "brief-evidence"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-evidence\"]",
+      "textHash": "sha256-VGj+H+YzO04Xr21+6iBElRebFYkQVfD75+RGU5ZuFDs=",
+      "summary": "Evidence matrix Signal Observation Confidence Action User workflow Readers need a single package that opens without a...",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 95,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-8",
+      "blockIds": [
+        "brief-workflow"
+      ],
+      "selector": "[data-htmlx-block-id=\"brief-workflow\"]",
+      "textHash": "sha256-X/2M36gkrUYwR+XCeofYEq5xTJJ8Rjwyh7/HtMSrBiE=",
+      "summary": "Recommended review loop Read Open the package and inspect the claim. Check Validate evidence, citations, and unresolv...",
+      "keywords": [
+        "Research Brief Template"
+      ],
+      "tokenEstimate": 48,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "HTMLX Document Package",
+      "type": "format"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

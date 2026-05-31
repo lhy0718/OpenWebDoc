@@ -7,6 +7,12 @@ const packages = ["@openwebdoc/spec", "@openwebdoc/core", "@openwebdoc/ui"];
 const app = { name: "OpenWebDoc", packageName: "@openwebdoc/app", route: "app" };
 const templates = [
   {
+    id: "template-flow-article",
+    title: "Flow Document Brief",
+    type: "Flow document",
+    description: "Default reflowing HTMLX document profile with semantic content.",
+  },
+  {
     id: "template-research-brief",
     title: "Research Brief",
     type: "Document",

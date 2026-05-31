@@ -19,6 +19,13 @@ export const HTMLX_EDITING_METADATA_SCHEMA_URL =
 export const HTMLX_PRESENTATION_METADATA_SCHEMA_URL =
   "https://openwebdoc.org/schemas/htmlx-presentation-metadata-v0.1.schema.json";
 
+export const HTMLX_DOCUMENT_PROFILES = [
+  "flow-document",
+  "fixed-stage-document",
+  "slide-deck",
+] as const;
+
+export type HtmlxDocumentProfile = (typeof HTMLX_DOCUMENT_PROFILES)[number];
 export type HtmlxInteractionModel = "declarative";
 export type HtmlxResourceRole =
   | "document"
@@ -56,6 +63,7 @@ export interface HtmlxSecurityPolicy {
 export interface HtmlxManifest {
   $schema: string;
   htmlxVersion: string;
+  profile?: HtmlxDocumentProfile;
   packageId: string;
   title: string;
   language: string;
@@ -69,6 +77,27 @@ export interface HtmlxManifest {
 }
 
 export type HtmlxSensitivity = "public" | "internal" | "private" | "unknown";
+export type HtmlxLlmBlockKind =
+  | "document"
+  | "section"
+  | "slide"
+  | "heading"
+  | "paragraph"
+  | "table"
+  | "figure"
+  | "image"
+  | "shape"
+  | "list"
+  | "code"
+  | "unknown";
+
+export interface HtmlxLlmBlockMapEntry {
+  id: string;
+  selector: string;
+  kind: HtmlxLlmBlockKind;
+  textHash?: string;
+  editable: boolean;
+}
 
 export interface HtmlxLlmChunk {
   id: string;
@@ -83,11 +112,22 @@ export interface HtmlxLlmChunk {
 
 export interface HtmlxLlmMetadata {
   schemaVersion: string;
+  profile?: HtmlxDocumentProfile;
   summary: string;
+  textHash?: string;
   readingOrder: string[];
+  selectors?: Record<string, string>;
+  blockMap?: HtmlxLlmBlockMapEntry[];
   chunks: HtmlxLlmChunk[];
   entities: unknown[];
   citations: unknown[];
+  editableBoundary?: {
+    profile: HtmlxDocumentProfile;
+    editableBlockIds: string[];
+    appEditableBlockIds?: string[];
+    externalAgentEditableFiles?: string[];
+    structuralEdits: "external-agent-only";
+  };
   assistantHints: {
     visibility: "user-visible";
     intendedUse: Array<"summarization" | "retrieval" | "editing">;
@@ -255,6 +295,7 @@ export const htmlxManifestSchema = {
   properties: {
     $schema: { const: HTMLX_MANIFEST_SCHEMA_URL },
     htmlxVersion: { type: "string", pattern: "^0\\.1\\.0$" },
+    profile: { enum: HTMLX_DOCUMENT_PROFILES },
     packageId: { type: "string", minLength: 1 },
     title: { type: "string", minLength: 1 },
     language: { type: "string", minLength: 2 },
@@ -557,17 +598,25 @@ export function validateHtmlxPresentationMetadataSchema(
   };
 }
 
+export function normalizeHtmlxDocumentProfile(input: unknown): HtmlxDocumentProfile | null {
+  return typeof input === "string" && (HTMLX_DOCUMENT_PROFILES as readonly string[]).includes(input)
+    ? (input as HtmlxDocumentProfile)
+    : null;
+}
+
 export function createDefaultManifest(input: {
   packageId: string;
   title: string;
   language?: string;
   entry?: string;
+  profile?: HtmlxDocumentProfile;
   now?: string;
 }): HtmlxManifest {
   const now = input.now ?? new Date().toISOString();
   return {
     $schema: HTMLX_MANIFEST_SCHEMA_URL,
     htmlxVersion: HTMLX_CURRENT_VERSION,
+    profile: input.profile ?? "flow-document",
     packageId: input.packageId,
     title: input.title,
     language: input.language ?? "en",

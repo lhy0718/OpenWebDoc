@@ -28,6 +28,18 @@ previews/thumbnail.png
 
 Only `mimetype`, `manifest.json`, and the manifest `entry` are required for MVP packages.
 
+`metadata/llm.json` is profile-aware reference metadata. It can include a document-level `textHash`, `readingOrder`, block selectors, a `blockMap`, chunk hashes, and an `editableBoundary`. These fields help humans and external agents navigate the package, but they do not override the HTML source of truth. After editing unpacked package files, run `htmlx refresh-metadata <directory>` to regenerate this metadata before validation and packing, then run `htmlx refresh-metadata <directory> --check` in CI to catch stale metadata or manifest integrity.
+
+## Document Profiles
+
+`manifest.profile` declares the document layout contract:
+
+- `flow-document`: the default pageless browser document profile. It reflows like normal HTML and does not require fixed-stage geometry.
+- `fixed-stage-document`: a proportional visual document profile for proposal-style, showcase, and other fixed-layout material. It uses stage-relative coordinates declared by the package.
+- `slide-deck`: an HTMLX-native presentation profile. It keeps a 16:9 stage and presentation metadata.
+
+Older packages without `manifest.profile` remain readable. The validator infers `slide-deck` from `metadata.presentation`, `fixed-stage-document` from self-editable stage metadata or stage markup, and `flow-document` otherwise.
+
 ## Standalone Entry Rule
 
 The canonical document entry is the root `index.html`. A valid OpenWebDoc package should be useful
@@ -48,11 +60,11 @@ Document-local `src` and `href` references must point to files inside the packag
 
 Remote resources are outside the MVP security model and are rejected by validation.
 
-## Self-editable Document Stage
+## Fixed-stage Document Profile
 
-Self-editable HTMLX documents use a fixed logical stage that scales to the browser width. The current rich MVP example uses a `980 x 6500` stage so the document can behave like a long browser-native introduction rather than a short card. Text, existing images, semantic HTML tables, grouped figures, roadmap cards, funnel blocks, and existing simple shapes are positioned in stage-relative coordinates and exported as script-free HTML with `data-htmlx-*` attributes. Inline text formatting uses safe semantic tags such as `<strong>`, `<em>`, and `<u>`. Text font sizes and document border insets use the same stage-relative scale as images and figures, so the composition remains visually stable as the browser width changes.
+Fixed-stage HTMLX documents use a logical stage that scales to the browser width. The current rich MVP example uses a `980 x 6500` stage so the document can behave like a long browser-native introduction rather than a short card. Text, existing images, semantic HTML tables, grouped figures, roadmap cards, funnel blocks, and existing simple shapes are positioned in stage-relative coordinates and exported as script-free HTML with `data-htmlx-*` attributes. Inline text formatting uses safe semantic tags such as `<strong>`, `<em>`, and `<u>`. Text font sizes and document border insets use the same stage-relative scale as images and figures, so the composition remains visually stable as the browser width changes.
 
-Self-editable HTMLX documents follow a proportional layout contract:
+Fixed-stage documents follow a proportional layout contract:
 
 - the document entry is root `index.html`
 - one stage element declares `data-htmlx-editable="document"`, `data-htmlx-stage-width`, and `data-htmlx-stage-height`
@@ -61,8 +73,7 @@ Self-editable HTMLX documents follow a proportional layout contract:
 - package CSS sets `box-sizing: border-box` so object frames include padding and borders
 - package CSS does not use `min()`, `max()`, `clamp()`, or media queries to override the stage coordinate scale
 
-This contract belongs to the package format and validator. The OpenWebDoc runtime should not repair
-broken ratios with runtime-specific layout overrides.
+This contract belongs to the package format and validator. The OpenWebDoc runtime should not repair broken ratios with runtime-specific layout overrides. Flow documents do not use this contract.
 
 The app UX is document-first: the document surface remains the primary screen, and editing controls appear as small overlays for opening, paragraph micro-edits, inline formatting, validating, inspecting, and exporting. Large app-side panels are secondary and should not replace the document surface. New figures, new tables, and major layout redesigns are external-agent/package-file work, not internal runtime work.
 
@@ -75,7 +86,7 @@ The app UX is document-first: the document surface remains the primary screen, a
 
 The `.htmlx` package does not execute arbitrary runtime code. The trusted OpenWebDoc runtime reads the declarative HTML and editing metadata, activates direct manipulation, and exports a validated package.
 
-See `examples/openwebdoc-introduction/` for a script-free sample that includes editable headings, paragraphs with inline formatting, editable document-owned microcopy, package-local PNG icons, grouped figures, semantic HTML tables, roadmap blocks, and funnel blocks.
+See `examples/template-flow-article/` for a reflowing flow document and `examples/openwebdoc-introduction/` for a script-free fixed-stage sample that includes editable headings, paragraphs with inline formatting, editable document-owned microcopy, package-local PNG icons, grouped figures, semantic HTML tables, roadmap blocks, and funnel blocks.
 
 ## Slide Deck Profile
 

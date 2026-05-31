@@ -1,13 +1,182 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "slide-deck",
   "summary": "A status review deck template for progress, risks, decisions, and commitments.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "textHash": "sha256-cSaKeC69qEzl1nQeP3NL7CcC4FqQsN0bh+H8zAQg34U=",
+  "selectors": {
+    "status-kicker": "[data-htmlx-block-id=\"status-kicker\"]",
+    "status-title": "[data-htmlx-block-id=\"status-title\"]",
+    "status-summary": "[data-htmlx-block-id=\"status-summary\"]",
+    "status-progress": "[data-htmlx-block-id=\"status-progress\"]",
+    "status-risks": "[data-htmlx-block-id=\"status-risks\"]",
+    "status-commitment": "[data-htmlx-block-id=\"status-commitment\"]"
+  },
+  "blockMap": [
+    {
+      "id": "status-kicker",
+      "selector": "[data-htmlx-block-id=\"status-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-SZNZUba6JioYGnCjRdkG7uxxHI3MFysg3R92pKyuzbs=",
+      "editable": false
+    },
+    {
+      "id": "status-title",
+      "selector": "[data-htmlx-block-id=\"status-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-0kMlTIkdKpIWso5AFlKh1yug++uoDEAlph0btQSqbn4=",
+      "editable": false
+    },
+    {
+      "id": "status-summary",
+      "selector": "[data-htmlx-block-id=\"status-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-49pc+Nas9bYxytYfDAJIJTS8LEuxAWOzxS7SPJAXDL0=",
+      "editable": false
+    },
+    {
+      "id": "status-progress",
+      "selector": "[data-htmlx-block-id=\"status-progress\"]",
+      "kind": "heading",
+      "textHash": "sha256-TnGJ4sJM+GRgBaCo9JLVbSOoyUdfQaeJ4b+EjlGaATs=",
+      "editable": false
+    },
+    {
+      "id": "status-risks",
+      "selector": "[data-htmlx-block-id=\"status-risks\"]",
+      "kind": "heading",
+      "textHash": "sha256-lIQfWl3LvYdYhXDzHrI30LxDiHUPOV7Cpv1FucBztVo=",
+      "editable": false
+    },
+    {
+      "id": "status-commitment",
+      "selector": "[data-htmlx-block-id=\"status-commitment\"]",
+      "kind": "heading",
+      "textHash": "sha256-8lnGcU282Ra58uJy1kIvbooYhjZcym6j7O0sC+cyD3I=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "status-kicker",
+    "status-title",
+    "status-summary",
+    "status-progress",
+    "status-risks",
+    "status-commitment"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "status-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"status-kicker\"]",
+      "textHash": "sha256-SZNZUba6JioYGnCjRdkG7uxxHI3MFysg3R92pKyuzbs=",
+      "summary": "Status review",
+      "keywords": [
+        "Status Review Deck Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "status-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"status-title\"]",
+      "textHash": "sha256-0kMlTIkdKpIWso5AFlKh1yug++uoDEAlph0btQSqbn4=",
+      "summary": "OpenWebDoc alpha readiness",
+      "keywords": [
+        "Status Review Deck Template"
+      ],
+      "tokenEstimate": 5,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "status-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"status-summary\"]",
+      "textHash": "sha256-49pc+Nas9bYxytYfDAJIJTS8LEuxAWOzxS7SPJAXDL0=",
+      "summary": "A weekly review deck for progress, risks, decisions, and next commitments.",
+      "keywords": [
+        "Status Review Deck Template"
+      ],
+      "tokenEstimate": 15,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "status-progress"
+      ],
+      "selector": "[data-htmlx-block-id=\"status-progress\"]",
+      "textHash": "sha256-TnGJ4sJM+GRgBaCo9JLVbSOoyUdfQaeJ4b+EjlGaATs=",
+      "summary": "The runtime, examples, and deployment path are now visible to public users.",
+      "keywords": [
+        "Status Review Deck Template"
+      ],
+      "tokenEstimate": 17,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "status-risks"
+      ],
+      "selector": "[data-htmlx-block-id=\"status-risks\"]",
+      "textHash": "sha256-lIQfWl3LvYdYhXDzHrI30LxDiHUPOV7Cpv1FucBztVo=",
+      "summary": "Track risks where the document and runtime meet.",
+      "keywords": [
+        "Status Review Deck Template"
+      ],
+      "tokenEstimate": 11,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "status-commitment"
+      ],
+      "selector": "[data-htmlx-block-id=\"status-commitment\"]",
+      "textHash": "sha256-8lnGcU282Ra58uJy1kIvbooYhjZcym6j7O0sC+cyD3I=",
+      "summary": "Ship only after the gallery examples look useful, readable, and downloadable.",
+      "keywords": [
+        "Status Review Deck Template"
+      ],
+      "tokenEstimate": 15,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "slide-deck",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/presentation.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

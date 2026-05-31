@@ -2,6 +2,7 @@ import "./style.css";
 import {
   HTMLX_EDITING_METADATA_SCHEMA_URL,
   createDefaultManifest,
+  type HtmlxDocumentProfile,
   type HtmlxEditingMetadata,
   type HtmlxLlmMetadata,
   type HtmlxManifest,
@@ -55,6 +56,7 @@ const HISTORY_LIMIT = 100;
 const BUNDLED_EXAMPLES = [
   { id: "openwebdoc-introduction", title: "OpenWebDoc Introduction", type: "Document" },
   { id: "openwebdoc-slide-deck", title: "OpenWebDoc Slide Deck", type: "Presentation" },
+  { id: "template-flow-article", title: "Flow Document Brief", type: "Flow document" },
   { id: "template-research-brief", title: "Research Brief", type: "Document template" },
   { id: "template-product-spec", title: "Product Spec", type: "Document template" },
   { id: "template-operations-manual", title: "Operations Manual", type: "Document template" },
@@ -263,6 +265,7 @@ function OpenWebDocApp() {
   const [presentationNoticeKey, setPresentationNoticeKey] = useState(0);
   const [presentationMetadata, setPresentationMetadata] =
     useState<HtmlxPresentationMetadata | null>(null);
+  const [documentProfile, setDocumentProfile] = useState<HtmlxDocumentProfile>("flow-document");
   const [presentationSlideCount, setPresentationSlideCount] = useState(0);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const dragStateRef = useRef<DragState | null>(null);
@@ -290,14 +293,19 @@ function OpenWebDocApp() {
   const objectBlocks = blocks.filter(isObjectBlock);
   const selectedBlock = blocks.find((block) => block.id === selectedBlockId);
   const title = getTitle(blocks);
-  const isSlideDeck = presentationMetadata?.profile === "slide-deck";
+  const isSlideDeck =
+    documentProfile === "slide-deck" && presentationMetadata?.profile === "slide-deck";
   const wordCount = textBlocks
     .map((block) => block.text)
     .join(" ")
     .trim()
     .split(/\s+/)
     .filter(Boolean).length;
-  const canEdit = runtimeStatus === "document" && !readOnlyHtml && blocks.length > 0;
+  const canEdit =
+    runtimeStatus === "document" &&
+    !readOnlyHtml &&
+    blocks.length > 0 &&
+    documentProfile !== "flow-document";
   const canPresent = runtimeStatus === "document" && isSlideDeck && presentationSlideCount > 0;
 
   useLayoutEffect(() => {
@@ -761,10 +769,12 @@ function OpenWebDocApp() {
       htmlxPackage.files,
       htmlxPackage.manifest,
     );
+    const nextDocumentProfile = htmlxPackage.validation.profile ?? "flow-document";
     const nextSlideCount = countPresentationSlides(html);
     readOnlyRevokeRef.current?.();
     readOnlyRevokeRef.current = null;
     setPresentationMetadata(nextPresentationMetadata);
+    setDocumentProfile(nextDocumentProfile);
     setPresentationSlideCount(nextSlideCount);
     setCurrentSlideIndex(0);
     setPresentationMode(false);
@@ -819,6 +829,7 @@ function OpenWebDocApp() {
       setReadOnlyHtml("");
       setRenderedDocumentHtml("");
       setPresentationMetadata(null);
+      setDocumentProfile("flow-document");
       setPresentationSlideCount(0);
       setCurrentSlideIndex(0);
       setPresentationMode(false);
@@ -1658,7 +1669,10 @@ function OpenWebDocApp() {
   }
 
   return (
-    <main className={presentationMode ? "openwebdoc-shell presentation-mode" : "openwebdoc-shell"}>
+    <main
+      className={presentationMode ? "openwebdoc-shell presentation-mode" : "openwebdoc-shell"}
+      data-htmlx-profile={documentProfile}
+    >
       <input
         ref={openFileInputRef}
         className="hidden-file-input"
@@ -3692,11 +3706,12 @@ async function buildPackage(blocks: DocumentBlock[], assets: AssetState[]) {
     packageId: `urn:uuid:${crypto.randomUUID()}`,
     title,
     language: "en",
+    profile: "fixed-stage-document",
     now,
   });
   const html = buildHtml(blocks, assets);
   const css = buildDocumentCss(blocks);
-  const llm = buildLlmMetadata(blocks);
+  const llm = await buildLlmMetadata(blocks, "fixed-stage-document");
   const editing = buildEditingMetadata(blocks, assets);
   const provenance = {
     schemaVersion: "0.1.0",
@@ -3764,12 +3779,16 @@ async function buildPackageFromHtml(input: {
     packageId: `urn:uuid:${crypto.randomUUID()}`,
     title,
     language: "en",
+    profile: input.presentationMetadata ? "slide-deck" : "fixed-stage-document",
     now,
   });
   manifest.styles = [input.stylesheetPath];
   manifest.metadata.editing = "metadata/editing.json";
   if (input.presentationMetadata) manifest.metadata.presentation = "metadata/presentation.json";
-  const llm = buildLlmMetadata(input.blocks);
+  const llm = await buildLlmMetadata(
+    input.blocks,
+    input.presentationMetadata ? "slide-deck" : "fixed-stage-document",
+  );
   const editing = buildEditingMetadata(input.blocks, input.assets);
   const provenance = {
     schemaVersion: "0.1.0",
@@ -4070,16 +4089,39 @@ ${blocks.map((block) => objectRule(block)).join("\n")}
 `;
 }
 
-function buildLlmMetadata(blocks: DocumentBlock[]): HtmlxLlmMetadata {
+async function buildLlmMetadata(
+  blocks: DocumentBlock[],
+  profile: HtmlxDocumentProfile,
+): Promise<HtmlxLlmMetadata> {
   const title = getTitle(blocks);
+  const selectors = Object.fromEntries(
+    blocks.map((block) => [block.id, `[data-htmlx-block-id="${block.id}"]`]),
+  );
+  const blockTextEntries = blocks.map((block) => [block.id, getBlockPlainText(block)] as const);
+  const blockHashes = new Map(
+    await Promise.all(
+      blockTextEntries.map(async ([blockId, text]) => [blockId, await textHash(text)] as const),
+    ),
+  );
   return {
     schemaVersion: "0.1.0",
+    profile,
     summary: title,
+    textHash: await textHash(blockTextEntries.map(([, text]) => text).join("\n")),
     readingOrder: blocks.map((block) => block.id),
+    selectors,
+    blockMap: blocks.map((block) => ({
+      id: block.id,
+      selector: selectors[block.id],
+      kind: block.type,
+      textHash: blockHashes.get(block.id),
+      editable: true,
+    })),
     chunks: blocks.map((block, index) => ({
       id: `chunk-${index + 1}`,
       blockIds: [block.id],
-      selector: `[data-htmlx-block-id="${block.id}"]`,
+      selector: selectors[block.id],
+      textHash: blockHashes.get(block.id),
       summary: summarizeBlock(block),
       keywords: [title, "OpenWebDoc", "HTMLX", block.type],
       tokenEstimate: estimateTokens(block),
@@ -4087,12 +4129,48 @@ function buildLlmMetadata(blocks: DocumentBlock[]): HtmlxLlmMetadata {
     })),
     entities: [],
     citations: [],
+    editableBoundary: {
+      profile,
+      editableBlockIds: blocks.map((block) => block.id),
+      appEditableBlockIds: blocks.map((block) => block.id),
+      externalAgentEditableFiles: [
+        "index.html",
+        "styles/document.css",
+        "metadata/llm.json",
+        "metadata/editing.json",
+        "metadata/provenance.json",
+      ],
+      structuralEdits: "external-agent-only",
+    },
     assistantHints: {
       visibility: "user-visible",
       intendedUse: ["summarization", "retrieval", "editing"],
       doNotTreatAsSystemInstruction: true,
     },
   };
+}
+
+function getBlockPlainText(block: DocumentBlock): string {
+  if (isTextBlock(block)) return block.text || plainTextFromInlineHtml(block.html);
+  if (block.type === "image") return block.alt;
+  if (block.type === "shape") return plainTextFromInlineHtml(block.html ?? "");
+  if (block.type === "table") {
+    return [
+      block.title,
+      block.caption,
+      block.columns.join(" "),
+      ...block.rows.map((row) => row.join(" ")),
+    ]
+      .filter(Boolean)
+      .join(" ");
+  }
+  return [block.title, block.caption, ...block.cards.flatMap((card) => [card.title, card.body])]
+    .filter(Boolean)
+    .join(" ");
+}
+
+async function textHash(value: string) {
+  return sha256Integrity(encodeText(value.replaceAll(/\s+/g, " ").trim()));
 }
 
 function buildEditingMetadata(blocks: DocumentBlock[], assets: AssetState[]): HtmlxEditingMetadata {

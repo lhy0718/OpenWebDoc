@@ -26,7 +26,7 @@ A later version can add optional metadata:
 ```json
 {
   "schemaVersion": "0.1.0",
-  "profile": "detached-signature",
+  "signatureProfile": "detached-signature",
   "algorithm": "ed25519",
   "signedResources": ["manifest.json", "index.html", "styles/document.css", "metadata/llm.json"],
   "signature": "base64url-signature",

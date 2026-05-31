@@ -58,6 +58,16 @@ try {
   await openInApp(page, join(repoRoot, "examples/basic.htmlx"));
   await expectFrameText(page, "h1", "Basic HTMLX Document");
 
+  await page.goto(`${appUrl}?example=template-flow-article`);
+  await expectFrameText(page, "h1", "A browser-native brief that reflows by default");
+  if ((await page.locator(".document-page").count()) !== 0) {
+    throw new Error("Flow documents should render as reflowing read-only documents.");
+  }
+  await page.getByRole("button", { name: "Expand menu" }).click();
+  if (await page.getByRole("button", { name: "Switch to editing mode" }).isEnabled()) {
+    throw new Error("Flow document edit mode should stay disabled in the MVP runtime.");
+  }
+
   await openInApp(page, join(repoRoot, "examples/openwebdoc-introduction.htmlx"));
   await page
     .locator('[data-htmlx-block-id="doc-title"]')

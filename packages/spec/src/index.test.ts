@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   HTMLX_CLI_COMMAND,
+  HTMLX_DOCUMENT_PROFILES,
   OPENWEBDOC_NPM_SCOPE,
   createDefaultManifest,
+  normalizeHtmlxDocumentProfile,
   validateHtmlxAgentEditProposalSchema,
   validateHtmlxAgentEditRequestSchema,
   validateHtmlxManifestSchema,
@@ -18,6 +20,27 @@ describe("HTMLX manifest schema", () => {
 
     expect(validateHtmlxManifestSchema(manifest).valid).toBe(true);
     expect(manifest.entry).toBe("index.html");
+    expect(manifest.profile).toBe("flow-document");
+  });
+
+  it("accepts explicit HTMLX document profiles", () => {
+    expect(HTMLX_DOCUMENT_PROFILES).toEqual([
+      "flow-document",
+      "fixed-stage-document",
+      "slide-deck",
+    ]);
+    expect(normalizeHtmlxDocumentProfile("fixed-stage-document")).toBe("fixed-stage-document");
+    expect(normalizeHtmlxDocumentProfile("document")).toBeNull();
+
+    const manifest = createDefaultManifest({
+      packageId: "urn:uuid:00000000-0000-4000-8000-000000000000",
+      title: "Deck",
+      profile: "slide-deck",
+      now: "2026-05-13T00:00:00.000Z",
+    });
+
+    expect(validateHtmlxManifestSchema(manifest).valid).toBe(true);
+    expect(manifest.profile).toBe("slide-deck");
   });
 
   it("rejects script-enabled manifests", () => {
