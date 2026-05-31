@@ -5,9 +5,11 @@
   "title": "Research Brief Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-05-23T00:00:00.000Z",
+  "modifiedAt": "2026-05-31T11:40:24.855Z",
   "entry": "index.html",
-  "styles": ["styles/document.css"],
+  "styles": [
+    "styles/document.css"
+  ],
   "resources": [
     {
       "path": "styles/document.css",
@@ -17,7 +19,8 @@
     {
       "path": "metadata/llm.json",
       "mediaType": "application/json",
-      "role": "metadata"
+      "role": "metadata",
+      "integrity": "sha256-fuXoQLEX/4qjBOaNGfxHzHxKg7v7iCeXPvht6urbpsQ="
     },
     {
       "path": "metadata/provenance.json",
@@ -40,5 +43,6 @@
     "allowRemoteResources": false,
     "allowedOrigins": [],
     "interactionModel": "declarative"
-  }
+  },
+  "profile": "flow-document"
 }

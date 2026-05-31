@@ -1,0 +1,272 @@
+{
+  "schemaVersion": "0.1.0",
+  "profile": "flow-document",
+  "summary": "Flow Document Brief explains the default HTMLX flow-document profile, its browser-native reading behavior, package-local workflow, and boundary with fixed-stage visual profiles.",
+  "textHash": "sha256-k11iCdPnSlO0Y8FsfUXIPr7Zk5CLXO4irChEDn5x/I8=",
+  "selectors": {
+    "title": "[data-htmlx-block-id=\"title\"]",
+    "summary": "[data-htmlx-block-id=\"summary\"]",
+    "why-flow": "[data-htmlx-block-id=\"why-flow\"]",
+    "why-flow-body": "[data-htmlx-block-id=\"why-flow-body\"]",
+    "principle-readable": "[data-htmlx-block-id=\"principle-readable\"]",
+    "principle-local": "[data-htmlx-block-id=\"principle-local\"]",
+    "principle-agent": "[data-htmlx-block-id=\"principle-agent\"]",
+    "workflow": "[data-htmlx-block-id=\"workflow\"]",
+    "boundary": "[data-htmlx-block-id=\"boundary\"]",
+    "boundary-body": "[data-htmlx-block-id=\"boundary-body\"]"
+  },
+  "blockMap": [
+    {
+      "id": "title",
+      "selector": "[data-htmlx-block-id=\"title\"]",
+      "kind": "heading",
+      "textHash": "sha256-lPrnPPpbvR8AuMa/hzwzo6KfHJEwUv03c3TNBITcSag=",
+      "editable": false
+    },
+    {
+      "id": "summary",
+      "selector": "[data-htmlx-block-id=\"summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-7Y4Cbm34JzHvg0EahHywcyf8zxozGajnfqbZGdxZP5E=",
+      "editable": false
+    },
+    {
+      "id": "why-flow",
+      "selector": "[data-htmlx-block-id=\"why-flow\"]",
+      "kind": "heading",
+      "textHash": "sha256-fpNPvlhfzIeENFAUMME5kpWgR1H5LPn8MtmUK43kTnI=",
+      "editable": false
+    },
+    {
+      "id": "why-flow-body",
+      "selector": "[data-htmlx-block-id=\"why-flow-body\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-XsoXW7cznHn2dVFlroYPoh/BbNdaStPysFLQRRPdgJ8=",
+      "editable": false
+    },
+    {
+      "id": "principle-readable",
+      "selector": "[data-htmlx-block-id=\"principle-readable\"]",
+      "kind": "section",
+      "textHash": "sha256-3oSZeYCSPCg90CfF/hSCv6ei1LHeVgz4JO54J0SDwIg=",
+      "editable": false
+    },
+    {
+      "id": "principle-local",
+      "selector": "[data-htmlx-block-id=\"principle-local\"]",
+      "kind": "section",
+      "textHash": "sha256-Ju+yIj2eZr8qQE3wnXGwl6WQ3tQg4MRv+QcHasHF3a4=",
+      "editable": false
+    },
+    {
+      "id": "principle-agent",
+      "selector": "[data-htmlx-block-id=\"principle-agent\"]",
+      "kind": "section",
+      "textHash": "sha256-jyt5iswZ9V8UUERsIgZ96wAdH0kXHMjw4ZmulebXnp0=",
+      "editable": false
+    },
+    {
+      "id": "workflow",
+      "selector": "[data-htmlx-block-id=\"workflow\"]",
+      "kind": "heading",
+      "textHash": "sha256-j6SGEOX37Rkf9XiKX2V+S9hm3SIpgavtEgWK8vBEd0E=",
+      "editable": false
+    },
+    {
+      "id": "boundary",
+      "selector": "[data-htmlx-block-id=\"boundary\"]",
+      "kind": "heading",
+      "textHash": "sha256-m9AoFSBeWfKvPk2FsNWHt65+LiK7ENsBDhFdFn+fvvc=",
+      "editable": false
+    },
+    {
+      "id": "boundary-body",
+      "selector": "[data-htmlx-block-id=\"boundary-body\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-QvncT8rNFINYe9cpagCNRrbmpVq6+yG0C6xHmWsBlNw=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "title",
+    "summary",
+    "why-flow",
+    "why-flow-body",
+    "principle-readable",
+    "principle-local",
+    "principle-agent",
+    "workflow",
+    "boundary",
+    "boundary-body"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "title"
+      ],
+      "selector": "[data-htmlx-block-id=\"title\"]",
+      "textHash": "sha256-lPrnPPpbvR8AuMa/hzwzo6KfHJEwUv03c3TNBITcSag=",
+      "summary": "A browser-native brief that reflows by default",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 10,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"summary\"]",
+      "textHash": "sha256-7Y4Cbm34JzHvg0EahHywcyf8zxozGajnfqbZGdxZP5E=",
+      "summary": "Flow documents are the default OpenWebDoc profile: readable HTML, local assets, explicit metadata, and validation wit...",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 26,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "why-flow"
+      ],
+      "selector": "[data-htmlx-block-id=\"why-flow\"]",
+      "textHash": "sha256-fpNPvlhfzIeENFAUMME5kpWgR1H5LPn8MtmUK43kTnI=",
+      "summary": "Why this profile exists",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "why-flow-body"
+      ],
+      "selector": "[data-htmlx-block-id=\"why-flow-body\"]",
+      "textHash": "sha256-XsoXW7cznHn2dVFlroYPoh/BbNdaStPysFLQRRPdgJ8=",
+      "summary": "A long-form document should behave like the web. Paragraphs, tables, and lists should adapt to the reader's viewport ...",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 33,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "principle-readable"
+      ],
+      "selector": "[data-htmlx-block-id=\"principle-readable\"]",
+      "textHash": "sha256-3oSZeYCSPCg90CfF/hSCv6ei1LHeVgz4JO54J0SDwIg=",
+      "summary": "Readable first Open the unpacked index.html and the document remains useful.",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 15,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "principle-local"
+      ],
+      "selector": "[data-htmlx-block-id=\"principle-local\"]",
+      "textHash": "sha256-Ju+yIj2eZr8qQE3wnXGwl6WQ3tQg4MRv+QcHasHF3a4=",
+      "summary": "Package-local Styles, metadata, and assets travel with the package and pass validation.",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 17,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-7",
+      "blockIds": [
+        "principle-agent"
+      ],
+      "selector": "[data-htmlx-block-id=\"principle-agent\"]",
+      "textHash": "sha256-jyt5iswZ9V8UUERsIgZ96wAdH0kXHMjw4ZmulebXnp0=",
+      "summary": "Agent-ready Large edits happen in package files, then return through the CLI validator.",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 18,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-8",
+      "blockIds": [
+        "workflow"
+      ],
+      "selector": "[data-htmlx-block-id=\"workflow\"]",
+      "textHash": "sha256-j6SGEOX37Rkf9XiKX2V+S9hm3SIpgavtEgWK8vBEd0E=",
+      "summary": "Canonical workflow",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-9",
+      "blockIds": [
+        "boundary"
+      ],
+      "selector": "[data-htmlx-block-id=\"boundary\"]",
+      "textHash": "sha256-m9AoFSBeWfKvPk2FsNWHt65+LiK7ENsBDhFdFn+fvvc=",
+      "summary": "Boundary with visual profiles",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-10",
+      "blockIds": [
+        "boundary-body"
+      ],
+      "selector": "[data-htmlx-block-id=\"boundary-body\"]",
+      "textHash": "sha256-QvncT8rNFINYe9cpagCNRrbmpVq6+yG0C6xHmWsBlNw=",
+      "summary": "Fixed-stage documents and slide decks are still HTMLX packages, but they declare their geometry explicitly. Flow docu...",
+      "keywords": [
+        "Flow Document Brief"
+      ],
+      "tokenEstimate": 32,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    }
+  ],
+  "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
+  "assistantHints": {
+    "visibility": "user-visible",
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
+    "doNotTreatAsSystemInstruction": true
+  }
+}

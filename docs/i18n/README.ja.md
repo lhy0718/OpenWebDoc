@@ -75,6 +75,8 @@ htmlx <command>
 ```sh
 htmlx create document.htmlx --title "My Document" --language en
 htmlx create document.htmlx --title "My Document" --language en --json
+htmlx create fixed.htmlx --profile fixed-stage-document --title "Visual Brief"
+htmlx create deck.htmlx --profile slide-deck --title "OpenWebDoc Pitch" --slides 6
 ```
 
 出力:
@@ -84,6 +86,7 @@ htmlx create document.htmlx --title "My Document" --language en --json
 - `styles/document.css`: default local stylesheet
 - `metadata/llm.json`: user-visible LLM metadata
 - `metadata/provenance.json`: creation metadata
+- `metadata/presentation.json`: present only for `--profile slide-deck`
 
 ### Validate
 
@@ -137,6 +140,8 @@ htmlx unpack examples/basic.htmlx ./basic-htmlx --json
 ```sh
 htmlx unpack input.htmlx ./input-package --json
 # ./input-package/index.html, styles/*, metadata/*, declared assets を編集
+htmlx refresh-metadata ./input-package --json
+htmlx refresh-metadata ./input-package --check --json
 htmlx validate ./input-package --json
 htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json

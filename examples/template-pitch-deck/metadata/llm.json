@@ -1,13 +1,182 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "slide-deck",
   "summary": "A pitch deck template for explaining a browser-native document package product story.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "textHash": "sha256-clQx6ivbPlVWGr3wG/9Q2K7UQaC5nZLkFmR+wt/cqtc=",
+  "selectors": {
+    "pitch-kicker": "[data-htmlx-block-id=\"pitch-kicker\"]",
+    "pitch-title": "[data-htmlx-block-id=\"pitch-title\"]",
+    "pitch-subtitle": "[data-htmlx-block-id=\"pitch-subtitle\"]",
+    "pitch-problem": "[data-htmlx-block-id=\"pitch-problem\"]",
+    "pitch-solution": "[data-htmlx-block-id=\"pitch-solution\"]",
+    "pitch-ask": "[data-htmlx-block-id=\"pitch-ask\"]"
+  },
+  "blockMap": [
+    {
+      "id": "pitch-kicker",
+      "selector": "[data-htmlx-block-id=\"pitch-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-YVHkTtQ1X6gqHRa6BNsUtqgjGYbfcMSwn9aHVEGY29s=",
+      "editable": false
+    },
+    {
+      "id": "pitch-title",
+      "selector": "[data-htmlx-block-id=\"pitch-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-4mnuRRvSht7NfpPqixh+MuIAqenNyS2Wcvzx3opE8Cs=",
+      "editable": false
+    },
+    {
+      "id": "pitch-subtitle",
+      "selector": "[data-htmlx-block-id=\"pitch-subtitle\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-SiuK/2Bw/OfmUAkbXKvdoQleL5cVXLunpGvIS90xULo=",
+      "editable": false
+    },
+    {
+      "id": "pitch-problem",
+      "selector": "[data-htmlx-block-id=\"pitch-problem\"]",
+      "kind": "heading",
+      "textHash": "sha256-U19L7uv8HLpwCmrGbf+fxSCDVFOPaSjo1QgE4OhJJvk=",
+      "editable": false
+    },
+    {
+      "id": "pitch-solution",
+      "selector": "[data-htmlx-block-id=\"pitch-solution\"]",
+      "kind": "heading",
+      "textHash": "sha256-HBj4CoEAR7ZYooA5BFxsWIJ7RyDWoyoNK745of4lAfM=",
+      "editable": false
+    },
+    {
+      "id": "pitch-ask",
+      "selector": "[data-htmlx-block-id=\"pitch-ask\"]",
+      "kind": "heading",
+      "textHash": "sha256-58SJXo5LJDrf3nHcyEEAFThwfpRUgds37+3P1nh1aFQ=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "pitch-kicker",
+    "pitch-title",
+    "pitch-subtitle",
+    "pitch-problem",
+    "pitch-solution",
+    "pitch-ask"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "pitch-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"pitch-kicker\"]",
+      "textHash": "sha256-YVHkTtQ1X6gqHRa6BNsUtqgjGYbfcMSwn9aHVEGY29s=",
+      "summary": "Pitch deck",
+      "keywords": [
+        "Pitch Deck Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "pitch-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"pitch-title\"]",
+      "textHash": "sha256-4mnuRRvSht7NfpPqixh+MuIAqenNyS2Wcvzx3opE8Cs=",
+      "summary": "A document package that opens as software surface",
+      "keywords": [
+        "Pitch Deck Template"
+      ],
+      "tokenEstimate": 11,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "pitch-subtitle"
+      ],
+      "selector": "[data-htmlx-block-id=\"pitch-subtitle\"]",
+      "textHash": "sha256-SiuK/2Bw/OfmUAkbXKvdoQleL5cVXLunpGvIS90xULo=",
+      "summary": "Use this template for a product or startup story that needs crisp slides, local assets, and portable distribution.",
+      "keywords": [
+        "Pitch Deck Template"
+      ],
+      "tokenEstimate": 25,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "pitch-problem"
+      ],
+      "selector": "[data-htmlx-block-id=\"pitch-problem\"]",
+      "textHash": "sha256-U19L7uv8HLpwCmrGbf+fxSCDVFOPaSjo1QgE4OhJJvk=",
+      "summary": "Documents are still trapped between static files and web apps.",
+      "keywords": [
+        "Pitch Deck Template"
+      ],
+      "tokenEstimate": 14,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "pitch-solution"
+      ],
+      "selector": "[data-htmlx-block-id=\"pitch-solution\"]",
+      "textHash": "sha256-HBj4CoEAR7ZYooA5BFxsWIJ7RyDWoyoNK745of4lAfM=",
+      "summary": "HTMLX packages keep HTML, CSS, assets, manifests, and metadata together.",
+      "keywords": [
+        "Pitch Deck Template"
+      ],
+      "tokenEstimate": 14,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "pitch-ask"
+      ],
+      "selector": "[data-htmlx-block-id=\"pitch-ask\"]",
+      "textHash": "sha256-58SJXo5LJDrf3nHcyEEAFThwfpRUgds37+3P1nh1aFQ=",
+      "summary": "Test the package loop with one real document workflow.",
+      "keywords": [
+        "Pitch Deck Template"
+      ],
+      "tokenEstimate": 13,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "slide-deck",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/presentation.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

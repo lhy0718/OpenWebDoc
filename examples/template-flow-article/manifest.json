@@ -1,0 +1,42 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "profile": "flow-document",
+  "packageId": "urn:openwebdoc:example:template-flow-article",
+  "title": "Flow Document Brief",
+  "language": "en",
+  "createdAt": "2026-05-23T00:00:00.000Z",
+  "modifiedAt": "2026-05-31T11:40:22.855Z",
+  "entry": "index.html",
+  "styles": [
+    "styles/document.css"
+  ],
+  "resources": [
+    {
+      "path": "styles/document.css",
+      "mediaType": "text/css",
+      "role": "stylesheet"
+    },
+    {
+      "path": "metadata/llm.json",
+      "mediaType": "application/json",
+      "role": "metadata",
+      "integrity": "sha256-MQ4uysOXUxwejW4GWWcqhdyHHJhR78vTChWISH/9MDY="
+    },
+    {
+      "path": "metadata/provenance.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    }
+  ],
+  "metadata": {
+    "llm": "metadata/llm.json",
+    "provenance": "metadata/provenance.json"
+  },
+  "security": {
+    "allowScripts": false,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

@@ -2,7 +2,10 @@ import {
   HTMLX_MANIFEST_PATH,
   HTMLX_MIME_TYPE,
   HTMLX_MIMETYPE_PATH,
+  normalizeHtmlxDocumentProfile,
+  type HtmlxDocumentProfile,
   type HtmlxEditingMetadata,
+  type HtmlxLlmBlockKind,
   type HtmlxLlmMetadata,
   type HtmlxManifest,
   type HtmlxPresentationMetadata,
@@ -25,6 +28,7 @@ export interface HtmlxValidationIssue {
 export interface HtmlxValidationResult {
   valid: boolean;
   issues: HtmlxValidationIssue[];
+  profile?: HtmlxDocumentProfile;
   manifest?: HtmlxManifest;
 }
 
@@ -56,6 +60,19 @@ export interface HtmlxCreateDocumentInput {
   css?: string;
   llm?: HtmlxLlmMetadata;
   packageId?: string;
+}
+
+export interface HtmlxLlmMetadataInput {
+  title: string;
+  html: string;
+  profile?: HtmlxDocumentProfile;
+  summary?: string;
+  keywords?: string[];
+  editableBlockIds?: string[];
+  appEditableBlockIds?: string[];
+  externalAgentEditableFiles?: string[];
+  entities?: unknown[];
+  citations?: unknown[];
 }
 
 export interface HtmlxPackInput {
@@ -109,7 +126,13 @@ export async function createHtmlxDocument(input: HtmlxCreateDocumentInput): Prom
     now,
   });
 
-  const llm = input.llm ?? createDefaultLlmMetadata(input.title, input.html);
+  const llm =
+    input.llm ??
+    (await createHtmlxLlmMetadata({
+      title: input.title,
+      html: input.html,
+      profile: "flow-document",
+    }));
   const provenance = {
     schemaVersion: "0.1.0",
     createdBy: "OpenWebDoc",
@@ -294,6 +317,18 @@ export function sanitizeHtmlxDocument(html: string): string {
       a: sanitizeHtml.simpleTransform("a", { rel: "noopener noreferrer" }, true),
     },
   });
+}
+
+export function resolveHtmlxProfile(
+  manifest: HtmlxManifest,
+  files?: Map<string, Uint8Array>,
+): HtmlxDocumentProfile {
+  const explicitProfile = normalizeHtmlxDocumentProfile(manifest.profile);
+  if (explicitProfile) return explicitProfile;
+  if (manifest.metadata.presentation) return "slide-deck";
+  if (hasEditingStageMetadata(manifest, files)) return "fixed-stage-document";
+  if (hasSelfEditableStageEntry(manifest, files)) return "fixed-stage-document";
+  return "flow-document";
 }
 
 function extractHtmlBody(html: string): string {
@@ -509,21 +544,87 @@ async function validateFileMap(
     }
   }
 
+  const profile = resolveHtmlxProfile(manifest, files);
+  validateProfileContract(manifest, files, profile, issues);
   validateManifestPaths(manifest, files, issues);
   validateMetadataDeclarations(manifest, files, issues);
   await validateResourceIntegrity(manifest, files, issues);
   validateDocumentSafety(manifest, files, issues);
   validateStylesheetSafety(manifest, files, issues);
-  validateProportionalLayoutContract(manifest, files, issues);
+  validateProportionalLayoutContract(manifest, files, profile, issues);
   validateEditingMetadata(manifest, files, issues);
   validatePresentationMetadata(manifest, files, issues);
-  validateLlmMetadata(manifest, files, issues);
+  await validateLlmMetadata(manifest, files, profile, issues);
 
   return {
     valid: issues.every((issue) => issue.severity !== "error"),
     issues,
+    profile,
     manifest,
   };
+}
+
+function validateProfileContract(
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  profile: HtmlxDocumentProfile,
+  issues: HtmlxValidationIssue[],
+): void {
+  const explicitProfile = manifest.profile;
+  const normalizedExplicitProfile = normalizeHtmlxDocumentProfile(explicitProfile);
+  if (explicitProfile !== undefined && !normalizedExplicitProfile) {
+    issues.push({
+      severity: "error",
+      code: "profile.invalid",
+      message: "HTMLX profile must be one of flow-document, fixed-stage-document, or slide-deck.",
+      path: HTMLX_MANIFEST_PATH,
+    });
+    return;
+  }
+
+  if (
+    manifest.metadata.presentation &&
+    explicitProfile !== undefined &&
+    normalizedExplicitProfile !== "slide-deck"
+  ) {
+    issues.push({
+      severity: "error",
+      code: "profile.presentation_mismatch",
+      message: "Packages with metadata.presentation must use the slide-deck profile.",
+      path: HTMLX_MANIFEST_PATH,
+    });
+  }
+
+  if (profile === "slide-deck" && !manifest.metadata.presentation) {
+    issues.push({
+      severity: "error",
+      code: "profile.presentation_missing",
+      message: "Slide deck packages must declare metadata.presentation.",
+      path: HTMLX_MANIFEST_PATH,
+    });
+  }
+
+  const htmlBytes = files.get(manifest.entry);
+  const html = htmlBytes ? decodeText(htmlBytes) : "";
+  const hasStage = hasSelfEditableStage(html);
+  if (profile === "fixed-stage-document" && !hasStage) {
+    issues.push({
+      severity: "error",
+      code: "profile.fixed_stage_missing",
+      message: "Fixed-stage document packages must declare a data-htmlx-editable document stage.",
+      path: manifest.entry,
+    });
+  }
+
+  if (normalizedExplicitProfile === "flow-document" && hasStage) {
+    issues.push({
+      severity: "error",
+      code: "profile.flow_stage_conflict",
+      message:
+        "Flow document packages must not use fixed-stage document geometry; use fixed-stage-document instead.",
+      path: manifest.entry,
+    });
+  }
 }
 
 function validateManifestPaths(
@@ -777,6 +878,7 @@ function validateStylesheetSafety(
 function validateProportionalLayoutContract(
   manifest: HtmlxManifest,
   files: Map<string, Uint8Array>,
+  profile: HtmlxDocumentProfile,
   issues: HtmlxValidationIssue[],
 ): void {
   const htmlBytes = files.get(manifest.entry);
@@ -784,6 +886,7 @@ function validateProportionalLayoutContract(
 
   const html = decodeText(htmlBytes);
   if (!hasSelfEditableStage(html)) return;
+  if (profile === "flow-document") return;
 
   if (manifest.entry !== "index.html") {
     issues.push({
@@ -871,11 +974,12 @@ function validateProportionalLayoutContract(
   }
 }
 
-function validateLlmMetadata(
+async function validateLlmMetadata(
   manifest: HtmlxManifest,
   files: Map<string, Uint8Array>,
+  profile: HtmlxDocumentProfile,
   issues: HtmlxValidationIssue[],
-): void {
+): Promise<void> {
   const llmPath = manifest.metadata.llm;
   if (!llmPath || !files.has(llmPath) || !files.has(manifest.entry)) {
     return;
@@ -904,7 +1008,30 @@ function validateLlmMetadata(
   }
 
   const html = decodeText(files.get(manifest.entry)!);
-  const blockIds = extractBlockIds(html);
+  const blockMap = extractHtmlxBlocks(html);
+  const blockIds = new Set(blockMap.keys());
+
+  if (metadata.profile && metadata.profile !== profile) {
+    issues.push({
+      severity: "error",
+      code: "llm.profile_mismatch",
+      message: `LLM metadata profile ${metadata.profile} does not match resolved package profile ${profile}.`,
+      path: llmPath,
+    });
+  }
+
+  if (metadata.textHash) {
+    const actualTextHash = await textHash(extractVisibleText(html));
+    if (metadata.textHash !== actualTextHash) {
+      issues.push({
+        severity: "warning",
+        code: "llm.text_hash_mismatch",
+        message: "LLM metadata document textHash does not match current document text.",
+        path: llmPath,
+      });
+    }
+  }
+
   for (const blockId of metadata.readingOrder ?? []) {
     if (!blockIds.has(blockId)) {
       issues.push({
@@ -916,6 +1043,92 @@ function validateLlmMetadata(
     }
   }
 
+  if (metadata.selectors && typeof metadata.selectors === "object") {
+    for (const [blockId, selector] of Object.entries(metadata.selectors)) {
+      if (!blockIds.has(blockId)) {
+        issues.push({
+          severity: "error",
+          code: "llm.selector_block_missing",
+          message: `selectors references missing block ID: ${blockId}`,
+          path: llmPath,
+        });
+      }
+      if (typeof selector !== "string" || selector.trim() === "") {
+        issues.push({
+          severity: "error",
+          code: "llm.selector_invalid",
+          message: `selectors.${blockId} must be a non-empty selector string.`,
+          path: llmPath,
+        });
+      }
+    }
+  }
+
+  if (metadata.blockMap !== undefined && !Array.isArray(metadata.blockMap)) {
+    issues.push({
+      severity: "error",
+      code: "llm.block_map_invalid",
+      message: "LLM metadata blockMap must be an array when present.",
+      path: llmPath,
+    });
+  }
+
+  for (const entry of Array.isArray(metadata.blockMap) ? metadata.blockMap : []) {
+    if (!entry || typeof entry !== "object") {
+      issues.push({
+        severity: "error",
+        code: "llm.block_map_invalid",
+        message: "LLM metadata blockMap entries must be objects.",
+        path: llmPath,
+      });
+      continue;
+    }
+    if (!blockIds.has(entry.id)) {
+      issues.push({
+        severity: "error",
+        code: "llm.block_map_block_missing",
+        message: `blockMap references missing block ID: ${entry.id}`,
+        path: llmPath,
+      });
+      continue;
+    }
+    if (typeof entry.selector !== "string" || entry.selector.trim() === "") {
+      issues.push({
+        severity: "error",
+        code: "llm.block_map_selector_invalid",
+        message: `blockMap entry ${entry.id} must declare a non-empty selector.`,
+        path: llmPath,
+      });
+    }
+    if (!isHtmlxLlmBlockKind(entry.kind)) {
+      issues.push({
+        severity: "error",
+        code: "llm.block_map_kind_invalid",
+        message: `blockMap entry ${entry.id} has an unsupported kind.`,
+        path: llmPath,
+      });
+    }
+    if (typeof entry.editable !== "boolean") {
+      issues.push({
+        severity: "error",
+        code: "llm.block_map_editable_invalid",
+        message: `blockMap entry ${entry.id} must declare editable as a boolean.`,
+        path: llmPath,
+      });
+    }
+    if (entry.textHash) {
+      const actualBlockHash = await textHash(blockMap.get(entry.id)?.text ?? "");
+      if (entry.textHash !== actualBlockHash) {
+        issues.push({
+          severity: "warning",
+          code: "llm.block_text_hash_mismatch",
+          message: `blockMap entry ${entry.id} textHash does not match current block text.`,
+          path: llmPath,
+        });
+      }
+    }
+  }
+
   for (const chunk of metadata.chunks ?? []) {
     for (const blockId of chunk.blockIds ?? []) {
       if (!blockIds.has(blockId)) {
@@ -923,6 +1136,50 @@ function validateLlmMetadata(
           severity: "error",
           code: "llm.chunk_block_missing",
           message: `Chunk ${chunk.id} references missing block ID: ${blockId}`,
+          path: llmPath,
+        });
+      }
+    }
+    if (chunk.textHash) {
+      const actualChunkHash = await textHash(
+        (chunk.blockIds ?? []).map((blockId) => blockMap.get(blockId)?.text ?? "").join("\n"),
+      );
+      if (chunk.textHash !== actualChunkHash) {
+        issues.push({
+          severity: "warning",
+          code: "llm.chunk_text_hash_mismatch",
+          message: `Chunk ${chunk.id} textHash does not match current chunk text.`,
+          path: llmPath,
+        });
+      }
+    }
+  }
+
+  if (metadata.editableBoundary) {
+    if (metadata.editableBoundary.profile !== profile) {
+      issues.push({
+        severity: "error",
+        code: "llm.editable_boundary_profile_mismatch",
+        message: `editableBoundary profile ${metadata.editableBoundary.profile} does not match resolved package profile ${profile}.`,
+        path: llmPath,
+      });
+    }
+    for (const blockId of metadata.editableBoundary.editableBlockIds ?? []) {
+      if (!blockIds.has(blockId)) {
+        issues.push({
+          severity: "error",
+          code: "llm.editable_boundary_block_missing",
+          message: `editableBoundary references missing block ID: ${blockId}`,
+          path: llmPath,
+        });
+      }
+    }
+    for (const blockId of metadata.editableBoundary.appEditableBlockIds ?? []) {
+      if (!blockIds.has(blockId)) {
+        issues.push({
+          severity: "error",
+          code: "llm.editable_boundary_block_missing",
+          message: `editableBoundary appEditableBlockIds references missing block ID: ${blockId}`,
           path: llmPath,
         });
       }
@@ -1138,23 +1395,74 @@ function normalizeFileMap(
   );
 }
 
-function createDefaultLlmMetadata(title: string, html: string): HtmlxLlmMetadata {
-  const blockIds = [...extractBlockIds(html)];
+export async function createHtmlxLlmMetadata(
+  input: HtmlxLlmMetadataInput,
+): Promise<HtmlxLlmMetadata> {
+  const {
+    title,
+    html,
+    profile = "flow-document",
+    summary = title,
+    keywords = [title],
+    editableBlockIds = [],
+    appEditableBlockIds = editableBlockIds,
+    externalAgentEditableFiles = [],
+    entities = [],
+    citations = [],
+  } = input;
+  const blocks = [...extractHtmlxBlocks(html).values()];
+  const blockIds = blocks.map((block) => block.id);
+  const editableIds = new Set(editableBlockIds);
+  const selectors = Object.fromEntries(
+    blockIds.map((blockId) => [blockId, createHtmlxBlockSelector(blockId)]),
+  );
+  const textByBlock = Object.fromEntries(blocks.map((block) => [block.id, block.text]));
+  const documentText = extractVisibleText(html);
+  const shouldWriteEditableBoundary =
+    editableBlockIds.length > 0 ||
+    appEditableBlockIds.length > 0 ||
+    externalAgentEditableFiles.length > 0;
   return {
     schemaVersion: "0.1.0",
-    summary: title,
+    profile,
+    summary,
+    textHash: await textHash(documentText),
+    selectors,
+    blockMap: await Promise.all(
+      blocks.map(async (block) => ({
+        id: block.id,
+        selector: selectors[block.id],
+        kind: block.kind,
+        textHash: await textHash(block.text),
+        editable: block.editable || editableIds.has(block.id),
+      })),
+    ),
     readingOrder: blockIds,
-    chunks: blockIds.map((blockId, index) => ({
-      id: `chunk-${index + 1}`,
-      blockIds: [blockId],
-      selector: `[data-htmlx-block-id="${blockId}"]`,
-      summary: `${title} section ${index + 1}`,
-      keywords: [title],
-      tokenEstimate: 120,
-      sensitivity: "unknown",
-    })),
-    entities: [],
-    citations: [],
+    chunks: await Promise.all(
+      blockIds.map(async (blockId, index) => ({
+        id: `chunk-${index + 1}`,
+        blockIds: [blockId],
+        selector: selectors[blockId],
+        textHash: await textHash(textByBlock[blockId] ?? ""),
+        summary: summarizeBlockText(title, textByBlock[blockId], index),
+        keywords,
+        tokenEstimate: estimateTokenCount(textByBlock[blockId] ?? ""),
+        sensitivity: "unknown",
+      })),
+    ),
+    entities,
+    citations,
+    ...(shouldWriteEditableBoundary
+      ? {
+          editableBoundary: {
+            profile,
+            editableBlockIds,
+            appEditableBlockIds,
+            externalAgentEditableFiles,
+            structuralEdits: "external-agent-only" as const,
+          },
+        }
+      : {}),
     assistantHints: {
       visibility: "user-visible",
       intendedUse: ["summarization", "retrieval", "editing"],
@@ -1163,10 +1471,145 @@ function createDefaultLlmMetadata(title: string, html: string): HtmlxLlmMetadata
   };
 }
 
-function extractBlockIds(html: string): Set<string> {
-  return new Set(
-    [...html.matchAll(/data-htmlx-block-id\s*=\s*["']([^"']+)["']/gi)].map((match) => match[1]),
-  );
+function createHtmlxBlockSelector(blockId: string): string {
+  return `[data-htmlx-block-id="${blockId.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"]`;
+}
+
+function summarizeBlockText(title: string, text: string | undefined, index: number): string {
+  const normalized = text?.replaceAll(/\s+/g, " ").trim() ?? "";
+  if (!normalized) return `${title} block ${index + 1}`;
+  return normalized.length > 120 ? `${normalized.slice(0, 117)}...` : normalized;
+}
+
+function estimateTokenCount(text: string): number {
+  const words = text.replaceAll(/\s+/g, " ").trim().split(" ").filter(Boolean);
+  return Math.max(1, Math.ceil(words.length * 1.35));
+}
+
+interface ExtractedHtmlxBlock {
+  id: string;
+  kind: HtmlxLlmBlockKind;
+  text: string;
+  editable: boolean;
+}
+
+const htmlxLlmBlockKinds = new Set<HtmlxLlmBlockKind>([
+  "document",
+  "section",
+  "slide",
+  "heading",
+  "paragraph",
+  "table",
+  "figure",
+  "image",
+  "shape",
+  "list",
+  "code",
+  "unknown",
+]);
+
+function isHtmlxLlmBlockKind(value: unknown): value is HtmlxLlmBlockKind {
+  return typeof value === "string" && htmlxLlmBlockKinds.has(value as HtmlxLlmBlockKind);
+}
+
+function extractHtmlxBlocks(html: string): Map<string, ExtractedHtmlxBlock> {
+  const blocks = new Map<string, ExtractedHtmlxBlock>();
+  const tagPattern =
+    /<([a-z][a-z0-9-]*)\b([^>]*\bdata-htmlx-block-id\s*=\s*["'][^"']+["'][^>]*)>/gi;
+  for (const match of html.matchAll(tagPattern)) {
+    const tag = match[1].toLowerCase();
+    const openingTag = match[0];
+    const id = getHtmlAttribute(openingTag, "data-htmlx-block-id");
+    if (!id || blocks.has(id)) continue;
+    const kind = inferBlockKind(tag, openingTag);
+    blocks.set(id, {
+      id,
+      kind,
+      text: extractElementText(html, tag, openingTag, match.index ?? 0),
+      editable:
+        getHtmlAttribute(openingTag, "data-htmlx-editable") !== null ||
+        getHtmlAttribute(openingTag, "contenteditable") === "true",
+    });
+  }
+  return blocks;
+}
+
+function inferBlockKind(tag: string, openingTag: string): HtmlxLlmBlockKind {
+  const explicitKind = getHtmlAttribute(openingTag, "data-htmlx-kind");
+  if (isHtmlxLlmBlockKind(explicitKind)) return explicitKind;
+  if (getHtmlAttribute(openingTag, "data-htmlx-editable") === "document") return "document";
+  if (tag === "main" || tag === "section" || tag === "article") return "section";
+  if (/^h[1-6]$/.test(tag)) return "heading";
+  if (tag === "p" || tag === "blockquote") return "paragraph";
+  if (tag === "table") return "table";
+  if (tag === "figure") return "figure";
+  if (tag === "img") return "image";
+  if (tag === "ul" || tag === "ol" || tag === "li") return "list";
+  if (tag === "pre" || tag === "code") return "code";
+  return "unknown";
+}
+
+function extractElementText(
+  html: string,
+  tag: string,
+  openingTag: string,
+  startIndex: number,
+): string {
+  if (tag === "img") {
+    return getHtmlAttribute(openingTag, "alt") ?? "";
+  }
+  const closePattern = new RegExp(`</${tag}\\s*>`, "i");
+  const afterOpening = startIndex + openingTag.length;
+  const closeMatch = closePattern.exec(html.slice(afterOpening));
+  const rawContent = closeMatch ? html.slice(afterOpening, afterOpening + closeMatch.index) : "";
+  return extractVisibleText(rawContent);
+}
+
+function extractVisibleText(html: string): string {
+  return html
+    .replaceAll(/<script\b[\s\S]*?<\/script>/gi, " ")
+    .replaceAll(/<style\b[\s\S]*?<\/style>/gi, " ")
+    .replaceAll(/<[^>]+>/g, " ")
+    .replaceAll(/&nbsp;/g, " ")
+    .replaceAll(/&amp;/g, "&")
+    .replaceAll(/&lt;/g, "<")
+    .replaceAll(/&gt;/g, ">")
+    .replaceAll(/&quot;/g, '"')
+    .replaceAll(/&#39;/g, "'")
+    .replaceAll(/\s+/g, " ")
+    .trim();
+}
+
+async function textHash(value: string): Promise<string> {
+  return sha256Integrity(encodeText(value.replaceAll(/\s+/g, " ").trim()));
+}
+
+function hasEditingStageMetadata(
+  manifest: HtmlxManifest,
+  files?: Map<string, Uint8Array>,
+): boolean {
+  const editingPath = manifest.metadata.editing;
+  if (!editingPath || !files?.has(editingPath)) return false;
+  try {
+    const metadata = JSON.parse(
+      decodeText(files.get(editingPath)!),
+    ) as Partial<HtmlxEditingMetadata>;
+    return (
+      !!metadata.stage &&
+      Number.isFinite(metadata.stage.width) &&
+      Number.isFinite(metadata.stage.height)
+    );
+  } catch {
+    return false;
+  }
+}
+
+function hasSelfEditableStageEntry(
+  manifest: HtmlxManifest,
+  files?: Map<string, Uint8Array>,
+): boolean {
+  const htmlBytes = files?.get(manifest.entry);
+  return htmlBytes ? hasSelfEditableStage(decodeText(htmlBytes)) : false;
 }
 
 function hasSelfEditableStage(html: string): boolean {

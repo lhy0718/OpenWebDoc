@@ -5,9 +5,11 @@
   "title": "Pitch Deck Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-05-23T00:00:00.000Z",
+  "modifiedAt": "2026-05-31T11:40:24.005Z",
   "entry": "index.html",
-  "styles": ["styles/document.css"],
+  "styles": [
+    "styles/document.css"
+  ],
   "resources": [
     {
       "path": "styles/document.css",
@@ -17,7 +19,8 @@
     {
       "path": "metadata/llm.json",
       "mediaType": "application/json",
-      "role": "metadata"
+      "role": "metadata",
+      "integrity": "sha256-iH5CZOfgXda4AXxlMZ7PadPTw9iTGYRGeqmlzsqskVE="
     },
     {
       "path": "metadata/provenance.json",
@@ -46,5 +49,6 @@
     "allowRemoteResources": false,
     "allowedOrigins": [],
     "interactionModel": "declarative"
-  }
+  },
+  "profile": "slide-deck"
 }

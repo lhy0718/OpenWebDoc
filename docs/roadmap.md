@@ -6,6 +6,8 @@ This roadmap tracks the work needed to move OpenWebDoc from a usable public prev
 
 OpenWebDoc stays centered on one runtime: a `.htmlx` document opens as the reading surface, and edit mode activates small corrections on that same surface. Structural redesign, large rewrites, new slide/table/figure creation, and AI-assisted authoring belong in unpacked package files edited by external coding agents, then validated and repacked with the `htmlx` CLI.
 
+The format now uses explicit document profiles: `flow-document` for default reflowing documents, `fixed-stage-document` for proportional visual documents, and `slide-deck` for HTMLX-native presentations. Public-alpha work should keep those profile boundaries clear instead of letting fixed-stage editing become the default document model.
+
 ## Public Alpha Milestones
 
 - [#10 Prepare v0.1.0-alpha.0 release](https://github.com/lhy0718/OpenWebDoc/issues/10): release readiness is GitHub Pages plus GitHub release artifacts. npm registry publishing is deferred for the public preview.

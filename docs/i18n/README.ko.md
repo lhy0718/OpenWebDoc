@@ -84,6 +84,8 @@ htmlx <command>
 ```sh
 htmlx create document.htmlx --title "My Document" --language en
 htmlx create document.htmlx --title "My Document" --language en --json
+htmlx create fixed.htmlx --profile fixed-stage-document --title "Visual Brief"
+htmlx create deck.htmlx --profile slide-deck --title "OpenWebDoc Pitch" --slides 6
 ```
 
 출력:
@@ -93,6 +95,7 @@ htmlx create document.htmlx --title "My Document" --language en --json
 - `styles/document.css`: 기본 로컬 stylesheet
 - `metadata/llm.json`: 사용자에게 보이는 LLM metadata
 - `metadata/provenance.json`: 생성 metadata
+- `metadata/presentation.json`: present only for `--profile slide-deck`
 
 ### Validate
 
@@ -146,6 +149,8 @@ htmlx unpack examples/basic.htmlx ./basic-htmlx --json
 ```sh
 htmlx unpack input.htmlx ./input-package --json
 # ./input-package/index.html, styles/*, metadata/*, declared assets 수정
+htmlx refresh-metadata ./input-package --json
+htmlx refresh-metadata ./input-package --check --json
 htmlx validate ./input-package --json
 htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json

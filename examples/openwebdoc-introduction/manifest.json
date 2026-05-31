@@ -5,15 +5,38 @@
   "title": "OpenWebDoc Introduction",
   "language": "en",
   "createdAt": "2026-05-15T00:00:00.000Z",
-  "modifiedAt": "2026-05-17T00:00:00.000Z",
+  "modifiedAt": "2026-05-31T11:40:21.961Z",
   "entry": "index.html",
-  "styles": ["styles/document.css"],
+  "styles": [
+    "styles/document.css"
+  ],
   "resources": [
-    { "path": "styles/document.css", "mediaType": "text/css", "role": "stylesheet" },
-    { "path": "metadata/llm.json", "mediaType": "application/json", "role": "metadata" },
-    { "path": "metadata/provenance.json", "mediaType": "application/json", "role": "metadata" },
-    { "path": "metadata/editing.json", "mediaType": "application/json", "role": "metadata" },
-    { "path": "metadata/editing-guide.md", "mediaType": "text/markdown", "role": "metadata" },
+    {
+      "path": "styles/document.css",
+      "mediaType": "text/css",
+      "role": "stylesheet"
+    },
+    {
+      "path": "metadata/llm.json",
+      "mediaType": "application/json",
+      "role": "metadata",
+      "integrity": "sha256-3LLUtNVWWDFRdSk4NuYu5t+Fi+Fky2qc15EWfarlejU="
+    },
+    {
+      "path": "metadata/provenance.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    },
+    {
+      "path": "metadata/editing.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    },
+    {
+      "path": "metadata/editing-guide.md",
+      "mediaType": "text/markdown",
+      "role": "metadata"
+    },
     {
       "path": "assets/openwebdoc-icons/openwebdoc-mark.png",
       "mediaType": "image/png",
@@ -61,5 +84,6 @@
     "allowRemoteResources": false,
     "allowedOrigins": [],
     "interactionModel": "declarative"
-  }
+  },
+  "profile": "fixed-stage-document"
 }

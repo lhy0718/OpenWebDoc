@@ -72,6 +72,8 @@ Tạo package `.htmlx` tối thiểu và hợp lệ.
 ```sh
 htmlx create document.htmlx --title "My Document" --language en
 htmlx create document.htmlx --title "My Document" --language en --json
+htmlx create fixed.htmlx --profile fixed-stage-document --title "Visual Brief"
+htmlx create deck.htmlx --profile slide-deck --title "OpenWebDoc Pitch" --slides 6
 ```
 
 Output:
@@ -81,6 +83,7 @@ Output:
 - `styles/document.css`: default local stylesheet
 - `metadata/llm.json`: user-visible LLM metadata
 - `metadata/provenance.json`: creation metadata
+- `metadata/presentation.json`: present only for `--profile slide-deck`
 
 ### Validate
 
@@ -134,6 +137,8 @@ External coding agents chinh sua truc tiep HTMLX package da unpack. Khong co can
 ```sh
 htmlx unpack input.htmlx ./input-package --json
 # Chinh sua ./input-package/index.html, styles/*, metadata/* va declared assets
+htmlx refresh-metadata ./input-package --json
+htmlx refresh-metadata ./input-package --check --json
 htmlx validate ./input-package --json
 htmlx pack ./input-package edited.htmlx --json
 htmlx validate edited.htmlx --json

@@ -1,54 +1,738 @@
 {
   "schemaVersion": "0.1.0",
-  "document": {
-    "title": "OpenWebDoc Slide Deck",
-    "language": "en",
-    "summary": "A browser-native slide deck introducing OpenWebDoc, HTMLX package structure, external agent editing, semantic content, and safe metadata."
+  "profile": "slide-deck",
+  "summary": "OpenWebDoc Slide Deck package metadata.",
+  "textHash": "sha256-j8MJdP7Xp1AKnhZRyjCz2/plHodq2zgfsfNiA38sgn0=",
+  "selectors": {
+    "slide-deck-root": "[data-htmlx-block-id=\"slide-deck-root\"]",
+    "deck-01-benefits": "[data-htmlx-block-id=\"deck-01-benefits\"]",
+    "deck-01-title": "[data-htmlx-block-id=\"deck-01-title\"]",
+    "deck-01-lead": "[data-htmlx-block-id=\"deck-01-lead\"]",
+    "deck-01-proof": "[data-htmlx-block-id=\"deck-01-proof\"]",
+    "deck-01-anatomy": "[data-htmlx-block-id=\"deck-01-anatomy\"]",
+    "deck-02-eyebrow": "[data-htmlx-block-id=\"deck-02-eyebrow\"]",
+    "deck-02-title": "[data-htmlx-block-id=\"deck-02-title\"]",
+    "deck-02-lead": "[data-htmlx-block-id=\"deck-02-lead\"]",
+    "deck-02-comparison": "[data-htmlx-block-id=\"deck-02-comparison\"]",
+    "deck-03-eyebrow": "[data-htmlx-block-id=\"deck-03-eyebrow\"]",
+    "deck-03-title": "[data-htmlx-block-id=\"deck-03-title\"]",
+    "deck-03-lead": "[data-htmlx-block-id=\"deck-03-lead\"]",
+    "deck-03-package": "[data-htmlx-block-id=\"deck-03-package\"]",
+    "deck-04-eyebrow": "[data-htmlx-block-id=\"deck-04-eyebrow\"]",
+    "deck-04-title": "[data-htmlx-block-id=\"deck-04-title\"]",
+    "deck-04-lead": "[data-htmlx-block-id=\"deck-04-lead\"]",
+    "deck-04-workflow": "[data-htmlx-block-id=\"deck-04-workflow\"]",
+    "deck-05-eyebrow": "[data-htmlx-block-id=\"deck-05-eyebrow\"]",
+    "deck-05-title": "[data-htmlx-block-id=\"deck-05-title\"]",
+    "deck-05-lead": "[data-htmlx-block-id=\"deck-05-lead\"]",
+    "deck-05-table": "[data-htmlx-block-id=\"deck-05-table\"]",
+    "deck-06-eyebrow": "[data-htmlx-block-id=\"deck-06-eyebrow\"]",
+    "deck-06-title": "[data-htmlx-block-id=\"deck-06-title\"]",
+    "deck-06-lead": "[data-htmlx-block-id=\"deck-06-lead\"]",
+    "deck-06-trust": "[data-htmlx-block-id=\"deck-06-trust\"]",
+    "deck-07-title": "[data-htmlx-block-id=\"deck-07-title\"]",
+    "deck-07-lead": "[data-htmlx-block-id=\"deck-07-lead\"]",
+    "deck-07-stack": "[data-htmlx-block-id=\"deck-07-stack\"]",
+    "deck-07-pill": "[data-htmlx-block-id=\"deck-07-pill\"]"
   },
+  "blockMap": [
+    {
+      "id": "slide-deck-root",
+      "selector": "[data-htmlx-block-id=\"slide-deck-root\"]",
+      "kind": "document",
+      "textHash": "sha256-zYRDY2Ea7HbsSmq/1SeY5x3mMp7ftH5jWPt021vxpic=",
+      "editable": true
+    },
+    {
+      "id": "deck-01-benefits",
+      "selector": "[data-htmlx-block-id=\"deck-01-benefits\"]",
+      "kind": "shape",
+      "textHash": "sha256-BIulqlbx9KdNKATDrDmTsrmRUtsYyeuJA+T7Eio6TUU=",
+      "editable": true
+    },
+    {
+      "id": "deck-01-title",
+      "selector": "[data-htmlx-block-id=\"deck-01-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-J3eAln9EorHlmw2ue9rz7BHkOMGbiyi943rXwziggX4=",
+      "editable": true
+    },
+    {
+      "id": "deck-01-lead",
+      "selector": "[data-htmlx-block-id=\"deck-01-lead\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-4xcV0CTm62PlrsooibUjjc9isyd23qyzEa3h1oWlsxg=",
+      "editable": true
+    },
+    {
+      "id": "deck-01-proof",
+      "selector": "[data-htmlx-block-id=\"deck-01-proof\"]",
+      "kind": "shape",
+      "textHash": "sha256-G7RpNlpbC7xmrZf4iCoL+wu5wBkCK2jsc5dxB34i658=",
+      "editable": true
+    },
+    {
+      "id": "deck-01-anatomy",
+      "selector": "[data-htmlx-block-id=\"deck-01-anatomy\"]",
+      "kind": "figure",
+      "textHash": "sha256-QWjBbxDk6TzsGFhrKKMzX9j3at2ka/YJrLIMAA2lrVQ=",
+      "editable": true
+    },
+    {
+      "id": "deck-02-eyebrow",
+      "selector": "[data-htmlx-block-id=\"deck-02-eyebrow\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-p58p6Y+EslL3IZeZMjKxJdZ548AK5eFfs3Cb5doqcng=",
+      "editable": true
+    },
+    {
+      "id": "deck-02-title",
+      "selector": "[data-htmlx-block-id=\"deck-02-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-BvUQ9mNHu7+3usM56FQEj3BNUGnmGcnpEzu46a0RX9Y=",
+      "editable": true
+    },
+    {
+      "id": "deck-02-lead",
+      "selector": "[data-htmlx-block-id=\"deck-02-lead\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-XjPcIW5TzFIg5I7mjRaL5dj9xQBolfjWXvRcSyYd/W4=",
+      "editable": true
+    },
+    {
+      "id": "deck-02-comparison",
+      "selector": "[data-htmlx-block-id=\"deck-02-comparison\"]",
+      "kind": "table",
+      "textHash": "sha256-M3TTXaBI8kCueOqLFhNPowTUmm4ORmXG8R6ELSZfts8=",
+      "editable": true
+    },
+    {
+      "id": "deck-03-eyebrow",
+      "selector": "[data-htmlx-block-id=\"deck-03-eyebrow\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-2xE3LaA5BQkRoBZUv0GD3ev0vAdqg5X3xhhkWPFqmAQ=",
+      "editable": true
+    },
+    {
+      "id": "deck-03-title",
+      "selector": "[data-htmlx-block-id=\"deck-03-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-egpyE7JU3kvfeVSbjFslxYILUrarDRyYd43lLkvh53M=",
+      "editable": true
+    },
+    {
+      "id": "deck-03-lead",
+      "selector": "[data-htmlx-block-id=\"deck-03-lead\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-FQORsTWRTiOvAsStf/Vf138DJNkblaFbOCYOGcSF720=",
+      "editable": true
+    },
+    {
+      "id": "deck-03-package",
+      "selector": "[data-htmlx-block-id=\"deck-03-package\"]",
+      "kind": "figure",
+      "textHash": "sha256-UOUCXAO5TLXJInJsaKKu54x5FoZkAHM3rPeQAL4McRI=",
+      "editable": true
+    },
+    {
+      "id": "deck-04-eyebrow",
+      "selector": "[data-htmlx-block-id=\"deck-04-eyebrow\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-kvsunjk050TzQ+wWCu0Z1lNexNRIXxqR/zIjVVYf7r0=",
+      "editable": true
+    },
+    {
+      "id": "deck-04-title",
+      "selector": "[data-htmlx-block-id=\"deck-04-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-2IgfSIs+ddjoxGjPqC+oVT3klKSbfzSTGtQOSZKfIuU=",
+      "editable": true
+    },
+    {
+      "id": "deck-04-lead",
+      "selector": "[data-htmlx-block-id=\"deck-04-lead\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-UMt3eeqo2sAu3E4Iujx6ypUvVHRc1qN877DXFzYEbJY=",
+      "editable": true
+    },
+    {
+      "id": "deck-04-workflow",
+      "selector": "[data-htmlx-block-id=\"deck-04-workflow\"]",
+      "kind": "figure",
+      "textHash": "sha256-/3HhXpVPp4R9d4Pd+YPFcI8BGSbwRNEKQtRQ4obBtXY=",
+      "editable": true
+    },
+    {
+      "id": "deck-05-eyebrow",
+      "selector": "[data-htmlx-block-id=\"deck-05-eyebrow\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-9YDALr2ZKr5gnFQJHsEQ18W2PtTV34NI0PAvh7Mq9z4=",
+      "editable": true
+    },
+    {
+      "id": "deck-05-title",
+      "selector": "[data-htmlx-block-id=\"deck-05-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-gD20KOBTT3qijRQJveHPbIC02CSz2dOF6qYLRALM0kw=",
+      "editable": true
+    },
+    {
+      "id": "deck-05-lead",
+      "selector": "[data-htmlx-block-id=\"deck-05-lead\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-qnt+JuKJ8gvz0Hs7HaNxF5kaRV9T0ca+DHl7nEsehoE=",
+      "editable": true
+    },
+    {
+      "id": "deck-05-table",
+      "selector": "[data-htmlx-block-id=\"deck-05-table\"]",
+      "kind": "table",
+      "textHash": "sha256-4CE5Fy7l3x7TQC+ZxhGUJM7wPVnqy/TisbqFqwAFdOs=",
+      "editable": true
+    },
+    {
+      "id": "deck-06-eyebrow",
+      "selector": "[data-htmlx-block-id=\"deck-06-eyebrow\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-gX9/ZUovKvJP0daDma7rftcHf5eQcFmou2zvp3qOlyg=",
+      "editable": true
+    },
+    {
+      "id": "deck-06-title",
+      "selector": "[data-htmlx-block-id=\"deck-06-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-ZcTALlQ5PXYSoWHfgmfy6wio1e/4lhPxZVu/uHY8/qw=",
+      "editable": true
+    },
+    {
+      "id": "deck-06-lead",
+      "selector": "[data-htmlx-block-id=\"deck-06-lead\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-1RsQ1iVVcq845980IW/4hevv+xDuuS1zY7l/F2ZCqeo=",
+      "editable": true
+    },
+    {
+      "id": "deck-06-trust",
+      "selector": "[data-htmlx-block-id=\"deck-06-trust\"]",
+      "kind": "figure",
+      "textHash": "sha256-EwEXWVdCB+vcQ7ixS1p8XesdxMxYwZD2KtHCv0mI0UQ=",
+      "editable": true
+    },
+    {
+      "id": "deck-07-title",
+      "selector": "[data-htmlx-block-id=\"deck-07-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-yU0bdnrqZnXZq4YLVC9IufySa/b2gFJZ5qlp1A5Da6A=",
+      "editable": true
+    },
+    {
+      "id": "deck-07-lead",
+      "selector": "[data-htmlx-block-id=\"deck-07-lead\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-Fas7Vsh+tXGI3zA7oiDDt6pBu/quCaKQgMFLdTydDZE=",
+      "editable": true
+    },
+    {
+      "id": "deck-07-stack",
+      "selector": "[data-htmlx-block-id=\"deck-07-stack\"]",
+      "kind": "shape",
+      "textHash": "sha256-PVCXdzeXs0GnKlxYHiAqK4xBdYyv98hmfuFxZ/Ehyjc=",
+      "editable": true
+    },
+    {
+      "id": "deck-07-pill",
+      "selector": "[data-htmlx-block-id=\"deck-07-pill\"]",
+      "kind": "shape",
+      "textHash": "sha256-QNLzUt3OJYDUnb+R0oC47FimuFS8ZApb8137JHDepIA=",
+      "editable": true
+    }
+  ],
   "readingOrder": [
+    "slide-deck-root",
+    "deck-01-benefits",
     "deck-01-title",
     "deck-01-lead",
+    "deck-01-proof",
+    "deck-01-anatomy",
+    "deck-02-eyebrow",
     "deck-02-title",
     "deck-02-lead",
+    "deck-02-comparison",
+    "deck-03-eyebrow",
     "deck-03-title",
     "deck-03-lead",
+    "deck-03-package",
+    "deck-04-eyebrow",
     "deck-04-title",
     "deck-04-lead",
+    "deck-04-workflow",
+    "deck-05-eyebrow",
     "deck-05-title",
     "deck-05-lead",
+    "deck-05-table",
+    "deck-06-eyebrow",
     "deck-06-title",
     "deck-06-lead",
+    "deck-06-trust",
     "deck-07-title",
-    "deck-07-lead"
+    "deck-07-lead",
+    "deck-07-stack",
+    "deck-07-pill"
   ],
   "chunks": [
     {
-      "id": "chunk-slide-deck-purpose",
-      "blockIds": ["deck-01-title", "deck-01-lead", "deck-02-title", "deck-02-lead"],
-      "selector": "[data-htmlx-slide-id='slide-1'], [data-htmlx-slide-id='slide-2']",
-      "summary": "OpenWebDoc treats the document as the primary browser reading and editing surface.",
-      "keywords": ["OpenWebDoc", "HTMLX", "browser-native", "pageless"],
-      "tokenEstimate": 120
+      "id": "chunk-1",
+      "blockIds": [
+        "slide-deck-root"
+      ],
+      "selector": "[data-htmlx-block-id=\"slide-deck-root\"]",
+      "textHash": "sha256-zYRDY2Ea7HbsSmq/1SeY5x3mMp7ftH5jWPt021vxpic=",
+      "summary": "Browser-readable Self-editable Agent-ready OpenWebDoc slide decks are documents first. A 16:9 presentation surface th...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 640,
+      "sensitivity": "unknown"
     },
     {
-      "id": "chunk-package-and-agent-flow",
-      "blockIds": ["deck-03-title", "deck-03-lead", "deck-04-title", "deck-04-lead"],
-      "selector": "[data-htmlx-slide-id='slide-3'], [data-htmlx-slide-id='slide-4']",
-      "summary": "The package contains HTML, CSS, assets, and metadata; structural edits are made in unpacked package files.",
-      "keywords": ["package", "agent workflow", "metadata", "validation"],
-      "tokenEstimate": 140
+      "id": "chunk-2",
+      "blockIds": [
+        "deck-01-benefits"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-01-benefits\"]",
+      "textHash": "sha256-BIulqlbx9KdNKATDrDmTsrmRUtsYyeuJA+T7Eio6TUU=",
+      "summary": "Browser-readable Self-editable Agent-ready",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 5,
+      "sensitivity": "unknown"
     },
     {
-      "id": "chunk-semantics-and-security",
-      "blockIds": ["deck-05-title", "deck-05-lead", "deck-06-title", "deck-06-lead"],
-      "selector": "[data-htmlx-slide-id='slide-5'], [data-htmlx-slide-id='slide-6']",
-      "summary": "Semantic HTML and user-visible reference metadata remain inspectable while the runtime blocks unsafe behavior.",
-      "keywords": ["semantic table", "security", "LLM metadata", "presentation"],
-      "tokenEstimate": 130
+      "id": "chunk-3",
+      "blockIds": [
+        "deck-01-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-01-title\"]",
+      "textHash": "sha256-J3eAln9EorHlmw2ue9rz7BHkOMGbiyi943rXwziggX4=",
+      "summary": "OpenWebDoc slide decks are documents first.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "deck-01-lead"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-01-lead\"]",
+      "textHash": "sha256-4xcV0CTm62PlrsooibUjjc9isyd23qyzEa3h1oWlsxg=",
+      "summary": "A 16:9 presentation surface that still reads as HTML, edits in place, and travels as one safe HTMLX package.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 26,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "deck-01-proof"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-01-proof\"]",
+      "textHash": "sha256-G7RpNlpbC7xmrZf4iCoL+wu5wBkCK2jsc5dxB34i658=",
+      "summary": "16:9 stage Uniform presentation geometry Semantic HTML Tables and figures stay real Package CSS Layout owned by the d...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 26,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "deck-01-anatomy"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-01-anatomy\"]",
+      "textHash": "sha256-QWjBbxDk6TzsGFhrKKMzX9j3at2ka/YJrLIMAA2lrVQ=",
+      "summary": "Native deck surface Read The deck opens as a normal browser document. Correct Visible text and objects stay editable ...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 41,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-7",
+      "blockIds": [
+        "deck-02-eyebrow"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-02-eyebrow\"]",
+      "textHash": "sha256-p58p6Y+EslL3IZeZMjKxJdZ548AK5eFfs3Cb5doqcng=",
+      "summary": "Format shift",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-8",
+      "blockIds": [
+        "deck-02-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-02-title\"]",
+      "textHash": "sha256-BvUQ9mNHu7+3usM56FQEj3BNUGnmGcnpEzu46a0RX9Y=",
+      "summary": "The starting point moves from page file to browser surface.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 14,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-9",
+      "blockIds": [
+        "deck-02-lead"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-02-lead\"]",
+      "textHash": "sha256-XjPcIW5TzFIg5I7mjRaL5dj9xQBolfjWXvRcSyYd/W4=",
+      "summary": "HTMLX keeps the presentation readable before any editor chrome appears.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 14,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-10",
+      "blockIds": [
+        "deck-02-comparison"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-02-comparison\"]",
+      "textHash": "sha256-M3TTXaBI8kCueOqLFhNPowTUmm4ORmXG8R6ELSZfts8=",
+      "summary": "Document model comparison Question Page-first deck HTMLX-native deck Where is the source? Buried in a binary or app-s...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 75,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-11",
+      "blockIds": [
+        "deck-03-eyebrow"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-03-eyebrow\"]",
+      "textHash": "sha256-2xE3LaA5BQkRoBZUv0GD3ev0vAdqg5X3xhhkWPFqmAQ=",
+      "summary": "Package anatomy",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-12",
+      "blockIds": [
+        "deck-03-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-03-title\"]",
+      "textHash": "sha256-egpyE7JU3kvfeVSbjFslxYILUrarDRyYd43lLkvh53M=",
+      "summary": "A deck is just one explicit package.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 10,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-13",
+      "blockIds": [
+        "deck-03-lead"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-03-lead\"]",
+      "textHash": "sha256-FQORsTWRTiOvAsStf/Vf138DJNkblaFbOCYOGcSF720=",
+      "summary": "The presentation profile describes how slides fit and navigate; the document remains the canonical source.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 21,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-14",
+      "blockIds": [
+        "deck-03-package"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-03-package\"]",
+      "textHash": "sha256-UOUCXAO5TLXJInJsaKKu54x5FoZkAHM3rPeQAL4McRI=",
+      "summary": "OpenWebDoc slide package openwebdoc-slide-deck/ index.html styles/document.css metadata/presentation.json metadata/ll...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 53,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-15",
+      "blockIds": [
+        "deck-04-eyebrow"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-04-eyebrow\"]",
+      "textHash": "sha256-kvsunjk050TzQ+wWCu0Z1lNexNRIXxqR/zIjVVYf7r0=",
+      "summary": "Agent workflow",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-16",
+      "blockIds": [
+        "deck-04-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-04-title\"]",
+      "textHash": "sha256-2IgfSIs+ddjoxGjPqC+oVT3klKSbfzSTGtQOSZKfIuU=",
+      "summary": "The agent boundary stays outside the runtime.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 10,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-17",
+      "blockIds": [
+        "deck-04-lead"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-04-lead\"]",
+      "textHash": "sha256-UMt3eeqo2sAu3E4Iujx6ypUvVHRc1qN877DXFzYEbJY=",
+      "summary": "Small corrections happen on the document; structural changes move through unpacked files, validation, and a clean pac...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 25,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-18",
+      "blockIds": [
+        "deck-04-workflow"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-04-workflow\"]",
+      "textHash": "sha256-/3HhXpVPp4R9d4Pd+YPFcI8BGSbwRNEKQtRQ4obBtXY=",
+      "summary": "Runtime boundary and external edit loop Trusted runtime surface Package files 1 Open Small edits 2 Unpack Edit packag...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 42,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-19",
+      "blockIds": [
+        "deck-05-eyebrow"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-05-eyebrow\"]",
+      "textHash": "sha256-9YDALr2ZKr5gnFQJHsEQ18W2PtTV34NI0PAvh7Mq9z4=",
+      "summary": "Semantic behavior",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-20",
+      "blockIds": [
+        "deck-05-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-05-title\"]",
+      "textHash": "sha256-gD20KOBTT3qijRQJveHPbIC02CSz2dOF6qYLRALM0kw=",
+      "summary": "A table in a deck stays a table.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 11,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-21",
+      "blockIds": [
+        "deck-05-lead"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-05-lead\"]",
+      "textHash": "sha256-qnt+JuKJ8gvz0Hs7HaNxF5kaRV9T0ca+DHl7nEsehoE=",
+      "summary": "Move the object; preserve the table semantics.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 10,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-22",
+      "blockIds": [
+        "deck-05-table"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-05-table\"]",
+      "textHash": "sha256-4CE5Fy7l3x7TQC+ZxhGUJM7wPVnqy/TisbqFqwAFdOs=",
+      "summary": "The object moves, the table stays semantic Mode What changes What remains semantic Read Open it like a browser docume...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 67,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-23",
+      "blockIds": [
+        "deck-06-eyebrow"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-06-eyebrow\"]",
+      "textHash": "sha256-gX9/ZUovKvJP0daDma7rftcHf5eQcFmou2zvp3qOlyg=",
+      "summary": "Trust model",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-24",
+      "blockIds": [
+        "deck-06-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-06-title\"]",
+      "textHash": "sha256-ZcTALlQ5PXYSoWHfgmfy6wio1e/4lhPxZVu/uHY8/qw=",
+      "summary": "Metadata guides. It never commands.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 7,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-25",
+      "blockIds": [
+        "deck-06-lead"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-06-lead\"]",
+      "textHash": "sha256-1RsQ1iVVcq845980IW/4hevv+xDuuS1zY7l/F2ZCqeo=",
+      "summary": "LLM metadata, presentation metadata, and editing guides are user-visible references, not a hidden instruction channel.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 21,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-26",
+      "blockIds": [
+        "deck-06-trust"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-06-trust\"]",
+      "textHash": "sha256-EwEXWVdCB+vcQ7ixS1p8XesdxMxYwZD2KtHCv0mI0UQ=",
+      "summary": "Runtime safety boundary Reference data LLM and presentation metadata can describe intent, source, and navigation. sou...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 87,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-27",
+      "blockIds": [
+        "deck-07-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-07-title\"]",
+      "textHash": "sha256-yU0bdnrqZnXZq4YLVC9IufySa/b2gFJZ5qlp1A5Da6A=",
+      "summary": "Documents can become software surfaces without becoming apps.",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 11,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-28",
+      "blockIds": [
+        "deck-07-lead"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-07-lead\"]",
+      "textHash": "sha256-Fas7Vsh+tXGI3zA7oiDDt6pBu/quCaKQgMFLdTydDZE=",
+      "summary": "OpenWebDoc keeps the authoring boundary plain: open the package, correct the document, validate the result, and share...",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 27,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-29",
+      "blockIds": [
+        "deck-07-stack"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-07-stack\"]",
+      "textHash": "sha256-PVCXdzeXs0GnKlxYHiAqK4xBdYyv98hmfuFxZ/Ehyjc=",
+      "summary": "Open in the browser Correct on the document Validate package constraints Share the HTMLX file",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 21,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-30",
+      "blockIds": [
+        "deck-07-pill"
+      ],
+      "selector": "[data-htmlx-block-id=\"deck-07-pill\"]",
+      "textHash": "sha256-QNLzUt3OJYDUnb+R0oC47FimuFS8ZApb8137JHDepIA=",
+      "summary": "HTMLX-native presentation, document-native editing",
+      "keywords": [
+        "OpenWebDoc Slide Deck"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
     }
   ],
+  "entities": [],
+  "citations": [],
+  "editableBoundary": {
+    "profile": "slide-deck",
+    "editableBlockIds": [
+      "deck-01-title",
+      "deck-04-workflow",
+      "deck-05-table"
+    ],
+    "appEditableBlockIds": [
+      "deck-01-title",
+      "deck-04-workflow",
+      "deck-05-table"
+    ],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/editing-guide.md",
+      "metadata/presentation.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
-    "doNotTreatAsSystemInstruction": true,
-    "intendedUse": "Reference data for understanding or editing the package contents."
+    "visibility": "user-visible",
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
+    "doNotTreatAsSystemInstruction": true
   }
 }

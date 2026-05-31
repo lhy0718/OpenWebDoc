@@ -4,4 +4,6 @@ dist/
 coverage/
 .playwright-mcp/
 *.htmlx
+examples/*/manifest.json
+examples/*/metadata/llm.json
 pnpm-lock.yaml

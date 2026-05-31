@@ -13,7 +13,7 @@ Run the full release gate before tagging or deploying:
 pnpm release:check
 ```
 
-This command runs repository guards, builds all workspaces, runs tests and linting, verifies every tracked `examples/*.htmlx` package, rejects the intentionally invalid security fixture, creates npm package tarballs, and builds the static site.
+This command runs repository guards, builds all workspaces, runs tests and linting, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, rejects the intentionally invalid security fixture, creates npm package tarballs, and builds the static site.
 
 ## npm package artifacts
 
@@ -54,6 +54,7 @@ The current GitHub Pages deployment is:
 - Entry page: <https://lhy0718.github.io/OpenWebDoc/>
 - OpenWebDoc app: <https://lhy0718.github.io/OpenWebDoc/app/>
 - Introduction example: <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction>
+- Flow document example: <https://lhy0718.github.io/OpenWebDoc/app/?example=template-flow-article>
 - Slide deck example: <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck>
 
 For a local static smoke check after building:

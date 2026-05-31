@@ -5,9 +5,11 @@
   "title": "Basic HTMLX Document",
   "language": "en",
   "createdAt": "2026-05-13T00:00:00.000Z",
-  "modifiedAt": "2026-05-13T00:00:00.000Z",
+  "modifiedAt": "2026-05-31T11:40:21.634Z",
   "entry": "index.html",
-  "styles": ["styles/document.css"],
+  "styles": [
+    "styles/document.css"
+  ],
   "resources": [
     {
       "path": "styles/document.css",
@@ -17,7 +19,8 @@
     {
       "path": "metadata/llm.json",
       "mediaType": "application/json",
-      "role": "metadata"
+      "role": "metadata",
+      "integrity": "sha256-aBqFnNK8zIe2O2TSY6cTrzD4qveH765amtwbXYcKiTc="
     },
     {
       "path": "metadata/provenance.json",
@@ -34,5 +37,6 @@
     "allowRemoteResources": false,
     "allowedOrigins": [],
     "interactionModel": "declarative"
-  }
+  },
+  "profile": "flow-document"
 }

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Flow Document Brief</title>
+    <link rel="stylesheet" href="styles/document.css" />
+  </head>
+  <body>
+    <main class="flow-document" data-htmlx-profile="flow-document">
+      <article>
+        <header class="document-header">
+          <p class="eyebrow">HTMLX FLOW DOCUMENT</p>
+          <h1 data-htmlx-block-id="title">A browser-native brief that reflows by default</h1>
+          <p data-htmlx-block-id="summary" class="summary">
+            Flow documents are the default OpenWebDoc profile: readable HTML, local assets, explicit
+            metadata, and validation without a fixed canvas.
+          </p>
+        </header>
+
+        <section aria-labelledby="why-flow">
+          <h2 id="why-flow" data-htmlx-block-id="why-flow">Why this profile exists</h2>
+          <p data-htmlx-block-id="why-flow-body">
+            A long-form document should behave like the web. Paragraphs, tables, and lists should
+            adapt to the reader's viewport before any runtime adds editing controls.
+          </p>
+          <div class="principles" aria-label="Flow document principles">
+            <section data-htmlx-block-id="principle-readable">
+              <h3>Readable first</h3>
+              <p>Open the unpacked <code>index.html</code> and the document remains useful.</p>
+            </section>
+            <section data-htmlx-block-id="principle-local">
+              <h3>Package-local</h3>
+              <p>Styles, metadata, and assets travel with the package and pass validation.</p>
+            </section>
+            <section data-htmlx-block-id="principle-agent">
+              <h3>Agent-ready</h3>
+              <p>Large edits happen in package files, then return through the CLI validator.</p>
+            </section>
+          </div>
+        </section>
+
+        <section aria-labelledby="workflow">
+          <h2 id="workflow" data-htmlx-block-id="workflow">Canonical workflow</h2>
+          <table>
+            <caption>
+              Flow document package operations
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Step</th>
+                <th scope="col">Surface</th>
+                <th scope="col">Purpose</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Read</th>
+                <td>Browser</td>
+                <td>Use the HTML document without app chrome or fixed-stage assumptions.</td>
+              </tr>
+              <tr>
+                <th scope="row">Revise</th>
+                <td>Unpacked package</td>
+                <td>Edit HTML, CSS, metadata, and declared assets directly.</td>
+              </tr>
+              <tr>
+                <th scope="row">Validate</th>
+                <td><code>htmlx</code> CLI</td>
+                <td>Check paths, resources, security policy, and metadata boundaries.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section aria-labelledby="boundary">
+          <h2 id="boundary" data-htmlx-block-id="boundary">Boundary with visual profiles</h2>
+          <p data-htmlx-block-id="boundary-body">
+            Fixed-stage documents and slide decks are still HTMLX packages, but they declare their
+            geometry explicitly. Flow documents stay reflowable and avoid stage coordinates.
+          </p>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

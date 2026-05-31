@@ -1,23 +1,60 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "flow-document",
   "summary": "Basic HTMLX Document",
-  "readingOrder": ["block-1"],
+  "textHash": "sha256-sxEfNsjUUNBvHhu9lOAxpibh9unE4JZfQomLBra8yH8=",
+  "selectors": {
+    "block-1": "[data-htmlx-block-id=\"block-1\"]"
+  },
+  "blockMap": [
+    {
+      "id": "block-1",
+      "selector": "[data-htmlx-block-id=\"block-1\"]",
+      "kind": "section",
+      "textHash": "sha256-QQJKWumGagqMm1WwtILC0LbCT7EgA8q5+rC1eBjcPz0=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "block-1"
+  ],
   "chunks": [
     {
       "id": "chunk-1",
-      "blockIds": ["block-1"],
+      "blockIds": [
+        "block-1"
+      ],
       "selector": "[data-htmlx-block-id=\"block-1\"]",
-      "summary": "A minimal valid HTMLX package example.",
-      "keywords": ["OpenWebDoc", "HTMLX", "example"],
-      "tokenEstimate": 80,
-      "sensitivity": "public"
+      "textHash": "sha256-QQJKWumGagqMm1WwtILC0LbCT7EgA8q5+rC1eBjcPz0=",
+      "summary": "Basic HTMLX Document This package demonstrates a browser-native, pageless HTMLX Document Package.",
+      "keywords": [
+        "Basic HTMLX Document"
+      ],
+      "tokenEstimate": 17,
+      "sensitivity": "unknown"
     }
   ],
   "entities": [],
   "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

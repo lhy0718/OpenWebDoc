@@ -1,7 +1,198 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "fixed-stage-document",
   "summary": "OpenWebDoc Introduction explains why browser-native document packages are useful, how the HTMLX Document Package keeps content, layout, assets, and metadata together, how small corrections stay on the document surface, how external agents revise unpacked files, and how validation, security, reference metadata, and practical use cases fit together.",
+  "textHash": "sha256-trQgAMc7Qi4zOSBlpT0616vNa/AQ0kzy6P18cxZFWI4=",
+  "selectors": {
+    "document-root": "[data-htmlx-block-id=\"document-root\"]",
+    "doc-title": "[data-htmlx-block-id=\"doc-title\"]",
+    "doc-subtitle": "[data-htmlx-block-id=\"doc-subtitle\"]",
+    "hero-system-card": "[data-htmlx-block-id=\"hero-system-card\"]",
+    "why-heading": "[data-htmlx-block-id=\"why-heading\"]",
+    "need-matrix": "[data-htmlx-block-id=\"need-matrix\"]",
+    "philosophy-heading": "[data-htmlx-block-id=\"philosophy-heading\"]",
+    "philosophy-grid": "[data-htmlx-block-id=\"philosophy-grid\"]",
+    "system-heading": "[data-htmlx-block-id=\"system-heading\"]",
+    "implementation-map": "[data-htmlx-block-id=\"implementation-map\"]",
+    "package-heading": "[data-htmlx-block-id=\"package-heading\"]",
+    "package-table": "[data-htmlx-block-id=\"package-table\"]",
+    "editing-heading": "[data-htmlx-block-id=\"editing-heading\"]",
+    "editing-model": "[data-htmlx-block-id=\"editing-model\"]",
+    "security-heading": "[data-htmlx-block-id=\"security-heading\"]",
+    "security-table": "[data-htmlx-block-id=\"security-table\"]",
+    "workflow-heading": "[data-htmlx-block-id=\"workflow-heading\"]",
+    "workflow-commands": "[data-htmlx-block-id=\"workflow-commands\"]",
+    "use-cases-heading": "[data-htmlx-block-id=\"use-cases-heading\"]",
+    "use-cases-panel": "[data-htmlx-block-id=\"use-cases-panel\"]",
+    "closing-panel": "[data-htmlx-block-id=\"closing-panel\"]",
+    "closing-heading": "[data-htmlx-block-id=\"closing-heading\"]",
+    "closing-note": "[data-htmlx-block-id=\"closing-note\"]"
+  },
+  "blockMap": [
+    {
+      "id": "document-root",
+      "selector": "[data-htmlx-block-id=\"document-root\"]",
+      "kind": "document",
+      "textHash": "sha256-DTZbVqQxpkLaDbzyM5XLIwN8SucqKq1a5L2eLhzNE0E=",
+      "editable": true
+    },
+    {
+      "id": "doc-title",
+      "selector": "[data-htmlx-block-id=\"doc-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-ezL6Mf7U+0ZN3Pf1mq/Y8qdWzhWT1PTQuh8UXbkCE5o=",
+      "editable": true
+    },
+    {
+      "id": "doc-subtitle",
+      "selector": "[data-htmlx-block-id=\"doc-subtitle\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-/Hd6rCowhTsahIRgdwdd5lz/5HWnikGhzZQ9ERSUpeo=",
+      "editable": true
+    },
+    {
+      "id": "hero-system-card",
+      "selector": "[data-htmlx-block-id=\"hero-system-card\"]",
+      "kind": "figure",
+      "textHash": "sha256-jFhL7B1pTgaADVq5NK89gnyI91NhYyOybdzyfG2afmw=",
+      "editable": true
+    },
+    {
+      "id": "why-heading",
+      "selector": "[data-htmlx-block-id=\"why-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-PCNVMoUxCkwqFaXivnODXBprK0t7KUX14JJA+aKmAdw=",
+      "editable": true
+    },
+    {
+      "id": "need-matrix",
+      "selector": "[data-htmlx-block-id=\"need-matrix\"]",
+      "kind": "table",
+      "textHash": "sha256-I7gqjAn6EvQhETSN8e5CelOBGBvjRbilLOAt3yMsiCI=",
+      "editable": true
+    },
+    {
+      "id": "philosophy-heading",
+      "selector": "[data-htmlx-block-id=\"philosophy-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-4seGwx7OoqAPeZmYMnmEJyTqttts3aKdneJCg2Osx3o=",
+      "editable": true
+    },
+    {
+      "id": "philosophy-grid",
+      "selector": "[data-htmlx-block-id=\"philosophy-grid\"]",
+      "kind": "figure",
+      "textHash": "sha256-c+CKDe+KnK5BJ+UZxyZ+V8LV2dGzeEvSmgoMs1MmtxU=",
+      "editable": true
+    },
+    {
+      "id": "system-heading",
+      "selector": "[data-htmlx-block-id=\"system-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-psUp0R1NrAu78XCe15NqUOPyeOWSVlHW7PpNKSxS8mI=",
+      "editable": true
+    },
+    {
+      "id": "implementation-map",
+      "selector": "[data-htmlx-block-id=\"implementation-map\"]",
+      "kind": "figure",
+      "textHash": "sha256-e6oKuXZfnQbCyL7KkSQ0ZVLHxl8LKTZDaR3X8ZZL0I0=",
+      "editable": true
+    },
+    {
+      "id": "package-heading",
+      "selector": "[data-htmlx-block-id=\"package-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-gPe/WwDUlXe4pgbmUZhkRFtLZYjNSH9uN29KjobnvmY=",
+      "editable": true
+    },
+    {
+      "id": "package-table",
+      "selector": "[data-htmlx-block-id=\"package-table\"]",
+      "kind": "table",
+      "textHash": "sha256-+lfSHP5J596pGVAVospGG80AdOOaBlUjb8DaFKnn2FQ=",
+      "editable": true
+    },
+    {
+      "id": "editing-heading",
+      "selector": "[data-htmlx-block-id=\"editing-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-VCVlkf2+clMtajysaRMK5qJMmehXKHlb53FtRUueYuM=",
+      "editable": true
+    },
+    {
+      "id": "editing-model",
+      "selector": "[data-htmlx-block-id=\"editing-model\"]",
+      "kind": "figure",
+      "textHash": "sha256-4HWQKubGks6XN23mtpQJeBJY8jmYpX+3tGmt0efqRsI=",
+      "editable": true
+    },
+    {
+      "id": "security-heading",
+      "selector": "[data-htmlx-block-id=\"security-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-TDvh3scM4AKjA5CPHdQMkPNWOO1eFuG7YXMcHgZAQVw=",
+      "editable": true
+    },
+    {
+      "id": "security-table",
+      "selector": "[data-htmlx-block-id=\"security-table\"]",
+      "kind": "table",
+      "textHash": "sha256-CrwdMMHhW0lIoiRhCLG61kn2iVTIS9/FORGZBzcTrQg=",
+      "editable": true
+    },
+    {
+      "id": "workflow-heading",
+      "selector": "[data-htmlx-block-id=\"workflow-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-M3NDMBNuNBKTbdCBvi99TaSDLun0XzgZrO3fxctxcH4=",
+      "editable": true
+    },
+    {
+      "id": "workflow-commands",
+      "selector": "[data-htmlx-block-id=\"workflow-commands\"]",
+      "kind": "figure",
+      "textHash": "sha256-1+XpuC0rreAcRxLV818byRQc/15fjiiDytUDDPwlB94=",
+      "editable": true
+    },
+    {
+      "id": "use-cases-heading",
+      "selector": "[data-htmlx-block-id=\"use-cases-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-nMbMgSJ1o3NiGqsmV7wSX0yW1xFe+W/+URDTbpH2zIM=",
+      "editable": true
+    },
+    {
+      "id": "use-cases-panel",
+      "selector": "[data-htmlx-block-id=\"use-cases-panel\"]",
+      "kind": "figure",
+      "textHash": "sha256-JlOdAFIjEyEdN5BZYHRFd2ge9o/m3shB97NvTDWcKCM=",
+      "editable": true
+    },
+    {
+      "id": "closing-panel",
+      "selector": "[data-htmlx-block-id=\"closing-panel\"]",
+      "kind": "figure",
+      "textHash": "sha256-YvEKCzlonYNfELaCudmi8+ZVpNDGYz6lw27SWqcmSWs=",
+      "editable": true
+    },
+    {
+      "id": "closing-heading",
+      "selector": "[data-htmlx-block-id=\"closing-heading\"]",
+      "kind": "heading",
+      "textHash": "sha256-KkOh82n1r4pEs9x+r8Dgm2RKLJulU/Bz3iwR5+StXeI=",
+      "editable": true
+    },
+    {
+      "id": "closing-note",
+      "selector": "[data-htmlx-block-id=\"closing-note\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-jOqVbOj8l14ZYxSu5THZiBcffB5HvDMqegIs6mm7TbI=",
+      "editable": true
+    }
+  ],
   "readingOrder": [
+    "document-root",
     "doc-title",
     "doc-subtitle",
     "hero-system-card",
@@ -21,81 +212,378 @@
     "workflow-commands",
     "use-cases-heading",
     "use-cases-panel",
+    "closing-panel",
     "closing-heading",
     "closing-note"
   ],
   "chunks": [
     {
-      "id": "identity-and-need",
-      "blockIds": ["doc-title", "doc-subtitle", "hero-system-card", "why-heading", "need-matrix"],
-      "selector": "#doc-title, #doc-subtitle, #hero-system-card, #why-heading, #need-matrix",
-      "summary": "Introduces OpenWebDoc as a browser-native document package and compares HTMLX against page-bound documents and ordinary web pages across reading, editing, AI-assisted revision, integrity, and trust boundaries.",
-      "keywords": ["OpenWebDoc", "HTMLX Document Package", "browser-native", ".htmlx", "need"],
-      "tokenEstimate": 520,
-      "sensitivity": "public"
-    },
-    {
-      "id": "philosophy",
-      "blockIds": ["philosophy-heading", "philosophy-grid"],
-      "selector": "#philosophy-heading, #philosophy-grid",
-      "summary": "Explains the OpenWebDoc philosophy through readable source, semantic HTML, package-owned layout, and file-level agent revision boundaries.",
-      "keywords": ["readable source", "semantic HTML", "package CSS", "unpacked package"],
-      "tokenEstimate": 340,
-      "sensitivity": "public"
-    },
-    {
-      "id": "implementation-system",
-      "blockIds": ["system-heading", "implementation-map", "package-heading", "package-table"],
-      "selector": "#system-heading, #implementation-map, #package-heading, #package-table",
-      "summary": "Describes the HTMLX package structure and the author, validate, revise, and repack implementation flow.",
-      "keywords": ["manifest.json", "index.html", "styles", "metadata", "assets", "validation"],
-      "tokenEstimate": 560,
-      "sensitivity": "public"
-    },
-    {
-      "id": "editing-boundary",
-      "blockIds": ["editing-heading", "editing-model"],
-      "selector": "#editing-heading, #editing-model",
-      "summary": "Separates small direct corrections in the OpenWebDoc runtime from structural edits performed by external agents in unpacked package files.",
-      "keywords": [
-        "self-editable",
-        "contenteditable",
-        "micro editing",
-        "external agent",
-        "directory validation"
-      ],
-      "tokenEstimate": 420,
-      "sensitivity": "public"
-    },
-    {
-      "id": "security-metadata-workflow",
+      "id": "chunk-1",
       "blockIds": [
-        "security-heading",
-        "security-table",
-        "workflow-heading",
-        "workflow-commands",
-        "use-cases-heading",
-        "use-cases-panel",
+        "document-root"
+      ],
+      "selector": "[data-htmlx-block-id=\"document-root\"]",
+      "textHash": "sha256-DTZbVqQxpkLaDbzyM5XLIwN8SucqKq1a5L2eLhzNE0E=",
+      "summary": "OpenWebDoc Browser-readable Self-editable Agent-safe files Validated package BROWSER-NATIVE DOCUMENT PACKAGE OpenWebD...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 1114,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "doc-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"doc-title\"]",
+      "textHash": "sha256-ezL6Mf7U+0ZN3Pf1mq/Y8qdWzhWT1PTQuh8UXbkCE5o=",
+      "summary": "OpenWebDoc Introduction",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "doc-subtitle"
+      ],
+      "selector": "[data-htmlx-block-id=\"doc-subtitle\"]",
+      "textHash": "sha256-/Hd6rCowhTsahIRgdwdd5lz/5HWnikGhzZQ9ERSUpeo=",
+      "summary": "OpenWebDoc is a browser-native package for rich documents that need to stay readable , lightly editable , and safe fo...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 56,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "hero-system-card"
+      ],
+      "selector": "[data-htmlx-block-id=\"hero-system-card\"]",
+      "textHash": "sha256-jFhL7B1pTgaADVq5NK89gnyI91NhYyOybdzyfG2afmw=",
+      "summary": "one portable document Browser-readable Open the document directly in any modern browser. Everything travels together ...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 46,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "why-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"why-heading\"]",
+      "textHash": "sha256-PCNVMoUxCkwqFaXivnODXBprK0t7KUX14JJA+aKmAdw=",
+      "summary": "1. Why Browser-Native Packages Matter",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 7,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-6",
+      "blockIds": [
+        "need-matrix"
+      ],
+      "selector": "[data-htmlx-block-id=\"need-matrix\"]",
+      "textHash": "sha256-I7gqjAn6EvQhETSN8e5CelOBGBvjRbilLOAt3yMsiCI=",
+      "summary": "Table 1. Why HTMLX differs from page-bound files and ordinary web pages Lens Page-bound documents Ordinary web pages ...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 202,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-7",
+      "blockIds": [
+        "philosophy-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"philosophy-heading\"]",
+      "textHash": "sha256-4seGwx7OoqAPeZmYMnmEJyTqttts3aKdneJCg2Osx3o=",
+      "summary": "2. The Core Philosophy Of OpenWebDoc",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-8",
+      "blockIds": [
+        "philosophy-grid"
+      ],
+      "selector": "[data-htmlx-block-id=\"philosophy-grid\"]",
+      "textHash": "sha256-c+CKDe+KnK5BJ+UZxyZ+V8LV2dGzeEvSmgoMs1MmtxU=",
+      "summary": "Document as source The unpacked index.html is the readable artifact, not a hidden export target. Semantic first Table...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 79,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-9",
+      "blockIds": [
+        "system-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"system-heading\"]",
+      "textHash": "sha256-psUp0R1NrAu78XCe15NqUOPyeOWSVlHW7PpNKSxS8mI=",
+      "summary": "3. How The Package Holds Together",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-10",
+      "blockIds": [
+        "implementation-map"
+      ],
+      "selector": "[data-htmlx-block-id=\"implementation-map\"]",
+      "textHash": "sha256-e6oKuXZfnQbCyL7KkSQ0ZVLHxl8LKTZDaR3X8ZZL0I0=",
+      "summary": "Figure 1. How the OpenWebDoc package keeps content, layout, and metadata together HTMLX package mimetype manifest.jso...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 83,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-11",
+      "blockIds": [
+        "package-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"package-heading\"]",
+      "textHash": "sha256-gPe/WwDUlXe4pgbmUZhkRFtLZYjNSH9uN29KjobnvmY=",
+      "summary": "4. Inside An HTMLX Document Package",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-12",
+      "blockIds": [
+        "package-table"
+      ],
+      "selector": "[data-htmlx-block-id=\"package-table\"]",
+      "textHash": "sha256-+lfSHP5J596pGVAVospGG80AdOOaBlUjb8DaFKnn2FQ=",
+      "summary": "Table 2. Package files and their responsibilities File Responsibility Validation rule Maintained by index.html Canoni...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 141,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-13",
+      "blockIds": [
+        "editing-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"editing-heading\"]",
+      "textHash": "sha256-VCVlkf2+clMtajysaRMK5qJMmehXKHlb53FtRUueYuM=",
+      "summary": "5. How The Document Stays Editable",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-14",
+      "blockIds": [
+        "editing-model"
+      ],
+      "selector": "[data-htmlx-block-id=\"editing-model\"]",
+      "textHash": "sha256-4HWQKubGks6XN23mtpQJeBJY8jmYpX+3tGmt0efqRsI=",
+      "summary": "Small corrections in the runtime Titles, paragraphs, captions, and table cells remain text on the page. Images, figur...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 99,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-15",
+      "blockIds": [
+        "security-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"security-heading\"]",
+      "textHash": "sha256-TDvh3scM4AKjA5CPHdQMkPNWOO1eFuG7YXMcHgZAQVw=",
+      "summary": "6. Security Model And Reference Metadata",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-16",
+      "blockIds": [
+        "security-table"
+      ],
+      "selector": "[data-htmlx-block-id=\"security-table\"]",
+      "textHash": "sha256-CrwdMMHhW0lIoiRhCLG61kn2iVTIS9/FORGZBzcTrQg=",
+      "summary": "Table 3. Risks HTMLX rejects or isolates by default Risk Rejected input Allowed pattern Default behavior Path travers...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 99,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-17",
+      "blockIds": [
+        "workflow-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"workflow-heading\"]",
+      "textHash": "sha256-M3NDMBNuNBKTbdCBvi99TaSDLun0XzgZrO3fxctxcH4=",
+      "summary": "7. Everyday Usage Flow",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-18",
+      "blockIds": [
+        "workflow-commands"
+      ],
+      "selector": "[data-htmlx-block-id=\"workflow-commands\"]",
+      "textHash": "sha256-1+XpuC0rreAcRxLV818byRQc/15fjiiDytUDDPwlB94=",
+      "summary": "01 Create or receive a package htmlx create intro.htmlx --title \"OpenWebDoc Introduction\" 02 Unpack when deeper chang...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 65,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-19",
+      "blockIds": [
+        "use-cases-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"use-cases-heading\"]",
+      "textHash": "sha256-nMbMgSJ1o3NiGqsmV7wSX0yW1xFe+W/+URDTbpH2zIM=",
+      "summary": "8. What OpenWebDoc Is Good For",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 9,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-20",
+      "blockIds": [
+        "use-cases-panel"
+      ],
+      "selector": "[data-htmlx-block-id=\"use-cases-panel\"]",
+      "textHash": "sha256-JlOdAFIjEyEdN5BZYHRFd2ge9o/m3shB97NvTDWcKCM=",
+      "summary": "Research briefs Keep long-form analysis, figures, tables, and source-aware metadata in one browser-readable package. ...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 86,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-21",
+      "blockIds": [
+        "closing-panel"
+      ],
+      "selector": "[data-htmlx-block-id=\"closing-panel\"]",
+      "textHash": "sha256-YvEKCzlonYNfELaCudmi8+ZVpNDGYz6lw27SWqcmSWs=",
+      "summary": "The Goal Of OpenWebDoc HTMLX is not an app wrapper around a document. It treats the document itself as the readable s...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 72,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-22",
+      "blockIds": [
+        "closing-heading"
+      ],
+      "selector": "[data-htmlx-block-id=\"closing-heading\"]",
+      "textHash": "sha256-KkOh82n1r4pEs9x+r8Dgm2RKLJulU/Bz3iwR5+StXeI=",
+      "summary": "The Goal Of OpenWebDoc",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 6,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-23",
+      "blockIds": [
         "closing-note"
       ],
-      "selector": "#security-heading, #security-table, #workflow-heading, #workflow-commands, #use-cases-heading, #use-cases-panel, #closing-note",
-      "summary": "Covers untrusted input handling, remote resource and script blocking, reference metadata isolation, the CLI workflow, and practical use cases such as research briefs, manuals, agent-reviewed drafts, and portable knowledge packs.",
-      "keywords": ["security", "untrusted input", "reference metadata", "htmlx CLI", "use cases"],
-      "tokenEstimate": 620,
-      "sensitivity": "public"
+      "selector": "[data-htmlx-block-id=\"closing-note\"]",
+      "textHash": "sha256-jOqVbOj8l14ZYxSu5THZiBcffB5HvDMqegIs6mm7TbI=",
+      "summary": "HTMLX is not an app wrapper around a document. It treats the document itself as the readable surface, correction surf...",
+      "keywords": [
+        "OpenWebDoc Introduction"
+      ],
+      "tokenEstimate": 67,
+      "sensitivity": "unknown"
     }
   ],
   "entities": [
-    { "name": "OpenWebDoc", "type": "project" },
-    { "name": "HTMLX Document Package", "type": "format" },
-    { "name": ".htmlx", "type": "extension" },
-    { "name": "htmlx", "type": "cli" },
-    { "name": "@openwebdoc/*", "type": "npm-scope" }
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    },
+    {
+      "name": "HTMLX Document Package",
+      "type": "format"
+    },
+    {
+      "name": ".htmlx",
+      "type": "extension"
+    },
+    {
+      "name": "htmlx",
+      "type": "cli"
+    },
+    {
+      "name": "@openwebdoc/*",
+      "type": "npm-scope"
+    }
   ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "fixed-stage-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/editing-guide.md",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

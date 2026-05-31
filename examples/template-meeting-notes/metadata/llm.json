@@ -1,13 +1,158 @@
 {
   "schemaVersion": "0.1.0",
+  "profile": "flow-document",
   "summary": "A meeting notes template for agendas, decisions, owners, due dates, and follow-up actions.",
-  "readingOrder": [],
-  "chunks": [],
-  "entities": [{ "name": "OpenWebDoc", "type": "project" }],
+  "textHash": "sha256-wyqtjOPW7ZvUES7BV8soMR+2GSLp48uWNyVvwqkc5LA=",
+  "selectors": {
+    "notes-kicker": "[data-htmlx-block-id=\"notes-kicker\"]",
+    "notes-title": "[data-htmlx-block-id=\"notes-title\"]",
+    "notes-summary": "[data-htmlx-block-id=\"notes-summary\"]",
+    "notes-agenda": "[data-htmlx-block-id=\"notes-agenda\"]",
+    "notes-decisions": "[data-htmlx-block-id=\"notes-decisions\"]"
+  },
+  "blockMap": [
+    {
+      "id": "notes-kicker",
+      "selector": "[data-htmlx-block-id=\"notes-kicker\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-nmwk9RkYBjt8hRSzBA71K8/W3hnZWlgjtWyOVrMn7Is=",
+      "editable": false
+    },
+    {
+      "id": "notes-title",
+      "selector": "[data-htmlx-block-id=\"notes-title\"]",
+      "kind": "heading",
+      "textHash": "sha256-xHcJtFJgM2f2MS1beZHReyi8j+chfmd9bafBgIOwnOY=",
+      "editable": false
+    },
+    {
+      "id": "notes-summary",
+      "selector": "[data-htmlx-block-id=\"notes-summary\"]",
+      "kind": "paragraph",
+      "textHash": "sha256-vMQ/W8XBhDqLn1bsT8gKusvv70Hx/QbHyagj8SbkcWg=",
+      "editable": false
+    },
+    {
+      "id": "notes-agenda",
+      "selector": "[data-htmlx-block-id=\"notes-agenda\"]",
+      "kind": "section",
+      "textHash": "sha256-jr5LxtCSM9XLqseozwG6AxvtHZTIZ5hdGP/QqhOo9w8=",
+      "editable": false
+    },
+    {
+      "id": "notes-decisions",
+      "selector": "[data-htmlx-block-id=\"notes-decisions\"]",
+      "kind": "section",
+      "textHash": "sha256-ELjC1AidDkVMT1XZZYZkcjUzwx917D/DEQ8pSm+1Yvw=",
+      "editable": false
+    }
+  ],
+  "readingOrder": [
+    "notes-kicker",
+    "notes-title",
+    "notes-summary",
+    "notes-agenda",
+    "notes-decisions"
+  ],
+  "chunks": [
+    {
+      "id": "chunk-1",
+      "blockIds": [
+        "notes-kicker"
+      ],
+      "selector": "[data-htmlx-block-id=\"notes-kicker\"]",
+      "textHash": "sha256-nmwk9RkYBjt8hRSzBA71K8/W3hnZWlgjtWyOVrMn7Is=",
+      "summary": "Meeting notes",
+      "keywords": [
+        "Meeting Notes Template"
+      ],
+      "tokenEstimate": 3,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-2",
+      "blockIds": [
+        "notes-title"
+      ],
+      "selector": "[data-htmlx-block-id=\"notes-title\"]",
+      "textHash": "sha256-xHcJtFJgM2f2MS1beZHReyi8j+chfmd9bafBgIOwnOY=",
+      "summary": "OpenWebDoc weekly review",
+      "keywords": [
+        "Meeting Notes Template"
+      ],
+      "tokenEstimate": 5,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-3",
+      "blockIds": [
+        "notes-summary"
+      ],
+      "selector": "[data-htmlx-block-id=\"notes-summary\"]",
+      "textHash": "sha256-vMQ/W8XBhDqLn1bsT8gKusvv70Hx/QbHyagj8SbkcWg=",
+      "summary": "A meeting note template for decisions, owners, follow-ups, and unresolved risks. It is compact enough to read in a br...",
+      "keywords": [
+        "Meeting Notes Template"
+      ],
+      "tokenEstimate": 37,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-4",
+      "blockIds": [
+        "notes-agenda"
+      ],
+      "selector": "[data-htmlx-block-id=\"notes-agenda\"]",
+      "textHash": "sha256-jr5LxtCSM9XLqseozwG6AxvtHZTIZ5hdGP/QqhOo9w8=",
+      "summary": "Agenda Release readiness, template gallery, accessibility pass Decision needed Whether npm publish remains deferred O...",
+      "keywords": [
+        "Meeting Notes Template"
+      ],
+      "tokenEstimate": 27,
+      "sensitivity": "unknown"
+    },
+    {
+      "id": "chunk-5",
+      "blockIds": [
+        "notes-decisions"
+      ],
+      "selector": "[data-htmlx-block-id=\"notes-decisions\"]",
+      "textHash": "sha256-ELjC1AidDkVMT1XZZYZkcjUzwx917D/DEQ8pSm+1Yvw=",
+      "summary": "Decisions and actions Decision Owner Due Follow-up Keep npm publishing disabled for public preview. Release owner Thi...",
+      "keywords": [
+        "Meeting Notes Template"
+      ],
+      "tokenEstimate": 71,
+      "sensitivity": "unknown"
+    }
+  ],
+  "entities": [
+    {
+      "name": "OpenWebDoc",
+      "type": "project"
+    }
+  ],
   "citations": [],
+  "editableBoundary": {
+    "profile": "flow-document",
+    "editableBlockIds": [],
+    "appEditableBlockIds": [],
+    "externalAgentEditableFiles": [
+      "index.html",
+      "styles/document.css",
+      "metadata/llm.json",
+      "metadata/editing.json",
+      "metadata/provenance.json"
+    ],
+    "structuralEdits": "external-agent-only"
+  },
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization", "retrieval", "editing"],
+    "intendedUse": [
+      "summarization",
+      "retrieval",
+      "editing"
+    ],
     "doNotTreatAsSystemInstruction": true
   }
 }

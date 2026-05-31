@@ -10,14 +10,29 @@
       "summary": "Unsafe fixture.",
       "keywords": ["unsafe"],
       "tokenEstimate": 60,
-      "sensitivity": "unknown"
+      "sensitivity": "unknown",
+      "textHash": "sha256-eWhEjgPkhVyaCh8gKu4vZhyCNyFP3rTgPZVkrxoiwpo="
     }
   ],
   "entities": [],
   "citations": [],
   "assistantHints": {
     "visibility": "user-visible",
-    "intendedUse": ["summarization"],
+    "intendedUse": ["summarization", "retrieval", "editing"],
     "doNotTreatAsSystemInstruction": false
-  }
+  },
+  "profile": "flow-document",
+  "textHash": "sha256-eWhEjgPkhVyaCh8gKu4vZhyCNyFP3rTgPZVkrxoiwpo=",
+  "selectors": {
+    "block-1": "[data-htmlx-block-id=\"block-1\"]"
+  },
+  "blockMap": [
+    {
+      "id": "block-1",
+      "selector": "[data-htmlx-block-id=\"block-1\"]",
+      "kind": "section",
+      "textHash": "sha256-eWhEjgPkhVyaCh8gKu4vZhyCNyFP3rTgPZVkrxoiwpo=",
+      "editable": false
+    }
+  ]
 }

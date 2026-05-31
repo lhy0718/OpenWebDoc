@@ -1,6 +1,7 @@
 # OpenWebDoc Examples
 
 - `basic/`: a valid HTMLX package directory that can be packed into `basic.htmlx`.
+- `template-flow-article/`: a richer `flow-document` example that reflows like normal browser HTML.
 - `openwebdoc-introduction/`: a long OpenWebDoc primer with a root `index.html`, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, funnel blocks, and validation metadata.
 - `openwebdoc-slide-deck/`: an HTMLX-native 16:9 slide deck with `metadata/presentation.json`, stacked read mode, and black-background presentation mode.
 - `template-research-brief/`: a research memo template with claim, evidence, decision, and workflow sections.
@@ -23,6 +24,7 @@ Generate example packages after building the CLI:
 
 ```sh
 pnpm --filter @openwebdoc/cli htmlx -- pack examples/basic examples/basic.htmlx
+pnpm --filter @openwebdoc/cli htmlx -- pack examples/template-flow-article examples/template-flow-article.htmlx
 pnpm --filter @openwebdoc/cli htmlx -- pack examples/openwebdoc-introduction examples/openwebdoc-introduction.htmlx
 pnpm --filter @openwebdoc/cli htmlx -- pack examples/openwebdoc-slide-deck examples/openwebdoc-slide-deck.htmlx
 pnpm --filter @openwebdoc/cli htmlx -- pack examples/template-research-brief examples/template-research-brief.htmlx
@@ -38,9 +40,20 @@ pnpm --filter @openwebdoc/cli htmlx -- pack examples/template-status-review-deck
 pnpm --filter @openwebdoc/cli htmlx -- pack examples/security-invalid examples/security-invalid.htmlx
 ```
 
+When visible text or `data-htmlx-block-id` values change, refresh `metadata/llm.json` so
+`readingOrder`, `selectors`, `blockMap`, `textHash`, and `editableBoundary` stay aligned with
+`index.html`.
+
+```sh
+pnpm htmlx refresh-metadata examples/openwebdoc-introduction --json
+pnpm htmlx refresh-metadata examples/openwebdoc-introduction --check --json
+```
+
 Create an external-agent editing package directory:
 
 ```sh
 pnpm htmlx unpack examples/basic.htmlx ./basic-package
+pnpm htmlx refresh-metadata ./basic-package --json
+pnpm htmlx refresh-metadata ./basic-package --check --json
 pnpm htmlx validate ./basic-package --json
 ```
