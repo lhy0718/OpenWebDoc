@@ -1,9 +1,10 @@
 # Deployment
 
-OpenWebDoc has two release surfaces during the public preview:
+OpenWebDoc has three release surfaces during the public preview:
 
 - a static site that hosts the OpenWebDoc app and template gallery
 - npm tarballs under `dist/npm/` for inspection, not registry publication
+- GitHub Releases for tagged alpha snapshots, example packages, and release notes
 
 ## Local release check
 
@@ -14,6 +15,8 @@ pnpm release:check
 ```
 
 This command runs repository guards, builds all workspaces, runs tests and linting, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, rejects the intentionally invalid security fixture, creates npm package tarballs, and builds the static site.
+
+Tagged release workflow runs create a GitHub Release with npm tarballs, example `.htmlx` packages, the generated site manifest, and a compressed spec/docs snapshot as attached artifacts.
 
 ## npm package artifacts
 
@@ -82,6 +85,7 @@ OPENWEBDOC_PAGES_URL=https://example.github.io/OpenWebDoc/ pnpm pages:smoke
 - `CI` runs on `main` and pull requests.
 - `Deploy Pages` builds and deploys `dist/site/` from `main`.
 - `Release` builds release artifacts on version tags and uploads npm tarballs and the static site as GitHub Actions artifacts.
+- `Release` creates a spec/docs snapshot archive for tagged GitHub Releases.
 
 ## npm package artifacts
 

@@ -46,6 +46,15 @@ jobs:
       - name: Smoke e2e
         run: pnpm smoke:e2e
 
+      - name: Validate examples with composite action
+        uses: ./.github/actions/validate-htmlx
+        with:
+          paths: |
+            examples/basic.htmlx
+            examples/openwebdoc-introduction.htmlx
+            examples/openwebdoc-slide-deck.htmlx
+            examples/template-flow-article.htmlx
+
       - name: Validate basic example
         run: pnpm htmlx validate examples/basic.htmlx
 

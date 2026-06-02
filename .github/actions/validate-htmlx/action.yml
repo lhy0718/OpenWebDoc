@@ -1,0 +1,51 @@
+name: Validate HTMLX packages
+description: Validate HTMLX Document Package files with the OpenWebDoc htmlx CLI.
+
+inputs:
+  paths:
+    description: Newline-separated glob patterns for .htmlx files to validate.
+    required: false
+    default: "**/*.htmlx"
+  fail-on-empty:
+    description: Fail when no files match the provided patterns.
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    - name: Enable Corepack
+      shell: bash
+      run: corepack enable
+
+    - name: Build htmlx CLI
+      shell: bash
+      run: |
+        cd "$GITHUB_ACTION_PATH/../../.."
+        pnpm install --frozen-lockfile
+        pnpm --filter @openwebdoc/cli build
+
+    - name: Validate packages
+      shell: bash
+      run: |
+        set -euo pipefail
+        shopt -s globstar nullglob
+
+        cli="$GITHUB_ACTION_PATH/../../../packages/cli/dist/index.js"
+        found=0
+
+        cd "$GITHUB_WORKSPACE"
+        while IFS= read -r pattern; do
+          [ -z "$pattern" ] && continue
+          for file in $pattern; do
+            if [ -f "$file" ]; then
+              found=1
+              node "$cli" validate "$file" --json
+            fi
+          done
+        done <<< "${{ inputs.paths }}"
+
+        if [ "$found" -eq 0 ] && [ "${{ inputs.fail-on-empty }}" = "true" ]; then
+          echo "No HTMLX packages matched the provided paths."
+          exit 1
+        fi

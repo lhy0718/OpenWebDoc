@@ -11,7 +11,11 @@
 - [Bahasa Indonesia](docs/i18n/README.id.md)
 - [हिन्दी](docs/i18n/README.hi.md)
 
-OpenWebDoc is a TypeScript monorepo for the HTMLX Document Package format. HTMLX packages are `.htmlx` ZIP files built around browser-readable HTML, local assets, explicit manifests, security validation, and LLM-native metadata.
+HTMLX is an agent-safe, browser-readable document package for verified local editing. It packages HTML, CSS, local assets, an explicit manifest, security validation, provenance-ready metadata, and user-visible LLM reference data in a `.htmlx` ZIP file.
+
+OpenWebDoc is the reference app and toolchain for HTMLX: an opener, validator, packer, template gallery, and external-agent workflow surface.
+
+HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript library for hypermedia applications. OpenWebDoc is also distinct from Open Web Docs, the web-platform documentation community.
 
 ## Try OpenWebDoc
 
@@ -22,7 +26,7 @@ OpenWebDoc is a TypeScript monorepo for the HTMLX Document Package format. HTMLX
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
-The project entry page lists downloadable, editable `.htmlx` templates for general documents and slide decks.
+The project entry page lists downloadable, editable `.htmlx` templates for general documents and slide decks. The strongest workflow is external-agent editing: unpack the package, let a coding agent revise package-local files, refresh metadata, validate, pack, and validate again.
 
 ## Screenshots
 
@@ -47,6 +51,18 @@ pnpm dev:app
 
 Open the local URL printed by Vite, choose a `.htmlx` file, and read it as the document itself. Packages that include `metadata/editing.json` can switch into direct editing from the small floating control. The static deployment artifact is built with `pnpm site:build` and serves the app from `dist/site/app/`.
 
+Use the CLI when an AI coding agent or CI system edits package files:
+
+```sh
+pnpm htmlx unpack examples/openwebdoc-introduction.htmlx ./work --json
+# edit ./work/index.html, styles/*, metadata/*, and declared assets
+pnpm htmlx refresh-metadata ./work --json
+pnpm htmlx refresh-metadata ./work --check --json
+pnpm htmlx validate ./work --json
+pnpm htmlx pack ./work edited.htmlx --json
+pnpm htmlx validate edited.htmlx --json
+```
+
 ## Naming
 
 | Concept     | Name                   |
@@ -58,6 +74,16 @@ Open the local URL printed by Vite, choose a `.htmlx` file, and read it as the d
 | npm scope   | `@openwebdoc/*`        |
 
 The npm package name `htmlx` is not used. Only the CLI binary is named `htmlx`.
+
+## Positioning
+
+The first audience is developers and AI-agent users, not general document consumers. HTMLX should spread as a verified workflow before it spreads as a standalone format:
+
+```text
+Open package -> validate package -> edit package-local files with an agent -> refresh metadata -> pack -> validate again
+```
+
+That workflow makes `.htmlx` useful for coding agents, maintainers, research/report automation, and document-agent reliability experiments because document breakage becomes a CI-visible validation problem.
 
 ## Workspace
 
@@ -248,6 +274,10 @@ MVP blocks arbitrary JavaScript execution, remote resources, path traversal, mis
 - [Security model](docs/security-model.md)
 - [LLM metadata guide](docs/llm-metadata-guide.md)
 - [External agent editing](docs/agent-editing.md)
+- [Agent cookbook](docs/agents/index.md)
+- [GitHub Action validator](docs/github-action.md)
+- [Positioning and adoption strategy](docs/adoption-strategy.md)
+- [FAQ](docs/faq.md)
 - [Chrome extension strategy](docs/extension-strategy.md)
 - [Public alpha roadmap](docs/roadmap.md)
 - [CLI usage](docs/cli-usage.md)

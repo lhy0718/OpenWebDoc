@@ -1,7 +1,7 @@
 {
   "name": "@openwebdoc/cli",
   "version": "0.1.0-alpha.0",
-  "description": "Command line interface for HTMLX Document Package files.",
+  "description": "CLI for validating, packing, and refreshing agent-safe HTMLX packages.",
   "type": "module",
   "bin": {
     "htmlx": "./dist/index.js"

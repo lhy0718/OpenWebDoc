@@ -7,7 +7,7 @@ on:
       - "v*"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   release:
@@ -34,6 +34,16 @@ jobs:
       - name: Run release check
         run: pnpm release:check
 
+      - name: Create spec and docs snapshot
+        run: |
+          mkdir -p dist/release
+          tar -czf "dist/release/openwebdoc-spec-docs-${GITHUB_REF_NAME}.tar.gz" \
+            README.md \
+            docs \
+            examples/README.md \
+            packages/spec/src \
+            packages/spec/fixtures
+
       - name: Upload npm tarballs
         uses: actions/upload-artifact@v7
         with:
@@ -45,3 +55,21 @@ jobs:
         with:
           name: static-site
           path: dist/site
+
+      - name: Upload spec and docs snapshot
+        uses: actions/upload-artifact@v7
+        with:
+          name: spec-docs-snapshot
+          path: dist/release/*.tar.gz
+
+      - name: Create GitHub release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          prerelease: true
+          files: |
+            dist/npm/*.tgz
+            examples/*.htmlx
+            dist/site/manifest.json
+            dist/release/*.tar.gz

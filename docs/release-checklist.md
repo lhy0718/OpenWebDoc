@@ -18,6 +18,8 @@
 - [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.
 - [ ] GitHub Pages serves the downloadable template gallery from the entry page.
 - [ ] `pnpm release:check` succeeds.
+- [ ] A `v0.1.0-alpha.0` GitHub Release includes npm tarballs, example `.htmlx` packages, release notes, and a spec/docs snapshot from the tagged commit.
+- [ ] CI runs the repository-local `.github/actions/validate-htmlx` composite action against representative examples.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/template-flow-article.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/openwebdoc-introduction.htmlx` succeeds.
@@ -46,7 +48,12 @@
 - [ ] OpenWebDoc reopens the exported package.
 - [ ] Public package names use `@openwebdoc/*`.
 - [ ] Packed npm package artifacts include README, license, declarations, JavaScript output, and any exported CSS.
+- [ ] Scoped npm alpha publishing, if enabled later, uses only `@openwebdoc/*` package names and never the unscoped `htmlx` package.
 - [ ] The CLI binary is named `htmlx`.
+- [ ] README and GitHub Pages position HTMLX as an agent-safe, browser-readable document package for verified local editing.
+- [ ] README and FAQ clearly distinguish HTMLX from HTMX and OpenWebDoc from Open Web Docs.
+- [ ] The GitHub Action validator is documented and usable by another repository.
+- [ ] The agent cookbook includes Codex, Claude Code, Cursor, GitHub Copilot, and Aider recipes.
 - [ ] README, docs, and Obsidian notes match implementation state.
 - [ ] npm publishing remains disabled for the public preview; release artifacts are uploaded as GitHub Actions artifacts only.
 - [ ] Chrome extension and file-association work is documented as optional future scope, not an alpha blocker.
