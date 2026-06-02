@@ -41,7 +41,7 @@ Standardization should follow adoption. The early product should focus on practi
 
 ## First 30 Days
 
-- Cut a `v0.1.0-alpha.0` GitHub release with example `.htmlx` packages, npm tarballs, release notes, and a spec snapshot.
+- Cut public alpha GitHub releases with example `.htmlx` packages, npm tarballs, user-facing release notes, and a spec snapshot.
 - Keep npm registry publishing as an explicit release decision. If enabled, publish only scoped `@openwebdoc/*` packages with alpha or canary tags.
 - Make the GitHub Action validator easy to copy into another repository.
 - Show the four-step workflow on the landing page: open, validate, edit with an agent, export.

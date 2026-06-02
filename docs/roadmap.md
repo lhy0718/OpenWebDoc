@@ -1,6 +1,6 @@
 # OpenWebDoc Public Alpha Roadmap
 
-This roadmap tracks the work needed to move OpenWebDoc from a usable public preview toward a stronger `v0.1.0-alpha.0` release.
+This roadmap tracks the work needed to move OpenWebDoc from a usable public preview toward stronger public alpha releases.
 
 ## Product Direction
 
@@ -16,7 +16,7 @@ The format now uses explicit document profiles: `flow-document` for default refl
 
 ## Public Alpha Milestones
 
-- [#10 Prepare v0.1.0-alpha.0 release](https://github.com/lhy0718/OpenWebDoc/issues/10): release readiness is GitHub Pages plus GitHub release artifacts. npm registry publishing is deferred for the public preview.
+- [#10 Prepare public alpha release](https://github.com/lhy0718/OpenWebDoc/issues/10): release readiness is GitHub Pages plus GitHub release artifacts. npm registry publishing is deferred for the public preview.
 - [#9 Accessibility and keyboard QA pass](https://github.com/lhy0718/OpenWebDoc/issues/9): the QA bar is captured in [Accessibility, Mobile, and Export QA](accessibility-mobile-export-qa.md), with keyboard, focus, reduced-motion, presentation, and live-status expectations.
 - [#8 Harden table and figure micro-editing](https://github.com/lhy0718/OpenWebDoc/issues/8): smoke coverage includes semantic table editing, table caption and cell edits, grouped figure movement, inner-card movement, object handles, and export round trip.
 - [#12 Mobile and export UX hardening](https://github.com/lhy0718/OpenWebDoc/issues/12): mobile overflow checks and export/reopen validation are part of `pnpm smoke:e2e`; export success is announced in the app.
@@ -27,7 +27,7 @@ The format now uses explicit document profiles: `flow-document` for default refl
 
 0-30 days:
 
-- publish `v0.1.0-alpha.0` as a GitHub Release with example `.htmlx` packages, npm tarballs, release notes, and the current spec/docs snapshot
+- publish GitHub Releases with example `.htmlx` packages, npm tarballs, user-facing release notes, and the current spec/docs snapshot
 - keep the GitHub Pages landing page focused on open, validate, edit with agent, export
 - make the GitHub Action validator easy to copy into other repositories
 - keep template previews and downloads visible from the landing page

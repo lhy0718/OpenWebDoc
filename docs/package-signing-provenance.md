@@ -47,4 +47,4 @@ This should be stored under `metadata/signature.json` and referenced from `manif
 
 ## Alpha Decision
 
-Do not implement signing in `v0.1.0-alpha.0`. Keep `metadata/provenance.json`, validation, and package-local resource integrity as the trust boundary. Revisit signing after the public preview has real packages, edits, and sharing workflows to evaluate.
+Do not implement signing during the public alpha phase. Keep `metadata/provenance.json`, validation, and package-local resource integrity as the trust boundary. Revisit signing after the public preview has real packages, edits, and sharing workflows to evaluate.

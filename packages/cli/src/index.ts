@@ -43,7 +43,7 @@ export function buildProgram(io: CliIo = process): Command {
     .description(
       "Create, validate, inspect, pack, unpack, and refresh HTMLX Document Package files.",
     )
-    .version("0.1.0-alpha.0");
+    .version("0.1.0-alpha.1");
 
   program
     .command("create")
