@@ -1,6 +1,6 @@
 {
   "name": "@openwebdoc/core",
-  "version": "0.1.0-alpha.0",
+  "version": "0.1.0-alpha.1",
   "description": "Core APIs for reading, writing, validating, and packaging agent-safe HTMLX documents.",
   "type": "module",
   "main": "./dist/index.js",
