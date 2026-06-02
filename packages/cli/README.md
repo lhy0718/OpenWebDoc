@@ -1,6 +1,6 @@
 # @openwebdoc/cli
 
-Command line interface for HTMLX Document Package files. This package provides the `htmlx` binary.
+Command line interface for agent-safe HTMLX Document Package workflows. This package provides the `htmlx` binary for creating, validating, packing, unpacking, and refreshing package metadata.
 
 ## Install
 

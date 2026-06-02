@@ -2,7 +2,7 @@
   "name": "openwebdoc",
   "version": "0.1.0-alpha.0",
   "private": true,
-  "description": "OpenWebDoc monorepo for the HTMLX Document Package format.",
+  "description": "Agent-safe, browser-readable HTMLX document package toolchain.",
   "type": "module",
   "packageManager": "pnpm@10.24.0",
   "scripts": {

@@ -2,6 +2,8 @@
 
 OpenWebDoc uses the unpacked HTMLX package as the canonical editing boundary. External coding agents such as Codex or Claude Code do not need a separate generated workspace: they edit ordinary package files, validate the directory, pack the package, and validate the result.
 
+This workflow is the main adoption surface for HTMLX. The value is not only that a package opens in the browser; the value is that an agent can edit package-local files and the validator can catch unsafe HTML, stale metadata, undeclared assets, and broken package boundaries before the document is shared.
+
 ## Canonical Flow
 
 ```sh
@@ -60,3 +62,5 @@ The OpenWebDoc runtime should not directly call model providers, store provider 
 The document surface is the main UI. The runtime may add small overlay controls for direct actions such as opening a file, small paragraph edits, formatting, validating, showing document details, and exporting. It should not expose browser-side agent prompt generation, model calls, provider API keys, or large structure-creation tools such as new figure/table/layout builders.
 
 For the current public-alpha QA boundary around keyboard operation, mobile behavior, table/figure micro-editing, and export round trips, see [Accessibility, Mobile, and Export QA](accessibility-mobile-export-qa.md).
+
+Agent-specific recipes are available in the [AI Agent Cookbook](agents/index.md).

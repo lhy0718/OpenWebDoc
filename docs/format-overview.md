@@ -1,6 +1,8 @@
 # HTMLX Document Package Format Overview
 
-HTMLX Document Package is the OpenWebDoc file format. It uses the `.htmlx` extension and stores browser-readable HTML, local assets, a manifest, and metadata in one ZIP package.
+HTMLX Document Package is an agent-safe, browser-readable document package for verified local editing. It uses the `.htmlx` extension and stores HTML, CSS, local assets, an explicit manifest, security rules, provenance-ready metadata, and user-visible LLM reference data in one ZIP package.
+
+OpenWebDoc is the reference app and toolchain for opening, validating, packing, unpacking, editing, and previewing HTMLX packages.
 
 ## Naming
 

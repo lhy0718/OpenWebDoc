@@ -1,6 +1,10 @@
 # OpenWebDoc
 
-OpenWebDoc est un monorepo TypeScript pour le format HTMLX Document Package. Les paquets HTMLX sont des fichiers `.htmlx` basés sur ZIP qui contiennent du HTML lisible par navigateur, des assets locaux, des manifests explicites, une validation de sécurité et des metadata LLM-native.
+HTMLX est un document package agent-safe et browser-readable pour l’édition locale vérifiée. Il regroupe HTML, CSS, assets locaux, manifest explicite, validation de sécurité, metadata prête pour la provenance et reference data LLM visible par l’utilisateur dans un fichier ZIP `.htmlx`.
+
+OpenWebDoc est l’app et la toolchain de référence pour ouvrir, valider, packer, unpacker, utiliser des templates et connecter les packages HTMLX aux workflows d’AI coding agents externes.
+
+HTMLX n’est pas HTMX. HTMLX est un document package basé sur ZIP; HTMX est une JavaScript library pour les hypermedia applications. OpenWebDoc est aussi distinct de la communauté Open Web Docs.
 
 ## Quick Start
 
