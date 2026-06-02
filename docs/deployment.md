@@ -6,6 +6,11 @@ OpenWebDoc has three release surfaces during the public preview:
 - npm tarballs under `dist/npm/` for inspection, not registry publication
 - GitHub Releases for tagged alpha snapshots, example packages, and release notes
 
+The current public alpha release notes are stored in
+[`docs/releases/v0.1.0-alpha.0.md`](releases/v0.1.0-alpha.0.md) and mirrored into
+the GitHub Release body at
+<https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.0>.
+
 ## Local release check
 
 Run the full release gate before tagging or deploying:
