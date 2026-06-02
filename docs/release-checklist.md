@@ -22,7 +22,7 @@
 - [ ] A tagged public alpha GitHub Release includes npm tarballs, valid example `.htmlx` packages, release notes, and a spec/docs snapshot from the tagged commit.
 - [ ] The GitHub Release body is mirrored from `docs/releases/<tag>.md` and explains the live app, template downloads, CLI validation, external-agent editing flow, and alpha boundaries.
 - [ ] GitHub Release assets do not include `examples/security-invalid.htmlx`; that fixture remains repository-only test data.
-- [ ] Release workflow runs JavaScript actions under the Node 24 action runtime opt-in without Node.js 20 deprecation warnings.
+- [ ] Release workflow creates GitHub Releases with the GitHub CLI instead of a Node 20-targeted release action.
 - [ ] CI runs the repository-local `.github/actions/validate-htmlx` composite action against representative examples.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/template-flow-article.htmlx` succeeds.

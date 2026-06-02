@@ -9,9 +9,6 @@ on:
 permissions:
   contents: write
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -81,12 +78,14 @@ jobs:
 
       - name: Create GitHub release
         if: startsWith(github.ref, 'refs/tags/')
-        uses: softprops/action-gh-release@v2
-        with:
-          body_path: docs/releases/${{ github.ref_name }}.md
-          prerelease: true
-          files: |
-            dist/npm/*.tgz
-            dist/release/examples/*.htmlx
-            dist/site/manifest.json
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            --title "${GITHUB_REF_NAME}" \
+            --notes-file "docs/releases/${GITHUB_REF_NAME}.md" \
+            --prerelease \
+            dist/npm/*.tgz \
+            dist/release/examples/*.htmlx \
+            dist/site/manifest.json \
             dist/release/*.tar.gz
