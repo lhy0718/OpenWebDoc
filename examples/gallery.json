@@ -1,0 +1,147 @@
+{
+  "examples": [
+    {
+      "id": "openwebdoc-introduction",
+      "title": "OpenWebDoc Introduction",
+      "type": "Concept document",
+      "profile": "fixed-stage-document",
+      "category": "Start here",
+      "audience": "New readers",
+      "description": "A long-form introduction to the HTMLX package philosophy, runtime boundary, metadata, and validation workflow.",
+      "bestFor": "Understanding what OpenWebDoc is before editing a package.",
+      "featured": true
+    },
+    {
+      "id": "openwebdoc-slide-deck",
+      "title": "OpenWebDoc Slide Deck",
+      "type": "Presentation",
+      "profile": "slide-deck",
+      "category": "Start here",
+      "audience": "Presenters",
+      "description": "A 16:9 HTMLX-native deck that reads as HTML, presents one slide at a time, and stays package-local.",
+      "bestFor": "Seeing how slide decks work without becoming PPTX files.",
+      "featured": true
+    },
+    {
+      "id": "template-flow-article",
+      "title": "Flow Document Brief",
+      "type": "Flow document",
+      "profile": "flow-document",
+      "category": "Start here",
+      "audience": "Writers",
+      "description": "The default pageless profile: semantic HTML that reflows like a normal browser document.",
+      "bestFor": "Starting from the simplest browser-native HTMLX document.",
+      "featured": true
+    },
+    {
+      "id": "template-research-brief",
+      "title": "Research Brief",
+      "type": "Document template",
+      "profile": "fixed-stage-document",
+      "category": "General documents",
+      "audience": "Researchers",
+      "description": "A structured research memo for claims, evidence, decisions, and follow-up questions.",
+      "bestFor": "Turning exploratory findings into a reviewable package.",
+      "featured": false
+    },
+    {
+      "id": "template-product-spec",
+      "title": "Product Spec",
+      "type": "Document template",
+      "profile": "fixed-stage-document",
+      "category": "General documents",
+      "audience": "Product teams",
+      "description": "Requirements, non-goals, release gates, ownership, and validation notes in one package.",
+      "bestFor": "Agent-edited product plans that still need human micro-corrections.",
+      "featured": false
+    },
+    {
+      "id": "template-operations-manual",
+      "title": "Operations Manual",
+      "type": "Document template",
+      "profile": "fixed-stage-document",
+      "category": "General documents",
+      "audience": "Operators",
+      "description": "A procedural manual for intake, validation, escalation, and handoff checkpoints.",
+      "bestFor": "Operational workflows where package safety matters.",
+      "featured": false
+    },
+    {
+      "id": "template-meeting-notes",
+      "title": "Meeting Notes",
+      "type": "Document template",
+      "profile": "fixed-stage-document",
+      "category": "General documents",
+      "audience": "Teams",
+      "description": "Agenda, decisions, owners, due dates, and follow-up actions.",
+      "bestFor": "Keeping meeting output editable, portable, and validation-ready.",
+      "featured": false
+    },
+    {
+      "id": "template-project-proposal",
+      "title": "Project Proposal",
+      "type": "Document template",
+      "profile": "fixed-stage-document",
+      "category": "General documents",
+      "audience": "Project leads",
+      "description": "Need, approach, validation plan, expected outcomes, and decision criteria.",
+      "bestFor": "Packaging a proposal for agent revision and human review.",
+      "featured": false
+    },
+    {
+      "id": "template-data-report",
+      "title": "Data Report",
+      "type": "Document template",
+      "profile": "fixed-stage-document",
+      "category": "General documents",
+      "audience": "Analysts",
+      "description": "Headline metrics, method notes, semantic tables, and interpretation blocks.",
+      "bestFor": "Making a compact report that preserves real table semantics.",
+      "featured": false
+    },
+    {
+      "id": "template-pitch-deck",
+      "title": "Pitch Deck",
+      "type": "Presentation template",
+      "profile": "slide-deck",
+      "category": "Presentations",
+      "audience": "Founders",
+      "description": "Problem, solution, workflow boundary, package promise, and ask.",
+      "bestFor": "Explaining an idea as an HTMLX-native deck.",
+      "featured": false
+    },
+    {
+      "id": "template-lesson-deck",
+      "title": "Lesson Deck",
+      "type": "Presentation template",
+      "profile": "slide-deck",
+      "category": "Presentations",
+      "audience": "Educators",
+      "description": "Concept, worked example, practice prompt, and recap slides.",
+      "bestFor": "Teaching a workflow while keeping slides editable as package files.",
+      "featured": false
+    },
+    {
+      "id": "template-research-talk",
+      "title": "Research Talk",
+      "type": "Presentation template",
+      "profile": "slide-deck",
+      "category": "Presentations",
+      "audience": "Researchers",
+      "description": "Research question, method, evidence, limitations, and discussion path.",
+      "bestFor": "Presenting research without losing HTML tables and metadata.",
+      "featured": false
+    },
+    {
+      "id": "template-status-review-deck",
+      "title": "Status Review Deck",
+      "type": "Presentation template",
+      "profile": "slide-deck",
+      "category": "Presentations",
+      "audience": "Review teams",
+      "description": "Progress, risks, decisions, commitments, and presentation-mode review.",
+      "bestFor": "Running status reviews from a portable HTMLX package.",
+      "featured": false
+    }
+  ]
+}

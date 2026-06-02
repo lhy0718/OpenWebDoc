@@ -1,5 +1,7 @@
 # OpenWebDoc Examples
 
+`gallery.json` is the public template-gallery index used by the static site and the OpenWebDoc app empty state. Keep it aligned with the valid examples copied to `apps/openwebdoc/public/examples/`.
+
 - `basic/`: a valid HTMLX package directory that can be packed into `basic.htmlx`.
 - `template-flow-article/`: a richer `flow-document` example that reflows like normal browser HTML.
 - `openwebdoc-introduction/`: a long OpenWebDoc primer with a root `index.html`, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, funnel blocks, and validation metadata.

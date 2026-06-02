@@ -1,78 +1,13 @@
 import { spawnSync } from "node:child_process";
-import { cp, mkdir, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const siteDirectory = "dist/site";
 const packages = ["@openwebdoc/spec", "@openwebdoc/core", "@openwebdoc/ui"];
 const app = { name: "OpenWebDoc", packageName: "@openwebdoc/app", route: "app" };
-const templates = [
-  {
-    id: "template-flow-article",
-    title: "Flow Document Brief",
-    type: "Flow document",
-    description: "Default reflowing HTMLX document profile with semantic content.",
-  },
-  {
-    id: "template-research-brief",
-    title: "Research Brief",
-    type: "Document",
-    description: "Evidence, claims, decisions, and follow-up questions.",
-  },
-  {
-    id: "template-product-spec",
-    title: "Product Spec",
-    type: "Document",
-    description: "Requirements, non-goals, release gates, and owner decisions.",
-  },
-  {
-    id: "template-operations-manual",
-    title: "Operations Manual",
-    type: "Document",
-    description: "Safe package intake, validation, and escalation procedure.",
-  },
-  {
-    id: "template-meeting-notes",
-    title: "Meeting Notes",
-    type: "Document",
-    description: "Agenda, decisions, owners, due dates, and follow-up actions.",
-  },
-  {
-    id: "template-project-proposal",
-    title: "Project Proposal",
-    type: "Document",
-    description: "Need, approach, validation plan, and expected outcomes.",
-  },
-  {
-    id: "template-data-report",
-    title: "Data Report",
-    type: "Document",
-    description: "Headline metrics, method notes, data table, and interpretation.",
-  },
-  {
-    id: "template-pitch-deck",
-    title: "Pitch Deck",
-    type: "Presentation",
-    description: "Problem, solution, user boundary, and ask.",
-  },
-  {
-    id: "template-lesson-deck",
-    title: "Lesson Deck",
-    type: "Presentation",
-    description: "Concept, practice, and recap slides for workshops.",
-  },
-  {
-    id: "template-research-talk",
-    title: "Research Talk",
-    type: "Presentation",
-    description: "Research question, method, evidence, and limitations.",
-  },
-  {
-    id: "template-status-review-deck",
-    title: "Status Review Deck",
-    type: "Presentation",
-    description: "Progress, risks, decisions, and commitments.",
-  },
-];
+const { examples: templates } = JSON.parse(await readFile("examples/gallery.json", "utf8"));
+const featuredTemplates = templates.filter((template) => template.featured);
+const groupedTemplates = groupTemplatesByCategory(templates);
 
 for (const packageName of packages) {
   runPnpm(["--filter", packageName, "build"]);
@@ -149,12 +84,67 @@ await writeFile(
         font-weight: 700;
         text-decoration: none;
       }
+      a:hover,
+      a:focus-visible {
+        border-color: #2f6fed;
+        background: #f3f7ff;
+      }
+      .primary-link {
+        border-color: #193b70;
+        color: #ffffff;
+        background: #193b70;
+      }
+      .primary-link:hover,
+      .primary-link:focus-visible {
+        color: #ffffff;
+        background: #264c82;
+      }
       code {
         border-radius: 6px;
         padding: 2px 5px;
         background: #edf3fb;
         color: #1b365d;
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      }
+      .hero-panel {
+        border: 1px solid #d3deec;
+        border-radius: 18px;
+        padding: 38px;
+        background:
+          linear-gradient(135deg, rgba(25, 59, 112, 0.08), rgba(15, 118, 110, 0.05)),
+          #ffffff;
+        box-shadow: 0 24px 70px rgba(24, 40, 68, 0.1);
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+        gap: 28px;
+        align-items: end;
+      }
+      .hero-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .hero-metric {
+        min-height: 96px;
+        border: 1px solid #d6e1ee;
+        border-radius: 12px;
+        padding: 14px;
+        background: rgba(255, 255, 255, 0.74);
+      }
+      .hero-metric strong {
+        display: block;
+        color: #13213a;
+        font-size: 24px;
+        line-height: 1.1;
+      }
+      .hero-metric span {
+        display: block;
+        margin-top: 6px;
+        color: #526078;
+        font-size: 13px;
+        line-height: 1.35;
       }
       .workflow {
         display: grid;
@@ -183,25 +173,53 @@ await writeFile(
       }
       .template-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 16px;
         margin-top: 18px;
       }
+      .featured-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+      .template-section {
+        margin-top: 34px;
+      }
+      .template-section h3 {
+        margin: 0 0 6px;
+        color: #172033;
+        font-size: 21px;
+      }
+      .template-section > p {
+        margin: 0;
+        font-size: 15px;
+      }
       .template-card {
+        display: grid;
+        grid-template-rows: auto auto 1fr auto auto;
+        gap: 10px;
         border: 1px solid #cdd7e6;
         border-radius: 12px;
         padding: 18px;
         background: #fff;
         box-shadow: 0 14px 36px rgba(24, 40, 68, 0.08);
       }
-      .template-card h3 {
+      .featured-card {
+        border-color: #b9d2ef;
+        background:
+          linear-gradient(180deg, rgba(47, 111, 237, 0.08), transparent 44%),
+          #ffffff;
+      }
+      .template-card h4 {
         margin: 0;
         color: #172033;
         font-size: 20px;
       }
-      .template-card .type {
+      .template-card .type,
+      .profile {
         display: inline-flex;
-        margin: 0 0 10px;
+        width: max-content;
         border-radius: 999px;
         padding: 5px 9px;
         color: #0f4f79;
@@ -209,10 +227,26 @@ await writeFile(
         font-size: 12px;
         font-weight: 800;
       }
+      .meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .profile {
+        color: #5a3b0b;
+        background: #fff3d5;
+      }
       .template-card p {
-        margin: 10px 0 14px;
+        margin: 0;
         font-size: 15px;
         line-height: 1.5;
+      }
+      .best-for {
+        border-left: 3px solid #0f766e;
+        padding-left: 10px;
+        color: #40526b;
+        font-size: 13px;
+        line-height: 1.45;
       }
       .template-actions {
         display: flex;
@@ -236,30 +270,55 @@ await writeFile(
         white-space: pre;
       }
       @media (max-width: 760px) {
+        main {
+          padding: 28px 14px;
+        }
+        .hero-panel {
+          padding: 24px;
+        }
+        .hero-grid,
+        .hero-metrics {
+          grid-template-columns: 1fr;
+        }
         .workflow {
           grid-template-columns: 1fr;
         }
-        .template-grid {
+        .template-grid,
+        .featured-grid {
           grid-template-columns: 1fr;
+        }
+        h1 {
+          font-size: 34px;
         }
       }
     </style>
   </head>
   <body>
     <main>
-      <p class="eyebrow">Agent-safe document packages</p>
-      <h1>OpenWebDoc</h1>
-      <p>HTMLX is a browser-readable document package that AI coding agents can edit through a validated local workflow. OpenWebDoc is the reference opener, validator, template gallery, and runtime.</p>
-      <nav aria-label="OpenWebDoc app">
-        <a href="./app/">Open OpenWebDoc</a>
-        <a href="./app/?example=openwebdoc-introduction">View introduction</a>
-        <a href="./app/?example=openwebdoc-slide-deck">View slide deck</a>
-      </nav>
-      <nav class="secondary-nav" aria-label="OpenWebDoc documentation">
-        <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/agents/index.md">Agent cookbook</a>
-        <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/github-action.md">GitHub Action</a>
-        <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/faq.md">FAQ</a>
-      </nav>
+      <section class="hero-panel" aria-label="OpenWebDoc overview">
+        <div class="hero-grid">
+          <div>
+            <p class="eyebrow">Agent-safe document packages</p>
+            <h1>OpenWebDoc</h1>
+            <p>HTMLX is a browser-readable document package for opening, editing, validating, and sharing HTML/CSS documents that external AI coding agents can safely revise as package-local files.</p>
+            <nav aria-label="OpenWebDoc app">
+              <a class="primary-link" href="./app/">Open OpenWebDoc</a>
+              <a href="#templates">Browse templates</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc">View repository</a>
+            </nav>
+            <nav class="secondary-nav" aria-label="OpenWebDoc documentation">
+              <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/agents/index.md">Agent cookbook</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/github-action.md">GitHub Action</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/faq.md">FAQ</a>
+            </nav>
+          </div>
+          <div class="hero-metrics" aria-label="Template gallery summary">
+            <div class="hero-metric"><strong>${templates.length}</strong><span>editable public examples and templates</span></div>
+            <div class="hero-metric"><strong>3</strong><span>HTMLX profiles: flow, fixed-stage, slide deck</span></div>
+            <div class="hero-metric"><strong>0</strong><span>browser-side model keys or hidden agent prompts</span></div>
+          </div>
+        </div>
+      </section>
       <section aria-label="HTMLX workflow">
         <h2>Open, validate, edit with an agent, export</h2>
         <p>The core workflow is package-local: open a document, validate it, let an external agent edit ordinary HTML/CSS/metadata/assets, refresh reference metadata, then pack and validate again.</p>
@@ -270,27 +329,26 @@ await writeFile(
           <div class="workflow-step"><strong>4. Export</strong><span>Pack the edited directory and validate the final portable document.</span></div>
         </div>
       </section>
-      <section aria-label="Template gallery">
+      <section id="templates" aria-label="Template gallery">
         <h2>Template gallery</h2>
-        <p>Preview a template in the OpenWebDoc app, download the <code>.htmlx</code> package, or copy the command boundary into an agent workflow.</p>
-        <div class="template-grid">
-          ${templates
-            .map(
-              (template) => `<article class="template-card">
-            <span class="type">${template.type}</span>
-            <h3>${template.title}</h3>
-            <p>${template.description}</p>
-            <div class="template-actions">
-              <a href="./app/?example=${template.id}">Preview</a>
-              <a href="./app/examples/${template.id}.htmlx" download>Download .htmlx</a>
-            </div>
-            <code class="command">htmlx unpack ${template.id}.htmlx ./work --json
-htmlx refresh-metadata ./work --check --json
-htmlx validate ./work --json</code>
-          </article>`,
-            )
-            .join("\n          ")}
+        <p>Preview a package in the OpenWebDoc app, download the <code>.htmlx</code> file, or copy the command boundary for an external coding agent.</p>
+        <div class="featured-grid" aria-label="Recommended starting points">
+          ${featuredTemplates.map((template) => renderTemplateCard(template, { featured: true })).join("\n          ")}
         </div>
+        ${Array.from(groupedTemplates.entries())
+          .map(
+            ([
+              category,
+              categoryTemplates,
+            ]) => `<section class="template-section" aria-label="${escapeHtml(category)}">
+          <h3>${escapeHtml(category)}</h3>
+          <p>${categoryDescription(category)}</p>
+          <div class="template-grid">
+            ${categoryTemplates.map((template) => renderTemplateCard(template)).join("\n            ")}
+          </div>
+        </section>`,
+          )
+          .join("\n        ")}
       </section>
     </main>
   </body>
@@ -305,8 +363,12 @@ await writeFile(
       name: "OpenWebDoc static site",
       apps: [{ name: app.name, path: `${app.route}/` }],
       templates: templates.map((template) => ({
+        id: template.id,
         name: template.title,
         type: template.type,
+        profile: template.profile,
+        category: template.category,
+        audience: template.audience,
         preview: `${app.route}/?example=${template.id}`,
         download: `${app.route}/examples/${template.id}.htmlx`,
       })),
@@ -323,4 +385,59 @@ function runPnpm(args) {
   if (result.status !== 0) {
     process.exit(result.status ?? 1);
   }
+}
+
+function groupTemplatesByCategory(items) {
+  const groups = new Map();
+  for (const item of items.filter((template) => !template.featured)) {
+    const entries = groups.get(item.category) ?? [];
+    entries.push(item);
+    groups.set(item.category, entries);
+  }
+  return groups;
+}
+
+function renderTemplateCard(template, options = {}) {
+  const featuredClass = options.featured ? " featured-card" : "";
+  return `<article class="template-card${featuredClass}">
+            <div class="meta-row">
+              <span class="type">${escapeHtml(template.type)}</span>
+              <span class="profile">${escapeHtml(profileLabel(template.profile))}</span>
+            </div>
+            <h4>${escapeHtml(template.title)}</h4>
+            <p>${escapeHtml(template.description)}</p>
+            <span class="best-for">${escapeHtml(template.bestFor)}</span>
+            <div class="template-actions">
+              <a href="./app/?example=${template.id}">Preview</a>
+              <a href="./app/examples/${template.id}.htmlx" download>Download .htmlx</a>
+            </div>
+            <code class="command">htmlx unpack ${template.id}.htmlx ./work --json
+htmlx refresh-metadata ./work --check --json
+htmlx validate ./work --json</code>
+          </article>`;
+}
+
+function profileLabel(profile) {
+  if (profile === "flow-document") return "Flow";
+  if (profile === "fixed-stage-document") return "Fixed-stage";
+  if (profile === "slide-deck") return "Slide deck";
+  return profile;
+}
+
+function categoryDescription(category) {
+  if (category === "General documents") {
+    return "Editable document packages for reports, specs, proposals, manuals, and team artifacts.";
+  }
+  if (category === "Presentations") {
+    return "HTMLX-native slide decks that read as documents and present one 16:9 slide at a time.";
+  }
+  return "Recommended entry points for learning the format and runtime.";
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;");
 }

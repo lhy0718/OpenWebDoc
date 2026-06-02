@@ -18,7 +18,7 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 960 } });
 
   await page.goto(baseUrl, { waitUntil: "networkidle" });
-  await page.getByRole("heading", { name: "OpenWebDoc" }).waitFor({
+  await page.getByRole("heading", { name: "OpenWebDoc", exact: true }).waitFor({
     state: "visible",
     timeout: 10000,
   });
@@ -26,12 +26,33 @@ try {
     state: "visible",
     timeout: 10000,
   });
+  await page.getByRole("heading", { name: "Template gallery" }).waitFor({
+    state: "visible",
+    timeout: 10000,
+  });
+  await page.getByRole("link", { name: "Browse templates" }).waitFor({
+    state: "visible",
+    timeout: 10000,
+  });
+  const landingDownloadLinks = await page.locator('a[download][href$=".htmlx"]').count();
+  if (landingDownloadLinks < 13) {
+    throw new Error(`Expected at least 13 landing download links, found ${landingDownloadLinks}.`);
+  }
+  await assertNoHorizontalOverflow(page, "landing page");
 
   await page.goto(appUrl, { waitUntil: "networkidle" });
   await page.getByRole("heading", { name: "Open a document package" }).waitFor({
     state: "visible",
     timeout: 10000,
   });
+  await page.getByRole("heading", { name: "Try a bundled example" }).waitFor({
+    state: "visible",
+    timeout: 10000,
+  });
+  const appDownloadLinks = await page.locator('a[download][href$=".htmlx"]').count();
+  if (appDownloadLinks < 13) {
+    throw new Error(`Expected at least 13 app download links, found ${appDownloadLinks}.`);
+  }
   await assertNoHorizontalOverflow(page, "empty state");
   await screenshot(page, "openwebdoc-pages-empty.png");
 

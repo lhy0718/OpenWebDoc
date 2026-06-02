@@ -26,7 +26,9 @@ HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript l
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
-The project entry page lists downloadable, editable `.htmlx` templates for general documents and slide decks. The strongest workflow is external-agent editing: unpack the package, let a coding agent revise package-local files, refresh metadata, validate, pack, and validate again.
+The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. Download a template when you want a portable starting point; preview it when you only want to inspect the rendered document first.
+
+The strongest workflow is external-agent editing: unpack the package, let a coding agent revise package-local files, refresh metadata, validate, pack, and validate again.
 
 ## Screenshots
 
@@ -61,6 +63,25 @@ pnpm htmlx refresh-metadata ./work --check --json
 pnpm htmlx validate ./work --json
 pnpm htmlx pack ./work edited.htmlx --json
 pnpm htmlx validate edited.htmlx --json
+```
+
+## Template Gallery Usage
+
+Use the public gallery when starting a new package:
+
+1. Open [https://lhy0718.github.io/OpenWebDoc/](https://lhy0718.github.io/OpenWebDoc/).
+2. Pick a starting point by profile:
+   - `flow-document` for normal browser-reflowing documents
+   - `fixed-stage-document` for visual briefs, proposals, reports, and manuals
+   - `slide-deck` for HTMLX-native presentations
+3. Click `Preview` to inspect the package in the OpenWebDoc app.
+4. Click `Download .htmlx` to save the package locally.
+5. For larger edits, unpack the downloaded file and let an external coding agent edit the package directory:
+
+```sh
+htmlx unpack template-name.htmlx ./work --json
+htmlx refresh-metadata ./work --check --json
+htmlx validate ./work --json
 ```
 
 ## Naming
