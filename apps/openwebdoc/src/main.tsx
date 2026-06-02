@@ -2533,6 +2533,7 @@ function ShadowHtmlxDocument({
       if (!dragState) return;
       const hostWidth = hostRef.current?.getBoundingClientRect().width || DESIGN_WIDTH;
       const stageWidth = getElementStageWidth(dragState.element);
+      const stageHeight = getElementStageHeight(dragState.element);
       const deltaX = ((event.clientX - dragState.originClientX) / hostWidth) * stageWidth;
       const deltaY = ((event.clientY - dragState.originClientY) / hostWidth) * stageWidth;
       if (!dragState.recorded) {
@@ -2540,7 +2541,10 @@ function ShadowHtmlxDocument({
         dragState.recorded = true;
       }
       if (dragState.mode === "resize") {
-        const resized = resizeGeometryFromDirection(dragState, deltaX, deltaY);
+        const resized = resizeGeometryFromDirection(dragState, deltaX, deltaY, {
+          stageWidth,
+          stageHeight,
+        });
         const originX = readNumber(
           dragState.element.dataset.htmlxRuntimeOriginX,
           dragState.originX,
@@ -2769,7 +2773,12 @@ function resizeGeometryFromDirection(
   },
   deltaX: number,
   deltaY: number,
+  stage: { stageWidth: number; stageHeight: number } = {
+    stageWidth: DESIGN_WIDTH,
+    stageHeight: DESIGN_HEIGHT,
+  },
 ) {
+  const { stageWidth, stageHeight } = stage;
   const direction = dragState.resizeDirection ?? "se";
   const minWidth = 32;
   const minHeight = 24;
@@ -2779,10 +2788,10 @@ function resizeGeometryFromDirection(
   let height = dragState.originHeight;
 
   if (direction.includes("e")) {
-    width = clamp(Math.round(dragState.originWidth + deltaX), minWidth, DESIGN_WIDTH - x);
+    width = clamp(Math.round(dragState.originWidth + deltaX), minWidth, stageWidth - x);
   }
   if (direction.includes("s")) {
-    height = clamp(Math.round(dragState.originHeight + deltaY), minHeight, DESIGN_HEIGHT - y);
+    height = clamp(Math.round(dragState.originHeight + deltaY), minHeight, stageHeight - y);
   }
   if (direction.includes("w")) {
     width = clamp(Math.round(dragState.originWidth - deltaX), minWidth, dragState.originWidth + x);
@@ -2797,10 +2806,10 @@ function resizeGeometryFromDirection(
     y = dragState.originY + dragState.originHeight - height;
   }
 
-  x = clamp(Math.round(x), 0, DESIGN_WIDTH - minWidth);
-  y = clamp(Math.round(y), 0, DESIGN_HEIGHT - minHeight);
-  width = clamp(Math.round(width), minWidth, DESIGN_WIDTH - x);
-  height = clamp(Math.round(height), minHeight, DESIGN_HEIGHT - y);
+  x = clamp(Math.round(x), 0, stageWidth - minWidth);
+  y = clamp(Math.round(y), 0, stageHeight - minHeight);
+  width = clamp(Math.round(width), minWidth, stageWidth - x);
+  height = clamp(Math.round(height), minHeight, stageHeight - y);
   return { x, y, width, height };
 }
 
@@ -5487,6 +5496,11 @@ function toStageCqw(value: number, stageWidth: number) {
 function getElementStageWidth(element: HTMLElement) {
   const stage = element.closest<HTMLElement>("[data-htmlx-stage-width]");
   return readNumber(stage?.dataset.htmlxStageWidth, DESIGN_WIDTH);
+}
+
+function getElementStageHeight(element: HTMLElement) {
+  const stage = element.closest<HTMLElement>("[data-htmlx-stage-height]");
+  return readNumber(stage?.dataset.htmlxStageHeight, DESIGN_HEIGHT);
 }
 
 function getStageScale(stage: HTMLElement | null) {

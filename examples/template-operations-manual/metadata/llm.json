@@ -141,7 +141,6 @@
       "index.html",
       "styles/document.css",
       "metadata/llm.json",
-      "metadata/editing.json",
       "metadata/provenance.json"
     ],
     "structuralEdits": "external-agent-only"

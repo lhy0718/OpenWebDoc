@@ -132,7 +132,7 @@ describe("HTMLX core", () => {
         },
       }),
       "index.html": `<section data-htmlx-block-id="canvas-1" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><h1 data-htmlx-block-id="title" data-htmlx-kind="heading" data-htmlx-editable="text" data-htmlx-x="40" data-htmlx-y="40" data-htmlx-width="700" data-htmlx-font-size="36" data-htmlx-line-height="1.1">Title</h1></section>`,
-      "styles/document.css": "* { box-sizing: border-box; }",
+      "styles/document.css": "* { box-sizing: border-box; } section { aspect-ratio: 980 / 620; }",
       "metadata/editing.json": JSON.stringify(validEditingMetadata),
     });
 
@@ -317,6 +317,116 @@ describe("HTMLX core", () => {
     expect(result.issues.map((issue) => issue.code)).toContain("profile.flow_stage_conflict");
   });
 
+  it("rejects fixed-stage editing metadata declared as a flow document", async () => {
+    const result = await validateHtmlx({
+      mimetype: "application/vnd.openwebdoc.htmlx+zip",
+      "manifest.json": JSON.stringify({
+        $schema: "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+        htmlxVersion: "0.1.0",
+        profile: "flow-document",
+        packageId: "urn:test",
+        title: "Conflicted Flow Metadata",
+        language: "en",
+        createdAt: "2026-05-13T00:00:00.000Z",
+        modifiedAt: "2026-05-13T00:00:00.000Z",
+        entry: "index.html",
+        styles: [],
+        resources: [
+          { path: "metadata/editing.json", mediaType: "application/json", role: "metadata" },
+        ],
+        metadata: { editing: "metadata/editing.json" },
+        security: {
+          allowScripts: false,
+          allowRemoteResources: false,
+          allowedOrigins: [],
+          interactionModel: "declarative",
+        },
+      }),
+      "index.html": `<main><h1 data-htmlx-block-id="title">Title</h1></main>`,
+      "metadata/editing.json": JSON.stringify({
+        schemaVersion: "0.1.0",
+        mode: "self-editable-document",
+        runtime: "@openwebdoc/runtime",
+        stage: { width: 980, height: 620, unit: "px", scaleMode: "uniform-fit" },
+        blocks: [],
+        constraints: { scripts: false, remoteResources: false },
+      }),
+    });
+
+    expect(result.valid).toBe(false);
+    expect(result.issues.map((issue) => issue.code)).toContain("profile.flow_stage_conflict");
+  });
+
+  it("rejects responsive CSS overrides in fixed-stage documents", async () => {
+    const result = await validateHtmlx({
+      mimetype: "application/vnd.openwebdoc.htmlx+zip",
+      "manifest.json": JSON.stringify({
+        $schema: "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+        htmlxVersion: "0.1.0",
+        profile: "fixed-stage-document",
+        packageId: "urn:test",
+        title: "Responsive Fixed Stage",
+        language: "en",
+        createdAt: "2026-05-13T00:00:00.000Z",
+        modifiedAt: "2026-05-13T00:00:00.000Z",
+        entry: "index.html",
+        styles: ["styles/document.css"],
+        resources: [{ path: "styles/document.css", mediaType: "text/css", role: "stylesheet" }],
+        metadata: {},
+        security: {
+          allowScripts: false,
+          allowRemoteResources: false,
+          allowedOrigins: [],
+          interactionModel: "declarative",
+        },
+      }),
+      "index.html": `<main class="htmlx-document" data-htmlx-block-id="stage" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><h1>Title</h1></main>`,
+      "styles/document.css": `.htmlx-document { width: 100%; aspect-ratio: 980 / 620; } h1 { font-size: clamp(24px, 4vw, 64px); } @media (max-width: 600px) { h1 { font-size: 20px; } }`,
+    });
+
+    expect(result.valid).toBe(false);
+    expect(result.issues.map((issue) => issue.code)).toEqual(
+      expect.arrayContaining([
+        "layout.fixed_stage_media_query",
+        "layout.fixed_stage_responsive_function",
+        "layout.fixed_stage_viewport_unit",
+      ]),
+    );
+  });
+
+  it("rejects fixed-stage documents without a matching stage aspect ratio", async () => {
+    const result = await validateHtmlx({
+      mimetype: "application/vnd.openwebdoc.htmlx+zip",
+      "manifest.json": JSON.stringify({
+        $schema: "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+        htmlxVersion: "0.1.0",
+        profile: "fixed-stage-document",
+        packageId: "urn:test",
+        title: "Loose Fixed Stage",
+        language: "en",
+        createdAt: "2026-05-13T00:00:00.000Z",
+        modifiedAt: "2026-05-13T00:00:00.000Z",
+        entry: "index.html",
+        styles: ["styles/document.css"],
+        resources: [{ path: "styles/document.css", mediaType: "text/css", role: "stylesheet" }],
+        metadata: {},
+        security: {
+          allowScripts: false,
+          allowRemoteResources: false,
+          allowedOrigins: [],
+          interactionModel: "declarative",
+        },
+      }),
+      "index.html": `<main class="htmlx-document" data-htmlx-block-id="stage" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><h1>Title</h1></main>`,
+      "styles/document.css": `* { box-sizing: border-box; } .htmlx-document { width: 100%; }`,
+    });
+
+    expect(result.valid).toBe(false);
+    expect(result.issues.map((issue) => issue.code)).toContain(
+      "layout.fixed_stage_aspect_ratio_missing",
+    );
+  });
+
   it("rejects fixed-stage profiles without a document stage", async () => {
     const result = await validateHtmlx({
       mimetype: "application/vnd.openwebdoc.htmlx+zip",
@@ -330,8 +440,8 @@ describe("HTMLX core", () => {
         createdAt: "2026-05-13T00:00:00.000Z",
         modifiedAt: "2026-05-13T00:00:00.000Z",
         entry: "index.html",
-        styles: [],
-        resources: [],
+        styles: ["styles/document.css"],
+        resources: [{ path: "styles/document.css", mediaType: "text/css", role: "stylesheet" }],
         metadata: {},
         security: {
           allowScripts: false,
@@ -461,7 +571,7 @@ describe("HTMLX core", () => {
       },
       files: {
         "index.html": `<section data-htmlx-block-id="canvas-1" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><h1 data-htmlx-block-id="block-title" data-htmlx-kind="heading" data-htmlx-editable="text" data-htmlx-x="48" data-htmlx-y="52" data-htmlx-width="720" data-htmlx-font-size="38" data-htmlx-line-height="1.08">Title</h1><div data-htmlx-block-id="shape-1" data-htmlx-kind="shape" data-htmlx-editable="object" data-htmlx-x="48" data-htmlx-y="120" data-htmlx-width="300" data-htmlx-height="70"><span data-htmlx-object-text="true">Chip</span></div></section>`,
-        "styles/document.css": "* { box-sizing: border-box; }",
+        "styles/document.css": "* { box-sizing: border-box; } section { aspect-ratio: 980 / 620; }",
         "metadata/editing.json": JSON.stringify(validEditingMetadata),
       },
     });
@@ -502,7 +612,7 @@ describe("HTMLX core", () => {
         },
       }),
       "index.html": `<section data-htmlx-block-id="canvas-1" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><p data-htmlx-block-id="block-1" data-htmlx-kind="paragraph" data-htmlx-editable="text" data-htmlx-x="48" data-htmlx-y="52" data-htmlx-width="720" data-htmlx-font-size="16">Title</p></section>`,
-      "styles/document.css": "* { box-sizing: border-box; }",
+      "styles/document.css": "* { box-sizing: border-box; } section { aspect-ratio: 980 / 620; }",
       "metadata/editing.json": "{not json",
     });
 
@@ -533,7 +643,8 @@ describe("HTMLX core", () => {
         },
       }),
       "index.html": `<section data-htmlx-block-id="canvas-1" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><h1 data-htmlx-block-id="title" data-htmlx-kind="heading" data-htmlx-editable="text" data-htmlx-x="40" data-htmlx-y="40" data-htmlx-width="700" data-htmlx-font-size="36" data-htmlx-line-height="1.1">Title</h1></section>`,
-      "styles/document.css": ".htmlx-stage { width: min(100%, 980px); }",
+      "styles/document.css":
+        "* { box-sizing: border-box; } .htmlx-stage { width: min(100%, 980px); aspect-ratio: 980 / 620; }",
     });
 
     expect(result.valid).toBe(false);
@@ -565,6 +676,7 @@ describe("HTMLX core", () => {
         },
       }),
       "index.html": `<section data-htmlx-block-id="canvas-1" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><figure data-htmlx-block-id="table-1" data-htmlx-kind="table" data-htmlx-editable="object" data-htmlx-x="40" data-htmlx-y="40" data-htmlx-width="700"><table><tbody><tr><td>A</td></tr></tbody></table></figure></section>`,
+      "styles/document.css": "* { box-sizing: border-box; } section { aspect-ratio: 980 / 620; }",
     });
 
     expect(result.valid).toBe(false);

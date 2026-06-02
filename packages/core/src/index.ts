@@ -607,6 +607,7 @@ function validateProfileContract(
   const htmlBytes = files.get(manifest.entry);
   const html = htmlBytes ? decodeText(htmlBytes) : "";
   const hasStage = hasSelfEditableStage(html);
+  const hasEditingStage = hasEditingStageMetadata(manifest, files);
   if (profile === "fixed-stage-document" && !hasStage) {
     issues.push({
       severity: "error",
@@ -616,13 +617,13 @@ function validateProfileContract(
     });
   }
 
-  if (normalizedExplicitProfile === "flow-document" && hasStage) {
+  if (normalizedExplicitProfile === "flow-document" && (hasStage || hasEditingStage)) {
     issues.push({
       severity: "error",
       code: "profile.flow_stage_conflict",
       message:
-        "Flow document packages must not use fixed-stage document geometry; use fixed-stage-document instead.",
-      path: manifest.entry,
+        "Flow document packages must not use fixed-stage document geometry or editing stage metadata; use fixed-stage-document instead.",
+      path: hasStage ? manifest.entry : (manifest.metadata.editing ?? HTMLX_MANIFEST_PATH),
     });
   }
 }
@@ -887,6 +888,7 @@ function validateProportionalLayoutContract(
   const html = decodeText(htmlBytes);
   if (!hasSelfEditableStage(html)) return;
   if (profile === "flow-document") return;
+  validateFixedStageCssContract(manifest, files, profile, issues);
 
   if (manifest.entry !== "index.html") {
     issues.push({
@@ -909,6 +911,9 @@ function validateProportionalLayoutContract(
     manifest.entry,
     issues,
   );
+  if (profile === "fixed-stage-document") {
+    validateFixedStageAspectRatioContract(stageTag, manifest, files, issues);
+  }
 
   for (const tag of extractTagsWithAttribute(html, "data-htmlx-editable", "text")) {
     validateNumericAttributes(
@@ -969,6 +974,70 @@ function validateProportionalLayoutContract(
       code: "layout.box_sizing_missing",
       message:
         "Self-editable HTMLX styles must set box-sizing: border-box so declared object frames include border and padding.",
+      path: manifest.styles[0] ?? manifest.entry,
+    });
+  }
+}
+
+function validateFixedStageCssContract(
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  profile: HtmlxDocumentProfile,
+  issues: HtmlxValidationIssue[],
+): void {
+  if (profile !== "fixed-stage-document") return;
+  for (const stylePath of manifest.styles) {
+    const styleBytes = files.get(stylePath);
+    if (!styleBytes) continue;
+    const css = decodeText(styleBytes);
+    const checks: Array<[RegExp, string, string]> = [
+      [
+        /@media\b/i,
+        "layout.fixed_stage_media_query",
+        "Fixed-stage document CSS must not use media queries that override the stage scale.",
+      ],
+      [
+        /\b(?:clamp|min|max)\s*\(/i,
+        "layout.fixed_stage_responsive_function",
+        "Fixed-stage document CSS must not use clamp(), min(), or max() to override the stage scale.",
+      ],
+      [
+        /(?:^|[^a-z-])(?:\d*\.?\d+)(?:vw|vh|vmin|vmax)\b/i,
+        "layout.fixed_stage_viewport_unit",
+        "Fixed-stage document CSS must use stage-relative units instead of viewport units.",
+      ],
+    ];
+    for (const [pattern, code, message] of checks) {
+      if (pattern.test(css)) {
+        issues.push({ severity: "error", code, message, path: stylePath });
+      }
+    }
+  }
+}
+
+function validateFixedStageAspectRatioContract(
+  stageTag: string,
+  manifest: HtmlxManifest,
+  files: Map<string, Uint8Array>,
+  issues: HtmlxValidationIssue[],
+): void {
+  const width = Number(getHtmlAttribute(stageTag, "data-htmlx-stage-width"));
+  const height = Number(getHtmlAttribute(stageTag, "data-htmlx-stage-height"));
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) return;
+  const ratioPattern = new RegExp(
+    `aspect-ratio\\s*:\\s*${escapeRegExp(String(width))}\\s*/\\s*${escapeRegExp(String(height))}\\b`,
+    "i",
+  );
+  const hasMatchingAspectRatio = manifest.styles.some((stylePath) => {
+    const styleBytes = files.get(stylePath);
+    return styleBytes ? ratioPattern.test(decodeText(styleBytes)) : false;
+  });
+  if (!hasMatchingAspectRatio) {
+    issues.push({
+      severity: "error",
+      code: "layout.fixed_stage_aspect_ratio_missing",
+      message:
+        "Fixed-stage document CSS must declare an aspect-ratio that matches data-htmlx-stage-width and data-htmlx-stage-height.",
       path: manifest.styles[0] ?? manifest.entry,
     });
   }

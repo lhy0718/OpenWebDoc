@@ -16,6 +16,8 @@
 - In self-editable showcase documents, reader-facing microcopy such as hero chips and primary action labels should become editable in edit mode. Do not freeze visible document text just because it is styled as navigation or a capsule.
 - Do not add standalone explanatory micro-edit callout boxes or adjacent decorative icons to the showcase document unless the user explicitly asks for that content; the document should explain the concept through durable sections, tables, and figures.
 - For OpenWebDoc app UI work, use the Codex in-app browser as the visual verification surface. Do not report visual/manual behavior as checked from an external browser or standalone Playwright window.
+- Keep profile contracts explicit in examples: `flow-document` examples must not declare fixed-stage `metadata/editing.json` stage metadata, while `fixed-stage-document` examples must declare package CSS `aspect-ratio` matching `data-htmlx-stage-width` and `data-htmlx-stage-height`.
+- Fixed-stage runtime logic must read package-owned stage geometry instead of assuming the default showcase stage height. Verify imported packages whose stage height differs from the app default before reporting resize or proportional-layout fixes.
 
 ## Stack
 

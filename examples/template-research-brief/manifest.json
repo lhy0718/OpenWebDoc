@@ -5,7 +5,7 @@
   "title": "Research Brief Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-05-31T11:40:24.855Z",
+  "modifiedAt": "2026-06-02T09:18:38.492Z",
   "entry": "index.html",
   "styles": [
     "styles/document.css"
@@ -20,23 +20,17 @@
       "path": "metadata/llm.json",
       "mediaType": "application/json",
       "role": "metadata",
-      "integrity": "sha256-fuXoQLEX/4qjBOaNGfxHzHxKg7v7iCeXPvht6urbpsQ="
+      "integrity": "sha256-bF9+HDFeRLVUM4y1VKMJYO1tTcd6c/VQ+nmQAnJod9Y="
     },
     {
       "path": "metadata/provenance.json",
-      "mediaType": "application/json",
-      "role": "metadata"
-    },
-    {
-      "path": "metadata/editing.json",
       "mediaType": "application/json",
       "role": "metadata"
     }
   ],
   "metadata": {
     "llm": "metadata/llm.json",
-    "provenance": "metadata/provenance.json",
-    "editing": "metadata/editing.json"
+    "provenance": "metadata/provenance.json"
   },
   "security": {
     "allowScripts": false,

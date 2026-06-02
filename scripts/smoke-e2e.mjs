@@ -1373,6 +1373,8 @@ async function verifyProportionalSurface(page, viewports) {
       const element = root.querySelector(".htmlx-document");
       if (!element) throw new Error("Editable HTMLX document root was not rendered.");
       const pageBox = element.getBoundingClientRect();
+      const stageWidth = Number.parseFloat(element.getAttribute("data-htmlx-stage-width") ?? "0");
+      const stageHeight = Number.parseFloat(element.getAttribute("data-htmlx-stage-height") ?? "0");
       const titleBox = element
         .querySelector('[data-htmlx-block-id="doc-title"]')
         ?.getBoundingClientRect();
@@ -1380,6 +1382,8 @@ async function verifyProportionalSurface(page, viewports) {
       return {
         width: pageBox.width,
         height: pageBox.height,
+        stageWidth,
+        stageHeight,
         titleWidth: titleBox?.width ?? 0,
         titleHeight: titleBox?.height ?? 0,
         tableWidth: tableBox?.width ?? 0,
@@ -1396,6 +1400,17 @@ async function verifyProportionalSurface(page, viewports) {
     }
     if (metrics.tableWidth <= 0 || metrics.tableWidth > metrics.width) {
       throw new Error(`Document table overflowed or disappeared at ${viewport.width}px.`);
+    }
+    if (metrics.stageWidth <= 0 || metrics.stageHeight <= 0) {
+      throw new Error(`Fixed-stage document did not expose stage geometry at ${viewport.width}px.`);
+    }
+    const expectedHeight = (metrics.width * metrics.stageHeight) / metrics.stageWidth;
+    if (Math.abs(metrics.height - expectedHeight) > 4) {
+      throw new Error(
+        `Fixed-stage document height did not match package stage ratio at ${viewport.width}px: ${JSON.stringify(
+          { ...metrics, expectedHeight },
+        )}`,
+      );
     }
   }
 }
