@@ -140,7 +140,7 @@ label:focus-within,
 }
 
 .open-card {
-  width: min(100%, 520px);
+  width: min(100%, 980px);
   padding: 32px;
   border: 1px solid #c8d7ea;
   border-radius: 12px;
@@ -248,11 +248,32 @@ label:focus-within,
   border-top: 1px solid #d7e2ef;
 }
 
+.example-gallery-heading {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  align-items: end;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
 .example-gallery h2 {
   margin: 0 0 12px;
   color: #13213a;
   font-size: 16px;
   line-height: 1.2;
+}
+
+.example-gallery-heading h2 {
+  margin: 0;
+}
+
+.example-gallery-heading p {
+  max-width: 420px;
+  margin: 0;
+  color: #5c6c83;
+  font-size: 13px;
+  line-height: 1.45;
 }
 
 .example-list {
@@ -261,38 +282,86 @@ label:focus-within,
   gap: 10px;
 }
 
-.example-list a {
+.example-card {
   display: grid;
-  gap: 4px;
-  min-height: 70px;
-  align-content: center;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 8px;
+  min-height: 154px;
   border: 1px solid #c8d7ea;
   border-radius: 8px;
   padding: 12px;
   color: #172033;
   background: #f8fbff;
-  text-decoration: none;
 }
 
-.example-list a:hover,
-.example-list a:focus-visible {
-  border-color: #2f6fed;
-  background: #eff5ff;
+.example-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
-.example-list strong {
-  font-size: 13px;
+.example-card-meta span {
+  border-radius: 999px;
+  padding: 4px 7px;
+  color: #0f4f79;
+  background: #e9f5fb;
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.example-card-meta span + span {
+  color: #5a3b0b;
+  background: #fff3d5;
+}
+
+.example-card h3 {
+  margin: 0;
+  color: #13213a;
+  font-size: 15px;
   line-height: 1.2;
 }
 
-.example-list span {
+.example-card p {
+  margin: 0;
   color: #5c6c83;
   font-size: 12px;
+  line-height: 1.45;
+}
+
+.example-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.example-card-actions a {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  border: 1px solid #c8d7ea;
+  border-radius: 7px;
+  padding: 0 10px;
+  color: #193b70;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.example-card-actions a:hover,
+.example-card-actions a:focus-visible {
+  border-color: #2f6fed;
+  background: #eff5ff;
 }
 
 @media (max-width: 580px) {
   .example-list {
     grid-template-columns: 1fr;
+  }
+
+  .open-card {
+    padding: 24px;
   }
 }
 

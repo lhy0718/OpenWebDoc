@@ -50,7 +50,9 @@ The output is written to `dist/site/`:
 - `dist/site/app/`
 - `dist/site/index.html`
 
-`dist/site/app/` is the deployable OpenWebDoc runtime. It starts with a single file-open screen. After a valid package is selected, the runtime shows the document first and keeps app controls in a small floating toolbar. `dist/site/index.html` is only a lightweight entry page that links to the app.
+`dist/site/app/` is the deployable OpenWebDoc runtime. It starts with a single file-open screen. After a valid package is selected, the runtime shows the document first and keeps app controls in a small floating toolbar.
+
+`dist/site/index.html` is the public entry page and template gallery. It exposes live previews, direct `.htmlx` downloads, and the external-agent command boundary for each public template listed in `examples/gallery.json`.
 
 The current GitHub Pages deployment is:
 
@@ -59,6 +61,7 @@ The current GitHub Pages deployment is:
 - Introduction example: <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction>
 - Flow document example: <https://lhy0718.github.io/OpenWebDoc/app/?example=template-flow-article>
 - Slide deck example: <https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck>
+- Template download example: <https://lhy0718.github.io/OpenWebDoc/app/examples/template-flow-article.htmlx>
 
 For a local static smoke check after building:
 

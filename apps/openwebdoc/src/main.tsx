@@ -46,6 +46,7 @@ import {
   useState,
 } from "react";
 import { createRoot } from "react-dom/client";
+import exampleGallery from "../../../examples/gallery.json";
 import { proposalIconDataUrls } from "./generatedIcons";
 
 const DESIGN_WIDTH = 980;
@@ -53,21 +54,19 @@ const DESIGN_HEIGHT = 7200;
 const TOOLBAR_ANCHOR_WIDTH = 232;
 const TOOLBAR_ANCHOR_HEIGHT = 48;
 const HISTORY_LIMIT = 100;
-const BUNDLED_EXAMPLES = [
-  { id: "openwebdoc-introduction", title: "OpenWebDoc Introduction", type: "Document" },
-  { id: "openwebdoc-slide-deck", title: "OpenWebDoc Slide Deck", type: "Presentation" },
-  { id: "template-flow-article", title: "Flow Document Brief", type: "Flow document" },
-  { id: "template-research-brief", title: "Research Brief", type: "Document template" },
-  { id: "template-product-spec", title: "Product Spec", type: "Document template" },
-  { id: "template-operations-manual", title: "Operations Manual", type: "Document template" },
-  { id: "template-meeting-notes", title: "Meeting Notes", type: "Document template" },
-  { id: "template-project-proposal", title: "Project Proposal", type: "Document template" },
-  { id: "template-data-report", title: "Data Report", type: "Document template" },
-  { id: "template-pitch-deck", title: "Pitch Deck", type: "Presentation template" },
-  { id: "template-lesson-deck", title: "Lesson Deck", type: "Presentation template" },
-  { id: "template-research-talk", title: "Research Talk", type: "Presentation template" },
-  { id: "template-status-review-deck", title: "Status Review Deck", type: "Presentation template" },
-] as const;
+interface BundledExample {
+  id: string;
+  title: string;
+  type: string;
+  profile: HtmlxDocumentProfile;
+  category: string;
+  audience: string;
+  description: string;
+  bestFor: string;
+  featured: boolean;
+}
+
+const BUNDLED_EXAMPLES = exampleGallery.examples as ReadonlyArray<BundledExample>;
 const EDITABLE_RUNTIME_TEXT_OVERRIDES = `
 .document-page .text-layer h1,
 .document-page .text-layer p {
@@ -1929,19 +1928,39 @@ function OpenScreen({
           </section>
         ) : null}
         <section className="example-gallery" aria-label="Bundled examples">
-          <h2>Try a bundled example</h2>
+          <div className="example-gallery-heading">
+            <h2>Try a bundled example</h2>
+            <p>Preview a package in the app, or download the `.htmlx` file for local validation.</p>
+          </div>
           <div className="example-list">
             {examples.map((example) => (
-              <a key={example.id} href={`?example=${example.id}`}>
-                <strong>{example.title}</strong>
-                <span>{example.type}</span>
-              </a>
+              <article key={example.id} className="example-card">
+                <div className="example-card-meta">
+                  <span>{example.type}</span>
+                  <span>{formatProfileLabel(example.profile)}</span>
+                </div>
+                <h3>{example.title}</h3>
+                <p>{example.description}</p>
+                <div className="example-card-actions">
+                  <a href={`?example=${example.id}`}>Preview</a>
+                  <a href={`./examples/${example.id}.htmlx`} download>
+                    Download
+                  </a>
+                </div>
+              </article>
             ))}
           </div>
         </section>
       </section>
     </main>
   );
+}
+
+function formatProfileLabel(profile: HtmlxDocumentProfile) {
+  if (profile === "flow-document") return "Flow";
+  if (profile === "fixed-stage-document") return "Fixed-stage";
+  if (profile === "slide-deck") return "Slide deck";
+  return profile;
 }
 
 function PresentationNotice() {

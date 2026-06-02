@@ -14,6 +14,7 @@
 - [ ] `pnpm release:check` fails when a packed `examples/*.htmlx` file drifts from its source directory.
 - [ ] `pnpm release:check` fails when `apps/openwebdoc/public/examples/*.htmlx` is not byte-identical to the matching packed example.
 - [ ] `pnpm release:check` scans text files inside packed examples for absolute or private local paths.
+- [ ] `examples/gallery.json` lists only public, valid, downloadable examples and stays aligned with the template gallery.
 - [ ] GitHub Pages serves the entry page at `https://lhy0718.github.io/OpenWebDoc/`.
 - [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.
 - [ ] GitHub Pages serves the downloadable template gallery from the entry page.

@@ -36,6 +36,7 @@ for (const [command, args, options] of commands) {
 }
 
 await checkExampleMetadataFreshness();
+checkExampleGallery();
 await checkExampleArtifactDrift();
 
 run("pnpm", ["pack:packages"]);
@@ -71,6 +72,52 @@ async function checkExampleMetadataFreshness() {
       "--check",
       "--json",
     ]);
+  }
+}
+
+function checkExampleGallery() {
+  const publicExampleIds = listPublicExampleIds(publicExamplesDirectory);
+  const publicExampleSet = new Set(publicExampleIds);
+  const galleryPath = join(examplesDirectory, "gallery.json");
+  const gallery = JSON.parse(readFileSync(galleryPath, "utf8"));
+  if (!Array.isArray(gallery.examples)) {
+    failReleaseCheck("examples/gallery.json must contain an examples array.");
+  }
+
+  const galleryIds = [];
+  for (const [index, example] of gallery.examples.entries()) {
+    for (const field of [
+      "id",
+      "title",
+      "type",
+      "profile",
+      "category",
+      "audience",
+      "description",
+      "bestFor",
+    ]) {
+      if (typeof example[field] !== "string" || !example[field].trim()) {
+        failReleaseCheck(`examples/gallery.json entry ${index} is missing ${field}.`);
+      }
+    }
+    if (typeof example.featured !== "boolean") {
+      failReleaseCheck(`examples/gallery.json entry ${example.id} must declare featured.`);
+    }
+    if (!publicExampleSet.has(example.id)) {
+      failReleaseCheck(`Gallery example has no public package: ${example.id}.htmlx.`);
+    }
+    galleryIds.push(example.id);
+  }
+
+  const duplicateIds = galleryIds.filter((id, index) => galleryIds.indexOf(id) !== index);
+  if (duplicateIds.length > 0) {
+    failReleaseCheck(`examples/gallery.json has duplicate ids: ${duplicateIds.join(", ")}.`);
+  }
+
+  const galleryIdSet = new Set(galleryIds);
+  const missingFromGallery = publicExampleIds.filter((id) => !galleryIdSet.has(id));
+  if (missingFromGallery.length > 0) {
+    failReleaseCheck(`Public examples missing from gallery: ${missingFromGallery.join(", ")}.`);
   }
 }
 
