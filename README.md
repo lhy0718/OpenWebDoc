@@ -23,6 +23,7 @@ HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript l
 - [Read the OpenWebDoc introduction example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction)
 - [Open the slide deck example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck)
 - [Browse the template gallery](https://lhy0718.github.io/OpenWebDoc/)
+- [Download the v0.1.0-alpha.0 release assets](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.0)
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
