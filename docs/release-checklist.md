@@ -19,7 +19,8 @@
 - [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.
 - [ ] GitHub Pages serves the downloadable template gallery from the entry page.
 - [ ] `pnpm release:check` succeeds.
-- [ ] A `v0.1.0-alpha.0` GitHub Release includes npm tarballs, example `.htmlx` packages, release notes, and a spec/docs snapshot from the tagged commit.
+- [ ] A `v0.1.0-alpha.0` GitHub Release includes npm tarballs, valid example `.htmlx` packages, release notes, and a spec/docs snapshot from the tagged commit.
+- [ ] GitHub Release assets do not include `examples/security-invalid.htmlx`; that fixture remains repository-only test data.
 - [ ] CI runs the repository-local `.github/actions/validate-htmlx` composite action against representative examples.
 - [ ] `pnpm htmlx validate examples/basic.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/template-flow-article.htmlx` succeeds.
