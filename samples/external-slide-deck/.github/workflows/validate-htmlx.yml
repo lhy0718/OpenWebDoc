@@ -1,0 +1,14 @@
+name: Validate HTMLX
+
+on:
+  pull_request:
+
+jobs:
+  validate-htmlx:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
+        with:
+          paths: |
+            documents/**/*.htmlx

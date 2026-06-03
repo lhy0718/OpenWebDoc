@@ -99,5 +99,6 @@ For issue-code recovery guidance, see [HTMLX Issue Code Cookbook](issue-code-coo
 
 For copyable external repository skeletons, see [External Sample Repositories](../samples/README.md).
 
-For a verified external-repository smoke test of the action, see
+For verified external-repository smoke tests across Markdown notes, safe HTML
+migration, agent-edited briefs, data reports, and slide decks, see
 [Starter PR Gate Case Study](starter-pr-gate-case-study.md).

@@ -17,6 +17,18 @@
       "source": "samples/external-agent-brief",
       "description": "Agent-edited brief workflow with pull-request HTMLX validation.",
       "url": "https://github.com/lhy0718/htmlx-agent-brief-starter"
+    },
+    {
+      "id": "htmlx-data-report-starter",
+      "source": "samples/external-data-report",
+      "description": "Analytics-style report package with pull-request HTMLX validation.",
+      "url": "https://github.com/lhy0718/htmlx-data-report-starter"
+    },
+    {
+      "id": "htmlx-slide-deck-starter",
+      "source": "samples/external-slide-deck",
+      "description": "Presentation-style HTMLX slide deck validated in pull requests.",
+      "url": "https://github.com/lhy0718/htmlx-slide-deck-starter"
     }
   ]
 }

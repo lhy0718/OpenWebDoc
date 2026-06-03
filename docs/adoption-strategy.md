@@ -52,8 +52,9 @@ Standardization should follow adoption. The early product should focus on practi
 - Add a conformance page and fixture runner so external validators can compare expected issue codes.
 - Publish short security and MIME/extension briefs to reduce early adoption uncertainty.
 - Publish an Agentic Document Integrity CI report shape so external repositories know what a pass or failure should communicate.
-- Provide three copyable external sample repositories for Markdown-first notes, safe HTML migration, and agent-edited briefs.
-- Keep a public starter PR-gate case study showing a real failure, validator fix, passing check, and merged PR.
+- Provide five copyable external sample repositories for Markdown-first notes, safe HTML migration, agent-edited briefs, data reports, and slide decks.
+- Keep a public starter PR-gate case study showing a real failure, validator fix, passing checks, merged PRs, and screenshot-backed README flow.
+- Maintain a recovery cookbook based on real `validate --json` and `refresh-metadata --check --json` failure logs.
 - Publish a 30-minute pilot script so teams can test one agent-edited `.htmlx` PR without adopting the whole toolchain.
 - Maintain a pilot target list focused on Git-based document workflows rather than general office-suite users.
 - Export and verify sample skeletons in `dist/sample-repos/`, publish downloadable starter repository archives from GitHub Pages, and link the public starter template repositories for copyable adoption.
@@ -96,11 +97,11 @@ Secondary metrics:
 - GitHub release downloads
 - npm package usage after scoped alpha publish
 - template downloads
-- external sample repositories with tag-pinned GitHub Action workflows
+- external sample repositories with tag-pinned GitHub Action workflows and passing PR-gate smoke runs
 - external repositories that run a tag-pinned or SHA-pinned Agentic Document Integrity gate
 - pilot case studies that report validation failures, fixes, and remaining human review
 - VS Code extension installs
 - conformance suite users
 
-For the first public starter-repository PR-gate smoke, see
+For the public starter-repository PR-gate smoke, see
 [Starter PR Gate Case Study](starter-pr-gate-case-study.md).

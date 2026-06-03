@@ -21,6 +21,8 @@ The template repository mapping is declared in [`template-repos.json`](template-
 | `external-research-notes` | [`htmlx-markdown-notes-starter`](https://github.com/lhy0718/htmlx-markdown-notes-starter)           | Markdown -> `.htmlx`                                     | Research notes and technical memos  |
 | `external-html-migration` | [`htmlx-safe-html-migration-starter`](https://github.com/lhy0718/htmlx-safe-html-migration-starter) | safe HTML -> `.htmlx` -> static HTML                     | Existing standalone web documents   |
 | `external-agent-brief`    | [`htmlx-agent-brief-starter`](https://github.com/lhy0718/htmlx-agent-brief-starter)                 | `.htmlx` -> unpacked package edits -> validated `.htmlx` | Agent-edited document pull requests |
+| `external-data-report`    | [`htmlx-data-report-starter`](https://github.com/lhy0718/htmlx-data-report-starter)                 | analytics report `.htmlx` -> PR validation               | Report automation and review        |
+| `external-slide-deck`     | [`htmlx-slide-deck-starter`](https://github.com/lhy0718/htmlx-slide-deck-starter)                   | slide deck `.htmlx` -> PR validation                     | Presentation review workflows       |
 
 ## Local Check
 
@@ -57,7 +59,7 @@ Repositories that require stricter action immutability can replace the tag with 
 
 See [GitHub Action Pinning and Supply-Chain Notes](../docs/supply-chain-action-pinning.md) for upgrade guidance.
 
-The first public starter-repository validation PRs are documented in
+The public starter-repository validation PRs are documented in
 [Starter PR Gate Case Study](../docs/starter-pr-gate-case-study.md).
 
 ## Splitting Into Template Repositories
