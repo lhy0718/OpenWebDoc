@@ -3,17 +3,20 @@
     {
       "id": "htmlx-markdown-notes-starter",
       "source": "samples/external-research-notes",
-      "description": "Markdown-first research notes converted into a validated HTMLX package."
+      "description": "Markdown-first research notes converted into a validated HTMLX package.",
+      "url": "https://github.com/lhy0718/htmlx-markdown-notes-starter"
     },
     {
       "id": "htmlx-safe-html-migration-starter",
       "source": "samples/external-html-migration",
-      "description": "Safe standalone HTML converted into HTMLX and exported back to static HTML."
+      "description": "Safe standalone HTML converted into HTMLX and exported back to static HTML.",
+      "url": "https://github.com/lhy0718/htmlx-safe-html-migration-starter"
     },
     {
       "id": "htmlx-agent-brief-starter",
       "source": "samples/external-agent-brief",
-      "description": "Agent-edited brief workflow with pull-request HTMLX validation."
+      "description": "Agent-edited brief workflow with pull-request HTMLX validation.",
+      "url": "https://github.com/lhy0718/htmlx-agent-brief-starter"
     }
   ]
 }

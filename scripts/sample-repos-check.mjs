@@ -22,6 +22,7 @@ checkTemplateManifest(sampleIds);
 for (const sampleId of sampleIds) {
   const sampleDirectory = join(samplesRoot, sampleId);
   checkRequiredFile(sampleDirectory, "README.md");
+  checkRequiredFile(sampleDirectory, "LICENSE");
   const workflowPath = join(sampleDirectory, ".github/workflows/validate-htmlx.yml");
   checkRequiredFile(sampleDirectory, ".github/workflows/validate-htmlx.yml");
   const workflow = readFileSync(workflowPath, "utf8");
@@ -69,7 +70,7 @@ function checkTemplateManifest(sampleIds) {
   const seenSources = new Set();
 
   for (const [index, repository] of manifest.repositories.entries()) {
-    for (const field of ["id", "source", "description"]) {
+    for (const field of ["id", "source", "description", "url"]) {
       if (typeof repository[field] !== "string" || !repository[field].trim()) {
         fail(`samples/template-repos.json entry ${index} is missing ${field}.`);
       }
@@ -87,6 +88,10 @@ function checkTemplateManifest(sampleIds) {
     seenSources.add(repository.source);
     if (!sampleSourceSet.has(repository.source)) {
       fail(`Template repository source must match an external sample: ${repository.source}.`);
+    }
+    const expectedUrl = `https://github.com/lhy0718/${repository.id}`;
+    if (repository.url !== expectedUrl) {
+      fail(`Template repository URL must be ${expectedUrl}, found ${repository.url}.`);
     }
   }
 }

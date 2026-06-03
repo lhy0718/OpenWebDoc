@@ -55,7 +55,7 @@ Standardization should follow adoption. The early product should focus on practi
 - Provide three copyable external sample repositories for Markdown-first notes, safe HTML migration, and agent-edited briefs.
 - Publish a 30-minute pilot script so teams can test one agent-edited `.htmlx` PR without adopting the whole toolchain.
 - Maintain a pilot target list focused on Git-based document workflows rather than general office-suite users.
-- Export and verify sample skeletons in `dist/sample-repos/`, and publish downloadable starter repository archives from GitHub Pages so template candidates can be reviewed before separate repositories are created.
+- Export and verify sample skeletons in `dist/sample-repos/`, publish downloadable starter repository archives from GitHub Pages, and link the public starter template repositories for copyable adoption.
 
 ## Months 1-3
 

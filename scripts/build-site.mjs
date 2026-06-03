@@ -310,7 +310,7 @@ await writeFile(
       }
       .sample-actions {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 8px;
       }
       .sample-actions a {
@@ -360,7 +360,8 @@ await writeFile(
         }
         .template-grid,
         .featured-grid,
-        .sample-grid {
+        .sample-grid,
+        .sample-actions {
           grid-template-columns: 1fr;
         }
         h1 {
@@ -460,6 +461,7 @@ await writeFile(
       sampleRepositories: sampleRepositories.map((repository) => ({
         id: repository.id,
         description: repository.description,
+        url: repository.url,
         archive: `${sampleRepoSiteDirectory}/${repository.id}.zip`,
       })),
     },
@@ -617,7 +619,8 @@ function renderSampleRepositoryCard(repository) {
             <h3>${escapeHtml(repository.id)}</h3>
             <p>${escapeHtml(repository.description)}</p>
             <div class="sample-actions">
-              <a href="./${sampleRepoSiteDirectory}/${repository.id}.zip" download>Download starter repo</a>
+              <a href="${escapeHtml(repository.url)}">Use template repo</a>
+              <a href="./${sampleRepoSiteDirectory}/${repository.id}.zip" download>Download ZIP</a>
               <a href="https://github.com/lhy0718/OpenWebDoc/tree/main/${escapeHtml(repository.source)}">View source</a>
             </div>
             <code class="command">pnpm samples:export

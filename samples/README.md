@@ -8,6 +8,7 @@ Each sample includes:
 - one generated `.htmlx` package
 - a tag-pinned GitHub Action workflow that validates the package in pull requests
 - a README with the local editing and validation flow
+- an MIT license
 
 The samples are not pnpm workspace packages. They model what another repository can copy.
 
@@ -15,11 +16,11 @@ The template repository mapping is declared in [`template-repos.json`](template-
 
 ## Samples
 
-| Sample                    | Entry path                                               | Use case                            |
-| ------------------------- | -------------------------------------------------------- | ----------------------------------- |
-| `external-research-notes` | Markdown -> `.htmlx`                                     | Research notes and technical memos  |
-| `external-html-migration` | safe HTML -> `.htmlx` -> static HTML                     | Existing standalone web documents   |
-| `external-agent-brief`    | `.htmlx` -> unpacked package edits -> validated `.htmlx` | Agent-edited document pull requests |
+| Sample                    | Template repository                                                                                 | Entry path                                               | Use case                            |
+| ------------------------- | --------------------------------------------------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------- |
+| `external-research-notes` | [`htmlx-markdown-notes-starter`](https://github.com/lhy0718/htmlx-markdown-notes-starter)           | Markdown -> `.htmlx`                                     | Research notes and technical memos  |
+| `external-html-migration` | [`htmlx-safe-html-migration-starter`](https://github.com/lhy0718/htmlx-safe-html-migration-starter) | safe HTML -> `.htmlx` -> static HTML                     | Existing standalone web documents   |
+| `external-agent-brief`    | [`htmlx-agent-brief-starter`](https://github.com/lhy0718/htmlx-agent-brief-starter)                 | `.htmlx` -> unpacked package edits -> validated `.htmlx` | Agent-edited document pull requests |
 
 ## Local Check
 
@@ -38,7 +39,7 @@ The export command copies the skeletons into `dist/sample-repos/` and adds a sma
 
 The export verification confirms that each exported candidate preserves its source sample content, includes the template note and validation workflow, avoids `@main` action refs, validates contained `.htmlx` packages, and contains no private or absolute local paths.
 
-`pnpm site:build` packages the exported candidates as downloadable archives under `dist/site/samples/` so the GitHub Pages landing page can expose them before separate template repositories are created. `pnpm release:check` runs export verification before building the public site.
+`pnpm site:build` packages the exported candidates as downloadable archives under `dist/site/samples/` so the GitHub Pages landing page can expose them alongside the public template repositories. `pnpm release:check` runs export verification before building the public site.
 
 ## Security-Sensitive Adoption
 
@@ -58,4 +59,4 @@ See [GitHub Action Pinning and Supply-Chain Notes](../docs/supply-chain-action-p
 
 ## Splitting Into Template Repositories
 
-See [External Template Repository Readiness](template-repo-readiness.md) before copying a sample into a separate public starter repository.
+See [External Template Repository Readiness](template-repo-readiness.md) before updating or adding a public starter repository.

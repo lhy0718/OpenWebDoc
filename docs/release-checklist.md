@@ -21,6 +21,7 @@
 - [ ] `pnpm release:check` scans text files inside packed examples for absolute or private local paths.
 - [ ] `pnpm samples:export` creates `dist/sample-repos/` template candidates.
 - [ ] `pnpm samples:verify-export` confirms exported template candidates match their source folders, include template notes and tag-pinned workflows, validate contained `.htmlx` files, and contain no private or absolute local paths.
+- [ ] `samples/template-repos.json` links to public GitHub template repositories for each external sample.
 - [ ] `examples/gallery.json` lists only public, valid, downloadable examples and stays aligned with the template gallery.
 - [ ] GitHub Pages serves the entry page at `https://lhy0718.github.io/OpenWebDoc/`.
 - [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.

@@ -52,6 +52,14 @@ try {
   if (starterRepoLinks < 3) {
     throw new Error(`Expected at least 3 starter repository downloads, found ${starterRepoLinks}.`);
   }
+  const templateRepositoryLinks = await page
+    .locator('a[href^="https://github.com/lhy0718/htmlx-"][href$="-starter"]')
+    .count();
+  if (templateRepositoryLinks < 3) {
+    throw new Error(
+      `Expected at least 3 public template repository links, found ${templateRepositoryLinks}.`,
+    );
+  }
   await assertStarterRepositoryArchives(page);
   await assertNoHorizontalOverflow(page, "landing page");
 
