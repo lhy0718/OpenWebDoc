@@ -134,3 +134,5 @@ Internal app editing remains micro-editing only: correcting text, typography, ex
 See `examples/openwebdoc-slide-deck/` for a valid slide deck package.
 
 Trusted provenance and package signing are intentionally outside the public-alpha format contract. See [Package Signing and Trusted Provenance](package-signing-provenance.md) for the current future-facing design note.
+
+For validator compatibility fixtures, see [HTMLX Conformance](conformance.md). For the short public security summary, see [Security Brief](security-brief.md). For `.htmlx` media type planning, see [MIME and Extension Registration Strategy](mime-registration.md).

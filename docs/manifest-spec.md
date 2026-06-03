@@ -51,3 +51,5 @@ When a package is a `fixed-stage-document`, validation treats the document as a 
 
 The OpenWebDoc runtime may activate editing behavior, but it should not fix layout ratios that the
 package itself failed to declare.
+
+For validator compatibility fixtures and expected issue codes, see [HTMLX Conformance](conformance.md).

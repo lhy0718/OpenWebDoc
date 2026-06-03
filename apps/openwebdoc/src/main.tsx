@@ -67,6 +67,7 @@ interface BundledExample {
 }
 
 const BUNDLED_EXAMPLES = exampleGallery.examples as ReadonlyArray<BundledExample>;
+const GITHUB_DOCS_BASE = "https://github.com/lhy0718/OpenWebDoc/blob/main/docs";
 const EDITABLE_RUNTIME_TEXT_OVERRIDES = `
 .document-page .text-layer h1,
 .document-page .text-layer p {
@@ -1930,7 +1931,10 @@ function OpenScreen({
         <section className="example-gallery" aria-label="Bundled examples">
           <div className="example-gallery-heading">
             <h2>Try a bundled example</h2>
-            <p>Preview a package in the app, or download the `.htmlx` file for local validation.</p>
+            <p>
+              Preview a package, download the `.htmlx` file, then validate or edit it through the
+              package-file workflow.
+            </p>
           </div>
           <div className="example-list">
             {examples.map((example) => (
@@ -1946,6 +1950,8 @@ function OpenScreen({
                   <a href={`./examples/${example.id}.htmlx`} download>
                     Download
                   </a>
+                  <a href={`${GITHUB_DOCS_BASE}/github-action.md`}>Validate in CI</a>
+                  <a href={`${GITHUB_DOCS_BASE}/agent-editing.md`}>Agent edit</a>
                 </div>
               </article>
             ))}

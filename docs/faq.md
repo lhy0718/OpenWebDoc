@@ -43,3 +43,5 @@ Start with validation and opening:
 - render package-local HTML and CSS
 - expose issue codes compatible with the conformance suite
 - keep `metadata/llm.json` as user-visible reference data
+
+See [HTMLX Conformance](conformance.md) for fixture coverage and [Security Brief](security-brief.md) for the short public trust model.

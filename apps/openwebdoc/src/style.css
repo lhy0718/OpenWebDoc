@@ -339,6 +339,7 @@ label:focus-within,
   display: inline-flex;
   min-height: 32px;
   align-items: center;
+  justify-content: center;
   border: 1px solid #c8d7ea;
   border-radius: 7px;
   padding: 0 10px;
@@ -347,6 +348,17 @@ label:focus-within,
   font-size: 12px;
   font-weight: 800;
   text-decoration: none;
+}
+
+.example-card-actions a:nth-child(1),
+.example-card-actions a:nth-child(2) {
+  border-color: #b5c9e4;
+}
+
+.example-card-actions a:nth-child(3),
+.example-card-actions a:nth-child(4) {
+  color: #0f5f58;
+  background: #f3fbf8;
 }
 
 .example-card-actions a:hover,

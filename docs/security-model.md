@@ -16,3 +16,5 @@ Every `.htmlx` file is treated as untrusted input.
 - Validate unpacked package directories before accepting edits back into `.htmlx` packages.
 
 The CLI refuses to unpack invalid packages and does not include an unsafe bypass flag in MVP.
+
+For a shorter public-facing summary, see [Security Brief](security-brief.md).

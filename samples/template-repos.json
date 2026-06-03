@@ -1,0 +1,19 @@
+{
+  "repositories": [
+    {
+      "id": "htmlx-markdown-notes-starter",
+      "source": "samples/external-research-notes",
+      "description": "Markdown-first research notes converted into a validated HTMLX package."
+    },
+    {
+      "id": "htmlx-safe-html-migration-starter",
+      "source": "samples/external-html-migration",
+      "description": "Safe standalone HTML converted into HTMLX and exported back to static HTML."
+    },
+    {
+      "id": "htmlx-agent-brief-starter",
+      "source": "samples/external-agent-brief",
+      "description": "Agent-edited brief workflow with pull-request HTMLX validation."
+    }
+  ]
+}

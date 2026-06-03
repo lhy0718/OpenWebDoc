@@ -1,0 +1,114 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.65;
+}
+
+body {
+  margin: 0;
+  color: #172033;
+  background: #f6f8fb;
+}
+
+.htmlx-flow-document {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: clamp(32px, 6vw, 72px) clamp(20px, 5vw, 56px);
+  background: #ffffff;
+}
+
+article {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1.6em 0 0.45em;
+  color: #10233f;
+  line-height: 1.12;
+}
+
+h1:first-child {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 7vw, 4.5rem);
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: clamp(1.65rem, 4vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+}
+
+p,
+li,
+blockquote {
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+}
+
+p,
+ul,
+ol,
+blockquote,
+pre {
+  margin: 0 0 1.15em;
+}
+
+ul,
+ol {
+  padding-left: 1.35em;
+}
+
+li + li {
+  margin-top: 0.42em;
+}
+
+blockquote {
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 4px solid #1d8f8a;
+  color: #40516b;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1em;
+  border: 1px solid #d6e0ea;
+  border-radius: 8px;
+  background: #0e1a2b;
+  color: #eef6ff;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+p code,
+li code {
+  padding: 0.1em 0.32em;
+  border-radius: 4px;
+  background: #e8eef5;
+  color: #12304d;
+}

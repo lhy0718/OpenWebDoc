@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "profile": "fixed-stage-document",
+  "packageId": "urn:openwebdoc:conformance:invalid-fixed-stage-proportional-css",
+  "title": "Invalid Fixed Stage Proportional CSS",
+  "language": "en",
+  "createdAt": "2026-06-04T00:00:00.000Z",
+  "modifiedAt": "2026-06-04T00:00:00.000Z",
+  "entry": "index.html",
+  "styles": ["styles/document.css"],
+  "resources": [
+    {
+      "path": "styles/document.css",
+      "mediaType": "text/css",
+      "role": "stylesheet"
+    },
+    {
+      "path": "metadata/editing.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    }
+  ],
+  "metadata": {
+    "editing": "metadata/editing.json"
+  },
+  "security": {
+    "allowScripts": false,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

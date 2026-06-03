@@ -29,15 +29,24 @@ The format now uses explicit document profiles: `flow-document` for default refl
 
 - publish GitHub Releases with example `.htmlx` packages, npm tarballs, user-facing release notes, and the current spec/docs snapshot
 - keep the GitHub Pages landing page focused on open, validate, edit with agent, export
-- make the GitHub Action validator easy to copy into other repositories
+- make the GitHub Action validator easy to copy into other repositories with tag-pinned usage by default
+- add SHA-pinned validator usage for stricter external repository adoption
 - keep template previews and downloads visible from the landing page
+- add conformance docs, fixture runner, security brief, and MIME/extension strategy
+- add an Agentic Document Integrity CI report mock
+- add `htmlx from-markdown` as the first lightweight entry converter
+- add `htmlx to-static-html` as the first lock-in-reducing export
+- add `htmlx from-html` for safe standalone HTML entry
+- add three copyable external sample repository skeletons
+- add sample repository manifest/export automation
+- add sample repository export verification before splitting public template repositories
+- expose sample repository archives from GitHub Pages before separate template repositories are created
+- add a 30-minute pilot adoption script and issue-code recovery cookbook
+- add a pilot target list and template-repository split checklist
 - prepare scoped npm alpha publishing, but do not use the unscoped `htmlx` package name
 
 1-3 months:
 
-- add `htmlx from-html`
-- add `htmlx from-markdown`
-- add `htmlx to-static-html`
 - evaluate `htmlx to-pdf` as an export-only escape hatch
 - prototype VS Code inspect/validate/pack/unpack commands
 - expose a React viewer package for third-party embedding
@@ -47,6 +56,9 @@ The format now uses explicit document profiles: `flow-document` for default refl
 - publish a conformance suite with valid packages, invalid packages, and expected issue codes
 - expand the agent cookbook with real demos
 - show target-boundary diffs after external-agent edits
+- use the sample repositories to recruit external pilot repositories
+- convert at least three pilots into public case studies with validation failures and fixes
+- convert at least three pilots into public case studies with validation failures and fixes
 
 6-12 months:
 

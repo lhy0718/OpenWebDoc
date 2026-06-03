@@ -4,20 +4,28 @@
 - [ ] `pnpm build` succeeds.
 - [ ] `pnpm test` succeeds.
 - [ ] `pnpm lint` succeeds.
+- [ ] `pnpm conformance:check` succeeds.
+- [ ] `pnpm samples:check` succeeds.
 - [ ] `pnpm smoke:e2e` succeeds.
 - [ ] `pnpm pages:smoke` succeeds against the live GitHub Pages app.
 - [ ] `pnpm guard:repo` succeeds.
 - [ ] `pnpm pack:packages` creates tarballs for `@openwebdoc/spec`, `@openwebdoc/core`, `@openwebdoc/cli`, and `@openwebdoc/ui`.
 - [ ] `pnpm site:build` creates `dist/site/` with the OpenWebDoc app build.
+- [ ] `pnpm site:build` creates downloadable starter repository archives under `dist/site/samples/`.
 - [ ] `pnpm release:check` validates every tracked `examples/*.htmlx` package and rejects `examples/security-invalid.htmlx`.
+- [ ] `pnpm release:check` runs the HTMLX conformance fixture suite.
+- [ ] `pnpm release:check` runs the external sample repository check.
 - [ ] `pnpm release:check` runs `htmlx refresh-metadata <example-directory> --check --json` for every valid source example directory.
 - [ ] `pnpm release:check` fails when a packed `examples/*.htmlx` file drifts from its source directory.
 - [ ] `pnpm release:check` fails when `apps/openwebdoc/public/examples/*.htmlx` is not byte-identical to the matching packed example.
 - [ ] `pnpm release:check` scans text files inside packed examples for absolute or private local paths.
+- [ ] `pnpm samples:export` creates `dist/sample-repos/` template candidates.
+- [ ] `pnpm samples:verify-export` confirms exported template candidates match their source folders, include template notes and tag-pinned workflows, validate contained `.htmlx` files, and contain no private or absolute local paths.
 - [ ] `examples/gallery.json` lists only public, valid, downloadable examples and stays aligned with the template gallery.
 - [ ] GitHub Pages serves the entry page at `https://lhy0718.github.io/OpenWebDoc/`.
 - [ ] GitHub Pages serves the OpenWebDoc app at `https://lhy0718.github.io/OpenWebDoc/app/`.
 - [ ] GitHub Pages serves the downloadable template gallery from the entry page.
+- [ ] GitHub Pages serves the downloadable starter repository archives from the entry page.
 - [ ] `pnpm release:check` succeeds.
 - [ ] A tagged public alpha GitHub Release includes npm tarballs, valid example `.htmlx` packages, release notes, and a spec/docs snapshot from the tagged commit.
 - [ ] The GitHub Release body is mirrored from `docs/releases/<tag>.md` and explains the live app, template downloads, CLI validation, external-agent editing flow, and alpha boundaries.
@@ -28,6 +36,9 @@
 - [ ] `pnpm htmlx validate examples/template-flow-article.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/openwebdoc-introduction.htmlx` succeeds.
 - [ ] `pnpm htmlx validate examples/openwebdoc-slide-deck.htmlx` succeeds.
+- [ ] `htmlx from-markdown` converts a local Markdown file into a valid `flow-document` package.
+- [ ] `htmlx from-html` converts a safe standalone HTML file into a valid `flow-document` package and rejects unsafe sources.
+- [ ] `htmlx to-static-html` exports a validated package into an ordinary static HTML directory without overwriting existing files by default.
 - [ ] `metadata/editing-guide.md`, when present, is declared as package-local Markdown metadata.
 - [ ] `pnpm htmlx validate examples/security-invalid.htmlx` fails for expected security reasons.
 - [ ] OpenWebDoc opens `examples/basic.htmlx` as a readable document.
@@ -57,6 +68,12 @@
 - [ ] README and GitHub Pages position HTMLX as an agent-safe, browser-readable document package for verified local editing.
 - [ ] README and FAQ clearly distinguish HTMLX from HTMX and OpenWebDoc from Open Web Docs.
 - [ ] The GitHub Action validator is documented and usable by another repository.
+- [ ] The Agentic Document Integrity CI report shape is documented for pass and failure cases.
+- [ ] Tag-pinned and SHA-pinned GitHub Action examples are documented.
+- [ ] Issue-code recovery guidance is documented for common validation failures.
+- [ ] A 30-minute external pilot script exists for first adoption conversations.
+- [ ] Pilot target archetypes and template-repository split criteria are documented.
+- [ ] External sample repository skeletons demonstrate Markdown, HTML migration, and agent-edited package workflows.
 - [ ] The agent cookbook includes Codex, Claude Code, Cursor, GitHub Copilot, and Aider recipes.
 - [ ] README, docs, and Obsidian notes match implementation state.
 - [ ] npm publishing remains disabled for the public preview; release artifacts are uploaded as GitHub Actions artifacts only.

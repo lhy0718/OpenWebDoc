@@ -10,6 +10,10 @@ inputs:
     description: Fail when no files match the provided patterns.
     required: false
     default: "true"
+  summary:
+    description: Write a short validation summary to the GitHub Actions job summary.
+    required: false
+    default: "true"
 
 runs:
   using: composite
@@ -28,11 +32,13 @@ runs:
     - name: Validate packages
       shell: bash
       run: |
-        set -euo pipefail
+        set -uo pipefail
         shopt -s globstar nullglob
 
         cli="$GITHUB_ACTION_PATH/../../../packages/cli/dist/index.js"
         found=0
+        checked=0
+        failed=0
 
         cd "$GITHUB_WORKSPACE"
         while IFS= read -r pattern; do
@@ -40,12 +46,40 @@ runs:
           for file in $pattern; do
             if [ -f "$file" ]; then
               found=1
-              node "$cli" validate "$file" --json
+              checked=$((checked + 1))
+              echo "::group::htmlx validate $file"
+              if node "$cli" validate "$file" --json; then
+                echo "::endgroup::"
+              else
+                echo "::endgroup::"
+                failed=1
+              fi
             fi
           done
         done <<< "${{ inputs.paths }}"
 
         if [ "$found" -eq 0 ] && [ "${{ inputs.fail-on-empty }}" = "true" ]; then
           echo "No HTMLX packages matched the provided paths."
+          exit 1
+        fi
+
+        if [ "${{ inputs.summary }}" = "true" ] && [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+          {
+            echo "### Agentic Document Integrity"
+            echo
+            echo "| Check | Result |"
+            echo "| --- | --- |"
+            echo "| HTMLX packages checked | $checked |"
+            if [ "$failed" -eq 0 ]; then
+              echo "| Package validation | Pass |"
+            else
+              echo "| Package validation | Fail |"
+            fi
+            echo
+            echo "Validation was performed with the OpenWebDoc htmlx CLI. Package metadata is treated as user-visible reference data, not as an instruction channel."
+          } >> "$GITHUB_STEP_SUMMARY"
+        fi
+
+        if [ "$failed" -ne 0 ]; then
           exit 1
         fi

@@ -30,6 +30,10 @@ try {
     state: "visible",
     timeout: 10000,
   });
+  await page.getByRole("heading", { name: "Starter repositories" }).waitFor({
+    state: "visible",
+    timeout: 10000,
+  });
   await page.getByRole("link", { name: "Browse templates" }).waitFor({
     state: "visible",
     timeout: 10000,
@@ -38,6 +42,17 @@ try {
   if (landingDownloadLinks < 13) {
     throw new Error(`Expected at least 13 landing download links, found ${landingDownloadLinks}.`);
   }
+  const landingCiLinks = await page.getByRole("link", { name: "Validate in CI" }).count();
+  if (landingCiLinks < 13) {
+    throw new Error(`Expected at least 13 landing CI links, found ${landingCiLinks}.`);
+  }
+  const starterRepoLinks = await page
+    .locator('a[download][href^="./samples/"][href$=".zip"]')
+    .count();
+  if (starterRepoLinks < 3) {
+    throw new Error(`Expected at least 3 starter repository downloads, found ${starterRepoLinks}.`);
+  }
+  await assertStarterRepositoryArchives(page);
   await assertNoHorizontalOverflow(page, "landing page");
 
   await page.goto(appUrl, { waitUntil: "networkidle" });
@@ -52,6 +67,10 @@ try {
   const appDownloadLinks = await page.locator('a[download][href$=".htmlx"]').count();
   if (appDownloadLinks < 13) {
     throw new Error(`Expected at least 13 app download links, found ${appDownloadLinks}.`);
+  }
+  const appCiLinks = await page.getByRole("link", { name: "Validate in CI" }).count();
+  if (appCiLinks < 13) {
+    throw new Error(`Expected at least 13 app CI links, found ${appCiLinks}.`);
   }
   await assertNoHorizontalOverflow(page, "empty state");
   await screenshot(page, "openwebdoc-pages-empty.png");
@@ -170,6 +189,35 @@ async function assertReadableActiveSlide(page, label) {
     Math.abs(metrics.ratio - 16 / 9) > 0.04
   ) {
     throw new Error(`${label} is not readable: ${JSON.stringify(metrics)}`);
+  }
+}
+
+async function assertStarterRepositoryArchives(page) {
+  const archiveResults = await page.evaluate(async () => {
+    const links = Array.from(document.querySelectorAll('a[download][href$=".zip"]'));
+    return Promise.all(
+      links.map(async (link) => {
+        const response = await fetch(link.href);
+        const bytes = response.ok ? new Uint8Array(await response.arrayBuffer()) : new Uint8Array();
+        return {
+          href: link.getAttribute("href"),
+          ok: response.ok,
+          status: response.status,
+          byteLength: bytes.byteLength,
+          signature: Array.from(bytes.slice(0, 4)),
+        };
+      }),
+    );
+  });
+  for (const archive of archiveResults) {
+    const hasZipSignature =
+      archive.signature[0] === 0x50 &&
+      archive.signature[1] === 0x4b &&
+      archive.signature[2] === 0x03 &&
+      archive.signature[3] === 0x04;
+    if (!archive.ok || archive.byteLength < 500 || !hasZipSignature) {
+      throw new Error(`Invalid starter repository archive: ${JSON.stringify(archive)}`);
+    }
   }
 }
 

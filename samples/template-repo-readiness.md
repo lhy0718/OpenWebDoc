@@ -1,0 +1,65 @@
+# External Template Repository Readiness
+
+The `samples/` folders are copyable skeletons. Before splitting them into separate public template repositories, each skeleton should satisfy the same small contract.
+
+## Candidate Repositories
+
+| Candidate repo                      | Source folder                     | Purpose                                                    |
+| ----------------------------------- | --------------------------------- | ---------------------------------------------------------- |
+| `htmlx-markdown-notes-starter`      | `samples/external-research-notes` | Markdown-first notes converted to `.htmlx`                 |
+| `htmlx-safe-html-migration-starter` | `samples/external-html-migration` | safe standalone HTML converted to `.htmlx` and static HTML |
+| `htmlx-agent-brief-starter`         | `samples/external-agent-brief`    | agent-edited brief with PR validation                      |
+
+The machine-readable mapping lives in [`template-repos.json`](template-repos.json). `pnpm samples:check` verifies that the manifest matches the available external sample folders.
+
+## Required Files
+
+Each extracted template repo should include:
+
+- `README.md`
+- `.github/workflows/validate-htmlx.yml`
+- one source document
+- one generated `.htmlx` package
+- one local validation command block
+- one GitHub Action workflow using a release tag
+- one note linking to SHA-pinned usage guidance
+
+## Split Procedure
+
+1. Copy the sample folder into a new repository.
+2. Keep source files and generated `.htmlx` files together.
+3. Run `htmlx validate documents/*.htmlx --json`.
+4. Run the repository workflow on a pull request.
+5. Confirm the workflow does not use `@main`.
+6. Add the repository to the OpenWebDoc adoption docs only after the first PR gate passes.
+
+For local export from the OpenWebDoc repository:
+
+```sh
+pnpm build
+pnpm samples:check
+pnpm samples:export
+pnpm samples:verify-export
+```
+
+The exported copies are written to `dist/sample-repos/`. `pnpm samples:verify-export` confirms that each exported candidate still matches its source folder, includes the template note, pins the validation workflow to a release tag, validates contained `.htmlx` files, and contains no private or absolute local paths.
+
+## Release Tag Policy
+
+Template repositories should use a readable release tag by default:
+
+```yaml
+- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.1
+```
+
+Security-sensitive repositories can replace the tag with the release commit SHA documented in [GitHub Action Pinning and Supply-Chain Notes](../docs/supply-chain-action-pinning.md).
+
+## Acceptance Checklist
+
+- [ ] The template validates with `htmlx validate`.
+- [ ] The workflow passes on a pull request.
+- [ ] The README names the document use case in the first paragraph.
+- [ ] The repo does not mention local machine paths or private workspaces.
+- [ ] The `.htmlx` file opens in the public OpenWebDoc app after download.
+- [ ] The template explains what CI proves and does not prove.
+- [ ] The template links back to OpenWebDoc docs for conformance, issue-code recovery, and action pinning.

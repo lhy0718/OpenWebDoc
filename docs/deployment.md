@@ -19,7 +19,7 @@ Run the full release gate before tagging or deploying:
 pnpm release:check
 ```
 
-This command runs repository guards, builds all workspaces, runs tests and linting, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, rejects the intentionally invalid security fixture, creates npm package tarballs, and builds the static site.
+This command runs repository guards, builds all workspaces, runs tests and linting, runs the HTMLX conformance fixture suite, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, checks, exports, and verifies external sample repository skeletons, rejects the intentionally invalid security fixture, creates npm package tarballs, and builds the static site with starter repository archives.
 
 Tagged release workflow runs create a GitHub Release with npm tarballs, example `.htmlx` packages, the generated site manifest, and a compressed spec/docs snapshot as attached artifacts.
 

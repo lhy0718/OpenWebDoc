@@ -23,13 +23,28 @@ HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript l
 - [Read the OpenWebDoc introduction example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-introduction)
 - [Open the slide deck example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck)
 - [Browse the template gallery](https://lhy0718.github.io/OpenWebDoc/)
+- [Add HTMLX validation to GitHub Actions](docs/github-action.md)
 - [Download the v0.1.0-alpha.1 release assets](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.1)
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
-The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. Download a template when you want a portable starting point; preview it when you only want to inspect the rendered document first.
+The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. The page also exposes starter repository archives for Markdown notes, safe HTML migration, and agent-edited brief workflows. Download a template when you want a portable document starting point; download a starter repository when you want pull-request validation already wired in.
 
 The strongest workflow is external-agent editing: unpack the package, let a coding agent revise package-local files, refresh metadata, validate, pack, and validate again.
+
+## Trust and Adoption Kit
+
+- [GitHub Action Validator](docs/github-action.md): copy-paste PR gate for external repositories.
+- [Action Pinning and Supply-Chain Notes](docs/supply-chain-action-pinning.md): tag-pinned and SHA-pinned validator usage.
+- [Agentic Document Integrity CI](docs/agentic-document-integrity-ci.md): PR-gate report shape for agent-edited documents.
+- [HTMLX Conformance](docs/conformance.md): valid and invalid fixtures plus expected issue-code checks.
+- [Issue Code Cookbook](docs/issue-code-cookbook.md): recovery hints for validation failures.
+- [Security Brief](docs/security-brief.md): short public explanation of the untrusted-package security model.
+- [MIME and Extension Registration Strategy](docs/mime-registration.md): staged plan for `.htmlx` and `application/vnd.openwebdoc.htmlx+zip`.
+- [Agent Editing Guide](docs/agent-editing.md): canonical unpacked-package workflow for external coding agents.
+- [External Sample Repositories](samples/README.md): copyable repository skeletons for Markdown, HTML migration, and agent-edited document workflows.
+- [Pilot Adoption Plan](docs/pilot-adoption.md): 30-minute external repository pilot script and success criteria.
+- [Pilot Target List](docs/pilot-targets.md): first external repository archetypes and intake questions.
 
 ## Screenshots
 
@@ -64,6 +79,15 @@ pnpm htmlx refresh-metadata ./work --check --json
 pnpm htmlx validate ./work --json
 pnpm htmlx pack ./work edited.htmlx --json
 pnpm htmlx validate edited.htmlx --json
+```
+
+Start from an existing Markdown note or safe standalone HTML page when you want a simple `flow-document` package before any visual design work:
+
+```sh
+pnpm htmlx from-markdown notes.md notes.htmlx --title "Project Notes" --json
+pnpm htmlx from-html page.html page.htmlx --title "Project Page" --json
+pnpm htmlx validate notes.htmlx --json
+pnpm htmlx to-static-html notes.htmlx ./notes-static --json
 ```
 
 ## Template Gallery Usage
@@ -127,6 +151,10 @@ pnpm test
 pnpm lint
 pnpm smoke:e2e
 pnpm pages:smoke
+pnpm conformance:check
+pnpm samples:check
+pnpm samples:export
+pnpm samples:verify-export
 pnpm dev:app
 pnpm site:build
 pnpm pack:packages
@@ -134,7 +162,7 @@ pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
 
-`pnpm release:check` validates every tracked example package in `examples/*.htmlx`, rejects the intentionally invalid security fixture, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, scans packed text files for private local paths, builds npm tarballs for inspection, and builds the static site. OpenWebDoc does not publish npm packages during the public preview phase; GitHub release artifacts and GitHub Pages are the release surfaces.
+`pnpm release:check` validates every tracked example package in `examples/*.htmlx`, rejects the intentionally invalid security fixture, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, checks, exports, and verifies external sample repository skeletons, scans packed text files for private local paths, builds npm tarballs for inspection, and builds the static site with starter repository archives. OpenWebDoc does not publish npm packages during the public preview phase; GitHub release artifacts and GitHub Pages are the release surfaces.
 
 ## OpenWebDoc App Usage
 
@@ -204,6 +232,39 @@ Output:
 - `metadata/presentation.json`: present only for `--profile slide-deck`, declaring the HTMLX-native slide profile
 
 `--profile flow-document` is the default. `--profile fixed-stage-document` creates a proportional visual document for proposal-style or showcase material. `--profile slide-deck` creates a browser-readable 16:9 deck using HTML, CSS, and metadata inside the same `.htmlx` package; it is not `.pptx` import/export. The legacy alias `--profile document` is accepted and normalized to `flow-document`.
+
+### From Markdown
+
+Convert a local Markdown file into a validated `flow-document` package.
+
+```sh
+htmlx from-markdown notes.md notes.htmlx --title "Project Notes"
+htmlx validate notes.htmlx --json
+```
+
+The MVP converter supports headings, paragraphs, lists, blockquotes, fenced code blocks, inline code, bold, and italic text. Markdown links are flattened into visible text instead of remote `href` attributes so generated packages remain script-free, remote-resource-free, and valid by default.
+
+### From HTML
+
+Convert a safe standalone HTML file into a validated `flow-document` package.
+
+```sh
+htmlx from-html page.html page.htmlx --title "Project Page"
+htmlx validate page.htmlx --json
+```
+
+The converter wraps the source body in the standard flow-document shell and adds `data-htmlx-block-id` attributes to common readable elements when missing. Source files with scripts, inline event handlers, forms, iframes, `javascript:` URLs, remote resources, `file:` resources, `data:` resources, CSS resource imports, or body-local asset references are rejected. Add assets later in an unpacked package until asset import options are introduced.
+
+### To Static HTML
+
+Export a validated `.htmlx` package into an ordinary static HTML directory.
+
+```sh
+htmlx to-static-html notes.htmlx ./notes-static --json
+htmlx to-static-html notes.htmlx ./notes-static --include-metadata --overwrite --json
+```
+
+The default export writes `index.html` and non-metadata local resources such as stylesheets, images, and fonts. Use `--include-metadata` when the static output should also carry `manifest.json` and `metadata/*`. Existing output files are protected unless `--overwrite` is passed.
 
 The canonical package entry is the root `index.html`. After unpacking a `.htmlx` package, opening
 `index.html` directly in a browser should render the same document layout using only package-local
