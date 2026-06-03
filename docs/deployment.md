@@ -7,9 +7,9 @@ OpenWebDoc has three release surfaces during the public preview:
 - GitHub Releases for tagged alpha snapshots, example packages, and release notes
 
 The current public alpha release notes are stored in
-[`docs/releases/v0.1.0-alpha.1.md`](releases/v0.1.0-alpha.1.md) and mirrored into
+[`docs/releases/v0.1.0-alpha.2.md`](releases/v0.1.0-alpha.2.md) and mirrored into
 the GitHub Release body at
-<https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.1>.
+<https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.2>.
 
 ## Local release check
 
@@ -111,8 +111,8 @@ Recommended release flow:
 
 ```sh
 pnpm release:check
-git tag v0.1.0-alpha.1
-git push origin v0.1.0-alpha.1
+git tag v0.1.0-alpha.2
+git push origin v0.1.0-alpha.2
 ```
 
 The release workflow uploads local artifacts on every run. npm publishing is intentionally deferred until OpenWebDoc is ready to support external package consumers.

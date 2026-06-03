@@ -2,7 +2,7 @@
   "schemaVersion": "0.1.0",
   "profile": "flow-document",
   "summary": "A meeting notes template for agendas, decisions, owners, due dates, and follow-up actions.",
-  "textHash": "sha256-wyqtjOPW7ZvUES7BV8soMR+2GSLp48uWNyVvwqkc5LA=",
+  "textHash": "sha256-ttj8O/5rVjgclJGQoQ+NjOOZ7um3n6wkFr7U4oHZKb0=",
   "selectors": {
     "notes-kicker": "[data-htmlx-block-id=\"notes-kicker\"]",
     "notes-title": "[data-htmlx-block-id=\"notes-title\"]",
@@ -22,7 +22,7 @@
       "id": "notes-title",
       "selector": "[data-htmlx-block-id=\"notes-title\"]",
       "kind": "heading",
-      "textHash": "sha256-xHcJtFJgM2f2MS1beZHReyi8j+chfmd9bafBgIOwnOY=",
+      "textHash": "sha256-WSsHmHrhZPK5KbDRztg0ptXCzPQFU9dWe8G17XDZifw=",
       "editable": false
     },
     {
@@ -36,14 +36,14 @@
       "id": "notes-agenda",
       "selector": "[data-htmlx-block-id=\"notes-agenda\"]",
       "kind": "section",
-      "textHash": "sha256-jr5LxtCSM9XLqseozwG6AxvtHZTIZ5hdGP/QqhOo9w8=",
+      "textHash": "sha256-Bq49yGbV4/Bzx0GuRN+f0uzJflepzc7oDzvl9LYa5Lc=",
       "editable": false
     },
     {
       "id": "notes-decisions",
       "selector": "[data-htmlx-block-id=\"notes-decisions\"]",
       "kind": "section",
-      "textHash": "sha256-ELjC1AidDkVMT1XZZYZkcjUzwx917D/DEQ8pSm+1Yvw=",
+      "textHash": "sha256-pTaKkn/LqwDbcAqID+ADdDuSSXZ2/8/xaNtA5q5T/Os=",
       "editable": false
     }
   ],
@@ -75,8 +75,8 @@
         "notes-title"
       ],
       "selector": "[data-htmlx-block-id=\"notes-title\"]",
-      "textHash": "sha256-xHcJtFJgM2f2MS1beZHReyi8j+chfmd9bafBgIOwnOY=",
-      "summary": "OpenWebDoc weekly review",
+      "textHash": "sha256-WSsHmHrhZPK5KbDRztg0ptXCzPQFU9dWe8G17XDZifw=",
+      "summary": "Customer onboarding review",
       "keywords": [
         "Meeting Notes Template"
       ],
@@ -103,12 +103,12 @@
         "notes-agenda"
       ],
       "selector": "[data-htmlx-block-id=\"notes-agenda\"]",
-      "textHash": "sha256-jr5LxtCSM9XLqseozwG6AxvtHZTIZ5hdGP/QqhOo9w8=",
-      "summary": "Agenda Release readiness, template gallery, accessibility pass Decision needed Whether npm publish remains deferred O...",
+      "textHash": "sha256-Bq49yGbV4/Bzx0GuRN+f0uzJflepzc7oDzvl9LYa5Lc=",
+      "summary": "Agenda Activation blockers, account handoffs, onboarding metrics Decision needed Which accounts need a guided setup c...",
       "keywords": [
         "Meeting Notes Template"
       ],
-      "tokenEstimate": 27,
+      "tokenEstimate": 33,
       "sensitivity": "unknown"
     },
     {
@@ -117,12 +117,12 @@
         "notes-decisions"
       ],
       "selector": "[data-htmlx-block-id=\"notes-decisions\"]",
-      "textHash": "sha256-ELjC1AidDkVMT1XZZYZkcjUzwx917D/DEQ8pSm+1Yvw=",
-      "summary": "Decisions and actions Decision Owner Due Follow-up Keep npm publishing disabled for public preview. Release owner Thi...",
+      "textHash": "sha256-pTaKkn/LqwDbcAqID+ADdDuSSXZ2/8/xaNtA5q5T/Os=",
+      "summary": "Decisions and actions Decision Owner Due Follow-up Offer guided setup to accounts with no first project after day thr...",
       "keywords": [
         "Meeting Notes Template"
       ],
-      "tokenEstimate": 71,
+      "tokenEstimate": 94,
       "sensitivity": "unknown"
     }
   ],

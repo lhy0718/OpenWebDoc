@@ -5,7 +5,7 @@
   "title": "Project Proposal Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-06-02T09:18:36.930Z",
+  "modifiedAt": "2026-06-03T20:43:50.010Z",
   "entry": "index.html",
   "styles": [
     "styles/document.css"
@@ -20,7 +20,7 @@
       "path": "metadata/llm.json",
       "mediaType": "application/json",
       "role": "metadata",
-      "integrity": "sha256-0kS525rpHqTKyhAyv/+KKRynuv94Wy29SlJ+YuKcad4="
+      "integrity": "sha256-/nj2OhSL1W55hX7uRckHZrXDKoqwdya1qDgKVqZlY44="
     },
     {
       "path": "metadata/provenance.json",

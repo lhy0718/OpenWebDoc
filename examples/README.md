@@ -9,8 +9,8 @@
 - `openwebdoc-introduction/`: a long OpenWebDoc primer with a root `index.html`, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, funnel blocks, and validation metadata.
 - `openwebdoc-slide-deck/`: an HTMLX-native 16:9 slide deck with `metadata/presentation.json`, stacked read mode, and black-background presentation mode.
 - `template-research-brief/`: a research memo template with claim, evidence, decision, and workflow sections.
-- `template-product-spec/`: a product specification template for requirements, non-goals, release gates, and owner decisions.
-- `template-operations-manual/`: an operations manual template for package intake, validation, and escalation.
+- `template-product-spec/`: a product specification template for customer insight intake, requirements, and owner decisions.
+- `template-operations-manual/`: an operations manual template for incident triage, handoff, and escalation.
 - `template-meeting-notes/`: a meeting notes template for agenda, decisions, owners, and follow-up actions.
 - `template-project-proposal/`: a project proposal template for need, approach, validation plan, and outcomes.
 - `template-data-report/`: a data report template for metrics, methodology notes, and semantic tables.

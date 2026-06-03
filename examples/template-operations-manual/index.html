@@ -11,23 +11,25 @@
       <header class="manual-header">
         <div>
           <p class="eyebrow" data-htmlx-block-id="manual-kicker">Operations manual</p>
-          <h1 data-htmlx-block-id="manual-title">Safe package intake procedure</h1>
+          <h1 data-htmlx-block-id="manual-title">Incident handoff procedure</h1>
         </div>
         <aside data-htmlx-block-id="manual-status">
           <strong>Runbook</strong>
-          <span>Version 0.1</span>
-          <span>Owner: document operations</span>
+          <span>Version 1.4</span>
+          <span>Owner: service operations</span>
         </aside>
       </header>
 
       <section class="section" data-htmlx-block-id="manual-intake">
         <h2>Intake checklist</h2>
         <div class="checklist">
-          <p><strong>1. Receive</strong> Save the `.htmlx` package from a trusted channel.</p>
-          <p><strong>2. Validate</strong> Run CLI validation before opening unknown content.</p>
-          <p><strong>3. Inspect</strong> Confirm manifest resources are package-local.</p>
-          <p><strong>4. Revise</strong> Use unpacked files for large changes.</p>
-          <p><strong>5. Repack</strong> Validate the final file before distribution.</p>
+          <p><strong>1. Triage</strong> Confirm severity, affected service, and customer impact.</p>
+          <p>
+            <strong>2. Stabilize</strong> Assign an incident lead and freeze non-critical changes.
+          </p>
+          <p><strong>3. Communicate</strong> Post the first internal update within 15 minutes.</p>
+          <p><strong>4. Handoff</strong> Record owner, next checkpoint, and unresolved decision.</p>
+          <p><strong>5. Close</strong> Attach timeline, root cause, and follow-up actions.</p>
         </div>
       </section>
 
@@ -43,19 +45,19 @@
           </thead>
           <tbody>
             <tr>
-              <td>Remote resource blocked</td>
-              <td>Document references an external URL.</td>
-              <td>Move the asset into the package or remove the reference.</td>
+              <td>Customer impact unclear</td>
+              <td>Support queue and telemetry disagree.</td>
+              <td>Use the larger affected account count until reconciled.</td>
             </tr>
             <tr>
-              <td>Script blocked</td>
-              <td>HTML contains executable JavaScript.</td>
-              <td>Replace behavior with declarative HTML, CSS, or metadata.</td>
+              <td>Rollback risk disputed</td>
+              <td>Release owner and incident lead prefer different actions.</td>
+              <td>Escalate to the on-call director with both risk statements.</td>
             </tr>
             <tr>
-              <td>Metadata warning</td>
-              <td>LLM metadata is not marked as reference data.</td>
-              <td>Add explicit user-visible assistant hints.</td>
+              <td>Postmortem blocked</td>
+              <td>Missing timeline or decision record.</td>
+              <td>Reconstruct from chat, deploy logs, and monitoring events.</td>
             </tr>
           </tbody>
         </table>

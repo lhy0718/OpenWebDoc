@@ -2,7 +2,7 @@
   "schemaVersion": "0.1.0",
   "profile": "flow-document",
   "summary": "A project proposal template for need, approach, validation, outcomes, and pilot planning.",
-  "textHash": "sha256-oJqPac+BivjNRl1OKxYUio02vtl/tKd7BWUqEoZLwF4=",
+  "textHash": "sha256-ByKsnJ9axM2sZei1QPHlGTBbhYz6nxPyEmVjOohs7fU=",
   "selectors": {
     "proposal-kicker": "[data-htmlx-block-id=\"proposal-kicker\"]",
     "proposal-title": "[data-htmlx-block-id=\"proposal-title\"]",
@@ -22,28 +22,28 @@
       "id": "proposal-title",
       "selector": "[data-htmlx-block-id=\"proposal-title\"]",
       "kind": "heading",
-      "textHash": "sha256-gnwobdzC7BK/1YW55bsoDlkYlAZYdhG1NmEK/mR4i7o=",
+      "textHash": "sha256-nOrlElYXq7ZufZa7fakQrxXlbrrruAB9rP+B3LAUd24=",
       "editable": false
     },
     {
       "id": "proposal-summary",
       "selector": "[data-htmlx-block-id=\"proposal-summary\"]",
       "kind": "paragraph",
-      "textHash": "sha256-veQB2S7XDMIKeM0906HPYyUdCLNjoIf82C46xPrguTw=",
+      "textHash": "sha256-S592jDjP7M51JipygbudDIveQWcRh/MFztScRgCwD5I=",
       "editable": false
     },
     {
       "id": "proposal-map",
       "selector": "[data-htmlx-block-id=\"proposal-map\"]",
       "kind": "section",
-      "textHash": "sha256-0HYURRZ2yuhrZapNMIsBOP6GR36/UdCSDAjAxQN+PIg=",
+      "textHash": "sha256-RKy4d7YP+WMxPtAnIt3Y5j5woxTUoRx2RmKozNv+3S8=",
       "editable": false
     },
     {
       "id": "proposal-plan",
       "selector": "[data-htmlx-block-id=\"proposal-plan\"]",
       "kind": "section",
-      "textHash": "sha256-fYnIhJ8UgF0yXE0cX0SMAkamfOtp/mRxSU/OaqhN+sg=",
+      "textHash": "sha256-GCSKtcZKsEQ/BVBrPtOrtqdj1fh7tXA/PKh0IZDd3ZM=",
       "editable": false
     }
   ],
@@ -75,8 +75,8 @@
         "proposal-title"
       ],
       "selector": "[data-htmlx-block-id=\"proposal-title\"]",
-      "textHash": "sha256-gnwobdzC7BK/1YW55bsoDlkYlAZYdhG1NmEK/mR4i7o=",
-      "summary": "Portable document workflow pilot",
+      "textHash": "sha256-nOrlElYXq7ZufZa7fakQrxXlbrrruAB9rP+B3LAUd24=",
+      "summary": "Regional partner enablement pilot",
       "keywords": [
         "Project Proposal Template"
       ],
@@ -89,12 +89,12 @@
         "proposal-summary"
       ],
       "selector": "[data-htmlx-block-id=\"proposal-summary\"]",
-      "textHash": "sha256-veQB2S7XDMIKeM0906HPYyUdCLNjoIf82C46xPrguTw=",
-      "summary": "A proposal format for explaining why a team should adopt HTMLX packages, what will be tested, what is out of scope, a...",
+      "textHash": "sha256-S592jDjP7M51JipygbudDIveQWcRh/MFztScRgCwD5I=",
+      "summary": "A proposal format for explaining the business need, pilot scope, operating model, success criteria, and decision path...",
       "keywords": [
         "Project Proposal Template"
       ],
-      "tokenEstimate": 37,
+      "tokenEstimate": 29,
       "sensitivity": "unknown"
     },
     {
@@ -103,12 +103,12 @@
         "proposal-map"
       ],
       "selector": "[data-htmlx-block-id=\"proposal-map\"]",
-      "textHash": "sha256-0HYURRZ2yuhrZapNMIsBOP6GR36/UdCSDAjAxQN+PIg=",
-      "summary": "Need Documents should open in browsers without losing structure. Approach Use `.htmlx` packages with local assets and...",
+      "textHash": "sha256-RKy4d7YP+WMxPtAnIt3Y5j5woxTUoRx2RmKozNv+3S8=",
+      "summary": "Need Regional partners need a consistent onboarding and support motion. Approach Run a six-week enablement pilot with...",
       "keywords": [
         "Project Proposal Template"
       ],
-      "tokenEstimate": 45,
+      "tokenEstimate": 50,
       "sensitivity": "unknown"
     },
     {
@@ -117,12 +117,12 @@
         "proposal-plan"
       ],
       "selector": "[data-htmlx-block-id=\"proposal-plan\"]",
-      "textHash": "sha256-fYnIhJ8UgF0yXE0cX0SMAkamfOtp/mRxSU/OaqhN+sg=",
-      "summary": "Pilot plan Phase Deliverable Review question Prepare Template gallery and validated examples Can first-time users und...",
+      "textHash": "sha256-GCSKtcZKsEQ/BVBrPtOrtqdj1fh7tXA/PKh0IZDd3ZM=",
+      "summary": "Pilot plan Phase Deliverable Review question Prepare Partner selection, kickoff deck, and enablement checklist Are su...",
       "keywords": [
         "Project Proposal Template"
       ],
-      "tokenEstimate": 60,
+      "tokenEstimate": 69,
       "sensitivity": "unknown"
     }
   ],

@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.1
+      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
         with:
           paths: |
             docs/**/*.htmlx
@@ -62,14 +62,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@5e00f71fc722f984352484b04e5f9179398cf74b
+      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@<release-commit-sha>
         with:
           paths: |
             docs/**/*.htmlx
             examples/*.htmlx
 ```
 
-The SHA above resolves the `v0.1.0-alpha.1` release tag. See [GitHub Action Pinning and Supply-Chain Notes](supply-chain-action-pinning.md) for when to use tag-pinned or SHA-pinned references.
+Replace `<release-commit-sha>` with the resolved commit for the `v0.1.0-alpha.2` release tag before committing a SHA-pinned workflow. See [GitHub Action Pinning and Supply-Chain Notes](supply-chain-action-pinning.md) for when to use tag-pinned or SHA-pinned references.
 
 By default the action writes an `Agentic Document Integrity` job summary with the number of packages checked and the pass/fail result. Set `summary: "false"` to disable that summary. See [Agentic Document Integrity CI](agentic-document-integrity-ci.md) for the public report shape and failure examples.
 

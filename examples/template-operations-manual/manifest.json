@@ -5,7 +5,7 @@
   "title": "Operations Manual Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-06-02T09:18:33.927Z",
+  "modifiedAt": "2026-06-03T20:43:47.603Z",
   "entry": "index.html",
   "styles": [
     "styles/document.css"
@@ -20,7 +20,7 @@
       "path": "metadata/llm.json",
       "mediaType": "application/json",
       "role": "metadata",
-      "integrity": "sha256-DZ9ftsohA3UZHYK0QzkvpD2Roo14gbpHdoWGeMWs+z8="
+      "integrity": "sha256-mopRaAxyK1Inm27qlU8KnnJwVUQFK25LDzCPiPf+X1w="
     },
     {
       "path": "metadata/provenance.json",

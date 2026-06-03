@@ -24,13 +24,28 @@ HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript l
 - [Open the slide deck example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck)
 - [Browse the template gallery](https://lhy0718.github.io/OpenWebDoc/)
 - [Add HTMLX validation to GitHub Actions](docs/github-action.md)
-- [Download the v0.1.0-alpha.1 release assets](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.1)
+- [Download the v0.1.0-alpha.2 release assets](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.2)
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
 The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. The page also exposes starter template repositories and ZIP archives for Markdown notes, safe HTML migration, and agent-edited brief workflows. Use a template repository when you want pull-request validation already wired in.
 
 The strongest workflow is external-agent editing: unpack the package, let a coding agent revise package-local files, refresh metadata, validate, pack, and validate again.
+
+## 10-Minute PR Gate
+
+The fastest way to try HTMLX in another repository is to add a validation gate to one
+agent-edited document:
+
+1. Start from a public starter template:
+   - [Markdown notes starter](https://github.com/lhy0718/htmlx-markdown-notes-starter)
+   - [Safe HTML migration starter](https://github.com/lhy0718/htmlx-safe-html-migration-starter)
+   - [Agent brief starter](https://github.com/lhy0718/htmlx-agent-brief-starter)
+2. Commit one `.htmlx` package and its source files.
+3. Add the tag-pinned GitHub Action from [GitHub Action Validator](docs/github-action.md).
+4. Open a pull request and confirm the `Agentic Document Integrity` check passes or reports a fixable issue code.
+
+This is the main public-alpha adoption path: a coding agent edits document files, and CI proves the package boundary, resources, security rules, profile contract, and metadata freshness before the document is shared.
 
 ## Trust and Adoption Kit
 

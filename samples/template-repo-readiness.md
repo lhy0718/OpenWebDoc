@@ -52,7 +52,7 @@ The exported copies are written to `dist/sample-repos/`. `pnpm samples:verify-ex
 Template repositories should use a readable release tag by default:
 
 ```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.1
+- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
 ```
 
 Security-sensitive repositories can replace the tag with the release commit SHA documented in [GitHub Action Pinning and Supply-Chain Notes](../docs/supply-chain-action-pinning.md).

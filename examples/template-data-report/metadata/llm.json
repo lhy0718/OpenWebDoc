@@ -2,7 +2,7 @@
   "schemaVersion": "0.1.0",
   "profile": "flow-document",
   "summary": "A data report template for metrics, methodology notes, semantic tables, and interpretation.",
-  "textHash": "sha256-vMTRN7lI3MZZOXIf+5LL5lFtpFaKjocfCOzHAHmdaeg=",
+  "textHash": "sha256-0dWybDyGWHu9+QZDWjTkuDX4Q2w1zqMgg8YyBtjI9FY=",
   "selectors": {
     "report-kicker": "[data-htmlx-block-id=\"report-kicker\"]",
     "report-title": "[data-htmlx-block-id=\"report-title\"]",
@@ -22,28 +22,28 @@
       "id": "report-title",
       "selector": "[data-htmlx-block-id=\"report-title\"]",
       "kind": "heading",
-      "textHash": "sha256-5LyY0Cm9MEo0DCXyH6EeY3UUVS+SZ2mQMALgWs5p9fo=",
+      "textHash": "sha256-E3+kne6TSNW0N/1wk5So1K8lQl68Wzxnu6eNFHUHRAg=",
       "editable": false
     },
     {
       "id": "report-summary",
       "selector": "[data-htmlx-block-id=\"report-summary\"]",
       "kind": "paragraph",
-      "textHash": "sha256-b5VAMCqucY11bL1TT9feSCmT8WB2TSv8L8+NrfKf4Pc=",
+      "textHash": "sha256-hrhiWkFY5JPHHAEQp6Q02UA0ULZHaDP2/DjCBqBJ94g=",
       "editable": false
     },
     {
       "id": "report-metrics",
       "selector": "[data-htmlx-block-id=\"report-metrics\"]",
       "kind": "section",
-      "textHash": "sha256-O1Qchxt8OwDIC9JLjxdQ9fdXBUQC26OaVCnZzZI/Sjo=",
+      "textHash": "sha256-1Bb8m6w+nNoaIruBhNiQR8YAXqp6SSNMweIy5vgM/kQ=",
       "editable": false
     },
     {
       "id": "report-table",
       "selector": "[data-htmlx-block-id=\"report-table\"]",
       "kind": "section",
-      "textHash": "sha256-0t2snlm5+SnnU8/IHMxFrLsJwegx6cj/TwFMlgoKjd4=",
+      "textHash": "sha256-J6T29+fyuWvcL4w4rnyhRkHptGI/hN6NRUv666DlmGs=",
       "editable": false
     }
   ],
@@ -75,8 +75,8 @@
         "report-title"
       ],
       "selector": "[data-htmlx-block-id=\"report-title\"]",
-      "textHash": "sha256-5LyY0Cm9MEo0DCXyH6EeY3UUVS+SZ2mQMALgWs5p9fo=",
-      "summary": "Document package readiness dashboard",
+      "textHash": "sha256-E3+kne6TSNW0N/1wk5So1K8lQl68Wzxnu6eNFHUHRAg=",
+      "summary": "Support response quality report",
       "keywords": [
         "Data Report Template"
       ],
@@ -89,12 +89,12 @@
         "report-summary"
       ],
       "selector": "[data-htmlx-block-id=\"report-summary\"]",
-      "textHash": "sha256-b5VAMCqucY11bL1TT9feSCmT8WB2TSv8L8+NrfKf4Pc=",
-      "summary": "A report template for combining headline metrics, methodology notes, a semantic data table, and interpretation in a p...",
+      "textHash": "sha256-hrhiWkFY5JPHHAEQp6Q02UA0ULZHaDP2/DjCBqBJ94g=",
+      "summary": "A report template for combining headline metrics, methodology notes, a semantic data table, and interpretation into a...",
       "keywords": [
         "Data Report Template"
       ],
-      "tokenEstimate": 32,
+      "tokenEstimate": 27,
       "sensitivity": "unknown"
     },
     {
@@ -103,12 +103,12 @@
         "report-metrics"
       ],
       "selector": "[data-htmlx-block-id=\"report-metrics\"]",
-      "textHash": "sha256-O1Qchxt8OwDIC9JLjxdQ9fdXBUQC26OaVCnZzZI/Sjo=",
-      "summary": "10 Template packages 100% Package-local resources 0 Scripts or remote assets 1 Document-first runtime",
+      "textHash": "sha256-1Bb8m6w+nNoaIruBhNiQR8YAXqp6SSNMweIy5vgM/kQ=",
+      "summary": "84% First-contact resolution 18m Median first response 7 Escalations over target 4.6 Customer satisfaction score",
       "keywords": [
         "Data Report Template"
       ],
-      "tokenEstimate": 19,
+      "tokenEstimate": 21,
       "sensitivity": "unknown"
     },
     {
@@ -117,12 +117,12 @@
         "report-table"
       ],
       "selector": "[data-htmlx-block-id=\"report-table\"]",
-      "textHash": "sha256-0t2snlm5+SnnU8/IHMxFrLsJwegx6cj/TwFMlgoKjd4=",
-      "summary": "Readiness table Area Measure Status Next check Format Manifest, entry, metadata, and local resources Ready for previe...",
+      "textHash": "sha256-J6T29+fyuWvcL4w4rnyhRkHptGI/hN6NRUv666DlmGs=",
+      "summary": "Readiness table Segment Measure Status Next check Enterprise 72% first-contact resolution Below target Audit authenti...",
       "keywords": [
         "Data Report Template"
       ],
-      "tokenEstimate": 60,
+      "tokenEstimate": 54,
       "sensitivity": "unknown"
     }
   ],

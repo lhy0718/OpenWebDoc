@@ -2,7 +2,7 @@
   "schemaVersion": "0.1.0",
   "profile": "flow-document",
   "summary": "A product specification template for runtime scope, requirements, release gates, and decisions.",
-  "textHash": "sha256-4JnCCDWxttGHu+rg/UA0GC/lDZYOpE5yRmXYqM3HZ+E=",
+  "textHash": "sha256-qla38JXd228pYu0NtcSmSooTd1oBlD1RH4+6qPCs208=",
   "selectors": {
     "spec-kicker": "[data-htmlx-block-id=\"spec-kicker\"]",
     "spec-title": "[data-htmlx-block-id=\"spec-title\"]",
@@ -23,35 +23,35 @@
       "id": "spec-title",
       "selector": "[data-htmlx-block-id=\"spec-title\"]",
       "kind": "heading",
-      "textHash": "sha256-Iv6F/sHePY31cmNK/Eq/HP3Tjk5iZXBbLDo4auWZ028=",
+      "textHash": "sha256-EbkmE8VUxfBk1TskkegKpBre3HD8qW5qLXMfdnscKHw=",
       "editable": false
     },
     {
       "id": "spec-summary",
       "selector": "[data-htmlx-block-id=\"spec-summary\"]",
       "kind": "paragraph",
-      "textHash": "sha256-V16bO8dWSmz5kcvvfcBmfgN/WlMrwHyFeyunffagvbQ=",
+      "textHash": "sha256-3a/vt8NTcNk7WyOeJEnfXcjdgJb+zO00rVaegEaTXEc=",
       "editable": false
     },
     {
       "id": "spec-scope",
       "selector": "[data-htmlx-block-id=\"spec-scope\"]",
       "kind": "section",
-      "textHash": "sha256-wB8nZWd9r8MNjxPvtyflmsACEhkai0u34lTfFtIROC0=",
+      "textHash": "sha256-8Cv9GW2QV4vKnNYcO8fYLWBV20SfbCoptdHILlbWmqs=",
       "editable": false
     },
     {
       "id": "spec-requirements",
       "selector": "[data-htmlx-block-id=\"spec-requirements\"]",
       "kind": "section",
-      "textHash": "sha256-Kn6j/frQHFXW2TuoMt1MMo8CfY5qA7nuu1WbqWhmOKA=",
+      "textHash": "sha256-mXx9VfOFg2dRUUuED9XuY20vSb502KF5F3ZAi+zypW8=",
       "editable": false
     },
     {
       "id": "spec-decisions",
       "selector": "[data-htmlx-block-id=\"spec-decisions\"]",
       "kind": "section",
-      "textHash": "sha256-SvUYVHhBs3/ggiW6NTfPAeB3+UEsIATAvis94qPLyn8=",
+      "textHash": "sha256-BgNfXO58ePMqs+YyprCFa9bLALsjw1FgqXJtjLhekos=",
       "editable": false
     }
   ],
@@ -84,8 +84,8 @@
         "spec-title"
       ],
       "selector": "[data-htmlx-block-id=\"spec-title\"]",
-      "textHash": "sha256-Iv6F/sHePY31cmNK/Eq/HP3Tjk5iZXBbLDo4auWZ028=",
-      "summary": "Document runtime release spec",
+      "textHash": "sha256-EbkmE8VUxfBk1TskkegKpBre3HD8qW5qLXMfdnscKHw=",
+      "summary": "Customer insight inbox spec",
       "keywords": [
         "Product Spec Template"
       ],
@@ -98,12 +98,12 @@
         "spec-summary"
       ],
       "selector": "[data-htmlx-block-id=\"spec-summary\"]",
-      "textHash": "sha256-V16bO8dWSmz5kcvvfcBmfgN/WlMrwHyFeyunffagvbQ=",
-      "summary": "A structured product spec for defining scope, constraints, release gates, and owner responsibilities without losing t...",
+      "textHash": "sha256-3a/vt8NTcNk7WyOeJEnfXcjdgJb+zO00rVaegEaTXEc=",
+      "summary": "A structured product spec for turning support tickets, sales notes, and research quotes into prioritized product insi...",
       "keywords": [
         "Product Spec Template"
       ],
-      "tokenEstimate": 26,
+      "tokenEstimate": 32,
       "sensitivity": "unknown"
     },
     {
@@ -112,12 +112,12 @@
         "spec-scope"
       ],
       "selector": "[data-htmlx-block-id=\"spec-scope\"]",
-      "textHash": "sha256-wB8nZWd9r8MNjxPvtyflmsACEhkai0u34lTfFtIROC0=",
-      "summary": "Problem Readers need to open a document, correct small details, and export safely. Non-goals No in-browser model call...",
+      "textHash": "sha256-8Cv9GW2QV4vKnNYcO8fYLWBV20SfbCoptdHILlbWmqs=",
+      "summary": "Problem Customer feedback is scattered across tools, making repeated themes hard to verify. Non-goals No automatic ro...",
       "keywords": [
         "Product Spec Template"
       ],
-      "tokenEstimate": 49,
+      "tokenEstimate": 53,
       "sensitivity": "unknown"
     },
     {
@@ -126,12 +126,12 @@
         "spec-requirements"
       ],
       "selector": "[data-htmlx-block-id=\"spec-requirements\"]",
-      "textHash": "sha256-Kn6j/frQHFXW2TuoMt1MMo8CfY5qA7nuu1WbqWhmOKA=",
-      "summary": "Functional requirements Capability Runtime behavior Validation rule Open package Show document first, with minimal fl...",
+      "textHash": "sha256-mXx9VfOFg2dRUUuED9XuY20vSb502KF5F3ZAi+zypW8=",
+      "summary": "Functional requirements Capability User behavior Acceptance rule Collect sources Import ticket excerpts, call notes, ...",
       "keywords": [
         "Product Spec Template"
       ],
-      "tokenEstimate": 75,
+      "tokenEstimate": 94,
       "sensitivity": "unknown"
     },
     {
@@ -140,12 +140,12 @@
         "spec-decisions"
       ],
       "selector": "[data-htmlx-block-id=\"spec-decisions\"]",
-      "textHash": "sha256-SvUYVHhBs3/ggiW6NTfPAeB3+UEsIATAvis94qPLyn8=",
-      "summary": "Owner Runtime maintainer Release risk Medium until accessibility pass Fallback Use CLI validation and unpacked edits",
+      "textHash": "sha256-BgNfXO58ePMqs+YyprCFa9bLALsjw1FgqXJtjLhekos=",
+      "summary": "Owner Product operations Release risk Medium until source-link review Fallback Export a manual insight digest",
       "keywords": [
         "Product Spec Template"
       ],
-      "tokenEstimate": 22,
+      "tokenEstimate": 21,
       "sensitivity": "unknown"
     }
   ],

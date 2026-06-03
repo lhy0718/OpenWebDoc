@@ -2,7 +2,7 @@
   "schemaVersion": "0.1.0",
   "profile": "flow-document",
   "summary": "An operations manual template for safe package intake, validation, escalation, and repacking.",
-  "textHash": "sha256-5zb0de1iUOB1PQ+WJyh4HUD/U1j4axeK7wMCRUtY29o=",
+  "textHash": "sha256-FvgBesLM3F3b49G6bsYtbqvI1eeAPWUt2Pi2CKnevyM=",
   "selectors": {
     "manual-kicker": "[data-htmlx-block-id=\"manual-kicker\"]",
     "manual-title": "[data-htmlx-block-id=\"manual-title\"]",
@@ -22,28 +22,28 @@
       "id": "manual-title",
       "selector": "[data-htmlx-block-id=\"manual-title\"]",
       "kind": "heading",
-      "textHash": "sha256-/YLbSVa4T9neHWBMhkb2I3xMViEolmt1M45tItQUSv0=",
+      "textHash": "sha256-+GUFJ5ArhUybbYy/xG1C5EBfelk5t23T+nZLhlir3G8=",
       "editable": false
     },
     {
       "id": "manual-status",
       "selector": "[data-htmlx-block-id=\"manual-status\"]",
       "kind": "unknown",
-      "textHash": "sha256-QhQcTmR/LJ5JtRt7bZP7oIQnmr2xgxgLXxuSYjSvH7Y=",
+      "textHash": "sha256-JkOkxLRe1DVwMkU15kNdMRPUGnM4jcXESRmoeo85p98=",
       "editable": false
     },
     {
       "id": "manual-intake",
       "selector": "[data-htmlx-block-id=\"manual-intake\"]",
       "kind": "section",
-      "textHash": "sha256-jIwWkKE1B7CBn6YkGmjlQuNH2KpZGAIQq53+w8VczEo=",
+      "textHash": "sha256-1R+ME0BiNm+JIkUT7CCSl38hRks3WdDZnmngJQllBE0=",
       "editable": false
     },
     {
       "id": "manual-escalation",
       "selector": "[data-htmlx-block-id=\"manual-escalation\"]",
       "kind": "section",
-      "textHash": "sha256-GuL/5oAubvSawCrHUEQAdZEJRtl+o/zT8SSOrpL0eXQ=",
+      "textHash": "sha256-IrjY9YHVFIMSI5KkwVxbjFlOBaSXKEx7d1I5ov9GIuc=",
       "editable": false
     }
   ],
@@ -75,12 +75,12 @@
         "manual-title"
       ],
       "selector": "[data-htmlx-block-id=\"manual-title\"]",
-      "textHash": "sha256-/YLbSVa4T9neHWBMhkb2I3xMViEolmt1M45tItQUSv0=",
-      "summary": "Safe package intake procedure",
+      "textHash": "sha256-+GUFJ5ArhUybbYy/xG1C5EBfelk5t23T+nZLhlir3G8=",
+      "summary": "Incident handoff procedure",
       "keywords": [
         "Operations Manual Template"
       ],
-      "tokenEstimate": 6,
+      "tokenEstimate": 5,
       "sensitivity": "unknown"
     },
     {
@@ -89,8 +89,8 @@
         "manual-status"
       ],
       "selector": "[data-htmlx-block-id=\"manual-status\"]",
-      "textHash": "sha256-QhQcTmR/LJ5JtRt7bZP7oIQnmr2xgxgLXxuSYjSvH7Y=",
-      "summary": "Runbook Version 0.1 Owner: document operations",
+      "textHash": "sha256-JkOkxLRe1DVwMkU15kNdMRPUGnM4jcXESRmoeo85p98=",
+      "summary": "Runbook Version 1.4 Owner: service operations",
       "keywords": [
         "Operations Manual Template"
       ],
@@ -103,12 +103,12 @@
         "manual-intake"
       ],
       "selector": "[data-htmlx-block-id=\"manual-intake\"]",
-      "textHash": "sha256-jIwWkKE1B7CBn6YkGmjlQuNH2KpZGAIQq53+w8VczEo=",
-      "summary": "Intake checklist 1. Receive Save the `.htmlx` package from a trusted channel. 2. Validate Run CLI validation before o...",
+      "textHash": "sha256-1R+ME0BiNm+JIkUT7CCSl38hRks3WdDZnmngJQllBE0=",
+      "summary": "Intake checklist 1. Triage Confirm severity, affected service, and customer impact. 2. Stabilize Assign an incident l...",
       "keywords": [
         "Operations Manual Template"
       ],
-      "tokenEstimate": 60,
+      "tokenEstimate": 67,
       "sensitivity": "unknown"
     },
     {
@@ -117,12 +117,12 @@
         "manual-escalation"
       ],
       "selector": "[data-htmlx-block-id=\"manual-escalation\"]",
-      "textHash": "sha256-GuL/5oAubvSawCrHUEQAdZEJRtl+o/zT8SSOrpL0eXQ=",
-      "summary": "Escalation table Issue Likely cause Response Remote resource blocked Document references an external URL. Move the as...",
+      "textHash": "sha256-IrjY9YHVFIMSI5KkwVxbjFlOBaSXKEx7d1I5ov9GIuc=",
+      "summary": "Escalation table Issue Likely cause Response Customer impact unclear Support queue and telemetry disagree. Use the la...",
       "keywords": [
         "Operations Manual Template"
       ],
-      "tokenEstimate": 72,
+      "tokenEstimate": 77,
       "sensitivity": "unknown"
     }
   ],
