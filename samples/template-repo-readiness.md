@@ -4,11 +4,11 @@ The `samples/` folders are copyable skeletons. Before splitting them into separa
 
 ## Candidate Repositories
 
-| Candidate repo                      | Source folder                     | Purpose                                                    |
-| ----------------------------------- | --------------------------------- | ---------------------------------------------------------- |
-| `htmlx-markdown-notes-starter`      | `samples/external-research-notes` | Markdown-first notes converted to `.htmlx`                 |
-| `htmlx-safe-html-migration-starter` | `samples/external-html-migration` | safe standalone HTML converted to `.htmlx` and static HTML |
-| `htmlx-agent-brief-starter`         | `samples/external-agent-brief`    | agent-edited brief with PR validation                      |
+| Candidate repo                                                                                      | Source folder                     | Purpose                                                    |
+| --------------------------------------------------------------------------------------------------- | --------------------------------- | ---------------------------------------------------------- |
+| [`htmlx-markdown-notes-starter`](https://github.com/lhy0718/htmlx-markdown-notes-starter)           | `samples/external-research-notes` | Markdown-first notes converted to `.htmlx`                 |
+| [`htmlx-safe-html-migration-starter`](https://github.com/lhy0718/htmlx-safe-html-migration-starter) | `samples/external-html-migration` | safe standalone HTML converted to `.htmlx` and static HTML |
+| [`htmlx-agent-brief-starter`](https://github.com/lhy0718/htmlx-agent-brief-starter)                 | `samples/external-agent-brief`    | agent-edited brief with PR validation                      |
 
 The machine-readable mapping lives in [`template-repos.json`](template-repos.json). `pnpm samples:check` verifies that the manifest matches the available external sample folders.
 
@@ -17,6 +17,7 @@ The machine-readable mapping lives in [`template-repos.json`](template-repos.jso
 Each extracted template repo should include:
 
 - `README.md`
+- `LICENSE`
 - `.github/workflows/validate-htmlx.yml`
 - one source document
 - one generated `.htmlx` package
@@ -31,7 +32,9 @@ Each extracted template repo should include:
 3. Run `htmlx validate documents/*.htmlx --json`.
 4. Run the repository workflow on a pull request.
 5. Confirm the workflow does not use `@main`.
-6. Add the repository to the OpenWebDoc adoption docs only after the first PR gate passes.
+6. Mark the repository as a GitHub template repository.
+7. Add or update the repository URL in `samples/template-repos.json`.
+8. Keep the repository linked from OpenWebDoc adoption docs only after validation passes.
 
 For local export from the OpenWebDoc repository:
 

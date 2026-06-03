@@ -28,7 +28,7 @@ HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript l
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
-The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. The page also exposes starter repository archives for Markdown notes, safe HTML migration, and agent-edited brief workflows. Download a template when you want a portable document starting point; download a starter repository when you want pull-request validation already wired in.
+The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. The page also exposes starter template repositories and ZIP archives for Markdown notes, safe HTML migration, and agent-edited brief workflows. Use a template repository when you want pull-request validation already wired in.
 
 The strongest workflow is external-agent editing: unpack the package, let a coding agent revise package-local files, refresh metadata, validate, pack, and validate again.
 

@@ -29,7 +29,7 @@ console.log(`Verified ${manifest.repositories.length} exported OpenWebDoc sample
 
 function verifyRepository(repository) {
   const directory = join(outputRoot, repository.id);
-  for (const field of ["id", "source", "description"]) {
+  for (const field of ["id", "source", "description", "url"]) {
     if (typeof repository[field] !== "string" || !repository[field].trim()) {
       fail(`Template repository entry is missing ${field}.`);
     }
@@ -37,8 +37,13 @@ function verifyRepository(repository) {
   if (!existsSync(directory)) {
     fail(`Missing exported sample repository: ${directory}.`);
   }
+  const expectedUrl = `https://github.com/lhy0718/${repository.id}`;
+  if (repository.url !== expectedUrl) {
+    fail(`Template repository URL must be ${expectedUrl}, found ${repository.url}.`);
+  }
   for (const required of [
     "README.md",
+    "LICENSE",
     "TEMPLATE_REPOSITORY.md",
     ".github/workflows/validate-htmlx.yml",
   ]) {
