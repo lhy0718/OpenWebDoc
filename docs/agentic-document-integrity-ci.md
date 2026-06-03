@@ -27,6 +27,8 @@ jobs:
 Pin the action to a release tag in external repositories. Use `@main` only when intentionally testing unreleased validator behavior.
 
 For copyable repository skeletons, see [External Sample Repositories](../samples/README.md).
+For the first public starter-repository PR-gate smoke, see
+[Starter PR Gate Case Study](starter-pr-gate-case-study.md).
 
 ## Mock Pass Report
 

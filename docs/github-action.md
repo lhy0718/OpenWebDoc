@@ -98,3 +98,6 @@ For compatibility fixtures, see [HTMLX Conformance](conformance.md).
 For issue-code recovery guidance, see [HTMLX Issue Code Cookbook](issue-code-cookbook.md).
 
 For copyable external repository skeletons, see [External Sample Repositories](../samples/README.md).
+
+For a verified external-repository smoke test of the action, see
+[Starter PR Gate Case Study](starter-pr-gate-case-study.md).

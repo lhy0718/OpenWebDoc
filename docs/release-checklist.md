@@ -71,6 +71,8 @@
 - [ ] The GitHub Action validator is documented and usable by another repository.
 - [ ] The Agentic Document Integrity CI report shape is documented for pass and failure cases.
 - [ ] Tag-pinned and SHA-pinned GitHub Action examples are documented.
+- [ ] Public starter repositories use the current release tag and have a passing `Validate HTMLX` PR-gate smoke after the release.
+- [ ] The starter PR-gate case study links to the current passing starter runs and does not rely on local-only evidence.
 - [ ] Issue-code recovery guidance is documented for common validation failures.
 - [ ] A 30-minute external pilot script exists for first adoption conversations.
 - [ ] Pilot target archetypes and template-repository split criteria are documented.

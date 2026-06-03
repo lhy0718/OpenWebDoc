@@ -57,6 +57,9 @@ Repositories that require stricter action immutability can replace the tag with 
 
 See [GitHub Action Pinning and Supply-Chain Notes](../docs/supply-chain-action-pinning.md) for upgrade guidance.
 
+The first public starter-repository validation PRs are documented in
+[Starter PR Gate Case Study](../docs/starter-pr-gate-case-study.md).
+
 ## Splitting Into Template Repositories
 
 See [External Template Repository Readiness](template-repo-readiness.md) before updating or adding a public starter repository.
