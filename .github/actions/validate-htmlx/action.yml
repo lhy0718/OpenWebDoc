@@ -27,6 +27,8 @@ runs:
       run: |
         cd "$GITHUB_ACTION_PATH/../../.."
         pnpm install --frozen-lockfile
+        pnpm --filter @openwebdoc/spec build
+        pnpm --filter @openwebdoc/core build
         pnpm --filter @openwebdoc/cli build
 
     - name: Validate packages

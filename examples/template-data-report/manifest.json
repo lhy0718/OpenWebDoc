@@ -5,7 +5,7 @@
   "title": "Data Report Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-06-02T09:18:30.989Z",
+  "modifiedAt": "2026-06-03T20:37:56.267Z",
   "entry": "index.html",
   "styles": [
     "styles/document.css"
@@ -20,7 +20,7 @@
       "path": "metadata/llm.json",
       "mediaType": "application/json",
       "role": "metadata",
-      "integrity": "sha256-2L9TBgoPaHbVWzWD0892bAzEdJnzcbMt+jwsDhgKTFo="
+      "integrity": "sha256-bI1uBJh9sxytZ+9STvSi5hTsxXT4iIivBGZz5LcE+VM="
     },
     {
       "path": "metadata/provenance.json",

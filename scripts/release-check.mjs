@@ -110,6 +110,18 @@ function checkExampleGallery() {
     if (!publicExampleSet.has(example.id)) {
       failReleaseCheck(`Gallery example has no public package: ${example.id}.htmlx.`);
     }
+    const sourceManifestPath = join(examplesDirectory, example.id, "manifest.json");
+    if (!existsSync(sourceManifestPath)) {
+      failReleaseCheck(
+        `Gallery example has no source manifest: examples/${example.id}/manifest.json.`,
+      );
+    }
+    const sourceManifest = JSON.parse(readFileSync(sourceManifestPath, "utf8"));
+    if (sourceManifest.profile !== example.profile) {
+      failReleaseCheck(
+        `Gallery profile mismatch for ${example.id}: gallery=${example.profile}, manifest=${sourceManifest.profile}.`,
+      );
+    }
     galleryIds.push(example.id);
   }
 

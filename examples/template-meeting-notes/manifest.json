@@ -5,7 +5,7 @@
   "title": "Meeting Notes Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-06-02T09:18:32.450Z",
+  "modifiedAt": "2026-06-03T20:43:46.409Z",
   "entry": "index.html",
   "styles": [
     "styles/document.css"
@@ -20,7 +20,7 @@
       "path": "metadata/llm.json",
       "mediaType": "application/json",
       "role": "metadata",
-      "integrity": "sha256-1zpWGG5DGS72RBpA2/wf58RW03EtyuVfCqMCsYANmL8="
+      "integrity": "sha256-at7WHfzJp1E31LhM+dEQ+mwgGMFs4Xk+ROW6zWK7HHg="
     },
     {
       "path": "metadata/provenance.json",

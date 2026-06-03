@@ -2,7 +2,7 @@
   "schemaVersion": "0.1.0",
   "profile": "flow-document",
   "summary": "A research brief template for claims, evidence, decisions, and follow-up questions.",
-  "textHash": "sha256-QCh84TeOgHj2/KIB3VRvUqpj5mNsc++ObMd+kHYtmwU=",
+  "textHash": "sha256-b6UkIwsJ4/0s8lKMeErj3j8jzUN2UZcuCRoWg33n6nE=",
   "selectors": {
     "brief-kicker": "[data-htmlx-block-id=\"brief-kicker\"]",
     "brief-title": "[data-htmlx-block-id=\"brief-title\"]",
@@ -25,49 +25,49 @@
       "id": "brief-title",
       "selector": "[data-htmlx-block-id=\"brief-title\"]",
       "kind": "heading",
-      "textHash": "sha256-lH0z7JEmBgwaPsHSxqqDsLqu54yTB4cOd779DuKO1mo=",
+      "textHash": "sha256-ER2chESKMEHtwPKSDaBp+DgMRZot4pRNtSVwLKXA0FQ=",
       "editable": false
     },
     {
       "id": "brief-summary",
       "selector": "[data-htmlx-block-id=\"brief-summary\"]",
       "kind": "paragraph",
-      "textHash": "sha256-jT0ZrPwa/2RSdQ9S0pAIxsw9uax9ucNjX9zoLBn/bi0=",
+      "textHash": "sha256-33OcMQ44oYrZayS0vHdYAmRfRqwcHE1FXyVlhbyB3Y8=",
       "editable": false
     },
     {
       "id": "brief-metadata",
       "selector": "[data-htmlx-block-id=\"brief-metadata\"]",
       "kind": "unknown",
-      "textHash": "sha256-pb6nNA9uzi+YQK/kCAde0ozMFoJjZW9T0w12NcYWBYw=",
+      "textHash": "sha256-b7ch/3IQrVUJ3NFFqn8Qna/AgaMN+1sX1XOfgl+lMw8=",
       "editable": false
     },
     {
       "id": "brief-thesis",
       "selector": "[data-htmlx-block-id=\"brief-thesis\"]",
       "kind": "section",
-      "textHash": "sha256-4ppk8eY0k8HPV1lUJJmCWFoKO3cAAeBTHHgFY2CUgXE=",
+      "textHash": "sha256-nIuyn4+XCEWVI/NSoXSkmCuCUnm+iRrPbwJkWz+66d8=",
       "editable": false
     },
     {
       "id": "brief-question",
       "selector": "[data-htmlx-block-id=\"brief-question\"]",
       "kind": "section",
-      "textHash": "sha256-XoAV8cNbq+sy/NAyuFlCIJPTsyUdg3fdZXrwXFMJJFM=",
+      "textHash": "sha256-saVicpMEHk8mbSidSOTqgNZnTgPVPc9Tw3xV28ZVans=",
       "editable": false
     },
     {
       "id": "brief-evidence",
       "selector": "[data-htmlx-block-id=\"brief-evidence\"]",
       "kind": "section",
-      "textHash": "sha256-VGj+H+YzO04Xr21+6iBElRebFYkQVfD75+RGU5ZuFDs=",
+      "textHash": "sha256-n3aeb9o30bjyRb5rfySTsCHmdu6gbJ9XLur9AiaoBwE=",
       "editable": false
     },
     {
       "id": "brief-workflow",
       "selector": "[data-htmlx-block-id=\"brief-workflow\"]",
       "kind": "figure",
-      "textHash": "sha256-X/2M36gkrUYwR+XCeofYEq5xTJJ8Rjwyh7/HtMSrBiE=",
+      "textHash": "sha256-cDOu89+r5pBVzBTpNT7GYus7yR7sRMin1JhzTs41pBE=",
       "editable": false
     }
   ],
@@ -102,12 +102,12 @@
         "brief-title"
       ],
       "selector": "[data-htmlx-block-id=\"brief-title\"]",
-      "textHash": "sha256-lH0z7JEmBgwaPsHSxqqDsLqu54yTB4cOd779DuKO1mo=",
-      "summary": "Browser-native evidence brief",
+      "textHash": "sha256-ER2chESKMEHtwPKSDaBp+DgMRZot4pRNtSVwLKXA0FQ=",
+      "summary": "Battery materials screening brief",
       "keywords": [
         "Research Brief Template"
       ],
-      "tokenEstimate": 5,
+      "tokenEstimate": 6,
       "sensitivity": "unknown"
     },
     {
@@ -116,12 +116,12 @@
         "brief-summary"
       ],
       "selector": "[data-htmlx-block-id=\"brief-summary\"]",
-      "textHash": "sha256-jT0ZrPwa/2RSdQ9S0pAIxsw9uax9ucNjX9zoLBn/bi0=",
-      "summary": "Use this template for a compact research memo that combines a claim, evidence table, decision notes, and follow-up qu...",
+      "textHash": "sha256-33OcMQ44oYrZayS0vHdYAmRfRqwcHE1FXyVlhbyB3Y8=",
+      "summary": "Use this template for a compact research memo that turns lab observations, source notes, confidence levels, and next ...",
       "keywords": [
         "Research Brief Template"
       ],
-      "tokenEstimate": 33,
+      "tokenEstimate": 32,
       "sensitivity": "unknown"
     },
     {
@@ -130,12 +130,12 @@
         "brief-metadata"
       ],
       "selector": "[data-htmlx-block-id=\"brief-metadata\"]",
-      "textHash": "sha256-pb6nNA9uzi+YQK/kCAde0ozMFoJjZW9T0w12NcYWBYw=",
-      "summary": "Audience: product and research leads Length: 4 to 6 sections Status: draft-ready",
+      "textHash": "sha256-b7ch/3IQrVUJ3NFFqn8Qna/AgaMN+1sX1XOfgl+lMw8=",
+      "summary": "Audience: principal investigator and product lead Scope: three candidate coatings Status: ready for technical review",
       "keywords": [
         "Research Brief Template"
       ],
-      "tokenEstimate": 17,
+      "tokenEstimate": 21,
       "sensitivity": "unknown"
     },
     {
@@ -144,12 +144,12 @@
         "brief-thesis"
       ],
       "selector": "[data-htmlx-block-id=\"brief-thesis\"]",
-      "textHash": "sha256-4ppk8eY0k8HPV1lUJJmCWFoKO3cAAeBTHHgFY2CUgXE=",
-      "summary": "Primary takeaway Put the conclusion first. The rest of the brief should explain what changed, why it matters, how str...",
+      "textHash": "sha256-nIuyn4+XCEWVI/NSoXSkmCuCUnm+iRrPbwJkWz+66d8=",
+      "summary": "Primary takeaway A manganese-rich coating produced the most stable early-cycle result, but the evidence is not strong...",
       "keywords": [
         "Research Brief Template"
       ],
-      "tokenEstimate": 42,
+      "tokenEstimate": 37,
       "sensitivity": "unknown"
     },
     {
@@ -158,12 +158,12 @@
         "brief-question"
       ],
       "selector": "[data-htmlx-block-id=\"brief-question\"]",
-      "textHash": "sha256-XoAV8cNbq+sy/NAyuFlCIJPTsyUdg3fdZXrwXFMJJFM=",
-      "summary": "Open question Frame the uncertainty clearly enough that another reviewer or external agent can refine the brief witho...",
+      "textHash": "sha256-saVicpMEHk8mbSidSOTqgNZnTgPVPc9Tw3xV28ZVans=",
+      "summary": "Open question The next review should decide whether the coating benefit survives under warm storage or only appears i...",
       "keywords": [
         "Research Brief Template"
       ],
-      "tokenEstimate": 29,
+      "tokenEstimate": 32,
       "sensitivity": "unknown"
     },
     {
@@ -172,12 +172,12 @@
         "brief-evidence"
       ],
       "selector": "[data-htmlx-block-id=\"brief-evidence\"]",
-      "textHash": "sha256-VGj+H+YzO04Xr21+6iBElRebFYkQVfD75+RGU5ZuFDs=",
-      "summary": "Evidence matrix Signal Observation Confidence Action User workflow Readers need a single package that opens without a...",
+      "textHash": "sha256-n3aeb9o30bjyRb5rfySTsCHmdu6gbJ9XLur9AiaoBwE=",
+      "summary": "Evidence matrix Signal Observation Confidence Action Cycle retention Coating B held 92% capacity after 80 cycles in t...",
       "keywords": [
         "Research Brief Template"
       ],
-      "tokenEstimate": 95,
+      "tokenEstimate": 84,
       "sensitivity": "unknown"
     },
     {
@@ -186,12 +186,12 @@
         "brief-workflow"
       ],
       "selector": "[data-htmlx-block-id=\"brief-workflow\"]",
-      "textHash": "sha256-X/2M36gkrUYwR+XCeofYEq5xTJJ8Rjwyh7/HtMSrBiE=",
-      "summary": "Recommended review loop Read Open the package and inspect the claim. Check Validate evidence, citations, and unresolv...",
+      "textHash": "sha256-cDOu89+r5pBVzBTpNT7GYus7yR7sRMin1JhzTs41pBE=",
+      "summary": "Recommended review loop Read Check the headline claim and evidence table. Check Confirm sample counts, conditions, an...",
       "keywords": [
         "Research Brief Template"
       ],
-      "tokenEstimate": 48,
+      "tokenEstimate": 52,
       "sensitivity": "unknown"
     }
   ],

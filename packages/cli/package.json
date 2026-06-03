@@ -1,6 +1,6 @@
 {
   "name": "@openwebdoc/cli",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "CLI for creating, converting, validating, packing, exporting, and refreshing agent-safe HTMLX packages.",
   "type": "module",
   "bin": {

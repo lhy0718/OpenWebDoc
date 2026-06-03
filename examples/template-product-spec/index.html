@@ -10,25 +10,29 @@
     <main class="doc product-spec" data-htmlx-kind="document">
       <header class="hero compact">
         <p class="eyebrow" data-htmlx-block-id="spec-kicker">Product specification</p>
-        <h1 data-htmlx-block-id="spec-title">Document runtime release spec</h1>
+        <h1 data-htmlx-block-id="spec-title">Customer insight inbox spec</h1>
         <p class="lede" data-htmlx-block-id="spec-summary">
-          A structured product spec for defining scope, constraints, release gates, and owner
-          responsibilities without losing the readable document surface.
+          A structured product spec for turning support tickets, sales notes, and research quotes
+          into prioritized product insights with clear ownership and review gates.
         </p>
       </header>
 
       <section class="spec-grid" data-htmlx-block-id="spec-scope">
         <article class="panel">
           <h2>Problem</h2>
-          <p>Readers need to open a document, correct small details, and export safely.</p>
+          <p>Customer feedback is scattered across tools, making repeated themes hard to verify.</p>
         </article>
         <article class="panel">
           <h2>Non-goals</h2>
-          <p>No in-browser model calls, provider keys, plugin execution, or hidden instructions.</p>
+          <p>
+            No automatic roadmap commitment, sentiment scoring, or customer-facing reply drafting.
+          </p>
         </article>
         <article class="panel">
           <h2>Success</h2>
-          <p>Examples open from GitHub Pages, validate locally, and remain package-local.</p>
+          <p>
+            Product managers can trace each insight to source notes before adding it to planning.
+          </p>
         </article>
       </section>
 
@@ -38,34 +42,36 @@
           <thead>
             <tr>
               <th>Capability</th>
-              <th>Runtime behavior</th>
-              <th>Validation rule</th>
+              <th>User behavior</th>
+              <th>Acceptance rule</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Open package</td>
-              <td>Show document first, with minimal floating controls.</td>
-              <td>Manifest and resources must pass validation.</td>
+              <td>Collect sources</td>
+              <td>
+                Import ticket excerpts, call notes, and research quotes into one intake queue.
+              </td>
+              <td>Every insight links to at least one source item.</td>
             </tr>
             <tr>
-              <td>Edit mode</td>
-              <td>Allow small text and object corrections on the document surface.</td>
-              <td>Requires declarative editing metadata.</td>
+              <td>Cluster themes</td>
+              <td>Group related evidence by workflow, account segment, and severity.</td>
+              <td>Theme cards show count, examples, and confidence.</td>
             </tr>
             <tr>
-              <td>Export</td>
-              <td>Create a fresh `.htmlx` file from the current package state.</td>
-              <td>Exported package must validate before sharing.</td>
+              <td>Review actions</td>
+              <td>Assign an owner, decision date, and next artifact for each accepted theme.</td>
+              <td>Unassigned themes stay out of roadmap reports.</td>
             </tr>
           </tbody>
         </table>
       </section>
 
       <section class="decision-strip" data-htmlx-block-id="spec-decisions">
-        <article><b>Owner</b><span>Runtime maintainer</span></article>
-        <article><b>Release risk</b><span>Medium until accessibility pass</span></article>
-        <article><b>Fallback</b><span>Use CLI validation and unpacked edits</span></article>
+        <article><b>Owner</b><span>Product operations</span></article>
+        <article><b>Release risk</b><span>Medium until source-link review</span></article>
+        <article><b>Fallback</b><span>Export a manual insight digest</span></article>
       </section>
     </main>
   </body>

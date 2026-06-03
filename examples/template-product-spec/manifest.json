@@ -5,7 +5,7 @@
   "title": "Product Spec Template",
   "language": "en",
   "createdAt": "2026-05-23T00:00:00.000Z",
-  "modifiedAt": "2026-06-02T09:18:35.400Z",
+  "modifiedAt": "2026-06-03T20:43:48.810Z",
   "entry": "index.html",
   "styles": [
     "styles/document.css"
@@ -20,7 +20,7 @@
       "path": "metadata/llm.json",
       "mediaType": "application/json",
       "role": "metadata",
-      "integrity": "sha256-qbb7AW4xw2A9oaH1mFie71og2jAHf898aeJwUOqH2OM="
+      "integrity": "sha256-jRLuXDnuJkyvLOIqeH3zM+Zpf5yxuYp4ge6r5eWBIis="
     },
     {
       "path": "metadata/provenance.json",
