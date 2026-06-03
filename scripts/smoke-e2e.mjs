@@ -1379,6 +1379,14 @@ async function verifyProportionalSurface(page, viewports) {
         .querySelector('[data-htmlx-block-id="doc-title"]')
         ?.getBoundingClientRect();
       const tableBox = element.querySelector("table")?.getBoundingClientRect();
+      const contentBottom = Math.max(
+        0,
+        ...Array.from(element.querySelectorAll("[data-htmlx-block-id]"))
+          .filter((node) => node !== element)
+          .map((node) => node.getBoundingClientRect())
+          .filter((box) => box.width > 0 && box.height > 0)
+          .map((box) => box.bottom - pageBox.top),
+      );
       return {
         width: pageBox.width,
         height: pageBox.height,
@@ -1387,6 +1395,7 @@ async function verifyProportionalSurface(page, viewports) {
         titleWidth: titleBox?.width ?? 0,
         titleHeight: titleBox?.height ?? 0,
         tableWidth: tableBox?.width ?? 0,
+        contentBottom,
       };
     });
     const expectedWidth = viewport.width - 16;
@@ -1409,6 +1418,15 @@ async function verifyProportionalSurface(page, viewports) {
       throw new Error(
         `Fixed-stage document height did not match package stage ratio at ${viewport.width}px: ${JSON.stringify(
           { ...metrics, expectedHeight },
+        )}`,
+      );
+    }
+    const bottomGap = metrics.height - metrics.contentBottom;
+    const maxAllowedBottomGap = Math.max(96, metrics.height * 0.08);
+    if (bottomGap > maxAllowedBottomGap) {
+      throw new Error(
+        `Fixed-stage document has excessive empty bottom space at ${viewport.width}px: ${JSON.stringify(
+          { ...metrics, bottomGap, maxAllowedBottomGap },
         )}`,
       );
     }

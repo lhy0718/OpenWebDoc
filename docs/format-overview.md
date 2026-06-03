@@ -64,7 +64,7 @@ Remote resources are outside the MVP security model and are rejected by validati
 
 ## Fixed-stage Document Profile
 
-Fixed-stage HTMLX documents use a logical stage that scales to the browser width. The current rich MVP example uses a `980 x 6500` stage so the document can behave like a long browser-native introduction rather than a short card. Text, existing images, semantic HTML tables, grouped figures, roadmap cards, funnel blocks, and existing simple shapes are positioned in stage-relative coordinates and exported as script-free HTML with `data-htmlx-*` attributes. Inline text formatting uses safe semantic tags such as `<strong>`, `<em>`, and `<u>`. Text font sizes and document border insets use the same stage-relative scale as images and figures, so the composition remains visually stable as the browser width changes.
+Fixed-stage HTMLX documents use a logical stage that scales to the browser width. The current rich MVP example uses a `980 x 3050` stage so the document can behave like a long browser-native introduction rather than a short card. Text, existing images, semantic HTML tables, grouped figures, roadmap cards, funnel blocks, and existing simple shapes are positioned in stage-relative coordinates and exported as script-free HTML with `data-htmlx-*` attributes. Inline text formatting uses safe semantic tags such as `<strong>`, `<em>`, and `<u>`. Text font sizes and document border insets use the same stage-relative scale as images and figures, so the composition remains visually stable as the browser width changes.
 
 Fixed-stage documents follow a proportional layout contract:
 

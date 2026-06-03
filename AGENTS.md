@@ -18,6 +18,7 @@
 - For OpenWebDoc app UI work, use the Codex in-app browser as the visual verification surface. Do not report visual/manual behavior as checked from an external browser or standalone Playwright window.
 - Keep profile contracts explicit in examples: `flow-document` examples must not declare fixed-stage `metadata/editing.json` stage metadata, while `fixed-stage-document` examples must declare package CSS `aspect-ratio` matching `data-htmlx-stage-width` and `data-htmlx-stage-height`.
 - Fixed-stage runtime logic must read package-owned stage geometry instead of assuming the default showcase stage height. Verify imported packages whose stage height differs from the app default before reporting resize or proportional-layout fixes.
+- Before reporting fixed-stage example quality, measure the rendered content bottom against the package stage height at desktop and narrow widths. Excessive blank space below the final content is a layout defect even when aspect-ratio validation passes; shrink the stage and align `data-htmlx-*` geometry to rendered content before packing.
 
 ## Stack
 

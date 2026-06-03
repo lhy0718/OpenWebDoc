@@ -42,7 +42,7 @@ body {
 .htmlx-document {
   position: relative;
   width: 100%;
-  aspect-ratio: 980 / 6500;
+  aspect-ratio: 980 / 3050;
   overflow: hidden;
   container-type: inline-size;
   padding: 2.7cqw 3.8cqw 4.4cqw;
