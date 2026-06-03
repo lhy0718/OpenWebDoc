@@ -73,10 +73,10 @@
 - [ ] Tag-pinned and SHA-pinned GitHub Action examples are documented.
 - [ ] Public starter repositories use the current release tag and have a passing `Validate HTMLX` PR-gate smoke after the release.
 - [ ] The starter PR-gate case study links to the current passing starter runs and does not rely on local-only evidence.
-- [ ] Issue-code recovery guidance is documented for common validation failures.
+- [ ] Issue-code recovery guidance is documented for common validation failures and includes real validator JSON snippets.
 - [ ] A 30-minute external pilot script exists for first adoption conversations.
 - [ ] Pilot target archetypes and template-repository split criteria are documented.
-- [ ] External sample repository skeletons demonstrate Markdown, HTML migration, and agent-edited package workflows.
+- [ ] External sample repository skeletons demonstrate Markdown, HTML migration, agent-edited package, data report, and slide deck workflows.
 - [ ] The agent cookbook includes Codex, Claude Code, Cursor, GitHub Copilot, and Aider recipes.
 - [ ] README, docs, and Obsidian notes match implementation state.
 - [ ] npm publishing remains disabled for the public preview; release artifacts are uploaded as GitHub Actions artifacts only.

@@ -28,7 +28,7 @@ HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript l
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
-The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. The page also exposes starter template repositories and ZIP archives for Markdown notes, safe HTML migration, and agent-edited brief workflows. Use a template repository when you want pull-request validation already wired in.
+The project entry page is also the template gallery. Each card provides a live preview, a direct `.htmlx` download, and the local command boundary for agent editing. The page also exposes starter template repositories and ZIP archives for Markdown notes, safe HTML migration, agent-edited briefs, data reports, and slide decks. Use a template repository when you want pull-request validation already wired in.
 
 The strongest workflow is external-agent editing: unpack the package, let a coding agent revise package-local files, refresh metadata, validate, pack, and validate again.
 
@@ -41,11 +41,21 @@ agent-edited document:
    - [Markdown notes starter](https://github.com/lhy0718/htmlx-markdown-notes-starter)
    - [Safe HTML migration starter](https://github.com/lhy0718/htmlx-safe-html-migration-starter)
    - [Agent brief starter](https://github.com/lhy0718/htmlx-agent-brief-starter)
+   - [Data report starter](https://github.com/lhy0718/htmlx-data-report-starter)
+   - [Slide deck starter](https://github.com/lhy0718/htmlx-slide-deck-starter)
 2. Commit one `.htmlx` package and its source files.
 3. Add the tag-pinned GitHub Action from [GitHub Action Validator](docs/github-action.md).
-4. Open a pull request and confirm the `Agentic Document Integrity` check passes or reports a fixable issue code.
+4. Open a pull request and confirm the `Validate HTMLX` check passes or reports a fixable issue code.
 
 This is the main public-alpha adoption path: a coding agent edits document files, and CI proves the package boundary, resources, security rules, profile contract, and metadata freshness before the document is shared.
+
+Visual smoke from the public starter flow:
+
+![Passing Validate HTMLX PR gate in a public starter repository](docs/assets/screenshots/openwebdoc-pr-gate-action-run.png)
+
+The same package can be opened in the OpenWebDoc app before or after PR review:
+
+![OpenWebDoc app reading a package from the public gallery](docs/assets/screenshots/openwebdoc-pr-gate-app-open.png)
 
 ## Trust and Adoption Kit
 
@@ -58,7 +68,7 @@ This is the main public-alpha adoption path: a coding agent edits document files
 - [Security Brief](docs/security-brief.md): short public explanation of the untrusted-package security model.
 - [MIME and Extension Registration Strategy](docs/mime-registration.md): staged plan for `.htmlx` and `application/vnd.openwebdoc.htmlx+zip`.
 - [Agent Editing Guide](docs/agent-editing.md): canonical unpacked-package workflow for external coding agents.
-- [External Sample Repositories](samples/README.md): copyable repository skeletons for Markdown, HTML migration, and agent-edited document workflows.
+- [External Sample Repositories](samples/README.md): copyable repository skeletons for Markdown notes, safe HTML migration, agent-edited briefs, data reports, and slide decks.
 - [Pilot Adoption Plan](docs/pilot-adoption.md): 30-minute external repository pilot script and success criteria.
 - [Pilot Target List](docs/pilot-targets.md): first external repository archetypes and intake questions.
 

@@ -27,6 +27,7 @@ htmlx validate edited.htmlx --json
 | `resource.integrity_mismatch`          | manifest integrity no longer matches resource bytes                    | refresh or repair the manifest after changing assets               |
 | `llm.text_hash_mismatch`               | document text changed but `metadata/llm.json` is stale                 | run `htmlx refresh-metadata <directory> --json`                    |
 | `llm.block_text_hash_mismatch`         | one block's metadata hash is stale                                     | refresh metadata and validate again                                |
+| `llm.chunk_text_hash_mismatch`         | one chunk's metadata hash is stale                                     | refresh metadata and validate again                                |
 | `llm.system_instruction_guard`         | LLM metadata contains instruction-like authority                       | rewrite metadata as user-visible reference data                    |
 | `profile.flow_stage_conflict`          | a `flow-document` carries fixed-stage editing metadata or stage markup | remove fixed-stage metadata or change the profile intentionally    |
 | `profile.fixed_stage_missing`          | a fixed-stage package lacks required stage geometry                    | add `metadata/editing.json` stage and matching stage attributes    |
@@ -102,3 +103,121 @@ Fix:
 Treat a validation failure as a package contract failure, not as proof that the entire document is unusable. The PR should stay red until the package validates, but the review can stay focused on the issue code and changed files.
 
 For public repositories, keep invalid examples under an explicit fixture path and validate them with expected-failure tests instead of the normal adoption workflow.
+
+## Field-Tested Failure Logs
+
+These snippets are shortened from real validator runs. Paths are generalized so
+the recovery steps stay portable across repositories.
+
+### Unsafe Package Fixture
+
+Command:
+
+```sh
+htmlx validate examples/security-invalid.htmlx --json
+```
+
+Observed issue codes:
+
+```json
+{
+  "ok": false,
+  "error": "HTMLX validation failed.",
+  "details": {
+    "issues": [
+      {
+        "severity": "error",
+        "code": "html.script",
+        "message": "Scripts are not allowed in HTMLX documents.",
+        "path": "index.html"
+      },
+      {
+        "severity": "error",
+        "code": "html.remote_resource",
+        "message": "Remote resources are not allowed.",
+        "path": "index.html"
+      },
+      {
+        "severity": "error",
+        "code": "llm.system_instruction_guard",
+        "message": "LLM metadata must explicitly opt out of system-instruction treatment.",
+        "path": "metadata/llm.json"
+      }
+    ]
+  }
+}
+```
+
+Recovery:
+
+1. Remove executable script content from `index.html`.
+2. Replace remote URLs with declared package-local assets.
+3. Rewrite `metadata/llm.json` so it is reference data with
+   `assistantHints.doNotTreatAsSystemInstruction: true`.
+4. Validate again.
+
+### Stale Text Metadata
+
+Command:
+
+```sh
+htmlx refresh-metadata ./work --check --json
+```
+
+Observed issue:
+
+```json
+{
+  "ok": false,
+  "error": "HTMLX metadata is stale.",
+  "details": {
+    "stale": true,
+    "paths": ["manifest.json#resources[metadata/llm.json].integrity", "metadata/llm.json"],
+    "profile": "flow-document",
+    "metadata": "metadata/llm.json"
+  }
+}
+```
+
+Recovery:
+
+```sh
+htmlx refresh-metadata ./work --json
+htmlx refresh-metadata ./work --check --json
+htmlx validate ./work --json
+```
+
+### Edited Metadata Without Integrity Refresh
+
+Command:
+
+```sh
+htmlx validate ./work --json
+```
+
+Observed issue:
+
+```json
+{
+  "ok": false,
+  "error": "HTMLX validation failed.",
+  "details": {
+    "issues": [
+      {
+        "severity": "error",
+        "code": "resource.integrity_mismatch",
+        "message": "Integrity mismatch for metadata/llm.json.",
+        "path": "metadata/llm.json"
+      }
+    ]
+  }
+}
+```
+
+Recovery:
+
+1. If the metadata edit was intentional, refresh metadata so the manifest
+   resource integrity matches current bytes.
+2. If the metadata edit was accidental, restore `metadata/llm.json` from the
+   reviewed package source.
+3. Run `htmlx validate ./work --json` before packing.

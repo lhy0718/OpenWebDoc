@@ -9,8 +9,10 @@ The `samples/` folders are copyable skeletons. Before splitting them into separa
 | [`htmlx-markdown-notes-starter`](https://github.com/lhy0718/htmlx-markdown-notes-starter)           | `samples/external-research-notes` | Markdown-first notes converted to `.htmlx`                 |
 | [`htmlx-safe-html-migration-starter`](https://github.com/lhy0718/htmlx-safe-html-migration-starter) | `samples/external-html-migration` | safe standalone HTML converted to `.htmlx` and static HTML |
 | [`htmlx-agent-brief-starter`](https://github.com/lhy0718/htmlx-agent-brief-starter)                 | `samples/external-agent-brief`    | agent-edited brief with PR validation                      |
+| [`htmlx-data-report-starter`](https://github.com/lhy0718/htmlx-data-report-starter)                 | `samples/external-data-report`    | analytics report package with PR validation                |
+| [`htmlx-slide-deck-starter`](https://github.com/lhy0718/htmlx-slide-deck-starter)                   | `samples/external-slide-deck`     | presentation-style HTMLX slide deck with PR validation     |
 
-The machine-readable mapping lives in [`template-repos.json`](template-repos.json). `pnpm samples:check` verifies that the manifest matches the available external sample folders.
+The machine-readable mapping lives in [`template-repos.json`](template-repos.json). `pnpm samples:check` verifies that the manifest matches the available external sample folders. Each listed repository is public, marked as a GitHub template repository, and has a passing pull-request validation smoke linked from the [Starter PR Gate Case Study](../docs/starter-pr-gate-case-study.md).
 
 ## Required Files
 
