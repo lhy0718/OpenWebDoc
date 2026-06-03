@@ -22,7 +22,7 @@ import {
 import { Command } from "commander";
 import { readdir, readFile, stat, writeFile, mkdir } from "node:fs/promises";
 import { realpathSync } from "node:fs";
-import { dirname, isAbsolute, join, relative, resolve } from "node:path";
+import { basename, dirname, isAbsolute, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 interface CliIo {
@@ -41,7 +41,7 @@ export function buildProgram(io: CliIo = process): Command {
   program
     .name("htmlx")
     .description(
-      "Create, validate, inspect, pack, unpack, and refresh HTMLX Document Package files.",
+      "Create, convert, validate, inspect, pack, unpack, export, and refresh HTMLX Document Package files.",
     )
     .version("0.1.0-alpha.1");
 
@@ -86,6 +86,123 @@ export function buildProgram(io: CliIo = process): Command {
             output,
             title: options.title,
             profile,
+          };
+        });
+      },
+    );
+
+  program
+    .command("from-markdown")
+    .description("Convert a Markdown file into a flow-document .htmlx package.")
+    .argument("<input>", "Input Markdown file")
+    .argument("<output>", "Output .htmlx path")
+    .option("--title <title>", "Document title")
+    .option("--language <language>", "Document language", "en")
+    .option("--json", "Print JSON output")
+    .action(
+      async (
+        input: string,
+        output: string,
+        options: {
+          title?: string;
+          language: string;
+        } & JsonOption,
+      ) => {
+        await runAction(io, options, async () => {
+          const inputPath = resolveCliPath(input);
+          const markdown = await readFile(inputPath, "utf8");
+          const title = options.title?.trim() || deriveMarkdownTitle(markdown, inputPath);
+          const html = createHtmlFromMarkdown(markdown, title, options.language);
+          const archive = await createHtmlx({
+            title,
+            language: options.language,
+            html,
+            css: flowDocumentCss,
+          });
+          await writeFileEnsured(resolveCliPath(output), archive);
+          return {
+            message: `Converted ${input} -> ${output}`,
+            input,
+            output,
+            title,
+            profile: "flow-document",
+          };
+        });
+      },
+    );
+
+  program
+    .command("from-html")
+    .description("Convert a safe standalone HTML file into a flow-document .htmlx package.")
+    .argument("<input>", "Input HTML file")
+    .argument("<output>", "Output .htmlx path")
+    .option("--title <title>", "Document title")
+    .option("--language <language>", "Document language", "en")
+    .option("--json", "Print JSON output")
+    .action(
+      async (
+        input: string,
+        output: string,
+        options: {
+          title?: string;
+          language: string;
+        } & JsonOption,
+      ) => {
+        await runAction(io, options, async () => {
+          const inputPath = resolveCliPath(input);
+          const sourceHtml = await readFile(inputPath, "utf8");
+          assertConvertibleHtmlSource(sourceHtml);
+          const title = options.title?.trim() || deriveHtmlTitle(sourceHtml, inputPath);
+          const html = createHtmlFromHtmlSource(sourceHtml, title, options.language);
+          const archive = await createHtmlx({
+            title,
+            language: options.language,
+            html,
+            css: flowDocumentCss,
+          });
+          await writeFileEnsured(resolveCliPath(output), archive);
+          return {
+            message: `Converted ${input} -> ${output}`,
+            input,
+            output,
+            title,
+            profile: "flow-document",
+          };
+        });
+      },
+    );
+
+  program
+    .command("to-static-html")
+    .description("Export a validated .htmlx package as a static HTML directory.")
+    .argument("<input>", "Input .htmlx path")
+    .argument("<directory>", "Output static directory")
+    .option("--include-metadata", "Copy manifest and metadata files into the static directory")
+    .option("--overwrite", "Overwrite existing output files")
+    .option("--json", "Print JSON output")
+    .action(
+      async (
+        input: string,
+        directory: string,
+        options: JsonOption & { includeMetadata?: boolean; overwrite?: boolean },
+      ) => {
+        await runAction(io, options, async () => {
+          const htmlx = await openHtmlx(await readFile(resolveCliPath(input)));
+          const outputDirectory = resolveCliPath(directory);
+          const exported = await writeStaticHtmlExport({
+            htmlx,
+            outputDirectory,
+            includeMetadata: Boolean(options.includeMetadata),
+            overwrite: Boolean(options.overwrite),
+          });
+          return {
+            message: `Exported ${input} -> ${directory}`,
+            input,
+            directory,
+            profile: resolveHtmlxProfile(htmlx.manifest, htmlx.files),
+            entry: "index.html",
+            files: exported,
+            includeMetadata: Boolean(options.includeMetadata),
           };
         });
       },
@@ -380,6 +497,312 @@ function createDefaultHtml(title: string): string {
   </body>
 </html>
 `;
+}
+
+function createHtmlFromMarkdown(markdown: string, title: string, language: string): string {
+  const body = renderMarkdownBlocks(markdown);
+  return `<!doctype html>
+<html lang="${escapeHtmlAttribute(language)}">
+  <head>
+    <meta charset="utf-8">
+    <title>${escapeHtml(title)}</title>
+    <link rel="stylesheet" href="styles/document.css">
+  </head>
+  <body>
+    <main class="htmlx-flow-document" data-htmlx-profile="flow-document">
+      <article>
+${body}
+      </article>
+    </main>
+  </body>
+</html>
+`;
+}
+
+function createHtmlFromHtmlSource(sourceHtml: string, title: string, language: string): string {
+  const body = ensureFlowBlockIds(extractHtmlBodyContent(sourceHtml));
+  return `<!doctype html>
+<html lang="${escapeHtmlAttribute(language)}">
+  <head>
+    <meta charset="utf-8">
+    <title>${escapeHtml(title)}</title>
+    <link rel="stylesheet" href="styles/document.css">
+  </head>
+  <body>
+    <main class="htmlx-flow-document" data-htmlx-profile="flow-document">
+      <article>
+${body || '        <p data-htmlx-block-id="html-block-1" data-htmlx-kind="paragraph"></p>'}
+      </article>
+    </main>
+  </body>
+</html>
+`;
+}
+
+function assertConvertibleHtmlSource(sourceHtml: string): void {
+  const unsafeChecks: Array<[RegExp, string]> = [
+    [/<script[\s>]/i, "Scripts are not allowed in HTMLX packages."],
+    [/\son[a-z]+\s*=/i, "Inline event handlers are not allowed in HTMLX packages."],
+    [/javascript:/i, "javascript: URLs are not allowed in HTMLX packages."],
+    [/<iframe[\s>]/i, "Iframes are not allowed in HTMLX packages."],
+    [/<form[\s>]/i, "Forms are not allowed in HTMLX packages."],
+    [/\s(?:src|href)\s*=\s*["']https?:\/\//i, "Remote resources are not allowed."],
+    [/\s(?:src|href)\s*=\s*["']file:/i, "file: resources are not allowed."],
+    [/\s(?:src|href)\s*=\s*["']data:/i, "data: resources are not allowed."],
+    [
+      /(?:<style\b[\s\S]*?(?:@import|url\s*\(\s*["']?(?:https?:\/\/|file:))|style\s*=\s*["'][^"']*(?:url\s*\(|@import|javascript:|https?:\/\/|file:))/i,
+      "CSS must not reference scripts, remote resources, or file resources.",
+    ],
+  ];
+  for (const [pattern, message] of unsafeChecks) {
+    if (pattern.test(sourceHtml)) {
+      throw new Error(`Cannot convert unsafe HTML source. ${message}`);
+    }
+  }
+
+  const body = extractHtmlBodyContent(sourceHtml);
+  for (const match of body.matchAll(/\s(?:src|href)\s*=\s*["']([^"']+)["']/gi)) {
+    const ref = match[1].trim().toLowerCase();
+    if (!ref || ref.startsWith("#") || ref.startsWith("mailto:")) {
+      continue;
+    }
+    throw new Error(
+      "Cannot convert HTML source with local resource references yet. Remove the reference or add assets after unpacking the package.",
+    );
+  }
+}
+
+function extractHtmlBodyContent(sourceHtml: string): string {
+  const bodyMatch = /<body\b[^>]*>([\s\S]*?)<\/body>/i.exec(sourceHtml);
+  return (bodyMatch?.[1] ?? sourceHtml).trim();
+}
+
+function ensureFlowBlockIds(html: string): string {
+  let blockNumber = 1;
+  return html.replace(
+    /<(h[1-6]|p|section|article|blockquote|ul|ol|pre|table|figure)\b([^>]*)>/gi,
+    (fullMatch: string, tagName: string, attributes: string) => {
+      if (/\bdata-htmlx-block-id\s*=/.test(attributes)) return fullMatch;
+      const blockId = `html-block-${blockNumber++}`;
+      const kind = inferHtmlSourceKind(tagName.toLowerCase());
+      return `<${tagName}${attributes} data-htmlx-block-id="${blockId}" data-htmlx-kind="${kind}">`;
+    },
+  );
+}
+
+function inferHtmlSourceKind(tagName: string): string {
+  if (/^h[1-6]$/.test(tagName)) return "heading";
+  if (tagName === "ul" || tagName === "ol") return "list";
+  if (tagName === "pre") return "code";
+  if (tagName === "table") return "table";
+  if (tagName === "figure") return "figure";
+  if (tagName === "section" || tagName === "article") return "section";
+  return "paragraph";
+}
+
+function renderMarkdownBlocks(markdown: string): string {
+  const lines = stripMarkdownFrontMatter(markdown).replaceAll("\r\n", "\n").split("\n");
+  const blocks: string[] = [];
+  let index = 0;
+  let blockNumber = 1;
+
+  const nextBlockId = () => `md-block-${blockNumber++}`;
+
+  while (index < lines.length) {
+    const line = lines[index] ?? "";
+    if (!line.trim()) {
+      index += 1;
+      continue;
+    }
+
+    const fenceMatch = line.match(/^```(\S*)\s*$/);
+    if (fenceMatch) {
+      const codeLines: string[] = [];
+      index += 1;
+      while (index < lines.length && !/^```\s*$/.test(lines[index] ?? "")) {
+        codeLines.push(lines[index] ?? "");
+        index += 1;
+      }
+      if (index < lines.length) index += 1;
+      const languageClass = fenceMatch[1]
+        ? ` class="language-${escapeHtmlAttribute(fenceMatch[1])}"`
+        : "";
+      blocks.push(
+        `        <pre data-htmlx-block-id="${nextBlockId()}" data-htmlx-kind="code"><code${languageClass}>${escapeHtml(
+          codeLines.join("\n"),
+        )}</code></pre>`,
+      );
+      continue;
+    }
+
+    const headingMatch = line.match(/^(#{1,6})\s+(.+?)\s*#*\s*$/);
+    if (headingMatch) {
+      const level = headingMatch[1].length;
+      const tag = `h${level}`;
+      blocks.push(
+        `        <${tag} data-htmlx-block-id="${nextBlockId()}" data-htmlx-kind="heading">${renderMarkdownInline(
+          headingMatch[2],
+        )}</${tag}>`,
+      );
+      index += 1;
+      continue;
+    }
+
+    const blockquoteLines: string[] = [];
+    while (index < lines.length) {
+      const quoteMatch = (lines[index] ?? "").match(/^>\s?(.*)$/);
+      if (!quoteMatch) break;
+      blockquoteLines.push(quoteMatch[1]);
+      index += 1;
+    }
+    if (blockquoteLines.length > 0) {
+      blocks.push(
+        `        <blockquote data-htmlx-block-id="${nextBlockId()}" data-htmlx-kind="paragraph"><p>${renderMarkdownInline(
+          blockquoteLines.join(" "),
+        )}</p></blockquote>`,
+      );
+      continue;
+    }
+
+    const listMatch = line.match(/^(\s*)([-*+]|\d+[.)])\s+(.+)$/);
+    if (listMatch) {
+      const ordered = /\d+[.)]/.test(listMatch[2]);
+      const items: string[] = [];
+      while (index < lines.length) {
+        const itemMatch = (lines[index] ?? "").match(/^(\s*)([-*+]|\d+[.)])\s+(.+)$/);
+        if (!itemMatch || /\d+[.)]/.test(itemMatch[2]) !== ordered) break;
+        items.push(`          <li>${renderMarkdownInline(itemMatch[3])}</li>`);
+        index += 1;
+      }
+      const tag = ordered ? "ol" : "ul";
+      blocks.push(
+        `        <${tag} data-htmlx-block-id="${nextBlockId()}" data-htmlx-kind="list">\n${items.join(
+          "\n",
+        )}\n        </${tag}>`,
+      );
+      continue;
+    }
+
+    const paragraphLines = [line.trim()];
+    index += 1;
+    while (
+      index < lines.length &&
+      lines[index]?.trim() &&
+      !/^(#{1,6})\s+/.test(lines[index] ?? "") &&
+      !/^```/.test(lines[index] ?? "") &&
+      !/^>\s?/.test(lines[index] ?? "") &&
+      !/^(\s*)([-*+]|\d+[.)])\s+/.test(lines[index] ?? "")
+    ) {
+      paragraphLines.push((lines[index] ?? "").trim());
+      index += 1;
+    }
+    blocks.push(
+      `        <p data-htmlx-block-id="${nextBlockId()}" data-htmlx-kind="paragraph">${renderMarkdownInline(
+        paragraphLines.join(" "),
+      )}</p>`,
+    );
+  }
+
+  if (blocks.length > 0) return blocks.join("\n");
+  return `        <p data-htmlx-block-id="${nextBlockId()}" data-htmlx-kind="paragraph"></p>`;
+}
+
+function stripMarkdownFrontMatter(markdown: string): string {
+  if (!markdown.startsWith("---\n") && !markdown.startsWith("---\r\n")) return markdown;
+  const normalized = markdown.replaceAll("\r\n", "\n");
+  const endIndex = normalized.indexOf("\n---\n", 4);
+  if (endIndex === -1) return markdown;
+  return normalized.slice(endIndex + "\n---\n".length);
+}
+
+function renderMarkdownInline(value: string): string {
+  const linkFlattened = value.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+"[^"]*")?\)/g, "$1 ($2)");
+  return escapeHtml(linkFlattened)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/__([^_]+)__/g, "<strong>$1</strong>")
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+    .replace(/_([^_]+)_/g, "<em>$1</em>");
+}
+
+function deriveMarkdownTitle(markdown: string, inputPath: string): string {
+  const heading = stripMarkdownFrontMatter(markdown).match(/^#\s+(.+?)\s*#*\s*$/m);
+  if (heading?.[1]) return heading[1].trim();
+  const name = basename(inputPath)
+    .replace(/\.[^.]+$/, "")
+    .replace(/[-_]+/g, " ")
+    .trim();
+  return name ? name.replace(/\b\w/g, (letter) => letter.toUpperCase()) : "Untitled HTMLX Document";
+}
+
+function deriveHtmlTitle(sourceHtml: string, inputPath: string): string {
+  const title = /<title\b[^>]*>([\s\S]*?)<\/title>/i.exec(sourceHtml)?.[1];
+  if (title?.trim()) return title.replaceAll(/\s+/g, " ").trim();
+  const h1 = /<h1\b[^>]*>([\s\S]*?)<\/h1>/i.exec(sourceHtml)?.[1];
+  const h1Text = h1
+    ?.replaceAll(/<[^>]+>/g, " ")
+    .replaceAll(/\s+/g, " ")
+    .trim();
+  if (h1Text) return h1Text;
+  const name = basename(inputPath)
+    .replace(/\.[^.]+$/, "")
+    .replace(/[-_]+/g, " ")
+    .trim();
+  return name ? name.replace(/\b\w/g, (letter) => letter.toUpperCase()) : "Untitled HTMLX Document";
+}
+
+async function writeStaticHtmlExport(input: {
+  htmlx: Awaited<ReturnType<typeof openHtmlx>>;
+  outputDirectory: string;
+  includeMetadata: boolean;
+  overwrite: boolean;
+}): Promise<string[]> {
+  const { htmlx, outputDirectory, includeMetadata, overwrite } = input;
+  const manifest = htmlx.manifest;
+  const outputPaths = new Map<string, Uint8Array>();
+
+  outputPaths.set("index.html", readRequiredPackageFile(htmlx.files, manifest.entry));
+
+  const copyPaths = new Set<string>([
+    ...manifest.styles,
+    ...manifest.resources
+      .filter((resource) => includeMetadata || resource.role !== "metadata")
+      .map((resource) => resource.path),
+  ]);
+
+  if (includeMetadata) {
+    copyPaths.add("manifest.json");
+  }
+
+  copyPaths.delete(manifest.entry);
+  copyPaths.delete(HTMLX_MIMETYPE_PATH);
+
+  for (const path of [...copyPaths].sort()) {
+    const bytes = htmlx.files.get(path);
+    if (bytes) {
+      outputPaths.set(path, bytes);
+    }
+  }
+
+  const exported: string[] = [];
+  for (const [path, bytes] of outputPaths) {
+    const destination = resolveStaticOutputPath(outputDirectory, path);
+    await writeFileEnsured(destination, bytes, { overwrite });
+    exported.push(path);
+  }
+  return exported.sort();
+}
+
+function resolveStaticOutputPath(outputDirectory: string, packagePath: string): string {
+  if (!packagePath || isAbsolute(packagePath) || packagePath.includes("\\")) {
+    throw new Error(`Refusing to export invalid package path: ${packagePath}`);
+  }
+  const destination = resolve(outputDirectory, packagePath);
+  const relativePath = relative(outputDirectory, destination);
+  if (relativePath.startsWith("..") || isAbsolute(relativePath)) {
+    throw new Error(`Refusing to export outside output directory: ${packagePath}`);
+  }
+  return destination;
 }
 
 async function createFixedStagePackage(title: string, language: string): Promise<Uint8Array> {
@@ -1019,6 +1442,115 @@ function escapeHtml(value: string): string {
 function escapeHtmlAttribute(value: string): string {
   return escapeHtml(value).replaceAll("'", "&#39;");
 }
+
+const flowDocumentCss = `*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  color-scheme: light;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.65;
+}
+
+body {
+  margin: 0;
+  color: #172033;
+  background: #f6f8fb;
+}
+
+.htmlx-flow-document {
+  width: min(100%, 920px);
+  margin: 0 auto;
+  padding: clamp(32px, 6vw, 72px) clamp(20px, 5vw, 56px);
+  background: #ffffff;
+}
+
+article {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 1.6em 0 0.45em;
+  color: #10233f;
+  line-height: 1.12;
+}
+
+h1:first-child {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 7vw, 4.5rem);
+  letter-spacing: 0;
+}
+
+h2 {
+  font-size: clamp(1.65rem, 4vw, 2.5rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 1.6rem);
+}
+
+p,
+li,
+blockquote {
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+}
+
+p,
+ul,
+ol,
+blockquote,
+pre {
+  margin: 0 0 1.15em;
+}
+
+ul,
+ol {
+  padding-left: 1.35em;
+}
+
+li + li {
+  margin-top: 0.42em;
+}
+
+blockquote {
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 4px solid #1d8f8a;
+  color: #40516b;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 1em;
+  border: 1px solid #d6e0ea;
+  border-radius: 8px;
+  background: #0e1a2b;
+  color: #eef6ff;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+p code,
+li code {
+  padding: 0.1em 0.32em;
+  border-radius: 4px;
+  background: #e8eef5;
+  color: #12304d;
+}
+`;
 
 const entryPoint = isEntrypoint();
 if (entryPoint) {

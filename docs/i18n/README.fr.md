@@ -78,6 +78,9 @@ htmlx create document.htmlx --title "My Document" --language en
 htmlx create document.htmlx --title "My Document" --language en --json
 htmlx create fixed.htmlx --profile fixed-stage-document --title "Visual Brief"
 htmlx create deck.htmlx --profile slide-deck --title "OpenWebDoc Pitch" --slides 6
+htmlx from-markdown notes.md notes.htmlx --title "Project Notes"
+htmlx from-html page.html page.htmlx --title "Project Page"
+htmlx to-static-html notes.htmlx ./notes-static
 ```
 
 Sortie:

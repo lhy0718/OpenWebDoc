@@ -1,0 +1,39 @@
+{
+  "cases": [
+    {
+      "id": "valid-flow-minimal",
+      "description": "Minimal script-free flow-document package.",
+      "path": "cases/valid-flow-minimal",
+      "valid": true,
+      "profile": "flow-document"
+    },
+    {
+      "id": "invalid-script",
+      "description": "Rejects executable script content in the document entry.",
+      "path": "cases/invalid-script",
+      "valid": false,
+      "expectedIssueCodes": ["html.script"]
+    },
+    {
+      "id": "invalid-flow-stage-conflict",
+      "description": "Rejects flow-document packages that declare fixed-stage editing metadata.",
+      "path": "cases/invalid-flow-stage-conflict",
+      "valid": false,
+      "expectedIssueCodes": ["profile.flow_stage_conflict"]
+    },
+    {
+      "id": "invalid-slide-profile-mismatch",
+      "description": "Rejects presentation metadata when the explicit manifest profile is not slide-deck.",
+      "path": "cases/invalid-slide-profile-mismatch",
+      "valid": false,
+      "expectedIssueCodes": ["profile.presentation_mismatch"]
+    },
+    {
+      "id": "invalid-fixed-stage-proportional-css",
+      "description": "Rejects fixed-stage packages that use non-proportional CSS functions.",
+      "path": "cases/invalid-fixed-stage-proportional-css",
+      "valid": false,
+      "expectedIssueCodes": ["layout.non_proportional_css_function"]
+    }
+  ]
+}

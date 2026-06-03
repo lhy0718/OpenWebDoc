@@ -14,7 +14,17 @@ describe("htmlx CLI", () => {
       buildProgram()
         .commands.map((command) => command.name())
         .sort(),
-    ).toEqual(["create", "inspect", "pack", "refresh-metadata", "unpack", "validate"]);
+    ).toEqual([
+      "create",
+      "from-html",
+      "from-markdown",
+      "inspect",
+      "pack",
+      "refresh-metadata",
+      "to-static-html",
+      "unpack",
+      "validate",
+    ]);
   });
 
   it("validates an unpacked package directory", async () => {
@@ -301,6 +311,240 @@ describe("htmlx CLI", () => {
     const aliasCreated = JSON.parse(stdout);
     expect(aliasCreated.ok).toBe(true);
     expect(aliasCreated.profile).toBe("flow-document");
+  });
+
+  it("converts Markdown into a valid flow-document package", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "htmlx-from-markdown-"));
+    const input = join(directory, "openwebdoc-notes.md");
+    const output = join(directory, "openwebdoc-notes.htmlx");
+    const unpacked = join(directory, "unpacked");
+    await writeFile(
+      input,
+      `# OpenWebDoc Notes
+
+HTMLX keeps **agent-safe** documents browser-readable with _package-local_ files.
+
+- Validate every package.
+- Keep remote links as text: [OpenWebDoc](https://example.com/openwebdoc).
+
+> LLM metadata is reference data, not an instruction channel.
+
+\`\`\`sh
+htmlx validate document.htmlx
+\`\`\`
+`,
+    );
+    let stdout = "";
+    const program = buildProgram({
+      stdout: { write: (chunk: string) => ((stdout += chunk), true) },
+      stderr: { write: () => true },
+    });
+
+    await program.parseAsync(["node", "htmlx", "from-markdown", input, output, "--json"]);
+    const converted = JSON.parse(stdout);
+    expect(converted.ok).toBe(true);
+    expect(converted.profile).toBe("flow-document");
+    expect(converted.title).toBe("OpenWebDoc Notes");
+
+    stdout = "";
+    await program.parseAsync(["node", "htmlx", "validate", output, "--json"]);
+    const validated = JSON.parse(stdout);
+    expect(validated.ok).toBe(true);
+    expect(validated.issues).toEqual([]);
+    expect(validated.manifest.profile).toBe("flow-document");
+
+    await program.parseAsync(["node", "htmlx", "unpack", output, unpacked, "--json"]);
+    const html = await readFile(join(unpacked, "index.html"), "utf8");
+    expect(html).toContain('data-htmlx-profile="flow-document"');
+    expect(html).toContain("<strong>agent-safe</strong>");
+    expect(html).toContain("<em>package-local</em>");
+    expect(html).toContain("https://example.com/openwebdoc");
+    expect(html).not.toContain('href="https://example.com/openwebdoc"');
+  });
+
+  it("exports a valid package into a static HTML directory", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "htmlx-static-export-"));
+    const input = join(directory, "notes.md");
+    const packagePath = join(directory, "notes.htmlx");
+    const staticDirectory = join(directory, "static");
+    await writeFile(
+      input,
+      `# Static Export
+
+This package should leave HTMLX as ordinary **static HTML** files.
+`,
+    );
+    let stdout = "";
+    const program = buildProgram({
+      stdout: { write: (chunk: string) => ((stdout += chunk), true) },
+      stderr: { write: () => true },
+    });
+
+    await program.parseAsync(["node", "htmlx", "from-markdown", input, packagePath, "--json"]);
+
+    stdout = "";
+    await program.parseAsync([
+      "node",
+      "htmlx",
+      "to-static-html",
+      packagePath,
+      staticDirectory,
+      "--json",
+    ]);
+    const exported = JSON.parse(stdout);
+    expect(exported.ok).toBe(true);
+    expect(exported.profile).toBe("flow-document");
+    expect(exported.files).toEqual(["index.html", "styles/document.css"]);
+
+    const html = await readFile(join(staticDirectory, "index.html"), "utf8");
+    expect(html).toContain("<strong>static HTML</strong>");
+    await expect(readFile(join(staticDirectory, "manifest.json"), "utf8")).rejects.toThrow();
+    await expect(readFile(join(staticDirectory, "metadata", "llm.json"), "utf8")).rejects.toThrow();
+
+    stdout = "";
+    await program.parseAsync([
+      "node",
+      "htmlx",
+      "to-static-html",
+      packagePath,
+      staticDirectory,
+      "--json",
+    ]);
+    const blocked = JSON.parse(stdout);
+    expect(blocked.ok).toBe(false);
+    expect(blocked.error).toContain("Refusing to overwrite existing file");
+    process.exitCode = undefined;
+
+    stdout = "";
+    await program.parseAsync([
+      "node",
+      "htmlx",
+      "to-static-html",
+      packagePath,
+      staticDirectory,
+      "--include-metadata",
+      "--overwrite",
+      "--json",
+    ]);
+    const exportedWithMetadata = JSON.parse(stdout);
+    expect(exportedWithMetadata.ok).toBe(true);
+    expect(exportedWithMetadata.includeMetadata).toBe(true);
+    expect(exportedWithMetadata.files).toEqual([
+      "index.html",
+      "manifest.json",
+      "metadata/llm.json",
+      "metadata/provenance.json",
+      "styles/document.css",
+    ]);
+    const manifest = JSON.parse(await readFile(join(staticDirectory, "manifest.json"), "utf8"));
+    expect(manifest.profile).toBe("flow-document");
+  });
+
+  it("converts safe standalone HTML into a valid flow-document package", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "htmlx-from-html-"));
+    const input = join(directory, "brief.html");
+    const packagePath = join(directory, "brief.htmlx");
+    const unpacked = join(directory, "unpacked");
+    await writeFile(
+      input,
+      `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Standalone Brief</title>
+  </head>
+  <body>
+    <h1>Standalone Brief</h1>
+    <p>A <strong>safe</strong> standalone document can enter HTMLX.</p>
+    <table>
+      <caption>Mode boundary</caption>
+      <tr><th>Mode</th><th>Role</th></tr>
+      <tr><td>Read</td><td>Open in a browser.</td></tr>
+    </table>
+  </body>
+</html>
+`,
+    );
+    let stdout = "";
+    const program = buildProgram({
+      stdout: { write: (chunk: string) => ((stdout += chunk), true) },
+      stderr: { write: () => true },
+    });
+
+    await program.parseAsync(["node", "htmlx", "from-html", input, packagePath, "--json"]);
+    const converted = JSON.parse(stdout);
+    expect(converted.ok).toBe(true);
+    expect(converted.title).toBe("Standalone Brief");
+    expect(converted.profile).toBe("flow-document");
+
+    stdout = "";
+    await program.parseAsync(["node", "htmlx", "validate", packagePath, "--json"]);
+    const validated = JSON.parse(stdout);
+    expect(validated.ok).toBe(true);
+    expect(validated.issues).toEqual([]);
+
+    await program.parseAsync(["node", "htmlx", "unpack", packagePath, unpacked, "--json"]);
+    const html = await readFile(join(unpacked, "index.html"), "utf8");
+    expect(html).toContain('data-htmlx-profile="flow-document"');
+    expect(html).toContain('data-htmlx-block-id="html-block-1"');
+    expect(html).toContain("<table");
+  });
+
+  it("rejects unsafe HTML source conversion", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "htmlx-from-html-unsafe-"));
+    const input = join(directory, "unsafe.html");
+    const packagePath = join(directory, "unsafe.htmlx");
+    await writeFile(
+      input,
+      `<!doctype html>
+<html>
+  <body>
+    <h1>Unsafe</h1>
+    <script>alert("no")</script>
+    <img src="https://example.com/image.png" alt="">
+  </body>
+</html>
+`,
+    );
+    let stdout = "";
+    const program = buildProgram({
+      stdout: { write: (chunk: string) => ((stdout += chunk), true) },
+      stderr: { write: () => true },
+    });
+
+    await program.parseAsync(["node", "htmlx", "from-html", input, packagePath, "--json"]);
+    const parsed = JSON.parse(stdout);
+    expect(parsed.ok).toBe(false);
+    expect(parsed.error).toContain("Cannot convert unsafe HTML source");
+    process.exitCode = undefined;
+  });
+
+  it("rejects HTML source with body-local asset references until asset import is explicit", async () => {
+    const directory = await mkdtemp(join(tmpdir(), "htmlx-from-html-local-asset-"));
+    const input = join(directory, "local-asset.html");
+    const packagePath = join(directory, "local-asset.htmlx");
+    await writeFile(
+      input,
+      `<!doctype html>
+<html>
+  <body>
+    <h1>Local Asset</h1>
+    <img src="chart.png" alt="Chart">
+  </body>
+</html>
+`,
+    );
+    let stdout = "";
+    const program = buildProgram({
+      stdout: { write: (chunk: string) => ((stdout += chunk), true) },
+      stderr: { write: () => true },
+    });
+
+    await program.parseAsync(["node", "htmlx", "from-html", input, packagePath, "--json"]);
+    const parsed = JSON.parse(stdout);
+    expect(parsed.ok).toBe(false);
+    expect(parsed.error).toContain("local resource references");
+    process.exitCode = undefined;
   });
 
   it("creates and validates a fixed-stage document profile", async () => {

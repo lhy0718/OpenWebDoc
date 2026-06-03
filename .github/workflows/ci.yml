@@ -34,6 +34,18 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Check HTMLX conformance fixtures
+        run: pnpm conformance:check
+
+      - name: Check external sample repositories
+        run: pnpm samples:check
+
+      - name: Export external sample repositories
+        run: pnpm samples:export
+
+      - name: Verify exported sample repositories
+        run: pnpm samples:verify-export
+
       - name: Test
         run: pnpm test
 

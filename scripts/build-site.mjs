@@ -1,11 +1,23 @@
 import { spawnSync } from "node:child_process";
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const siteDirectory = "dist/site";
+const sampleRepoExportDirectory = "dist/sample-repos";
+const sampleRepoSiteDirectory = "samples";
 const packages = ["@openwebdoc/spec", "@openwebdoc/core", "@openwebdoc/ui"];
 const app = { name: "OpenWebDoc", packageName: "@openwebdoc/app", route: "app" };
 const { examples: templates } = JSON.parse(await readFile("examples/gallery.json", "utf8"));
+const { repositories: sampleRepositories } = JSON.parse(
+  await readFile("samples/template-repos.json", "utf8"),
+);
+const crcTable = Array.from({ length: 256 }, (_, index) => {
+  let value = index;
+  for (let bit = 0; bit < 8; bit += 1) {
+    value = value & 1 ? 0xedb88320 ^ (value >>> 1) : value >>> 1;
+  }
+  return value >>> 0;
+});
 const featuredTemplates = templates.filter((template) => template.featured);
 const groupedTemplates = groupTemplatesByCategory(templates);
 
@@ -14,11 +26,14 @@ for (const packageName of packages) {
 }
 
 runPnpm(["--filter", app.packageName, "build"]);
+runNode(["scripts/export-sample-repos.mjs"]);
 
 await rm(siteDirectory, { recursive: true, force: true });
 await mkdir(siteDirectory, { recursive: true });
+await mkdir(join(siteDirectory, sampleRepoSiteDirectory), { recursive: true });
 
 await cp(`apps/openwebdoc/dist`, join(siteDirectory, app.route), { recursive: true });
+await writeSampleRepositoryArchives();
 
 await writeFile(
   join(siteDirectory, "index.html"),
@@ -249,13 +264,73 @@ await writeFile(
         line-height: 1.45;
       }
       .template-actions {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 8px;
       }
       .template-actions a {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        justify-content: center;
         padding: 9px 11px;
         font-size: 13px;
+        text-align: center;
+      }
+      .template-actions a:nth-child(3),
+      .template-actions a:nth-child(4) {
+        color: #0f5f58;
+        background: #f3fbf8;
+      }
+      .sample-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+      .sample-card {
+        display: grid;
+        gap: 12px;
+        border: 1px solid #cdd7e6;
+        border-radius: 12px;
+        padding: 18px;
+        background: #fff;
+        box-shadow: 0 14px 36px rgba(24, 40, 68, 0.08);
+      }
+      .sample-card h3 {
+        margin: 0;
+        color: #172033;
+        font-size: 20px;
+        line-height: 1.25;
+      }
+      .sample-card p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+      .sample-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+      }
+      .sample-actions a {
+        display: inline-flex;
+        min-height: 38px;
+        align-items: center;
+        justify-content: center;
+        padding: 9px 11px;
+        font-size: 13px;
+        text-align: center;
+      }
+      .sample-actions a:first-child {
+        border-color: #193b70;
+        color: #ffffff;
+        background: #193b70;
+      }
+      .sample-actions a:first-child:hover,
+      .sample-actions a:first-child:focus-visible {
+        color: #ffffff;
+        background: #264c82;
       }
       .command {
         display: block;
@@ -284,7 +359,8 @@ await writeFile(
           grid-template-columns: 1fr;
         }
         .template-grid,
-        .featured-grid {
+        .featured-grid,
+        .sample-grid {
           grid-template-columns: 1fr;
         }
         h1 {
@@ -309,6 +385,8 @@ await writeFile(
             <nav class="secondary-nav" aria-label="OpenWebDoc documentation">
               <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/agents/index.md">Agent cookbook</a>
               <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/github-action.md">GitHub Action</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/conformance.md">Conformance</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/security-brief.md">Security brief</a>
               <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/faq.md">FAQ</a>
             </nav>
           </div>
@@ -331,7 +409,7 @@ await writeFile(
       </section>
       <section id="templates" aria-label="Template gallery">
         <h2>Template gallery</h2>
-        <p>Preview a package in the OpenWebDoc app, download the <code>.htmlx</code> file, or copy the command boundary for an external coding agent.</p>
+        <p>Preview a package in the OpenWebDoc app, download the <code>.htmlx</code> file, validate it in CI, or follow the package-file editing workflow for an external coding agent.</p>
         <div class="featured-grid" aria-label="Recommended starting points">
           ${featuredTemplates.map((template) => renderTemplateCard(template, { featured: true })).join("\n          ")}
         </div>
@@ -349,6 +427,13 @@ await writeFile(
         </section>`,
           )
           .join("\n        ")}
+      </section>
+      <section id="starter-repositories" aria-label="Starter repositories">
+        <h2>Starter repositories</h2>
+        <p>Download a copyable repository skeleton when you want to try HTMLX in a separate GitHub repository with pull-request validation already wired in.</p>
+        <div class="sample-grid">
+          ${sampleRepositories.map((repository) => renderSampleRepositoryCard(repository)).join("\n          ")}
+        </div>
       </section>
     </main>
   </body>
@@ -372,6 +457,11 @@ await writeFile(
         preview: `${app.route}/?example=${template.id}`,
         download: `${app.route}/examples/${template.id}.htmlx`,
       })),
+      sampleRepositories: sampleRepositories.map((repository) => ({
+        id: repository.id,
+        description: repository.description,
+        archive: `${sampleRepoSiteDirectory}/${repository.id}.zip`,
+      })),
     },
     null,
     2,
@@ -385,6 +475,109 @@ function runPnpm(args) {
   if (result.status !== 0) {
     process.exit(result.status ?? 1);
   }
+}
+
+function runNode(args) {
+  const result = spawnSync(process.execPath, args, { stdio: "inherit" });
+  if (result.status !== 0) {
+    process.exit(result.status ?? 1);
+  }
+}
+
+async function writeSampleRepositoryArchives() {
+  for (const repository of sampleRepositories) {
+    const sourceDirectory = join(sampleRepoExportDirectory, repository.id);
+    const destination = join(siteDirectory, sampleRepoSiteDirectory, `${repository.id}.zip`);
+    const files = await readZipInputFiles(sourceDirectory);
+    await writeFile(destination, createStoreZip(files));
+  }
+}
+
+async function readZipInputFiles(directory, prefix = "") {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries.sort((left, right) => left.name.localeCompare(right.name))) {
+    const relativePath = prefix ? `${prefix}/${entry.name}` : entry.name;
+    const absolutePath = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...(await readZipInputFiles(absolutePath, relativePath)));
+    } else if (entry.isFile()) {
+      const fileStat = await stat(absolutePath);
+      if (!fileStat.isFile()) continue;
+      files.push({
+        path: relativePath,
+        data: await readFile(absolutePath),
+      });
+    }
+  }
+  return files;
+}
+
+function createStoreZip(files) {
+  const localParts = [];
+  const centralParts = [];
+  let offset = 0;
+  for (const file of files) {
+    const filename = Buffer.from(file.path, "utf8");
+    const data = Buffer.from(file.data);
+    const crc = crc32(data);
+    const localHeader = Buffer.alloc(30);
+    localHeader.writeUInt32LE(0x04034b50, 0);
+    localHeader.writeUInt16LE(20, 4);
+    localHeader.writeUInt16LE(0, 6);
+    localHeader.writeUInt16LE(0, 8);
+    localHeader.writeUInt16LE(0, 10);
+    localHeader.writeUInt16LE(33, 12);
+    localHeader.writeUInt32LE(crc, 14);
+    localHeader.writeUInt32LE(data.length, 18);
+    localHeader.writeUInt32LE(data.length, 22);
+    localHeader.writeUInt16LE(filename.length, 26);
+    localHeader.writeUInt16LE(0, 28);
+    localParts.push(localHeader, filename, data);
+
+    const centralHeader = Buffer.alloc(46);
+    centralHeader.writeUInt32LE(0x02014b50, 0);
+    centralHeader.writeUInt16LE(20, 4);
+    centralHeader.writeUInt16LE(20, 6);
+    centralHeader.writeUInt16LE(0, 8);
+    centralHeader.writeUInt16LE(0, 10);
+    centralHeader.writeUInt16LE(0, 12);
+    centralHeader.writeUInt16LE(33, 14);
+    centralHeader.writeUInt32LE(crc, 16);
+    centralHeader.writeUInt32LE(data.length, 20);
+    centralHeader.writeUInt32LE(data.length, 24);
+    centralHeader.writeUInt16LE(filename.length, 28);
+    centralHeader.writeUInt16LE(0, 30);
+    centralHeader.writeUInt16LE(0, 32);
+    centralHeader.writeUInt16LE(0, 34);
+    centralHeader.writeUInt16LE(0, 36);
+    centralHeader.writeUInt32LE(0, 38);
+    centralHeader.writeUInt32LE(offset, 42);
+    centralParts.push(centralHeader, filename);
+
+    offset += localHeader.length + filename.length + data.length;
+  }
+
+  const centralDirectory = Buffer.concat(centralParts);
+  const end = Buffer.alloc(22);
+  end.writeUInt32LE(0x06054b50, 0);
+  end.writeUInt16LE(0, 4);
+  end.writeUInt16LE(0, 6);
+  end.writeUInt16LE(files.length, 8);
+  end.writeUInt16LE(files.length, 10);
+  end.writeUInt32LE(centralDirectory.length, 12);
+  end.writeUInt32LE(offset, 16);
+  end.writeUInt16LE(0, 20);
+
+  return Buffer.concat([...localParts, centralDirectory, end]);
+}
+
+function crc32(data) {
+  let crc = 0xffffffff;
+  for (const byte of data) {
+    crc = (crc >>> 8) ^ crcTable[(crc ^ byte) & 0xff];
+  }
+  return (crc ^ 0xffffffff) >>> 0;
 }
 
 function groupTemplatesByCategory(items) {
@@ -410,10 +603,25 @@ function renderTemplateCard(template, options = {}) {
             <div class="template-actions">
               <a href="./app/?example=${template.id}">Preview</a>
               <a href="./app/examples/${template.id}.htmlx" download>Download .htmlx</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/github-action.md">Validate in CI</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/agent-editing.md">Agent edit</a>
             </div>
             <code class="command">htmlx unpack ${template.id}.htmlx ./work --json
 htmlx refresh-metadata ./work --check --json
 htmlx validate ./work --json</code>
+          </article>`;
+}
+
+function renderSampleRepositoryCard(repository) {
+  return `<article class="sample-card">
+            <h3>${escapeHtml(repository.id)}</h3>
+            <p>${escapeHtml(repository.description)}</p>
+            <div class="sample-actions">
+              <a href="./${sampleRepoSiteDirectory}/${repository.id}.zip" download>Download starter repo</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/tree/main/${escapeHtml(repository.source)}">View source</a>
+            </div>
+            <code class="command">pnpm samples:export
+pnpm samples:verify-export</code>
           </article>`;
 }
 

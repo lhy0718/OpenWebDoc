@@ -24,6 +24,10 @@ const commands = [
   ["pnpm", ["test"]],
   ["pnpm", ["lint"]],
   ["pnpm", ["format"]],
+  ["pnpm", ["conformance:check"]],
+  ["pnpm", ["samples:check"]],
+  ["pnpm", ["samples:export"]],
+  ["pnpm", ["samples:verify-export"]],
   ...examplePackages.map((examplePackage) => [
     "node",
     ["packages/cli/dist/index.js", "validate", `examples/${examplePackage}`],

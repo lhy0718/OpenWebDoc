@@ -2,6 +2,8 @@
 
 `gallery.json` is the public template-gallery index used by the static site and the OpenWebDoc app empty state. Keep it aligned with the valid examples copied to `apps/openwebdoc/public/examples/`.
 
+`conformance/` contains small validator fixtures with expected pass/fail outcomes and issue codes. These fixtures are not public gallery templates.
+
 - `basic/`: a valid HTMLX package directory that can be packed into `basic.htmlx`.
 - `template-flow-article/`: a richer `flow-document` example that reflows like normal browser HTML.
 - `openwebdoc-introduction/`: a long OpenWebDoc primer with a root `index.html`, semantic HTML tables, grouped figures, package-local PNG icons, roadmap blocks, funnel blocks, and validation metadata.
@@ -21,6 +23,13 @@ Each valid example is also a standalone unpacked package: open its `index.html` 
 browser to inspect the same script-free document that will be packed into `.htmlx`.
 
 - `security-invalid/`: an intentionally invalid fixture with script, remote resource, and unsafe LLM metadata examples.
+
+Run the conformance fixtures after building the CLI:
+
+```sh
+pnpm build
+pnpm conformance:check
+```
 
 Generate example packages after building the CLI:
 
