@@ -53,6 +53,7 @@ Standardization should follow adoption. The early product should focus on practi
 - Publish short security and MIME/extension briefs to reduce early adoption uncertainty.
 - Publish an Agentic Document Integrity CI report shape so external repositories know what a pass or failure should communicate.
 - Provide three copyable external sample repositories for Markdown-first notes, safe HTML migration, and agent-edited briefs.
+- Keep a public starter PR-gate case study showing a real failure, validator fix, passing check, and merged PR.
 - Publish a 30-minute pilot script so teams can test one agent-edited `.htmlx` PR without adopting the whole toolchain.
 - Maintain a pilot target list focused on Git-based document workflows rather than general office-suite users.
 - Export and verify sample skeletons in `dist/sample-repos/`, publish downloadable starter repository archives from GitHub Pages, and link the public starter template repositories for copyable adoption.
@@ -100,3 +101,6 @@ Secondary metrics:
 - pilot case studies that report validation failures, fixes, and remaining human review
 - VS Code extension installs
 - conformance suite users
+
+For the first public starter-repository PR-gate smoke, see
+[Starter PR Gate Case Study](starter-pr-gate-case-study.md).

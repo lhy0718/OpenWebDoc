@@ -52,6 +52,7 @@ This is the main public-alpha adoption path: a coding agent edits document files
 - [GitHub Action Validator](docs/github-action.md): copy-paste PR gate for external repositories.
 - [Action Pinning and Supply-Chain Notes](docs/supply-chain-action-pinning.md): tag-pinned and SHA-pinned validator usage.
 - [Agentic Document Integrity CI](docs/agentic-document-integrity-ci.md): PR-gate report shape for agent-edited documents.
+- [Starter PR Gate Case Study](docs/starter-pr-gate-case-study.md): public starter repositories where the validator failed, was fixed, passed, and merged.
 - [HTMLX Conformance](docs/conformance.md): valid and invalid fixtures plus expected issue-code checks.
 - [Issue Code Cookbook](docs/issue-code-cookbook.md): recovery hints for validation failures.
 - [Security Brief](docs/security-brief.md): short public explanation of the untrusted-package security model.
