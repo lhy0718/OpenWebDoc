@@ -74,10 +74,6 @@ The same package can be opened in the OpenWebDoc app before or after PR review:
 
 ## Screenshots
 
-Usage flow:
-
-![OpenWebDoc app usage flow](docs/assets/screenshots/openwebdoc-usage.gif)
-
 File-open and template gallery screen:
 
 ![OpenWebDoc file-open screen](docs/assets/screenshots/openwebdoc-pages-empty.png)
