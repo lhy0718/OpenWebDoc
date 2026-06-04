@@ -609,12 +609,21 @@ function validateProfileContract(
   const html = htmlBytes ? decodeText(htmlBytes) : "";
   const hasStage = hasSelfEditableStage(html);
   const hasEditingStage = hasEditingStageMetadata(manifest, files);
+  const editingPath = manifest.metadata.editing;
   if (profile === "fixed-stage-document" && !hasStage) {
     issues.push({
       severity: "error",
       code: "profile.fixed_stage_missing",
       message: "Fixed-stage document packages must declare a data-htmlx-editable document stage.",
       path: manifest.entry,
+    });
+  }
+  if (profile === "fixed-stage-document" && (!editingPath || !files.has(editingPath))) {
+    issues.push({
+      severity: "error",
+      code: "profile.fixed_stage_editing_missing",
+      message: "Fixed-stage document packages must declare metadata/editing.json.",
+      path: editingPath ?? HTMLX_MANIFEST_PATH,
     });
   }
 

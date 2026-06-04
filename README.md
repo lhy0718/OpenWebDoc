@@ -51,18 +51,23 @@ This is the main public-alpha adoption path: a coding agent edits document files
 
 Visual smoke from the public starter flow:
 
-![Passing Validate HTMLX PR gate in a public starter repository](docs/assets/screenshots/openwebdoc-pr-gate-action-run.png)
+1. A starter repository opens a pull request with a tag-pinned HTMLX validator.
 
-The same package can be opened in the OpenWebDoc app before or after PR review:
+![Passing Validate HTMLX PR gate in a public starter repository](docs/assets/screenshots/openwebdoc-pr-gate-alpha3-action-run.png)
+
+2. The same package can be opened in the OpenWebDoc app before or after PR review.
 
 ![OpenWebDoc app reading a package from the public gallery](docs/assets/screenshots/openwebdoc-pr-gate-app-open.png)
+
+3. If validation fails, the PR log reports issue codes that map to the
+   [Issue Code Cookbook](docs/issue-code-cookbook.md).
 
 ## Trust and Adoption Kit
 
 - [GitHub Action Validator](docs/github-action.md): copy-paste PR gate for external repositories.
 - [Action Pinning and Supply-Chain Notes](docs/supply-chain-action-pinning.md): tag-pinned and SHA-pinned validator usage.
 - [Agentic Document Integrity CI](docs/agentic-document-integrity-ci.md): PR-gate report shape for agent-edited documents.
-- [Starter PR Gate Case Study](docs/starter-pr-gate-case-study.md): public starter repositories where the validator failed, was fixed, passed, and merged.
+- [Starter PR Gate Case Study](docs/starter-pr-gate-case-study.md): public starter repositories where the validator failed, was fixed, passed, upgraded to the current release, and merged.
 - [HTMLX Conformance](docs/conformance.md): valid and invalid fixtures plus expected issue-code checks.
 - [Issue Code Cookbook](docs/issue-code-cookbook.md): recovery hints for validation failures.
 - [Security Brief](docs/security-brief.md): short public explanation of the untrusted-package security model.
@@ -163,9 +168,9 @@ Use the public gallery when starting a new package:
 5. For larger edits, unpack the downloaded file and let an external coding agent edit the package directory:
 
 ```sh
-htmlx unpack template-name.htmlx ./work --json
-htmlx refresh-metadata ./work --check --json
-htmlx validate ./work --json
+pnpm htmlx unpack template-name.htmlx ./work --json
+pnpm htmlx refresh-metadata ./work --check --json
+pnpm htmlx validate ./work --json
 ```
 
 ## Naming
@@ -265,7 +270,7 @@ During workspace development, run the CLI through pnpm:
 pnpm htmlx <command>
 ```
 
-After installing `@openwebdoc/cli` as a package, use the binary directly:
+The installed binary name is still `htmlx`, but npm packages are not published during the public preview. The direct binary form is for future package installs, release tarball experiments, and CI surfaces that provide the CLI:
 
 ```sh
 htmlx <command>

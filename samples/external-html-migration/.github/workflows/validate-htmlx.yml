@@ -3,11 +3,16 @@ name: Validate HTMLX
 on:
   pull_request:
 
+permissions:
+  contents: read
+
 jobs:
   validate-htmlx:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
       - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
         with:
           paths: |

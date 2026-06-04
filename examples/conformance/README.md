@@ -24,6 +24,7 @@ The cases are declared in `cases.json`.
 | `valid-flow-minimal`                   |            pass | Minimal `flow-document` with local CSS and no executable content |
 | `invalid-script`                       |            fail | `script` elements are rejected                                   |
 | `invalid-flow-stage-conflict`          |            fail | `flow-document` cannot declare fixed-stage editing metadata      |
+| `invalid-fixed-stage-editing-missing`  |            fail | fixed-stage documents must declare editing metadata              |
 | `invalid-slide-profile-mismatch`       |            fail | packages with presentation metadata must use `slide-deck`        |
 | `invalid-fixed-stage-proportional-css` |            fail | fixed-stage CSS cannot use non-proportional layout functions     |
 

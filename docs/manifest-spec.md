@@ -14,12 +14,25 @@
   "modifiedAt": "2026-05-13T00:00:00.000Z",
   "entry": "index.html",
   "styles": ["styles/document.css"],
-  "resources": [],
+  "resources": [
+    {
+      "path": "styles/document.css",
+      "mediaType": "text/css",
+      "role": "stylesheet"
+    },
+    {
+      "path": "metadata/llm.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    },
+    {
+      "path": "metadata/provenance.json",
+      "mediaType": "application/json",
+      "role": "metadata"
+    }
+  ],
   "metadata": {
     "llm": "metadata/llm.json",
-    "editing": "metadata/editing.json",
-    "editingGuide": "metadata/editing-guide.md",
-    "presentation": "metadata/presentation.json",
     "provenance": "metadata/provenance.json"
   },
   "security": {
@@ -38,12 +51,13 @@
 ## Profile Validation
 
 - `flow-document` is the default reflowing browser document profile and does not require stage geometry.
-- `fixed-stage-document` requires a self-editable document stage with `data-htmlx-editable="document"` and proportional geometry.
+- `fixed-stage-document` requires `metadata/editing.json`, a self-editable document stage with `data-htmlx-editable="document"`, and proportional geometry.
 - `slide-deck` requires `metadata/presentation.json`, a slide deck root, and at least one slide section.
 
 When a package is a `fixed-stage-document`, validation treats the document as a proportional stage document. In that mode:
 
 - `entry` must be `index.html`
+- `metadata.editing` must point to package-local editing metadata
 - stage width and height must be declared in `data-htmlx-stage-width` and `data-htmlx-stage-height`
 - editable text and object blocks must carry numeric `data-htmlx-*` geometry attributes
 - stylesheets must set `box-sizing: border-box`

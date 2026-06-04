@@ -71,6 +71,13 @@
       "expectedIssueCodes": ["profile.flow_stage_conflict"]
     },
     {
+      "id": "invalid-fixed-stage-editing-missing",
+      "description": "Rejects fixed-stage packages that omit required editing metadata.",
+      "path": "cases/invalid-fixed-stage-editing-missing",
+      "valid": false,
+      "expectedIssueCodes": ["profile.fixed_stage_editing_missing"]
+    },
+    {
       "id": "invalid-slide-profile-mismatch",
       "description": "Rejects presentation metadata when the explicit manifest profile is not slide-deck.",
       "path": "cases/invalid-slide-profile-mismatch",

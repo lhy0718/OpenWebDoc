@@ -9,18 +9,18 @@ decide whether the package boundary is still intact.
 
 The test covers five public starter repositories:
 
-| Repository                                                                                          | Workflow                                   | PR                                                                           | Result |
+| Repository                                                                                          | Workflow                                   | Current release PR                                                           | Result |
 | --------------------------------------------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------- | ------ |
-| [`htmlx-markdown-notes-starter`](https://github.com/lhy0718/htmlx-markdown-notes-starter)           | Markdown notes converted to `.htmlx`       | [PR #1](https://github.com/lhy0718/htmlx-markdown-notes-starter/pull/1)      | Merged |
-| [`htmlx-safe-html-migration-starter`](https://github.com/lhy0718/htmlx-safe-html-migration-starter) | safe standalone HTML converted to `.htmlx` | [PR #1](https://github.com/lhy0718/htmlx-safe-html-migration-starter/pull/1) | Merged |
-| [`htmlx-agent-brief-starter`](https://github.com/lhy0718/htmlx-agent-brief-starter)                 | unpacked package files edited and repacked | [PR #1](https://github.com/lhy0718/htmlx-agent-brief-starter/pull/1)         | Merged |
-| [`htmlx-data-report-starter`](https://github.com/lhy0718/htmlx-data-report-starter)                 | analytics report package validation        | [PR #1](https://github.com/lhy0718/htmlx-data-report-starter/pull/1)         | Merged |
-| [`htmlx-slide-deck-starter`](https://github.com/lhy0718/htmlx-slide-deck-starter)                   | HTMLX-native slide deck validation         | [PR #1](https://github.com/lhy0718/htmlx-slide-deck-starter/pull/1)          | Merged |
+| [`htmlx-markdown-notes-starter`](https://github.com/lhy0718/htmlx-markdown-notes-starter)           | Markdown notes converted to `.htmlx`       | [PR #2](https://github.com/lhy0718/htmlx-markdown-notes-starter/pull/2)      | Merged |
+| [`htmlx-safe-html-migration-starter`](https://github.com/lhy0718/htmlx-safe-html-migration-starter) | safe standalone HTML converted to `.htmlx` | [PR #2](https://github.com/lhy0718/htmlx-safe-html-migration-starter/pull/2) | Merged |
+| [`htmlx-agent-brief-starter`](https://github.com/lhy0718/htmlx-agent-brief-starter)                 | unpacked package files edited and repacked | [PR #2](https://github.com/lhy0718/htmlx-agent-brief-starter/pull/2)         | Merged |
+| [`htmlx-data-report-starter`](https://github.com/lhy0718/htmlx-data-report-starter)                 | analytics report package validation        | [PR #2](https://github.com/lhy0718/htmlx-data-report-starter/pull/2)         | Merged |
+| [`htmlx-slide-deck-starter`](https://github.com/lhy0718/htmlx-slide-deck-starter)                   | HTMLX-native slide deck validation         | [PR #2](https://github.com/lhy0718/htmlx-slide-deck-starter/pull/2)          | Merged |
 
 Each repository uses the same public validator action:
 
 ```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
+- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
   with:
     paths: |
       documents/**/*.htmlx
@@ -42,22 +42,24 @@ workspace in dependency order:
 
 The data report and slide deck starters were added after the action fix and
 passed their first public pull-request validation smoke with the same release tag.
+The current starter repositories now use `v0.1.0-alpha.3`, which also includes
+the production dependency audit gate and stricter editing metadata validation.
 
 ## Passing Evidence
 
-After upgrading the starter workflows to `v0.1.0-alpha.2`, the validation checks
+After upgrading the starter workflows to `v0.1.0-alpha.3`, the validation checks
 passed and the pull requests were merged.
 
-| Repository                  | Passing run                                                                                                 | Merge commit                               |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
-| Markdown notes starter      | [Validate HTMLX run](https://github.com/lhy0718/htmlx-markdown-notes-starter/actions/runs/26912702313)      | `43fff4abbd5fe8ecf1494b33ca07de90485585d4` |
-| Safe HTML migration starter | [Validate HTMLX run](https://github.com/lhy0718/htmlx-safe-html-migration-starter/actions/runs/26912707081) | `4a13a0d97f4b12fd0c60a21592b79eb43534391e` |
-| Agent brief starter         | [Validate HTMLX run](https://github.com/lhy0718/htmlx-agent-brief-starter/actions/runs/26912704534)         | `d4c786c4b5a84546dff1712e40870f7a7db09b66` |
-| Data report starter         | [Validate HTMLX run](https://github.com/lhy0718/htmlx-data-report-starter/actions/runs/26913986503)         | `298977f0664fc92eb7f176987c2bb5d012aecdf5` |
-| Slide deck starter          | [Validate HTMLX run](https://github.com/lhy0718/htmlx-slide-deck-starter/actions/runs/26913896457)          | `90b28296cbe1bcef522cc85cb0b211fb3231d7a0` |
+| Repository                  | Passing run                                                                                                 | Merge commit                               | Action tag       |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ---------------- |
+| Markdown notes starter      | [Validate HTMLX run](https://github.com/lhy0718/htmlx-markdown-notes-starter/actions/runs/26940817187)      | `23fd2f023a98a1afa5686fb3a03bf8d8d1d1eb7c` | `v0.1.0-alpha.3` |
+| Safe HTML migration starter | [Validate HTMLX run](https://github.com/lhy0718/htmlx-safe-html-migration-starter/actions/runs/26940821836) | `e0506821fdf19fca94837dd61a43320f1ca907fe` | `v0.1.0-alpha.3` |
+| Agent brief starter         | [Validate HTMLX run](https://github.com/lhy0718/htmlx-agent-brief-starter/actions/runs/26940825751)         | `f798d9788e3fee0cbb92f7d8be50469cdddf6f5f` | `v0.1.0-alpha.3` |
+| Data report starter         | [Validate HTMLX run](https://github.com/lhy0718/htmlx-data-report-starter/actions/runs/26940828697)         | `be2115798cd99a1f1367c661ff9305a4dad75da6` | `v0.1.0-alpha.3` |
+| Slide deck starter          | [Validate HTMLX run](https://github.com/lhy0718/htmlx-slide-deck-starter/actions/runs/26940833018)          | `a30ba595adbd9d41868f0bc28fb6f9dc2932b7c5` | `v0.1.0-alpha.3` |
 
-The OpenWebDoc release that fixed the action is
-[`v0.1.0-alpha.2`](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.2).
+The current OpenWebDoc release is
+[`v0.1.0-alpha.3`](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.3).
 
 ## What This Proves
 
@@ -67,7 +69,7 @@ The OpenWebDoc release that fixed the action is
 - The validator can find and validate committed `.htmlx` packages in pull
   requests.
 - Five starter repositories are copyable adoption paths rather than only local
-  sample folders.
+  sample folders, and each has a passing current-release PR-gate smoke run.
 
 ## What This Does Not Prove
 

@@ -457,6 +457,39 @@ describe("HTMLX core", () => {
     expect(result.issues.map((issue) => issue.code)).toContain("profile.fixed_stage_missing");
   });
 
+  it("rejects fixed-stage profiles without editing metadata", async () => {
+    const result = await validateHtmlx({
+      mimetype: "application/vnd.openwebdoc.htmlx+zip",
+      "manifest.json": JSON.stringify({
+        $schema: "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+        htmlxVersion: "0.1.0",
+        profile: "fixed-stage-document",
+        packageId: "urn:test",
+        title: "Missing Editing Metadata",
+        language: "en",
+        createdAt: "2026-05-13T00:00:00.000Z",
+        modifiedAt: "2026-05-13T00:00:00.000Z",
+        entry: "index.html",
+        styles: ["styles/document.css"],
+        resources: [{ path: "styles/document.css", mediaType: "text/css", role: "stylesheet" }],
+        metadata: {},
+        security: {
+          allowScripts: false,
+          allowRemoteResources: false,
+          allowedOrigins: [],
+          interactionModel: "declarative",
+        },
+      }),
+      "index.html": `<main class="htmlx-document" data-htmlx-block-id="stage" data-htmlx-editable="document" data-htmlx-stage-width="980" data-htmlx-stage-height="620"><h1>Title</h1></main>`,
+      "styles/document.css": `* { box-sizing: border-box; } .htmlx-document { width: 100%; aspect-ratio: 980 / 620; }`,
+    });
+
+    expect(result.valid).toBe(false);
+    expect(result.issues.map((issue) => issue.code)).toContain(
+      "profile.fixed_stage_editing_missing",
+    );
+  });
+
   it("rejects path traversal", () => {
     expect(normalizePackagePath("../evil.txt")).toBeNull();
     expect(normalizePackagePath("index.html")).toBe("index.html");

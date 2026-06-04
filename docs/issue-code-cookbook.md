@@ -31,6 +31,7 @@ htmlx validate edited.htmlx --json
 | `llm.system_instruction_guard`         | LLM metadata contains instruction-like authority                       | rewrite metadata as user-visible reference data                    |
 | `profile.flow_stage_conflict`          | a `flow-document` carries fixed-stage editing metadata or stage markup | remove fixed-stage metadata or change the profile intentionally    |
 | `profile.fixed_stage_missing`          | a fixed-stage package lacks required stage geometry                    | add `metadata/editing.json` stage and matching stage attributes    |
+| `profile.fixed_stage_editing_missing`  | a fixed-stage package lacks editing metadata                           | declare `metadata.editing` and add `metadata/editing.json`         |
 | `profile.presentation_mismatch`        | presentation metadata exists but profile is not `slide-deck`           | align `manifest.profile` and `metadata/presentation.json`          |
 | `layout.non_proportional_css_function` | fixed-stage CSS uses sizing functions that break proportional scaling  | use package-owned stage geometry and proportional CSS              |
 | `layout.media_query_override`          | fixed-stage CSS uses media queries that alter stage geometry           | remove stage-affecting media-query overrides                       |
