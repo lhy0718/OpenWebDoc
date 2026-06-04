@@ -80,7 +80,7 @@
 - [ ] Pilot target archetypes and template-repository split criteria are documented.
 - [ ] External sample repository skeletons demonstrate Markdown, HTML migration, agent-edited package, data report, and slide deck workflows.
 - [ ] The agent cookbook includes Codex, Claude Code, Cursor, GitHub Copilot, and Aider recipes.
-- [ ] README, docs, and Obsidian notes match implementation state.
+- [ ] README and public docs match implementation state.
 - [ ] npm publishing remains disabled for the public preview; release artifacts are uploaded as GitHub Actions artifacts only.
 - [ ] Chrome extension and file-association work is documented as optional future scope, not an alpha blocker.
 - [ ] Package signing and trusted provenance are documented as future scope, not an alpha blocker.

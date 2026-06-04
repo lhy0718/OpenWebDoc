@@ -75,6 +75,7 @@ Current baseline examples:
 | `profile.flow_stage_conflict`            | a `flow-document` declares fixed-stage editing metadata or stage markup   |
 | `profile.presentation_mismatch`          | presentation metadata exists but the explicit profile is not `slide-deck` |
 | `profile.fixed_stage_missing`            | a fixed-stage package lacks required stage geometry                       |
+| `profile.fixed_stage_editing_missing`    | a fixed-stage package lacks required editing metadata                     |
 | `editing.schema_invalid`                 | `metadata/editing.json` fails the editing metadata JSON Schema            |
 | `editing.stage_mismatch`                 | editing metadata stage geometry differs from document stage attributes    |
 | `editing.block_missing`                  | editing metadata references a missing document block                      |

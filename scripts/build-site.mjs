@@ -392,7 +392,7 @@ await writeFile(
             </nav>
           </div>
           <div class="hero-metrics" aria-label="Template gallery summary">
-            <div class="hero-metric"><strong>${templates.length}</strong><span>editable public examples and templates</span></div>
+            <div class="hero-metric"><strong>${templates.length}</strong><span>public examples and templates</span></div>
             <div class="hero-metric"><strong>3</strong><span>HTMLX profiles: flow, fixed-stage, slide deck</span></div>
             <div class="hero-metric"><strong>0</strong><span>browser-side model keys or hidden agent prompts</span></div>
           </div>
@@ -608,9 +608,9 @@ function renderTemplateCard(template, options = {}) {
               <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/github-action.md">Validate in CI</a>
               <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/agent-editing.md">Agent edit</a>
             </div>
-            <code class="command">htmlx unpack ${template.id}.htmlx ./work --json
-htmlx refresh-metadata ./work --check --json
-htmlx validate ./work --json</code>
+            <code class="command">pnpm htmlx unpack ${template.id}.htmlx ./work --json
+pnpm htmlx refresh-metadata ./work --check --json
+pnpm htmlx validate ./work --json</code>
           </article>`;
 }
 
@@ -623,8 +623,8 @@ function renderSampleRepositoryCard(repository) {
               <a href="./${sampleRepoSiteDirectory}/${repository.id}.zip" download>Download ZIP</a>
               <a href="https://github.com/lhy0718/OpenWebDoc/tree/main/${escapeHtml(repository.source)}">View source</a>
             </div>
-            <code class="command">pnpm samples:export
-pnpm samples:verify-export</code>
+            <code class="command">Open a pull request
+Validate HTMLX checks documents/**/*.htmlx</code>
           </article>`;
 }
 

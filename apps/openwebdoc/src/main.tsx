@@ -3584,8 +3584,8 @@ function FloatingControls({
               type="button"
               className="overlay-button"
               onClick={onValidate}
-              aria-label="Validate document"
-              title="Validate"
+              aria-label="Validation details"
+              title="Validation details"
             >
               <CheckCircle2 size={17} />
             </button>

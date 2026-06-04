@@ -539,8 +539,14 @@ label:focus-within,
   background: #172033;
 }
 
-.overlay-button.primary:hover {
+.overlay-button.primary:hover:not(:disabled) {
   background: #263a59;
+}
+
+.overlay-button.primary:disabled {
+  border-color: #d8e2ef;
+  color: #96a3b6;
+  background: #eef3f8;
 }
 
 .overlay-button input {
