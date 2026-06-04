@@ -1,9 +1,11 @@
 import { chromium } from "playwright";
-import { mkdir } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 
 const baseUrl = process.env.OPENWEBDOC_PAGES_URL ?? "https://lhy0718.github.io/OpenWebDoc/";
 const appUrl = new URL("app/", baseUrl).toString();
+const rootPackage = JSON.parse(await readFile("package.json", "utf8"));
+const currentReleaseTag = `v${rootPackage.version}`;
 const screenshotDirectory =
   process.env.OPENWEBDOC_PAGES_SCREENSHOTS === "1" ? "docs/assets/screenshots" : "";
 
@@ -35,6 +37,10 @@ try {
     timeout: 10000,
   });
   await page.getByRole("link", { name: "Browse templates" }).waitFor({
+    state: "visible",
+    timeout: 10000,
+  });
+  await page.getByRole("link", { name: `Release ${currentReleaseTag}` }).waitFor({
     state: "visible",
     timeout: 10000,
   });
