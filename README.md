@@ -74,9 +74,29 @@ The same package can be opened in the OpenWebDoc app before or after PR review:
 
 ## Screenshots
 
+Usage flow:
+
+![OpenWebDoc app usage flow](docs/assets/screenshots/openwebdoc-usage.gif)
+
+File-open and template gallery screen:
+
 ![OpenWebDoc file-open screen](docs/assets/screenshots/openwebdoc-pages-empty.png)
 
+Reading mode:
+
 ![OpenWebDoc introduction example](docs/assets/screenshots/openwebdoc-pages-introduction.png)
+
+Micro-edit mode:
+
+![OpenWebDoc edit mode overlay](docs/assets/screenshots/openwebdoc-pages-edit-mode.png)
+
+Template gallery example:
+
+![OpenWebDoc status review deck in reading mode](docs/assets/screenshots/openwebdoc-pages-template-status-read.png)
+
+![OpenWebDoc status review deck in presentation mode](docs/assets/screenshots/openwebdoc-pages-template-status-present.png)
+
+Presentation mode:
 
 ![OpenWebDoc slide deck presentation mode](docs/assets/screenshots/openwebdoc-pages-slide-deck-present.png)
 
