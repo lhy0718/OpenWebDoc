@@ -10,7 +10,7 @@ import {
 
 const manifestPath = "samples/template-repos.json";
 const outputRoot = "dist/sample-repos";
-const expectedActionRef = "lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3";
+const expectedActionRef = "lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.4";
 const cliPath = "packages/cli/dist/index.js";
 const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
 

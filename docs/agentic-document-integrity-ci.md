@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
+      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.4
         with:
           paths: |
             docs/**/*.htmlx

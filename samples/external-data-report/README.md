@@ -16,7 +16,7 @@ htmlx validate documents/support-quality-report.htmlx --json
 
 The pull request gate validates every `.htmlx` package under `documents/`.
 This repository has been checked with the OpenWebDoc pull-request validation
-gate using `v0.1.0-alpha.3`.
+gate using `v0.1.0-alpha.4`.
 
 ## Review Boundary
 

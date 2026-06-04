@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
+      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.4
         with:
           paths: |
             docs/**/*.htmlx
@@ -53,7 +53,7 @@ For stricter supply-chain pinning, resolve the release tag and use the returned
 full commit SHA instead of the readable tag:
 
 ```sh
-git ls-remote https://github.com/lhy0718/OpenWebDoc.git refs/tags/v0.1.0-alpha.3
+git ls-remote https://github.com/lhy0718/OpenWebDoc.git refs/tags/v0.1.0-alpha.4
 ```
 
 See [GitHub Action Pinning and Supply-Chain Notes](supply-chain-action-pinning.md) for when to use tag-pinned or SHA-pinned references.
