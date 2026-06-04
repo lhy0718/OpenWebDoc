@@ -7,6 +7,8 @@ const sampleRepoExportDirectory = "dist/sample-repos";
 const sampleRepoSiteDirectory = "samples";
 const packages = ["@openwebdoc/spec", "@openwebdoc/core", "@openwebdoc/ui"];
 const app = { name: "OpenWebDoc", packageName: "@openwebdoc/app", route: "app" };
+const rootPackage = JSON.parse(await readFile("package.json", "utf8"));
+const currentReleaseTag = `v${rootPackage.version}`;
 const { examples: templates } = JSON.parse(await readFile("examples/gallery.json", "utf8"));
 const { repositories: sampleRepositories } = JSON.parse(
   await readFile("samples/template-repos.json", "utf8"),
@@ -382,6 +384,7 @@ await writeFile(
               <a class="primary-link" href="./app/">Open OpenWebDoc</a>
               <a href="#templates">Browse templates</a>
               <a href="https://github.com/lhy0718/OpenWebDoc">View repository</a>
+              <a href="https://github.com/lhy0718/OpenWebDoc/releases/tag/${currentReleaseTag}">Release ${currentReleaseTag}</a>
             </nav>
             <nav class="secondary-nav" aria-label="OpenWebDoc documentation">
               <a href="https://github.com/lhy0718/OpenWebDoc/blob/main/docs/agents/index.md">Agent cookbook</a>
