@@ -53,7 +53,7 @@ Visual smoke from the public starter flow:
 
 1. A starter repository opens a pull request with a tag-pinned HTMLX validator.
 
-![Passing Validate HTMLX PR gate in a public starter repository](docs/assets/screenshots/openwebdoc-pr-gate-alpha3-action-run.png)
+![Passing Validate HTMLX PR gate in a public starter repository](docs/assets/screenshots/openwebdoc-pr-gate-alpha4-action-run.png)
 
 2. The same package can be opened in the OpenWebDoc app before or after PR review.
 
