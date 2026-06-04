@@ -1,0 +1,28 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "profile": "flow-document",
+  "packageId": "urn:openwebdoc:conformance:invalid-editing-guide-instruction",
+  "title": "Invalid Editing Guide Instruction",
+  "language": "en",
+  "createdAt": "2026-06-04T00:00:00.000Z",
+  "modifiedAt": "2026-06-04T00:00:00.000Z",
+  "entry": "index.html",
+  "styles": [],
+  "resources": [
+    {
+      "path": "metadata/editing-guide.md",
+      "mediaType": "text/markdown",
+      "role": "metadata"
+    }
+  ],
+  "metadata": {
+    "editingGuide": "metadata/editing-guide.md"
+  },
+  "security": {
+    "allowScripts": false,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

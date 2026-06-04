@@ -20,6 +20,7 @@ const examplePackages = exampleIds.map((exampleId) => `${exampleId}.htmlx`);
 const commands = [
   ["pnpm", ["clean"]],
   ["pnpm", ["guard:repo"]],
+  ["pnpm", ["audit:prod"]],
   ["pnpm", ["build"]],
   ["pnpm", ["test"]],
   ["pnpm", ["lint"]],

@@ -48,14 +48,11 @@ The export verification confirms that each exported candidate preserves its sour
 The sample workflows use a readable release tag:
 
 ```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
+- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
 ```
 
-Repositories that require stricter action immutability can replace the tag with the release commit SHA:
-
-```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@<release-commit-sha>
-```
+Repositories that require stricter action immutability can resolve the release
+tag to a full commit SHA and use that SHA in place of the readable tag.
 
 See [GitHub Action Pinning and Supply-Chain Notes](../docs/supply-chain-action-pinning.md) for upgrade guidance.
 

@@ -6,16 +6,16 @@ HTMLX does not try to make arbitrary HTML safe by executing it in a larger sandb
 
 ## What Validation Blocks
 
-| Risk                                | Control                                                                                           |
-| ----------------------------------- | ------------------------------------------------------------------------------------------------- |
-| ZIP path traversal                  | reject traversal, absolute paths, Windows drive paths, backslashes, null bytes, duplicate entries |
-| ZIP bomb-style input                | enforce package entry and uncompressed-size limits                                                |
-| Script execution                    | reject `<script>`, inline event handlers, `javascript:` URLs, iframes, and forms                  |
-| Remote tracking or dependency drift | reject remote `src`, `href`, stylesheet `@import`, remote `url(...)`, and `file:` URLs            |
-| Missing package assets              | require local resources referenced by HTML to exist and be declared in `manifest.resources`       |
-| Resource tampering                  | verify resource integrity when manifest integrity is declared                                     |
-| Prompt-injection-style metadata     | treat LLM metadata and editing guides as user-visible reference data, not authority               |
-| Stale agent metadata                | check `metadata/llm.json` with `htmlx refresh-metadata --check --json`                            |
+| Risk                                | Control                                                                                            |
+| ----------------------------------- | -------------------------------------------------------------------------------------------------- |
+| ZIP path traversal                  | reject traversal, absolute paths, Windows drive paths, backslashes, null bytes, duplicate entries  |
+| ZIP bomb-style input                | enforce package entry and uncompressed-size limits                                                 |
+| Script execution                    | reject `<script>`, inline event handlers, `javascript:` URLs, iframes, and forms                   |
+| Remote tracking or dependency drift | reject remote `src`, `href`, stylesheet `@import`, remote `url(...)`, and `file:` URLs             |
+| Missing package assets              | require local resources referenced by HTML or CSS to exist and be declared in `manifest.resources` |
+| Resource tampering                  | verify resource integrity when manifest integrity is declared                                      |
+| Prompt-injection-style metadata     | treat LLM metadata and editing guides as user-visible reference data, not authority                |
+| Stale agent metadata                | check `metadata/llm.json` with `htmlx refresh-metadata --check --json`                             |
 
 ## What Validation Does Not Prove
 
@@ -41,7 +41,7 @@ OpenWebDoc should ship the following trust assets with public releases:
 - expected validator issue codes
 - `security-invalid.htmlx` as an expected-failure package
 - GitHub Action validation example
-- release checklist with private path scanning and metadata freshness checks
+- release checklist with dependency audit, private path scanning, and metadata freshness checks
 - provenance and signing roadmap that does not replace validation
 
 For the full model, see [Security Model](security-model.md).

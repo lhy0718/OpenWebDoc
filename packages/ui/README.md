@@ -2,11 +2,11 @@
 
 Shared React UI components and styles for OpenWebDoc apps.
 
-## Install
+## Public Preview Availability
 
-```sh
-npm install @openwebdoc/ui
-```
+OpenWebDoc does not publish npm packages during the public preview phase. Use the
+repository checkout for development, or inspect the GitHub release tarballs. The
+future published package will remain scoped as `@openwebdoc/ui`.
 
 ## Usage
 

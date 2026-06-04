@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "0.1.0",
+  "mode": "self-editable-document",
+  "runtime": "@openwebdoc/legacy-editor",
+  "stage": {
+    "width": 980,
+    "height": 620,
+    "unit": "px",
+    "scaleMode": "uniform-fit"
+  },
+  "blocks": [],
+  "constraints": {
+    "scripts": false,
+    "remoteResources": false,
+    "coordinates": "stage-relative",
+    "textScaling": "stage-uniform"
+  }
+}

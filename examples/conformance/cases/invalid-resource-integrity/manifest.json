@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openwebdoc.org/schemas/htmlx-manifest-v0.1.schema.json",
+  "htmlxVersion": "0.1.0",
+  "profile": "flow-document",
+  "packageId": "urn:openwebdoc:conformance:invalid-resource-integrity",
+  "title": "Invalid Resource Integrity",
+  "language": "en",
+  "createdAt": "2026-06-04T00:00:00.000Z",
+  "modifiedAt": "2026-06-04T00:00:00.000Z",
+  "entry": "index.html",
+  "styles": ["styles/document.css"],
+  "resources": [
+    {
+      "path": "styles/document.css",
+      "mediaType": "text/css",
+      "role": "stylesheet",
+      "integrity": "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+    }
+  ],
+  "metadata": {},
+  "security": {
+    "allowScripts": false,
+    "allowRemoteResources": false,
+    "allowedOrigins": [],
+    "interactionModel": "declarative"
+  }
+}

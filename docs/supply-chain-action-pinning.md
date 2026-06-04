@@ -7,24 +7,19 @@ OpenWebDoc's GitHub Action validator is the easiest way for another repository t
 Use a release tag for normal adoption:
 
 ```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
+- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
   with:
     paths: |
       docs/**/*.htmlx
       examples/*.htmlx
 ```
 
-Use the full release commit SHA for stricter pinning:
+Use the full release commit SHA for stricter pinning. Resolve the readable tag
+first, then replace the tag in the workflow with the returned 40-character SHA:
 
-```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@<release-commit-sha>
-  with:
-    paths: |
-      docs/**/*.htmlx
-      examples/*.htmlx
+```sh
+git ls-remote https://github.com/lhy0718/OpenWebDoc.git refs/tags/v0.1.0-alpha.3
 ```
-
-Replace `<release-commit-sha>` with the resolved commit for the `v0.1.0-alpha.2` release tag before committing a SHA-pinned workflow. When adopting a later release, resolve the release tag to its commit and update the SHA deliberately.
 
 ## Pinning Policy
 

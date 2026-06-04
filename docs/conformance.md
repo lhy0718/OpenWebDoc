@@ -66,20 +66,25 @@ Conformance fixtures should isolate one rule when possible and declare the issue
 
 Current baseline examples:
 
-| Issue code                             | Meaning                                                                   |
-| -------------------------------------- | ------------------------------------------------------------------------- |
-| `html.script`                          | executable script content is present                                      |
-| `html.remote_resource`                 | a remote resource reference is present                                    |
-| `html.local_resource_missing`          | a local resource is referenced but missing or undeclared                  |
-| `profile.flow_stage_conflict`          | a `flow-document` declares fixed-stage editing metadata or stage markup   |
-| `profile.presentation_mismatch`        | presentation metadata exists but the explicit profile is not `slide-deck` |
-| `profile.fixed_stage_missing`          | a fixed-stage package lacks required stage geometry                       |
-| `layout.non_proportional_css_function` | fixed-stage CSS uses non-proportional layout functions                    |
-| `layout.media_query_override`          | fixed-stage CSS uses media queries that can break stage scaling           |
-| `resource.integrity_mismatch`          | manifest resource integrity does not match package bytes                  |
-| `llm.text_hash_mismatch`               | document-level LLM text hash is stale                                     |
-| `llm.block_text_hash_mismatch`         | block-level LLM text hash is stale                                        |
-| `llm.system_instruction_guard`         | LLM metadata contains instruction-like authority it must not carry        |
+| Issue code                               | Meaning                                                                   |
+| ---------------------------------------- | ------------------------------------------------------------------------- |
+| `html.script`                            | executable script content is present                                      |
+| `html.remote_resource`                   | a remote resource reference is present                                    |
+| `html.local_resource_missing`            | a local resource is referenced but missing or undeclared                  |
+| `css.local_resource_missing`             | a local CSS `url(...)` resource is missing or undeclared                  |
+| `profile.flow_stage_conflict`            | a `flow-document` declares fixed-stage editing metadata or stage markup   |
+| `profile.presentation_mismatch`          | presentation metadata exists but the explicit profile is not `slide-deck` |
+| `profile.fixed_stage_missing`            | a fixed-stage package lacks required stage geometry                       |
+| `editing.schema_invalid`                 | `metadata/editing.json` fails the editing metadata JSON Schema            |
+| `editing.stage_mismatch`                 | editing metadata stage geometry differs from document stage attributes    |
+| `editing.block_missing`                  | editing metadata references a missing document block                      |
+| `editing_guide.system_instruction_guard` | editing guide metadata looks like hidden instruction text                 |
+| `layout.non_proportional_css_function`   | fixed-stage CSS uses non-proportional layout functions                    |
+| `layout.media_query_override`            | fixed-stage CSS uses media queries that can break stage scaling           |
+| `resource.integrity_mismatch`            | manifest resource integrity does not match package bytes                  |
+| `llm.text_hash_mismatch`                 | document-level LLM text hash is stale                                     |
+| `llm.block_text_hash_mismatch`           | block-level LLM text hash is stale                                        |
+| `llm.system_instruction_guard`           | LLM metadata contains instruction-like authority it must not carry        |
 
 New issue codes should be stable enough for CI logs, PR comments, and third-party validators.
 

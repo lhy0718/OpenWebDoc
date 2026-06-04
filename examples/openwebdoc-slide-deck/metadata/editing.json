@@ -21,19 +21,19 @@
       "lineHeight": 1.02
     },
     {
-      "id": "deck-02-principles",
-      "type": "figure",
-      "selector": "[data-htmlx-block-id=\"deck-02-principles\"]",
+      "id": "deck-02-comparison",
+      "type": "table",
+      "selector": "[data-htmlx-block-id=\"deck-02-comparison\"]",
       "editable": true,
-      "frame": { "x": 108, "y": 340, "width": 1380, "height": 392 },
-      "figure": { "variant": "principle-grid", "cardCount": 6 }
+      "frame": { "x": 104, "y": 326, "width": 1392, "height": 432 },
+      "table": { "columns": ["Question", "Page-first deck", "HTMLX-native deck"], "rowCount": 3 }
     },
     {
-      "id": "deck-03-map",
+      "id": "deck-03-package",
       "type": "figure",
-      "selector": "[data-htmlx-block-id=\"deck-03-map\"]",
+      "selector": "[data-htmlx-block-id=\"deck-03-package\"]",
       "editable": true,
-      "frame": { "x": 118, "y": 318, "width": 1360, "height": 456 },
+      "frame": { "x": 104, "y": 302, "width": 1392, "height": 474 },
       "figure": { "variant": "package-map", "cardCount": 4 }
     },
     {

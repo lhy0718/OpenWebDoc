@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
+      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
         with:
           paths: |
             docs/**/*.htmlx
@@ -49,27 +49,14 @@ The action builds the `@openwebdoc/cli` package from the referenced OpenWebDoc r
 
 Pin to a release tag when adopting the action in another repository. Use `@main` only when intentionally testing the latest unreleased validator behavior.
 
-For stricter supply-chain pinning, use the full release commit SHA instead of the tag:
+For stricter supply-chain pinning, resolve the release tag and use the returned
+full commit SHA instead of the readable tag:
 
-```yaml
-name: Validate HTMLX
-
-on:
-  pull_request:
-
-jobs:
-  validate-htmlx:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-      - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@<release-commit-sha>
-        with:
-          paths: |
-            docs/**/*.htmlx
-            examples/*.htmlx
+```sh
+git ls-remote https://github.com/lhy0718/OpenWebDoc.git refs/tags/v0.1.0-alpha.3
 ```
 
-Replace `<release-commit-sha>` with the resolved commit for the `v0.1.0-alpha.2` release tag before committing a SHA-pinned workflow. See [GitHub Action Pinning and Supply-Chain Notes](supply-chain-action-pinning.md) for when to use tag-pinned or SHA-pinned references.
+See [GitHub Action Pinning and Supply-Chain Notes](supply-chain-action-pinning.md) for when to use tag-pinned or SHA-pinned references.
 
 By default the action writes an `Agentic Document Integrity` job summary with the number of packages checked and the pass/fail result. Set `summary: "false"` to disable that summary. See [Agentic Document Integrity CI](agentic-document-integrity-ci.md) for the public report shape and failure examples.
 

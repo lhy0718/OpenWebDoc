@@ -547,6 +547,145 @@ export const htmlxPresentationMetadataSchema = {
   },
 } as const;
 
+export const htmlxEditingMetadataSchema = {
+  $schema: "https://json-schema.org/draft/2020-12/schema",
+  $id: HTMLX_EDITING_METADATA_SCHEMA_URL,
+  title: "HTMLX Editing Metadata",
+  type: "object",
+  additionalProperties: false,
+  required: ["schemaVersion", "mode", "runtime", "stage", "blocks", "constraints"],
+  properties: {
+    $schema: { const: HTMLX_EDITING_METADATA_SCHEMA_URL },
+    schemaVersion: { const: HTMLX_CURRENT_VERSION },
+    mode: { const: "self-editable-document" },
+    runtime: { const: "@openwebdoc/runtime" },
+    model: { type: "string", minLength: 1 },
+    stage: {
+      type: "object",
+      additionalProperties: false,
+      required: ["width", "height", "unit", "scaleMode"],
+      properties: {
+        width: { type: "number", exclusiveMinimum: 0 },
+        height: { type: "number", exclusiveMinimum: 0 },
+        unit: { const: "px" },
+        scaleMode: { const: "uniform-fit" },
+      },
+    },
+    editableKinds: {
+      type: "array",
+      uniqueItems: true,
+      items: { enum: ["heading", "paragraph", "image", "shape", "table", "figure"] },
+    },
+    inlineFormatting: {
+      type: "array",
+      uniqueItems: true,
+      items: { enum: ["bold", "italic", "underline"] },
+    },
+    typography: {
+      type: "object",
+      additionalProperties: false,
+      required: ["fontSize", "textColor", "fontFamily", "remoteFonts"],
+      properties: {
+        fontSize: { const: "block-stage-relative" },
+        textColor: { const: "safe-css-color" },
+        fontFamily: { const: "package-css-or-system" },
+        remoteFonts: { const: false },
+      },
+    },
+    blocks: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["id", "type", "selector", "editable", "frame"],
+        properties: {
+          id: { type: "string", minLength: 1 },
+          type: { enum: ["heading", "paragraph", "image", "shape", "table", "figure"] },
+          selector: { type: "string", minLength: 1 },
+          editable: { type: "boolean" },
+          frame: {
+            type: "object",
+            additionalProperties: false,
+            required: ["x", "y", "width"],
+            properties: {
+              x: { type: "number" },
+              y: { type: "number" },
+              width: { type: "number", exclusiveMinimum: 0 },
+              height: { type: "number", exclusiveMinimum: 0 },
+            },
+          },
+          textRole: { enum: ["title", "body"] },
+          assetPath: packageRelativePathSchema,
+          shape: { const: "rectangle" },
+          fontSize: { type: "number", exclusiveMinimum: 0 },
+          lineHeight: { type: "number", exclusiveMinimum: 0 },
+          color: { type: "string", minLength: 1 },
+          inlineFormatting: {
+            type: "array",
+            uniqueItems: true,
+            items: { enum: ["bold", "italic", "underline"] },
+          },
+          fill: { type: "string", minLength: 1 },
+          table: {
+            type: "object",
+            additionalProperties: false,
+            required: ["columns", "rowCount"],
+            properties: {
+              columns: {
+                type: "array",
+                items: { type: "string" },
+              },
+              rowCount: { type: "number", minimum: 0 },
+            },
+          },
+          figure: {
+            type: "object",
+            additionalProperties: false,
+            required: ["variant", "cardCount"],
+            properties: {
+              variant: { type: "string", minLength: 1 },
+              cardCount: { type: "number", minimum: 0 },
+            },
+          },
+        },
+      },
+    },
+    constraints: {
+      type: "object",
+      additionalProperties: false,
+      required: ["scripts", "remoteResources", "coordinates", "textScaling"],
+      properties: {
+        scripts: { const: false },
+        remoteResources: { const: false },
+        coordinates: { const: "stage-relative" },
+        textScaling: { const: "stage-uniform" },
+        textFormatting: {
+          type: "array",
+          uniqueItems: true,
+          items: { enum: ["bold", "italic", "underline"] },
+        },
+        typography: {
+          type: "object",
+          additionalProperties: false,
+          required: ["fontSize", "textColor", "fontFamily", "remoteFonts"],
+          properties: {
+            fontSize: { const: "block-stage-relative" },
+            textColor: { const: "safe-css-color" },
+            fontFamily: { const: "package-css-or-system" },
+            remoteFonts: { const: false },
+          },
+        },
+      },
+    },
+    appRole: { type: "string", minLength: 1 },
+    externalAgentRole: { type: "string", minLength: 1 },
+    notes: {
+      type: "array",
+      items: { type: "string", minLength: 1 },
+    },
+  },
+} as const;
+
 const ajv = new Ajv2020({ allErrors: true, strict: false, validateFormats: false });
 const validateManifestSchema = ajv.compile<HtmlxManifest>(htmlxManifestSchema);
 const validateAgentEditRequestSchema = ajv.compile<HtmlxAgentEditRequest>(
@@ -558,6 +697,7 @@ const validateAgentEditProposalSchema = ajv.compile<HtmlxAgentEditProposal>(
 const validatePresentationMetadataSchema = ajv.compile<HtmlxPresentationMetadata>(
   htmlxPresentationMetadataSchema,
 );
+const validateEditingMetadataSchema = ajv.compile<HtmlxEditingMetadata>(htmlxEditingMetadataSchema);
 
 export interface HtmlxSchemaValidationResult {
   valid: boolean;
@@ -595,6 +735,14 @@ export function validateHtmlxPresentationMetadataSchema(
   return {
     valid,
     errors: validatePresentationMetadataSchema.errors ?? [],
+  };
+}
+
+export function validateHtmlxEditingMetadataSchema(input: unknown): HtmlxSchemaValidationResult {
+  const valid = validateEditingMetadataSchema(input);
+  return {
+    valid,
+    errors: validateEditingMetadataSchema.errors ?? [],
   };
 }
 

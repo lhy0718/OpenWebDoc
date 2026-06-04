@@ -6,7 +6,7 @@ import { scanFileMapForAbsolutePaths } from "./release-check-helpers.mjs";
 
 const samplesRoot = "samples";
 const templateManifestPath = join(samplesRoot, "template-repos.json");
-const expectedActionRef = "lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2";
+const expectedActionRef = "lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3";
 const cliPath = "packages/cli/dist/index.js";
 
 const sampleIds = readdirSync(samplesRoot)

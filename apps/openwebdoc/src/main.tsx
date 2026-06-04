@@ -188,6 +188,10 @@ interface FigureBlock extends BaseBlock {
 type DocumentBlock = TextBlock | ImageBlock | ShapeBlock | TableBlock | FigureBlock;
 type ObjectBlock = ImageBlock | ShapeBlock | TableBlock | FigureBlock;
 type DrawerMode = "none" | "info";
+interface StageGeometry {
+  width: number;
+  height: number;
+}
 
 interface DragState {
   mode: "move" | "resize";
@@ -1539,9 +1543,14 @@ function OpenWebDocApp() {
     const link = document.createElement("a");
     link.href = url;
     link.download = `${slugify(getTitle(syncedBlocks))}.htmlx`;
+    link.style.display = "none";
+    document.body.append(link);
     link.click();
-    URL.revokeObjectURL(url);
     setRuntimeMessage(`Exported ${link.download}`);
+    window.setTimeout(() => {
+      URL.revokeObjectURL(url);
+      link.remove();
+    }, 0);
   }
 
   async function validateCurrentPackage() {
@@ -3746,7 +3755,10 @@ async function buildPackage(blocks: DocumentBlock[], assets: AssetState[]) {
   const html = buildHtml(blocks, assets);
   const css = buildDocumentCss(blocks);
   const llm = await buildLlmMetadata(blocks, "fixed-stage-document");
-  const editing = buildEditingMetadata(blocks, assets);
+  const editing = buildEditingMetadata(blocks, assets, {
+    width: DESIGN_WIDTH,
+    height: DESIGN_HEIGHT,
+  });
   const provenance = {
     schemaVersion: "0.1.0",
     createdBy: "@openwebdoc/runtime",
@@ -3823,7 +3835,11 @@ async function buildPackageFromHtml(input: {
     input.blocks,
     input.presentationMetadata ? "slide-deck" : "fixed-stage-document",
   );
-  const editing = buildEditingMetadata(input.blocks, input.assets);
+  const editing = buildEditingMetadata(
+    input.blocks,
+    input.assets,
+    resolveExportStageGeometry(input.html, input.presentationMetadata),
+  );
   const provenance = {
     schemaVersion: "0.1.0",
     createdBy: "@openwebdoc/runtime",
@@ -4207,13 +4223,17 @@ async function textHash(value: string) {
   return sha256Integrity(encodeText(value.replaceAll(/\s+/g, " ").trim()));
 }
 
-function buildEditingMetadata(blocks: DocumentBlock[], assets: AssetState[]): HtmlxEditingMetadata {
+function buildEditingMetadata(
+  blocks: DocumentBlock[],
+  assets: AssetState[],
+  stage: StageGeometry,
+): HtmlxEditingMetadata {
   return {
     $schema: HTMLX_EDITING_METADATA_SCHEMA_URL,
     schemaVersion: "0.1.0",
     mode: "self-editable-document",
     runtime: "@openwebdoc/runtime",
-    stage: { width: DESIGN_WIDTH, height: DESIGN_HEIGHT, unit: "px", scaleMode: "uniform-fit" },
+    stage: { width: stage.width, height: stage.height, unit: "px", scaleMode: "uniform-fit" },
     blocks: blocks.map((block) => ({
       id: block.id,
       type: editableType(block),
@@ -4259,6 +4279,32 @@ function buildEditingMetadata(blocks: DocumentBlock[], assets: AssetState[]): Ht
       },
     },
   };
+}
+
+function resolveExportStageGeometry(
+  html: string,
+  presentationMetadata: HtmlxPresentationMetadata | null,
+): StageGeometry {
+  if (presentationMetadata) {
+    return {
+      width: presentationMetadata.stage.width,
+      height: presentationMetadata.stage.height,
+    };
+  }
+  const width = readHtmlAttributeNumber(html, "data-htmlx-stage-width");
+  const height = readHtmlAttributeNumber(html, "data-htmlx-stage-height");
+  return {
+    width: width ?? DESIGN_WIDTH,
+    height: height ?? DESIGN_HEIGHT,
+  };
+}
+
+function readHtmlAttributeNumber(html: string, attributeName: string): number | null {
+  const pattern = new RegExp(`\\b${attributeName}\\s*=\\s*["']([^"']+)["']`, "i");
+  const match = pattern.exec(html);
+  if (!match) return null;
+  const value = Number(match[1]);
+  return Number.isFinite(value) && value > 0 ? value : null;
 }
 
 async function packageAssetsToState(files: Map<string, Uint8Array>, manifest: HtmlxManifest) {

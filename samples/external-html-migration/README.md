@@ -2,6 +2,11 @@
 
 This sample shows how an existing safe standalone HTML page can enter HTMLX and leave again as ordinary static HTML.
 
+During the OpenWebDoc public preview, the `htmlx` command below assumes either a
+checked-out OpenWebDoc repository running `pnpm htmlx ...` or a project-specific
+tooling setup. Repositories can adopt HTMLX validation first through the
+tag-pinned GitHub Action without installing an npm package.
+
 ## Flow
 
 ```sh

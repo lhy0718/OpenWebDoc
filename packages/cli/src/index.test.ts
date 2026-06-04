@@ -180,7 +180,7 @@ describe("htmlx CLI", () => {
     process.exitCode = undefined;
   });
 
-  it("filters stale editing metadata block IDs from refreshed editable boundaries", async () => {
+  it("rejects stale editing metadata block IDs during metadata refresh", async () => {
     const archivePath = join(
       await mkdtemp(join(tmpdir(), "htmlx-refresh-boundary-")),
       "fixed.htmlx",
@@ -209,12 +209,23 @@ describe("htmlx CLI", () => {
       type: "paragraph",
       selector: '[data-htmlx-block-id="missing-editable-block"]',
       editable: true,
+      frame: { x: 1, y: 1, width: 10, height: 10 },
     });
     await writeFile(editingPath, `${JSON.stringify(editing, null, 2)}\n`);
 
     stdout = "";
     await program.parseAsync(["node", "htmlx", "refresh-metadata", output, "--json"]);
-    expect(JSON.parse(stdout).ok).toBe(true);
+    const refreshed = JSON.parse(stdout);
+    expect(refreshed.ok).toBe(false);
+    expect(refreshed.details.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "editing.block_missing",
+          message: expect.stringContaining("missing-editable-block"),
+        }),
+      ]),
+    );
+    process.exitCode = undefined;
 
     const llm = JSON.parse(await readFile(join(output, "metadata", "llm.json"), "utf8"));
     expect(llm.editableBoundary.editableBlockIds).not.toContain("missing-editable-block");
@@ -222,8 +233,16 @@ describe("htmlx CLI", () => {
     stdout = "";
     await program.parseAsync(["node", "htmlx", "validate", output, "--json"]);
     const validated = JSON.parse(stdout);
-    expect(validated.ok).toBe(true);
-    expect(validated.issues).toEqual([]);
+    expect(validated.ok).toBe(false);
+    expect(validated.details.issues).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "editing.block_missing",
+          message: expect.stringContaining("missing-editable-block"),
+        }),
+      ]),
+    );
+    process.exitCode = undefined;
   });
 
   it("rejects conflicting metadata refresh modes", async () => {

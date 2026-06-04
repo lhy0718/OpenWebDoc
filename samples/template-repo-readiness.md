@@ -54,12 +54,28 @@ The exported copies are written to `dist/sample-repos/`. `pnpm samples:verify-ex
 Template repositories should use a readable release tag by default:
 
 ```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.2
+- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
 ```
 
 Security-sensitive repositories can replace the tag with the release commit SHA documented in [GitHub Action Pinning and Supply-Chain Notes](../docs/supply-chain-action-pinning.md).
 
-## Acceptance Checklist
+## Current Export Evidence
+
+The repository-local skeletons are checked by:
+
+- `pnpm samples:check`
+- `pnpm samples:export`
+- `pnpm samples:verify-export`
+- `pnpm release:check`
+
+Those checks verify source/export drift, required files, tag-pinned workflows,
+contained `.htmlx` package validation, and private-path hygiene for the exported
+sample repositories.
+
+## Per-Repository Acceptance Gate
+
+Before linking a newly extracted public template repository from OpenWebDoc docs,
+confirm:
 
 - [ ] The template validates with `htmlx validate`.
 - [ ] The workflow passes on a pull request.
