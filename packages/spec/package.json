@@ -1,6 +1,6 @@
 {
   "name": "@openwebdoc/spec",
-  "version": "0.1.0-alpha.3",
+  "version": "0.1.0-alpha.4",
   "description": "HTMLX Document Package constants, schemas, and TypeScript types for validated web documents.",
   "type": "module",
   "main": "./dist/index.js",

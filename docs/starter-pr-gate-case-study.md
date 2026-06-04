@@ -17,7 +17,8 @@ The test covers five public starter repositories:
 | [`htmlx-data-report-starter`](https://github.com/lhy0718/htmlx-data-report-starter)                 | analytics report package validation        | [PR #2](https://github.com/lhy0718/htmlx-data-report-starter/pull/2)         | Merged |
 | [`htmlx-slide-deck-starter`](https://github.com/lhy0718/htmlx-slide-deck-starter)                   | HTMLX-native slide deck validation         | [PR #2](https://github.com/lhy0718/htmlx-slide-deck-starter/pull/2)          | Merged |
 
-Each repository uses the same public validator action:
+The latest published starter evidence in this case study used the same public
+validator action:
 
 ```yaml
 - uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
@@ -42,8 +43,10 @@ workspace in dependency order:
 
 The data report and slide deck starters were added after the action fix and
 passed their first public pull-request validation smoke with the same release tag.
-The current starter repositories now use `v0.1.0-alpha.3`, which also includes
-the production dependency audit gate and stricter editing metadata validation.
+The evidence below uses `v0.1.0-alpha.3`, which also includes the production
+dependency audit gate and stricter editing metadata validation. Starter
+repositories should be synchronized to newer release tags after each new
+OpenWebDoc tag is published.
 
 ## Passing Evidence
 
@@ -58,8 +61,9 @@ passed and the pull requests were merged.
 | Data report starter         | [Validate HTMLX run](https://github.com/lhy0718/htmlx-data-report-starter/actions/runs/26940828697)         | `be2115798cd99a1f1367c661ff9305a4dad75da6` | `v0.1.0-alpha.3` |
 | Slide deck starter          | [Validate HTMLX run](https://github.com/lhy0718/htmlx-slide-deck-starter/actions/runs/26940833018)          | `a30ba595adbd9d41868f0bc28fb6f9dc2932b7c5` | `v0.1.0-alpha.3` |
 
-The current OpenWebDoc release is
-[`v0.1.0-alpha.3`](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.3).
+Newer OpenWebDoc releases keep the same adoption path: pin the validator to a
+published release tag, open a pull request, and use the issue-code output to
+recover from validation failures.
 
 ## What This Proves
 

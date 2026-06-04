@@ -48,7 +48,7 @@ The export verification confirms that each exported candidate preserves its sour
 The sample workflows use a readable release tag:
 
 ```yaml
-- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.3
+- uses: lhy0718/OpenWebDoc/.github/actions/validate-htmlx@v0.1.0-alpha.4
 ```
 
 Repositories that require stricter action immutability can resolve the release
