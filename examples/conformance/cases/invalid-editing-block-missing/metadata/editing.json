@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "0.1.0",
+  "mode": "self-editable-document",
+  "runtime": "@openwebdoc/runtime",
+  "stage": {
+    "width": 980,
+    "height": 620,
+    "unit": "px",
+    "scaleMode": "uniform-fit"
+  },
+  "blocks": [
+    {
+      "id": "missing-title",
+      "type": "heading",
+      "selector": "[data-htmlx-block-id='missing-title']",
+      "editable": true,
+      "frame": {
+        "x": 40,
+        "y": 40,
+        "width": 600,
+        "height": 64
+      }
+    }
+  ],
+  "constraints": {
+    "scripts": false,
+    "remoteResources": false,
+    "coordinates": "stage-relative",
+    "textScaling": "stage-uniform"
+  }
+}

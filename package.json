@@ -1,12 +1,13 @@
 {
   "name": "openwebdoc",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "private": true,
   "description": "Agent-safe, browser-readable HTMLX document package toolchain.",
   "type": "module",
   "packageManager": "pnpm@10.24.0",
   "scripts": {
     "clean": "node scripts/clean.mjs",
+    "audit:prod": "pnpm audit --prod --audit-level high",
     "guard:repo": "node scripts/repository-guard.mjs",
     "build": "pnpm -r --sort build",
     "test": "pnpm -r --sort test",

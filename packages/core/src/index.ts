@@ -10,6 +10,7 @@ import {
   type HtmlxManifest,
   type HtmlxPresentationMetadata,
   createDefaultManifest,
+  validateHtmlxEditingMetadataSchema,
   validateHtmlxManifestSchema,
   validateHtmlxPresentationMetadataSchema,
 } from "@openwebdoc/spec";
@@ -856,6 +857,7 @@ function validateStylesheetSafety(
   files: Map<string, Uint8Array>,
   issues: HtmlxValidationIssue[],
 ): void {
+  const manifestResourcePaths = new Set(manifest.resources.map((resource) => resource.path));
   for (const stylePath of manifest.styles) {
     const styleBytes = files.get(stylePath);
     if (!styleBytes) {
@@ -871,6 +873,22 @@ function validateStylesheetSafety(
     for (const [pattern, code, message] of checks) {
       if (pattern.test(css)) {
         issues.push({ severity: "error", code, message, path: stylePath });
+      }
+    }
+
+    for (const ref of extractCssResourceRefs(css)) {
+      const normalizedPath = resolvePackageRelativePath(stylePath, ref);
+      if (
+        !normalizedPath ||
+        !files.has(normalizedPath) ||
+        !manifestResourcePaths.has(normalizedPath)
+      ) {
+        issues.push({
+          severity: "error",
+          code: "css.local_resource_missing",
+          message: `Local CSS resource reference is missing from package resources: ${ref}`,
+          path: stylePath,
+        });
       }
     }
   }
@@ -1289,6 +1307,19 @@ function validateEditingMetadata(
     return;
   }
 
+  const schemaResult = validateHtmlxEditingMetadataSchema(metadata);
+  if (!schemaResult.valid) {
+    for (const error of schemaResult.errors) {
+      issues.push({
+        severity: "error",
+        code: "editing.schema_invalid",
+        message: `${error.instancePath || "/"} ${error.message ?? "is invalid"}`,
+        path: editingPath,
+      });
+    }
+    return;
+  }
+
   if (metadata.schemaVersion !== "0.1.0") {
     issues.push({
       severity: "error",
@@ -1350,6 +1381,59 @@ function validateEditingMetadata(
         "Editing metadata constraints must keep scripts and remote resources disabled with stage-relative coordinates.",
       path: editingPath,
     });
+  }
+
+  const htmlBytes = files.get(manifest.entry);
+  const html = htmlBytes ? decodeText(htmlBytes) : "";
+  const stageTag = extractTagsWithAttribute(html, "data-htmlx-editable", "document")[0];
+  if (stageTag) {
+    const stageWidth = Number(getHtmlAttribute(stageTag, "data-htmlx-stage-width"));
+    const stageHeight = Number(getHtmlAttribute(stageTag, "data-htmlx-stage-height"));
+    if (stageWidth !== metadata.stage.width || stageHeight !== metadata.stage.height) {
+      issues.push({
+        severity: "error",
+        code: "editing.stage_mismatch",
+        message: "Editing metadata stage geometry must match the document stage attributes.",
+        path: editingPath,
+      });
+    }
+  }
+
+  const seenBlockIds = new Set<string>();
+  const manifestResourcePaths = new Set(manifest.resources.map((resource) => resource.path));
+  for (const block of metadata.blocks ?? []) {
+    if (seenBlockIds.has(block.id)) {
+      issues.push({
+        severity: "error",
+        code: "editing.block_duplicate",
+        message: `Editing metadata has a duplicate block id: ${block.id}`,
+        path: editingPath,
+      });
+    }
+    seenBlockIds.add(block.id);
+    if (block.id && !html.includes(`data-htmlx-block-id="${block.id}"`)) {
+      issues.push({
+        severity: "error",
+        code: "editing.block_missing",
+        message: `Editing metadata references a block id that is not present in the document: ${block.id}`,
+        path: editingPath,
+      });
+    }
+    if (block.assetPath) {
+      const normalizedAssetPath = normalizePackagePath(block.assetPath);
+      if (
+        !normalizedAssetPath ||
+        !files.has(normalizedAssetPath) ||
+        !manifestResourcePaths.has(normalizedAssetPath)
+      ) {
+        issues.push({
+          severity: "error",
+          code: "editing.asset_missing",
+          message: `Editing metadata references an undeclared or missing asset: ${block.assetPath}`,
+          path: editingPath,
+        });
+      }
+    }
   }
 }
 
@@ -1773,6 +1857,46 @@ function extractHtmlResourceRefs(html: string): string[] {
         !lowerRef.startsWith("#")
       );
     });
+}
+
+function extractCssResourceRefs(css: string): string[] {
+  return [...css.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/gi)]
+    .map((match) => match[1])
+    .filter(isLocalPackageResourceRef);
+}
+
+function isLocalPackageResourceRef(ref: string): boolean {
+  const lowerRef = ref.toLowerCase();
+  return (
+    !lowerRef.startsWith("http://") &&
+    !lowerRef.startsWith("https://") &&
+    !lowerRef.startsWith("mailto:") &&
+    !lowerRef.startsWith("javascript:") &&
+    !lowerRef.startsWith("file:") &&
+    !lowerRef.startsWith("blob:") &&
+    !lowerRef.startsWith("data:") &&
+    !lowerRef.startsWith("#")
+  );
+}
+
+function resolvePackageRelativePath(fromPath: string, ref: string): string | null {
+  const pathOnly = ref.split(/[?#]/, 1)[0] ?? "";
+  if (!pathOnly || pathOnly.includes("\0") || pathOnly.includes("\\") || pathOnly.startsWith("/")) {
+    return null;
+  }
+  const fromDirectory = fromPath.includes("/") ? fromPath.slice(0, fromPath.lastIndexOf("/")) : "";
+  const candidate = fromDirectory ? `${fromDirectory}/${pathOnly}` : pathOnly;
+  const parts: string[] = [];
+  for (const rawPart of candidate.split("/")) {
+    if (!rawPart || rawPart === ".") continue;
+    if (rawPart === "..") {
+      if (parts.length === 0) return null;
+      parts.pop();
+      continue;
+    }
+    parts.push(rawPart);
+  }
+  return parts.length > 0 ? parts.join("/") : null;
 }
 
 function rewriteHtmlResourceAttributes(

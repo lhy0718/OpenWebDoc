@@ -6,6 +6,10 @@ OpenWebDoc 是 HTMLX 的 reference app 和 toolchain，用于打开、验证、p
 
 HTMLX 不是 HTMX。HTMLX 是基于 ZIP 的 document package；HTMX 是用于 hypermedia application 的 JavaScript library。OpenWebDoc 也不同于 Open Web Docs community。
 
+## Public Preview
+
+当前 preview 阶段 OpenWebDoc packages 尚未发布到 npm。请使用本 repository checkout 运行 `pnpm htmlx ...`，或使用 tag-pinned GitHub Action、GitHub release assets。未来的 npm packages 只会使用 `@openwebdoc/*` scope。
+
 ## 命名
 
 | 概念        | 名称                   |

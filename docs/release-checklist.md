@@ -2,6 +2,7 @@
 
 - [ ] `pnpm install` succeeds.
 - [ ] `pnpm build` succeeds.
+- [ ] `pnpm audit:prod` succeeds with no high or critical production dependency advisory.
 - [ ] `pnpm test` succeeds.
 - [ ] `pnpm lint` succeeds.
 - [ ] `pnpm conformance:check` succeeds.
@@ -13,6 +14,7 @@
 - [ ] `pnpm site:build` creates `dist/site/` with the OpenWebDoc app build.
 - [ ] `pnpm site:build` creates downloadable starter repository archives under `dist/site/samples/`.
 - [ ] `pnpm release:check` validates every tracked `examples/*.htmlx` package and rejects `examples/security-invalid.htmlx`.
+- [ ] `pnpm release:check` runs the production dependency audit before build and packaging.
 - [ ] `pnpm release:check` runs the HTMLX conformance fixture suite.
 - [ ] `pnpm release:check` runs the external sample repository check.
 - [ ] `pnpm release:check` runs `htmlx refresh-metadata <example-directory> --check --json` for every valid source example directory.

@@ -6,6 +6,10 @@ OpenWebDoc은 HTMLX를 열고, 검증하고, pack/unpack하고, template으로 �
 
 HTMLX는 HTMX가 아닙니다. HTMLX는 ZIP 기반 document package이고, HTMX는 hypermedia application을 위한 JavaScript library입니다. OpenWebDoc은 Open Web Docs 커뮤니티와도 별개의 프로젝트입니다.
 
+## 공개 프리뷰
+
+현재 프리뷰 기간에는 OpenWebDoc 패키지를 npm에 배포하지 않습니다. 이 저장소 checkout에서 `pnpm htmlx ...`를 사용하거나, tag-pinned GitHub Action 또는 GitHub Releases asset을 사용하세요. 향후 npm 패키지는 `@openwebdoc/*` scope만 사용합니다.
+
 ## 빠른 시작
 
 ```sh

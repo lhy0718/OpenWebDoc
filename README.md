@@ -24,7 +24,7 @@ HTMLX is not HTMX. HTMLX is a ZIP-based document package; HTMX is a JavaScript l
 - [Open the slide deck example](https://lhy0718.github.io/OpenWebDoc/app/?example=openwebdoc-slide-deck)
 - [Browse the template gallery](https://lhy0718.github.io/OpenWebDoc/)
 - [Add HTMLX validation to GitHub Actions](docs/github-action.md)
-- [Download the v0.1.0-alpha.2 release assets](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.2)
+- [Download the v0.1.0-alpha.3 release assets](https://github.com/lhy0718/OpenWebDoc/releases/tag/v0.1.0-alpha.3)
 
 The app starts with a single file-open screen. After a valid `.htmlx` package is loaded, the document becomes the primary surface: read first, enable edit mode for small corrections, then export a validated package.
 
@@ -101,6 +101,23 @@ Presentation mode:
 Use the live app when you only want to open and try `.htmlx` documents:
 
 - [https://lhy0718.github.io/OpenWebDoc/app/](https://lhy0718.github.io/OpenWebDoc/app/)
+
+Local development requires Node.js `>=20.19.0` and pnpm `10.24.0`, matching the
+`packageManager` field in `package.json`.
+
+```sh
+corepack enable
+corepack prepare pnpm@10.24.0 --activate
+pnpm install
+```
+
+OpenWebDoc does not publish npm packages during the public preview phase. Use
+one of these surfaces instead:
+
+- the live app and downloadable `.htmlx` examples on GitHub Pages
+- the tag-pinned GitHub Action for pull-request validation
+- `pnpm htmlx ...` from a checked-out OpenWebDoc repository
+- GitHub release tarballs for inspection
 
 Run the app locally when you are developing OpenWebDoc itself:
 
@@ -188,6 +205,7 @@ That workflow makes `.htmlx` useful for coding agents, maintainers, research/rep
 ```sh
 pnpm install
 pnpm guard:repo
+pnpm audit:prod
 pnpm build
 pnpm test
 pnpm lint
@@ -204,7 +222,7 @@ pnpm release:check
 pnpm htmlx validate examples/basic.htmlx
 ```
 
-`pnpm release:check` validates every tracked example package in `examples/*.htmlx`, rejects the intentionally invalid security fixture, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, checks, exports, and verifies external sample repository skeletons, scans packed text files for private local paths, builds npm tarballs for inspection, and builds the static site with starter repository archives. OpenWebDoc does not publish npm packages during the public preview phase; GitHub release artifacts and GitHub Pages are the release surfaces.
+`pnpm release:check` validates every tracked example package in `examples/*.htmlx`, rejects the intentionally invalid security fixture, runs the production dependency audit, checks valid example metadata freshness with `refresh-metadata --check`, verifies packed examples against their source directories, verifies public app example copies byte-for-byte, checks, exports, and verifies external sample repository skeletons, scans packed text files for private local paths, builds npm tarballs for inspection, and builds the static site with starter repository archives. OpenWebDoc does not publish npm packages during the public preview phase; GitHub release artifacts and GitHub Pages are the release surfaces.
 
 ## OpenWebDoc App Usage
 

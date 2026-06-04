@@ -31,6 +31,9 @@ jobs:
       - name: Guard repository scope
         run: pnpm guard:repo
 
+      - name: Audit production dependencies
+        run: pnpm audit:prod
+
       - name: Build
         run: pnpm build
 

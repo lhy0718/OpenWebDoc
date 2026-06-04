@@ -2,11 +2,12 @@
 
 Command line interface for agent-safe HTMLX Document Package workflows. This package provides the `htmlx` binary for creating, converting, validating, packing, unpacking, exporting, and refreshing package metadata.
 
-## Install
+## Public Preview Availability
 
-```sh
-npm install -g @openwebdoc/cli
-```
+OpenWebDoc does not publish npm packages during the public preview phase. Use the
+repository checkout with `pnpm htmlx ...`, the tag-pinned GitHub Action, or the
+GitHub release tarballs for inspection. The future published package will remain
+scoped as `@openwebdoc/cli`; only the binary name is `htmlx`.
 
 ## Usage
 

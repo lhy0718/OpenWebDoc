@@ -6,6 +6,10 @@ OpenWebDoc la reference app va toolchain de mo, validate, pack, unpack, dung tem
 
 HTMLX khong phai HTMX. HTMLX la ZIP-based document package; HTMX la JavaScript library cho hypermedia applications. OpenWebDoc cung tach biet voi Open Web Docs community.
 
+## Public Preview
+
+Trong preview hiện tại, OpenWebDoc packages chưa được publish lên npm. Hãy dùng repository checkout này với `pnpm htmlx ...`, GitHub Action được pin theo tag, hoặc GitHub release assets. Các npm packages sau này sẽ chỉ dùng scope `@openwebdoc/*`.
+
 ## Quick Start
 
 ```sh

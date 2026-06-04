@@ -1,6 +1,6 @@
 {
   "name": "@openwebdoc/core",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "Core APIs for reading, writing, validating, and packaging agent-safe HTMLX documents.",
   "type": "module",
   "main": "./dist/index.js",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@openwebdoc/spec": "workspace:*",
     "fflate": "^0.8.2",
-    "sanitize-html": "^2.17.0"
+    "sanitize-html": "^2.17.4"
   },
   "devDependencies": {
     "@types/sanitize-html": "^2.16.0",

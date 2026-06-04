@@ -8,11 +8,60 @@
       "profile": "flow-document"
     },
     {
+      "id": "valid-css-local-resource",
+      "description": "Allows a package-local CSS url() resource when it is declared in manifest resources.",
+      "path": "cases/valid-css-local-resource",
+      "valid": true,
+      "profile": "flow-document"
+    },
+    {
       "id": "invalid-script",
       "description": "Rejects executable script content in the document entry.",
       "path": "cases/invalid-script",
       "valid": false,
       "expectedIssueCodes": ["html.script"]
+    },
+    {
+      "id": "invalid-css-local-resource-missing",
+      "description": "Rejects a package-local CSS url() resource when it is missing from files or manifest resources.",
+      "path": "cases/invalid-css-local-resource-missing",
+      "valid": false,
+      "expectedIssueCodes": ["css.local_resource_missing"]
+    },
+    {
+      "id": "invalid-editing-schema",
+      "description": "Rejects editing metadata that does not satisfy the editing metadata JSON Schema.",
+      "path": "cases/invalid-editing-schema",
+      "valid": false,
+      "expectedIssueCodes": ["editing.schema_invalid"]
+    },
+    {
+      "id": "invalid-editing-stage-mismatch",
+      "description": "Rejects editing metadata whose stage geometry differs from document stage attributes.",
+      "path": "cases/invalid-editing-stage-mismatch",
+      "valid": false,
+      "expectedIssueCodes": ["editing.stage_mismatch"]
+    },
+    {
+      "id": "invalid-editing-block-missing",
+      "description": "Rejects editing metadata that references a missing document block.",
+      "path": "cases/invalid-editing-block-missing",
+      "valid": false,
+      "expectedIssueCodes": ["editing.block_missing"]
+    },
+    {
+      "id": "invalid-editing-guide-instruction",
+      "description": "Rejects package-local editing guides that look like hidden system instructions.",
+      "path": "cases/invalid-editing-guide-instruction",
+      "valid": false,
+      "expectedIssueCodes": ["editing_guide.system_instruction_guard"]
+    },
+    {
+      "id": "invalid-resource-integrity",
+      "description": "Rejects declared resources whose sha256 integrity does not match package bytes.",
+      "path": "cases/invalid-resource-integrity",
+      "valid": false,
+      "expectedIssueCodes": ["resource.integrity_mismatch"]
     },
     {
       "id": "invalid-flow-stage-conflict",

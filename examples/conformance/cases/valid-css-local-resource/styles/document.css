@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  color: #172033;
+  background: #ffffff url("../assets/pattern.svg") repeat;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}

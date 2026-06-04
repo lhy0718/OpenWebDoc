@@ -2,6 +2,12 @@
 
 The CLI binary is named `htmlx` and is provided by `@openwebdoc/cli`.
 
+OpenWebDoc does not publish npm packages during the public preview phase. The
+examples below assume a repository checkout using `pnpm htmlx ...`, a
+project-specific local wrapper, or a future published `@openwebdoc/cli`
+installation. External repositories can adopt validation first through the
+tag-pinned GitHub Action without installing an npm package.
+
 ```sh
 htmlx create document.htmlx --title "My Document"
 htmlx create fixed.htmlx --profile fixed-stage-document --title "Visual Brief"
@@ -47,6 +53,7 @@ If the package includes `metadata/editing-guide.md`, treat it as document-owned 
 During workspace development, run the binary through pnpm:
 
 ```sh
+pnpm audit:prod
 pnpm htmlx validate examples/basic.htmlx
 ```
 

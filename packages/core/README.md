@@ -2,11 +2,11 @@
 
 Core read, write, pack, unpack, validation, and package-local asset resolution APIs for HTMLX Document Package files.
 
-## Install
+## Public Preview Availability
 
-```sh
-npm install @openwebdoc/core
-```
+OpenWebDoc does not publish npm packages during the public preview phase. Use the
+repository checkout for development, or inspect the GitHub release tarballs. The
+future published package will remain scoped as `@openwebdoc/core`.
 
 ## Usage
 

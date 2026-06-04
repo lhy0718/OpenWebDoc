@@ -707,11 +707,15 @@
     "profile": "slide-deck",
     "editableBlockIds": [
       "deck-01-title",
+      "deck-02-comparison",
+      "deck-03-package",
       "deck-04-workflow",
       "deck-05-table"
     ],
     "appEditableBlockIds": [
       "deck-01-title",
+      "deck-02-comparison",
+      "deck-03-package",
       "deck-04-workflow",
       "deck-05-table"
     ],
